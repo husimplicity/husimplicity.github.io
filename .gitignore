@@ -2,5 +2,5 @@
 Thumbs.db
 db.json
 *.log
-.deploy_git/*
-public/*
+.deploy_git*
+public*
