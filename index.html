@@ -249,6 +249,282 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/11/csapp4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Hulieu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hulieu">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/01/11/csapp4/" itemprop="url">从一开始的汇编</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-01-11T15:49:05+08:00">
+                2020-01-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%8C%AB%E7%88%AA%E8%AE%B0/" itemprop="url" rel="index">
+                    <span itemprop="name">猫爪记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="Y86-一个玩具"><a href="#Y86-一个玩具" class="headerlink" title="Y86(一个玩具)"></a>Y86(一个玩具)</h3><p>定义Y86指令集只处理四字节的数据</p>
+<p><img src="y86.png" alt=""></p>
+<ul>
+<li>将movl拆分成四个指令，显示指定源和目的。i表示立即数，r表示寄存器，m表示存储器。</li>
+<li>OPl包含四个整数操作，分别是addl,subl,andl,xorl</li>
+<li>三个条件码ZF、SF和OF</li>
+<li>7个跳转指令jmp、jle、jl、je、jne、jge、jg</li>
+<li>6个条件传送cmovle、cmovl、cmove、cmovne、cmovge、cmovg（属于rrmovl类）</li>
+<li>call、ret、pushl、popl不变</li>
+<li>halt相当于X86里的hlt，会直接导致处理器暂停</li>
+</ul>
+<p>指令集模拟器YIS</p>
+<h3 id="HCL"><a href="#HCL" class="headerlink" title="HCL"></a>HCL</h3><p>位级电路-&gt;字级电路</p>
+<p>多路复用电路</p>
+<p>ALU（算术单元）：根据输入做一次算术运算</p>
+<h3 id="寄存器"><a href="#寄存器" class="headerlink" title="寄存器"></a>寄存器</h3><p>寄存器操作时，输出会一直保存在当前寄存器状态上，直到时钟信号上升。</p>
+<p><img src="register.png" alt=""></p>
+<p>这是一个典型的寄存器文件，这样一个多端口随机访问存储器允许同时进行多个读写操作。向寄存器文件写入字是由时钟信号控制的。</p>
+<p><img src="register2.png" alt=""></p>
+<p>数据存储器只有一个输入输出。</p>
+<p><em>现实中更为复杂</em></p>
+<h3 id="顺序实现"><a href="#顺序实现" class="headerlink" title="顺序实现"></a>顺序实现</h3><p>一个指令的各个阶段</p>
+<ul>
+<li>取指 fetch</li>
+<li>解码 decode</li>
+<li>执行 execute（包括计算和设置条件码）</li>
+<li>访存 memory</li>
+<li>写回 write back</li>
+<li>更新PC PC update，将PC设置成下一条指令的地址</li>
+</ul>
+<p>大多数指令比较简单，最难实现的应该是pushl和popl（举例如下）</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>阶段</th>
+<th>call Dest</th>
+<th>ret</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>fetch</td>
+<td>icode: ifun &lt;-M[PC]<br>valC&lt;-M[PC+1]<br>valP&lt;-PC+5</td>
+<td>icode: ifun &lt;-M[PC]<br>valP&lt;-PC+1</td>
+</tr>
+<tr>
+<td>decode</td>
+<td>valB&lt;-R[%esp]</td>
+<td>valA&lt;-R[%esp]<br>valB&lt;-R[%esp]</td>
+</tr>
+<tr>
+<td>execute</td>
+<td>valE&lt;-valB-4</td>
+<td>valE&lt;-valB+4</td>
+</tr>
+<tr>
+<td>memory</td>
+<td>M[valE]&lt;-valP</td>
+<td>valM&lt;-M[valA]</td>
+</tr>
+<tr>
+<td>write back</td>
+<td>R[%esp]&lt;-valE</td>
+<td>R[%esp]&lt;-valE</td>
+</tr>
+<tr>
+<td>PC update</td>
+<td>PC&lt;-valC</td>
+<td>PC&lt;-valM</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>阶段</th>
+<th>pushl rA</th>
+<th>popl rA</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>fetch</td>
+<td>icode: ifun &lt;-M[PC]<br> rA:rB&lt;-M[PC+1]</td>
+<td>icode: ifun &lt;-M[PC]<br/> rA:rB&lt;-M[PC+1]</td>
+</tr>
+<tr>
+<td>decode</td>
+<td>valP&lt;-PC+2</td>
+<td>valP&lt;-PC+2</td>
+</tr>
+<tr>
+<td>execute</td>
+<td>valA&lt;-R[rA] <br/>valB&lt;-R[%esp]</td>
+<td>valA&lt;-R[%esp]<br/> valB&lt;-R[%esp]</td>
+</tr>
+<tr>
+<td>memory</td>
+<td>valE&lt;-valB+(-4)</td>
+<td>valE&lt;-valB+4</td>
+</tr>
+<tr>
+<td>write back</td>
+<td>M[valE]&lt;-valA <br/>R[%esp]&lt;-valE</td>
+<td>valM&lt;-M[valA]<br/> R[%esp]&lt;-valE <br/>R[rA]&lt;-valM</td>
+</tr>
+<tr>
+<td>PC update</td>
+<td>PC&lt;-valP</td>
+<td>PC&lt;-valP</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>一种顺序实现如下</p>
+<p><img src="seq.png" alt=""></p>
+<h3 id="SEQ实现"><a href="#SEQ实现" class="headerlink" title="SEQ实现"></a>SEQ实现</h3><p>所使用的常数如下（除了指令之外还包括了状态码）</p>
+<p><img src="seqconstant.png" alt=""></p>
+<h5 id="取指阶段"><a href="#取指阶段" class="headerlink" title="取指阶段"></a>取指阶段</h5><ul>
+<li>instr_valid：合法指令</li>
+<li>need_regids：包括寄存器指示符</li>
+<li>need_valC：包含常数</li>
+</ul>
+<p><img src="seqfetch.png" alt=""></p>
+<p>增加器产生值p+1+need_rigids+4*need_valC</p>
+<h5 id="译码和写回阶段"><a href="#译码和写回阶段" class="headerlink" title="译码和写回阶段"></a>译码和写回阶段</h5><p><img src="seqfetch.png" alt=""></p>
+<h5 id="执行阶段"><a href="#执行阶段" class="headerlink" title="执行阶段"></a>执行阶段</h5><p><img src="seqexecute.png" alt=""></p>
+<h5 id="访存阶段"><a href="#访存阶段" class="headerlink" title="访存阶段"></a>访存阶段</h5><p><img src="seqmemory.png" alt=""></p>
+<h5 id="更新PC阶段"><a href="#更新PC阶段" class="headerlink" title="更新PC阶段"></a>更新PC阶段</h5><p>HCL描述如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">int new_pc &#x3D; [</span><br><span class="line">	icode &#x3D;&#x3D; ICALL: valC; # 调用</span><br><span class="line">	icode &#x3D;&#x3D; IJXX &amp;&amp; Cnd: valC; # 跳转</span><br><span class="line">	icode &#x3D;&#x3D; IRET: valM; # 返回</span><br><span class="line">	1: valP; # 默认</span><br><span class="line">];</span><br></pre></td></tr></table></figure>
+<h3 id="流水线"><a href="#流水线" class="headerlink" title="流水线"></a>流水线</h3><p>SEQ的问题在于每个单元只在整个时钟周期的一部分时间里被使用</p>
+<p>P294（268）</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/08/hello-world/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -859,6 +1135,7 @@
 <p>此时x86-64一般会在过程开始后固定栈指针%rsp，并通过栈指针访问</p>
 <p><strong>相比之下，x86-64的代码比IA32更简洁且需要较少存储器访问</strong></p>
 <p><img src="cpu64.png" alt=""></p>
+<p>16个通用目的寄存器中，6个用来传递参数（%rdi,%rsi,%rdx,%rcx,%r8,%r9），6个被调用者保存的临时寄存器（%rbx,%rbp,%r12~%r15)，1个保存返回值(%rax)，1个栈指针(%rsp)，剩下的是调用者保存的寄存器（%r10,%r11）</p>
 <p>由于没有帧指针寄存器，可以用寄存器%rbp作为通用寄存器</p>
 <p><em>跳转到ret前会加rep作为空操作（使处理器适当预测ret目的以加速）</em></p>
 
@@ -1230,7 +1507,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>

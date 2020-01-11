@@ -91,7 +91,7 @@
 <meta property="og:image" content="http://yoursite.com/2020/01/08/csapp3/stackframeExample.png">
 <meta property="og:image" content="http://yoursite.com/2020/01/08/csapp3/cpu64.png">
 <meta property="article:published_time" content="2020-01-08T11:59:31.000Z">
-<meta property="article:modified_time" content="2020-01-11T07:21:01.106Z">
+<meta property="article:modified_time" content="2020-01-11T07:38:17.321Z">
 <meta property="article:author" content="Hulieu">
 <meta property="article:tag" content="琉璃猫">
 <meta name="twitter:card" content="summary">
@@ -736,6 +736,7 @@
 <p>此时x86-64一般会在过程开始后固定栈指针%rsp，并通过栈指针访问</p>
 <p><strong>相比之下，x86-64的代码比IA32更简洁且需要较少存储器访问</strong></p>
 <p><img src="cpu64.png" alt=""></p>
+<p>16个通用目的寄存器中，6个用来传递参数（%rdi,%rsi,%rdx,%rcx,%r8,%r9），6个被调用者保存的临时寄存器（%rbx,%rbp,%r12~%r15)，1个保存返回值(%rax)，1个栈指针(%rsp)，剩下的是调用者保存的寄存器（%r10,%r11）</p>
 <p>由于没有帧指针寄存器，可以用寄存器%rbp作为通用寄存器</p>
 <p><em>跳转到ret前会加rep作为空操作（使处理器适当预测ret目的以加速）</em></p>
 
@@ -857,7 +858,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
