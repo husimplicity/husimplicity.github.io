@@ -137,3 +137,86 @@ jmp *.L7(, %eax, 4) # Goto *jt[index]
 + ret 从过程调用中返回
 call指令将控制转移到一个函数开始，ret指令返回到call指令之后的那条指令
 leave指令将%esp移到%ebp然后弹出%ebp。如果函数要返回整数或指针的话，寄存器%eax可以用来返回值。
+
+一个典型的过程调用示例
+
+![](stackframeExample.png)
+
+```
+caller:
+  pushl %ebp
+  movl %esp, %ebp
+  subl $24, %esp
+  ... # 赋值
+  call swap_add
+swap_add:
+  pushl %ebp # Save old %ebp
+  movl %esp, %ebp
+  pushl %ebx
+  ... # 主体代码
+  popl %ebx
+  popl %ebp
+  ret # 返回值在%eax
+caller: # 之后的代码
+  ... 
+  imull %edx, %eax
+  leave
+  ret
+```
+
+*leave等价于几个popl*
+
+### 数组
+
+声明方式：T A[N]
+
+假设整型数组E存在%edx，整数索引i存在%ecx
+
+表达式|类型|值|汇编代码
+-|-|-|-
+E|int*|x_E| movl %edx, %eax
+E[i]|int|M[x_E+4i]|movl (%edx,%ecx,4), %eax
+&E[i]|int*|x_E+4i|leal (%edx, %ecx, 4), %eax
+
+###  异质数据结构
+
+struct声明数据结构类型
+
+union允许以多种类型引用一个对象->一般需要创建一个标签字段
+
+<u>数据对齐：要求short地址必须为2的倍数，int等地址必须为4的倍数</u>
+
+### GDB
+
++ 开始和停止：
+  - quit
+  - run
+  - kill
++ 断点：
+  - break sum
+  - break \*0x00000000
+  - delete 1
++ 执行：
+  - stepi n 执行n条指令，默认1条
+  - nexti 以程序为单位执行
+  - continue
+  - finish
++ 检查代码（反汇编）：
+  - disas
+  - disas sum
+  - disas 0x00000000 反汇编地址附近的函数
+  - disas 0x00000000 0x000000ff
++ 检查数值 
+  - print $eax（十进制）
+  - print /x $eax(十六进制)
+  - print *(int *)($ebp+8) 输出%ebp+8处的整数
++ 有用的信息
+  - info frame 当前栈帧
+  - info registers 所有寄存器
+
+### 保护机制
+
++ 栈随机化
++ 栈保护
++ 限制存储可执行代码的存储器
+
