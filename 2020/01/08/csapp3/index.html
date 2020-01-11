@@ -79,18 +79,19 @@
 
 
 
-<meta name="description" content="汇编代码后缀    名称 代码 大小     char b 1个字节   short w 2个字节   int&#x2F;long int&#x2F;char* l 4个字节   float s 4个字节   double l 8个字节   long double t 10&#x2F;12个字节     访问信息寄存器是用来存储整数数据和指针的。 三种操作数指示符：第一种：立即数 $格式 $Imm 操作数值 Imm第二种：寄存">
+<meta name="description" content="汇编代码后缀    名称 代码 大小     char b 1个字节   short w 2个字节   int&#x2F;long int&#x2F;char* l 4个字节   float s 4个字节   double l 8个字节   long double t 8&#x2F;10&#x2F;12个字节(根据系统)     访问信息寄存器是用来存储整数数据和指针的。 三种操作数指示符：第一种：立即数 $格式 $Imm 操作数值 I">
 <meta property="og:type" content="article">
 <meta property="og:title" content="从零开始的汇编">
 <meta property="og:url" content="http://yoursite.com/2020/01/08/csapp3/index.html">
 <meta property="og:site_name" content="Hulieu">
-<meta property="og:description" content="汇编代码后缀    名称 代码 大小     char b 1个字节   short w 2个字节   int&#x2F;long int&#x2F;char* l 4个字节   float s 4个字节   double l 8个字节   long double t 10&#x2F;12个字节     访问信息寄存器是用来存储整数数据和指针的。 三种操作数指示符：第一种：立即数 $格式 $Imm 操作数值 Imm第二种：寄存">
+<meta property="og:description" content="汇编代码后缀    名称 代码 大小     char b 1个字节   short w 2个字节   int&#x2F;long int&#x2F;char* l 4个字节   float s 4个字节   double l 8个字节   long double t 8&#x2F;10&#x2F;12个字节(根据系统)     访问信息寄存器是用来存储整数数据和指针的。 三种操作数指示符：第一种：立即数 $格式 $Imm 操作数值 I">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://yoursite.com/2020/01/08/csapp3/cpu.png">
 <meta property="og:image" content="http://yoursite.com/2020/01/08/csapp3/stackframe.png">
 <meta property="og:image" content="http://yoursite.com/2020/01/08/csapp3/stackframeExample.png">
+<meta property="og:image" content="http://yoursite.com/2020/01/08/csapp3/cpu64.png">
 <meta property="article:published_time" content="2020-01-08T11:59:31.000Z">
-<meta property="article:modified_time" content="2020-01-11T05:16:33.853Z">
+<meta property="article:modified_time" content="2020-01-11T07:21:01.106Z">
 <meta property="article:author" content="Hulieu">
 <meta property="article:tag" content="琉璃猫">
 <meta name="twitter:card" content="summary">
@@ -384,7 +385,7 @@
 <tr>
 <td>long double</td>
 <td>t</td>
-<td>10/12个字节</td>
+<td>8/10/12个字节(根据系统)</td>
 </tr>
 </tbody>
 </table>
@@ -572,7 +573,8 @@
 </table>
 </div>
 <h3 id="条件赋值"><a href="#条件赋值" class="headerlink" title="条件赋值"></a>条件赋值</h3><p>cmovl S, R 如果&lt;，用S代替R<br>cmov系列指令和上面j系列相似<br><strong>不是所有的条件表达式可以用条件传送来编译</strong>，因为代码会对then-expr和else-expr求值，如果有一个值不存在或者操作了全局变量，即使测试为假，也会导致错误</p>
-<h3 id="switch方法"><a href="#switch方法" class="headerlink" title="switch方法"></a>switch方法</h3><p>在.rodata(Read-Only Data)里声明switch情况分配地址<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">.L7:</span><br><span class="line">  .long .L3</span><br><span class="line">  .long .L2</span><br><span class="line">  .long .L4</span><br><span class="line">  ... ...</span><br></pre></td></tr></table></figure><br>然后使用间接跳转<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jmp *.L7(, %eax, 4) # Goto *jt[index]</span><br></pre></td></tr></table></figure><br>值得注意的是，<strong>当switch的case值不连续的时候，会编译成multi-if的形式</strong></p>
+<h3 id="switch方法"><a href="#switch方法" class="headerlink" title="switch方法"></a>switch方法</h3><p>在.rodata(Read-Only Data)里声明switch情况分配地址<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">.L7:</span><br><span class="line">  .long .L3</span><br><span class="line">  .long .L2</span><br><span class="line">  .long .L4</span><br><span class="line">  ... ...</span><br></pre></td></tr></table></figure><br>然后使用间接跳转<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jmp *.L7(, %eax, 4) # Goto *jt[index]</span><br></pre></td></tr></table></figure><br>值得注意的是，<strong>当switch的case值不连续且跨度足够大的时候，会编译成multi-if的形式</strong></p>
+<p><em>有传闻显示，编译器还有二分区间这样的骚操作</em></p>
 <h3 id="程序栈"><a href="#程序栈" class="headerlink" title="程序栈"></a>程序栈</h3><p>单个过程分配的那部分栈称为栈帧，最顶端以两个指针界定<br>%ebp为帧指针，%esp为栈指针，程序执行时，栈指针可以移动，一般相对于帧指针进行访问<br><img src="stackframe.png" alt=""></p>
 <p>转移控制指令</p>
 <ul>
@@ -584,7 +586,7 @@
 <p>一个典型的过程调用示例</p>
 <p><img src="stackframeExample.png" alt=""></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">caller:</span><br><span class="line">  pushl %ebp</span><br><span class="line">  movl %esp, %ebp</span><br><span class="line">  subl $24, %esp</span><br><span class="line">  ... # 赋值</span><br><span class="line">  call swap_add</span><br><span class="line">swap_add:</span><br><span class="line">  pushl %ebp # Save old %ebp</span><br><span class="line">  movl %esp, %ebp</span><br><span class="line">  pushl %ebx</span><br><span class="line">  ... # 主体代码</span><br><span class="line">  popl %ebx</span><br><span class="line">  popl %ebp</span><br><span class="line">  ret # 返回值在%eax</span><br><span class="line">caller: # 之后的代码</span><br><span class="line">  ... </span><br><span class="line">  imull %edx, %eax</span><br><span class="line">  leave</span><br><span class="line">  ret</span><br></pre></td></tr></table></figure>
-<p><em>leave等价于几个popl</em></p>
+<p><em>leave效果上等价于几个popl</em>，但效率上更高</p>
 <h3 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h3><p>声明方式：T A[N]</p>
 <p>假设整型数组E存在%edx，整数索引i存在%ecx</p>
 <div class="table-container">
@@ -666,6 +668,76 @@
 <li>栈保护</li>
 <li>限制存储可执行代码的存储器</li>
 </ul>
+<h3 id="64位"><a href="#64位" class="headerlink" title="64位"></a>64位</h3><p>指针和声明为长整型的变量都是64位，用movq和addq代替movl和addl</p>
+<p>相应的运算和控制也要加上q</p>
+<p>返回值放在寄存器%rax中</p>
+<p>许多函数没有生成栈帧，通过寄存器传递参数，参数传递见下表</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>操作数大小</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>64</td>
+<td>%rdi</td>
+<td>%rsi</td>
+<td>%rdx</td>
+<td>%rcx</td>
+<td>%r8</td>
+<td>%r9</td>
+</tr>
+<tr>
+<td>32</td>
+<td>%edi</td>
+<td>%esi</td>
+<td>%edx</td>
+<td>%ecx</td>
+<td>%r8d</td>
+<td>%r9d</td>
+</tr>
+<tr>
+<td>16</td>
+<td>%di</td>
+<td>%si</td>
+<td>%dx</td>
+<td>%cx</td>
+<td>%r8w</td>
+<td>%r9w</td>
+</tr>
+<tr>
+<td>8</td>
+<td>%dil</td>
+<td>%sil</td>
+<td>%dl</td>
+<td>%cl</td>
+<td>%r8b</td>
+<td>%r9b</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>需要帧栈的情况如下</p>
+<ul>
+<li>局部变量太多</li>
+<li>局部变量是数组或结构</li>
+<li>用&amp;计算局部变量地址</li>
+<li>需要传递栈上的参数</li>
+<li>需要保存它的状态</li>
+</ul>
+<p>此时x86-64一般会在过程开始后固定栈指针%rsp，并通过栈指针访问</p>
+<p><strong>相比之下，x86-64的代码比IA32更简洁且需要较少存储器访问</strong></p>
+<p><img src="cpu64.png" alt=""></p>
+<p>由于没有帧指针寄存器，可以用寄存器%rbp作为通用寄存器</p>
+<p><em>跳转到ret前会加rep作为空操作（使处理器适当预测ret目的以加速）</em></p>
 
       
     </div>
@@ -696,8 +768,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2020/01/08/%E5%90%89%E6%96%AF%E5%B0%BC%E4%BA%9A%E4%BC%A0%E5%A5%870n/" rel="next" title="吉斯尼亚传奇N">
-                <i class="fa fa-chevron-left"></i> 吉斯尼亚传奇N
+              <a href="/2020/01/08/%E5%90%89%E6%96%AF%E5%B0%BC%E4%BA%9A%E4%BC%A0%E5%A5%8701/" rel="next" title="吉斯尼亚传奇">
+                <i class="fa fa-chevron-left"></i> 吉斯尼亚传奇
               </a>
             
           </div>
@@ -706,8 +778,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2020/01/08/%E5%90%89%E6%96%AF%E5%B0%BC%E4%BA%9A%E4%BC%A0%E5%A5%8701/" rel="prev" title="吉斯尼亚传奇">
-                吉斯尼亚传奇 <i class="fa fa-chevron-right"></i>
+              <a href="/2020/01/08/hello-world/" rel="prev" title="Hello World">
+                Hello World <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -841,7 +913,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#汇编代码后缀"><span class="nav-number">1.</span> <span class="nav-text">汇编代码后缀</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#访问信息"><span class="nav-number">2.</span> <span class="nav-text">访问信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三种操作数指示符："><span class="nav-number">3.</span> <span class="nav-text">三种操作数指示符：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据传送指令"><span class="nav-number">4.</span> <span class="nav-text">数据传送指令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#整数算术操作"><span class="nav-number">5.</span> <span class="nav-text">整数算术操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#特殊算术操作"><span class="nav-number">6.</span> <span class="nav-text">特殊算术操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#条件码"><span class="nav-number">7.</span> <span class="nav-text">条件码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#跳转指令"><span class="nav-number">8.</span> <span class="nav-text">跳转指令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#条件赋值"><span class="nav-number">9.</span> <span class="nav-text">条件赋值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#switch方法"><span class="nav-number">10.</span> <span class="nav-text">switch方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#程序栈"><span class="nav-number">11.</span> <span class="nav-text">程序栈</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数组"><span class="nav-number">12.</span> <span class="nav-text">数组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#异质数据结构"><span class="nav-number">13.</span> <span class="nav-text">异质数据结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GDB"><span class="nav-number">14.</span> <span class="nav-text">GDB</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#保护机制"><span class="nav-number">15.</span> <span class="nav-text">保护机制</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#汇编代码后缀"><span class="nav-number">1.</span> <span class="nav-text">汇编代码后缀</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#访问信息"><span class="nav-number">2.</span> <span class="nav-text">访问信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三种操作数指示符："><span class="nav-number">3.</span> <span class="nav-text">三种操作数指示符：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据传送指令"><span class="nav-number">4.</span> <span class="nav-text">数据传送指令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#整数算术操作"><span class="nav-number">5.</span> <span class="nav-text">整数算术操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#特殊算术操作"><span class="nav-number">6.</span> <span class="nav-text">特殊算术操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#条件码"><span class="nav-number">7.</span> <span class="nav-text">条件码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#跳转指令"><span class="nav-number">8.</span> <span class="nav-text">跳转指令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#条件赋值"><span class="nav-number">9.</span> <span class="nav-text">条件赋值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#switch方法"><span class="nav-number">10.</span> <span class="nav-text">switch方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#程序栈"><span class="nav-number">11.</span> <span class="nav-text">程序栈</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数组"><span class="nav-number">12.</span> <span class="nav-text">数组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#异质数据结构"><span class="nav-number">13.</span> <span class="nav-text">异质数据结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GDB"><span class="nav-number">14.</span> <span class="nav-text">GDB</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#保护机制"><span class="nav-number">15.</span> <span class="nav-text">保护机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#64位"><span class="nav-number">16.</span> <span class="nav-text">64位</span></a></li></ol></div>
             
 
           </div>
