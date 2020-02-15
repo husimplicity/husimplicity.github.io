@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="琉璃猫," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="编译C预处理器cpp 将 .c 翻译成 .i C编译器cc1 将.i 翻译成汇编 .s 汇编器as 将 .s 翻译成可重定向目标文件 .o 连接器程序 ld 将 .o 结合起来创建可执行文件 连接器的两个任务  符号解析 symbol resolution 将每个符号引用和符号定义联系起来 重定位 relocation 将符号定义与存储器位置联系起来  目标文件  可重定位目标文件 可执行目标文件">
+<meta property="og:type" content="article">
+<meta property="og:title" content="从三开始的汇编">
+<meta property="og:url" content="http://yoursite.com/2020/02/08/csapp7/index.html">
+<meta property="og:site_name" content="Hulieu">
+<meta property="og:description" content="编译C预处理器cpp 将 .c 翻译成 .i C编译器cc1 将.i 翻译成汇编 .s 汇编器as 将 .s 翻译成可重定向目标文件 .o 连接器程序 ld 将 .o 结合起来创建可执行文件 连接器的两个任务  符号解析 symbol resolution 将每个符号引用和符号定义联系起来 重定位 relocation 将符号定义与存储器位置联系起来  目标文件  可重定位目标文件 可执行目标文件">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://yoursite.com/2020/02/08/csapp7/elf.png">
+<meta property="og:image" content="http://yoursite.com/2020/02/08/csapp7/elfexe.png">
+<meta property="og:image" content="http://yoursite.com/2020/02/08/csapp7/pte.png">
+<meta property="og:image" content="http://yoursite.com/2020/02/08/csapp7/translate.png">
+<meta property="og:image" content="http://yoursite.com/2020/02/08/csapp7/tlb.png">
+<meta property="og:image" content="http://yoursite.com/2020/02/08/csapp7/corei7translate.png">
+<meta property="og:image" content="http://yoursite.com/2020/02/08/csapp7/list.png">
+<meta property="article:published_time" content="2020-02-08T08:10:30.000Z">
+<meta property="article:modified_time" content="2020-02-13T08:22:08.241Z">
+<meta property="article:author" content="Hulieu">
+<meta property="article:tag" content="琉璃猫">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2020/02/08/csapp7/elf.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/02/08/csapp7/"/>
+
+
+
+
+
+  <title>从三开始的汇编 | Hulieu</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hulieu</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/08/csapp7/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Hulieu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hulieu">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">从三开始的汇编</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-02-08T16:10:30+08:00">
+                2020-02-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%8C%AB%E7%88%AA%E8%AE%B0/" itemprop="url" rel="index">
+                    <span itemprop="name">猫爪记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="编译"><a href="#编译" class="headerlink" title="编译"></a>编译</h3><p>C预处理器cpp 将 .c 翻译成 .i</p>
+<p>C编译器cc1 将.i 翻译成汇编 .s</p>
+<p>汇编器as 将 .s 翻译成可重定向目标文件 .o</p>
+<p>连接器程序 ld 将 .o 结合起来创建可执行文件</p>
+<p>连接器的两个任务</p>
+<ul>
+<li>符号解析 symbol resolution 将每个符号引用和符号定义联系起来</li>
+<li>重定位 relocation 将符号定义与存储器位置联系起来</li>
+</ul>
+<p>目标文件</p>
+<ul>
+<li>可重定位目标文件</li>
+<li>可执行目标文件</li>
+<li>共享目标文件</li>
+</ul>
+<p>最早的Unix使用.out，现代Unix使用ELF，Windows NT使用COFF的变种PE。</p>
+<h3 id="ELF"><a href="#ELF" class="headerlink" title="ELF"></a>ELF</h3><p>一个典型的ELF可重定位目标文件格式。</p>
+<p><img src="elf.png" alt=""></p>
+<ul>
+<li>ELF头以16字节序列描述生成该文件的系统的字的大小和字节顺序，然后是语法分析和解释（包括ELF头大小、目标文件类型、机器类型、节头部表的文件偏移等。</li>
+<li>.text：已编译的代码</li>
+<li>.rodata：只读数据</li>
+<li>.data：初始化的全局变量</li>
+<li>.bss：未初始化的全局变量</li>
+<li>.symtab：符号表，存放程序中定义和引用的函数和全局变量</li>
+<li>.rel.text：.text中位置的列表</li>
+<li>.rel.data：全局变量的重定位信息</li>
+<li>.debug：调试符号表 -g才会得到</li>
+<li>.line ：行号 -g才会得到</li>
+<li>.strtab：字符串表，包括.symtab和.debug和节头部的名字</li>
+</ul>
+<p><u>static变量是在符号表定义</u>。</p>
+<p><u>重载函数类名为原始名字前加上名字中字符数，比如Foo被编码成3Foo；方法被编码为原始方法加上类名加上每个参数的单字母编码，比如Foo::bar(int, long)被编码为bar__3Fooil。</u></p>
+<p><u>多重定义：会选择强定义（初始化的定义），不同类型可能导致错误。</u></p>
+<h3 id="重定位"><a href="#重定位" class="headerlink" title="重定位"></a>重定位</h3><p>代码的重定位条目放在.rel.text</p>
+<p>已初始化数据的重定位条目放在.rel.data</p>
+<p>重定位条目格式如下</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> &#123;</span></span><br><span class="line">    <span class="keyword">int</span> offset; <span class="comment">/* offset of the refence to relocate*/</span></span><br><span class="line">    <span class="keyword">int</span> symbol:<span class="number">24</span>, <span class="comment">/*symbol the reference should point to*/</span></span><br><span class="line">    	type:<span class="number">8</span>; <span class="comment">/*Relocation type 有11中不同类型*/</span></span><br><span class="line">&#125; Elf32_Rel</span><br></pre></td></tr></table></figure>
+<p>重定位符号引用</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">refptr = s + r.offset;</span><br><span class="line"><span class="comment">/* 相对引用 */</span></span><br><span class="line"><span class="keyword">if</span> (r.type == R_386_PC32) &#123;</span><br><span class="line">    refaddr = ADDR(s) + r.offset;</span><br><span class="line">    *refptr = (<span class="keyword">unsigned</span>)(ADD(r.symbol) + *refptr - refaddr);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/* 绝对引用 */</span></span><br><span class="line"><span class="keyword">if</span> (r.type == R_386_32) &#123;</span><br><span class="line">    *refptr = (<span class="keyword">unsigned</span>)(ADD(r.symbol) + *refptr)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="可执行文件"><a href="#可执行文件" class="headerlink" title="可执行文件"></a>可执行文件</h3><p>下图是个典型的ELF可执行文件</p>
+<p><img src="elfexe.png" alt=""></p>
+<p>ELF头部包含程序的入口（entry point)，.init定义了初始化函数，不再需要.rel。</p>
+<h3 id="静态库"><a href="#静态库" class="headerlink" title="静态库"></a>静态库</h3><p>静态库（.o）是所有相关的目标打包称为独立的文件。</p>
+<p>优点：不需要重复定义、只拷贝被引用的模块、只需要较少的库文件名</p>
+<p><em>AR工具创建库</em></p>
+<h3 id="动态链接共享库"><a href="#动态链接共享库" class="headerlink" title="动态链接共享库"></a>动态链接共享库</h3><p>.so（Unix）或者.dll（Windows）</p>
+<p>解决静态库需要显式链接、浪费资源的问题</p>
+<p><em>gcc -shared -fPIC 创建库</em> </p>
+<blockquote>
+<p>PIC是位置无关代码 position-independent code，通过全局偏移量表实现，但是有性能缺陷。</p>
+<p>因而ELF有延迟绑定lazy binding技术，通过GOT和PLT。</p>
+<p>GOT[1] 是连接器标识信息，GOT[2] 是连接器入口点</p>
+<p>调用时控制传递到PLT中，然后通过GOT做间接跳转。第一次调用时，GOT跳转回PLT下一条指令，通过将标识信息压入栈中并跳转动态链接器，覆盖GOT跳转地址。以后调用时，只是间接引用而没有额外开销。</p>
+</blockquote>
+<p><u>应用程序还可能在运行时要求链接共享库而无需在编译时链接。（dlopen、dlsym、dlclose）</u></p>
+<h3 id="异常控制流（Exception-Control-Flow）"><a href="#异常控制流（Exception-Control-Flow）" class="headerlink" title="异常控制流（Exception Control Flow）"></a>异常控制流（Exception Control Flow）</h3><p>异常处理是在内核模式（kernel mode）</p>
+<p>每个异常有一个异常号。异常可分为四类</p>
+<ul>
+<li>中断 interrupt：来自I/O设备，异步</li>
+<li>陷阱 trap：有意的异常，提供系统调用接口，比如system call</li>
+<li>故障 fault</li>
+<li>终止 abort</li>
+</ul>
+<h3 id="进程"><a href="#进程" class="headerlink" title="进程"></a>进程</h3><p>一个执行中的程序的实例</p>
+<ul>
+<li>独立的逻辑控制流</li>
+<li>私有的地址空间</li>
+</ul>
+<p>内核为每个进程维持一个上下文context，内核通过上下文切换context switch来实现多任务。在进程执行的某些时刻，内核可以通过调度器进行调度schedule，选择一个新的进程运行。</p>
+<p>获取ID getpid（进程PID） getppid（父进程PID）</p>
+<p><u>fork在新的子进程中运行相同程序，而execve函数在当前进程上下文加载并运行新程序，会覆盖当前进程的地址，仍然有相同的PID。Unix和Web服务器大量使用fork和execve。</u></p>
+<h3 id="回收子进程"><a href="#回收子进程" class="headerlink" title="回收子进程"></a>回收子进程</h3><p>终止而未被回收的称为僵死进程zombie，它们仍然消耗系统资源。</p>
+<ul>
+<li>判定等待集合成员 pid</li>
+<li>修改默认行为 WNOHANG 和 WUNTRACED</li>
+<li>waitpid函数</li>
+<li>检查已回收子进程的退出状态 WIFEXITED等 见wait.h</li>
+<li>错误条件：没有子进程 waitpid=-1 ECHILD/被信号中断 返回-1 EINTR</li>
+</ul>
+<h3 id="信号"><a href="#信号" class="headerlink" title="信号"></a>信号</h3><p>Unix信号允许进程中断其他进程。</p>
+<p>一个发送而没被接受的信号为待处理信号pending signal。一个类型至多只有一个待处理信号，多余的会简单丢弃。一个待处理信号只能被接受一次。</p>
+<p>发送信号的机制基于进程组。一个负的PID会导致信号被发送到进程组PID中的每个进程。</p>
+<p>可以通过signal函数修改接收到信号的默认行为。</p>
+<p>几个信号处理中的问题</p>
+<ul>
+<li>信号会阻塞和不会排队等待：改成while尽可能多的接收信号</li>
+<li>系统调用被中断的可能性：while手动重启</li>
+</ul>
+<p>Signal是sigaction的一个包装函数，提供了可移植的信号处理。</p>
+<p>sigprocmask显式改变阻塞信号集合。</p>
+<p><u>同步流以避免并发问题。这个问题称之为竞争race，通过阻塞信号来就解决。暴露竞争的问题的方法就是随机决定父进程和子进程执行的顺序。</u></p>
+<h3 id="非本地跳转"><a href="#非本地跳转" class="headerlink" title="非本地跳转"></a>非本地跳转</h3><p>用户级异常控制流，直接从一个函数跳转另一个函数。</p>
+<p>setjmp和longjump（catch相当于setjmp，throw相当于longjump</p>
+<h3 id="虚拟存储器VM"><a href="#虚拟存储器VM" class="headerlink" title="虚拟存储器VM"></a>虚拟存储器VM</h3><p>虚拟寻址时，CPU生成虚拟地址来访问主存。</p>
+<p><img src="pte.png" alt=""></p>
+<p>这里DRAM缓存是全相连的。</p>
+<p><u>页面调度</u></p>
+<p>虚拟存储器作为存储器管理工具</p>
+<ul>
+<li>简化链接</li>
+<li>简化加载</li>
+<li>简化共享</li>
+<li>简化存储器分配</li>
+</ul>
+<p>同时能通过读写权限控制保护存储器。</p>
+<h3 id="地址翻译"><a href="#地址翻译" class="headerlink" title="地址翻译"></a>地址翻译</h3><p>符号定义</p>
+<ul>
+<li>N 虚拟空间地址数 M 物理空间地址数 P 页大小</li>
+<li>VPO 虚拟页面偏移 VPN 虚拟页号 </li>
+<li>TLBI TLB索引 TLBT TLB标记</li>
+<li>PPO 物理页面偏移 PPN 物理页号</li>
+<li>CO 缓冲块偏移</li>
+<li>CI 高速缓存索引 CT 高速缓存标记</li>
+</ul>
+<p>地址翻译：虚拟地址空间VAS到物理地址空间PAS的映射</p>
+<p><img src="translate.png" alt=""></p>
+<p>MMU利用VPN选择适当的PTE，得到PPN，PPO和VPO是相同的。</p>
+<p><u>利用TLB加速地址翻译：TLB是个小的虚拟寻址的缓存，每行保存一个PTE块。VPN的t个低位组成TLB索引，其余n-p-t位是TLB标记。</u></p>
+<p><u>每次MMU从TLB取出相应PTE，如果TLB不命中，则从L1缓存取出PTE并存放在TLB。</u></p>
+<p><img src="tlb.png" alt=""></p>
+<p><u>多级页表：减小主存压力，地址翻译也并不比单级页表慢很多。</u></p>
+<p>Core i7地址翻译概况如下</p>
+<p><img src="corei7translate.png" alt=""></p>
+<p><u>优化地址翻译：CPU翻译时，发送VPN到MMU，发送VPO到L1，同时进行。</u></p>
+<h3 id="存储器映射"><a href="#存储器映射" class="headerlink" title="存储器映射"></a>存储器映射</h3><p>存储器映射是将虚拟存储器区域和一个磁盘上的对象关联起来。这个对象可以是普通文件，也可以是匿名文件。一旦一个虚拟页面被初始化了，就在一个专门的交换文件（也叫做交换空间或交换区域）之间转换。</p>
+<p><u>一个对象可以被映射到虚拟存储器的一个区域，要么作为共享对象，要么作为私有对象。共享对象即使被映射到了多个共享区域，也只需存放它的一个拷贝。私有对象使用写时拷贝copy-on-write的技术充分使用了稀有的物理存储器。</u></p>
+<h3 id="动态存储器分配"><a href="#动态存储器分配" class="headerlink" title="动态存储器分配"></a>动态存储器分配</h3><p>低级的mmap和munmap可以创建和删除虚拟存储器的区域。</p>
+<p>动态存储器分配dynamic memory allocater更方便且更好移植。它维护一个进程的虚拟存储器区域，称为堆heap。每个进程维护一个brk，指向堆的顶部。</p>
+<ul>
+<li><p>显式分配</p>
+<p>malloc和free（C++里的new和delete）</p>
+<p>想要已初始化的动态存储calloc，改变已分配块大小realloc</p>
+<p>sbrk通过移动brk指针来改变堆</p>
+</li>
+<li><p>隐式分配</p>
+<p>也叫垃圾收集器，自动释放未使用的已分配块，见JAVA等高级语言。</p>
+</li>
+</ul>
+<p>分配器的目标</p>
+<ul>
+<li><p>最大化吞吐率</p>
+</li>
+<li><p>最大化利用率</p>
+<p>利用率低是因为碎片fragmentation</p>
+<ul>
+<li>内部碎片：已分配块比有效载荷大（对齐约束）</li>
+<li>外部碎片：组织/放置/分割/合并 空闲块（空闲链表）</li>
+</ul>
+</li>
+</ul>
+<h3 id="隐式空闲链表"><a href="#隐式空闲链表" class="headerlink" title="隐式空闲链表"></a>隐式空闲链表</h3><p>因为双字的对齐约束，块大小总是8的倍数，块大小最低三位总是0，所以只需存储块大小的29个高位，剩余3位编码其他信息。1表示已分配，0表示空闲。</p>
+<p><img src="list.png" alt=""></p>
+<p>优点是简单，缺点是开销与块总数呈线性关系。</p>
+<p>放置策略：首次适配、下次适配（对首次适配的改进）、最佳适配</p>
+<p>合并策略：立即合并（会产生抖动？）、推迟合并</p>
+<p><u>Knuth提出边界标记（boundary tag），通过在块结尾处添加脚部（头部的副本），允许常数时间内对前面块进行合并。</u></p>
+<h5 id="显式空闲链表"><a href="#显式空闲链表" class="headerlink" title="显式空闲链表"></a>显式空闲链表</h5><p>加入pred和succ的指针，使得开销与<strong>空闲块</strong>总数呈线性关系</p>
+<p>缺点是空闲块必须足够大，潜在提高了内部碎片程度</p>
+<h5 id="分离的空闲链表"><a href="#分离的空闲链表" class="headerlink" title="分离的空闲链表"></a>分离的空闲链表</h5><p>维护多个空闲链表，每个表中块大小大致相等</p>
+<ul>
+<li>简单分离存储：快速但是容易造成碎片</li>
+<li>分离适配：GNU malloc就是这种方法</li>
+<li>伙伴系统：特殊的分离适配，都是2的幂次；块地址和伙伴地址只有一位不同、主要缺点是要求块大小为2的幂次，导致显著的内部碎片。</li>
+</ul>
+<h5 id="垃圾收集"><a href="#垃圾收集" class="headerlink" title="垃圾收集"></a>垃圾收集</h5><p>C和C++保守的垃圾收集器：每个可达的都被正确标记了，但一些不可达的也被错误标记为可达了（因为int或float可以伪装成指针，而收集器无法判断）</p>
+<p>Mark&amp;Sweep：由于C的保守，需要维护一个已分配块的平衡二叉树</p>
+<h3 id="常见存储器错误"><a href="#常见存储器错误" class="headerlink" title="常见存储器错误"></a>常见存储器错误</h3><ul>
+<li>间接引用坏指针：错误的把int或float当做指针</li>
+<li>读未初始化的存储器：<strong>堆存储器</strong>不总是初始化为零，正确方法是用calloc代替malloc或者显式初始化</li>
+<li>缓冲区溢出</li>
+<li>假设指针和对象相同大小</li>
+<li>引用不存在的变量/空闲堆栈</li>
+<li>存储器泄露（不释放空间）</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/%E7%90%89%E7%92%83%E7%8C%AB/" rel="tag"># 琉璃猫</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/01/29/csapp5/" rel="next" title="从二开始的汇编">
+                <i class="fa fa-chevron-left"></i> 从二开始的汇编
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/02/14/csapp10/" rel="prev" title="从四开始的汇编">
+                从四开始的汇编 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Hulieu</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+<br>
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=1364161141&auto=1&height=66"></iframe>
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#编译"><span class="nav-number">1.</span> <span class="nav-text">编译</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ELF"><span class="nav-number">2.</span> <span class="nav-text">ELF</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#重定位"><span class="nav-number">3.</span> <span class="nav-text">重定位</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#可执行文件"><span class="nav-number">4.</span> <span class="nav-text">可执行文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#静态库"><span class="nav-number">5.</span> <span class="nav-text">静态库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#动态链接共享库"><span class="nav-number">6.</span> <span class="nav-text">动态链接共享库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#异常控制流（Exception-Control-Flow）"><span class="nav-number">7.</span> <span class="nav-text">异常控制流（Exception Control Flow）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#进程"><span class="nav-number">8.</span> <span class="nav-text">进程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#回收子进程"><span class="nav-number">9.</span> <span class="nav-text">回收子进程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#信号"><span class="nav-number">10.</span> <span class="nav-text">信号</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#非本地跳转"><span class="nav-number">11.</span> <span class="nav-text">非本地跳转</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#虚拟存储器VM"><span class="nav-number">12.</span> <span class="nav-text">虚拟存储器VM</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#地址翻译"><span class="nav-number">13.</span> <span class="nav-text">地址翻译</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#存储器映射"><span class="nav-number">14.</span> <span class="nav-text">存储器映射</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#动态存储器分配"><span class="nav-number">15.</span> <span class="nav-text">动态存储器分配</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#隐式空闲链表"><span class="nav-number">16.</span> <span class="nav-text">隐式空闲链表</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#显式空闲链表"><span class="nav-number">16.0.1.</span> <span class="nav-text">显式空闲链表</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#分离的空闲链表"><span class="nav-number">16.0.2.</span> <span class="nav-text">分离的空闲链表</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#垃圾收集"><span class="nav-number">16.0.3.</span> <span class="nav-text">垃圾收集</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常见存储器错误"><span class="nav-number">17.</span> <span class="nav-text">常见存储器错误</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Hulieu</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

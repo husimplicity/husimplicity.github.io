@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="琉璃猫," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="系统I&#x2F;O打开关闭文件&#x2F;改变文件位置&#x2F;读写文件 RIO包（Robust I&#x2F;O)提供两类函数  无缓冲的输入输出：直接在存储器和文件间传送数据 带缓冲的输入：rio_readlineb 他是线程安全的  读取文件元数据：stat&#x2F;fstat 内核用三个数据结构表示打开的文件：  描述符表：每个进程有独立的描述符表，每个描述符表指向文件表的一个表项 文件表：文件表的表项包括当前的文件位置、引用计数和">
+<meta property="og:type" content="article">
+<meta property="og:title" content="从四开始的汇编">
+<meta property="og:url" content="http://yoursite.com/2020/02/14/csapp10/index.html">
+<meta property="og:site_name" content="Hulieu">
+<meta property="og:description" content="系统I&#x2F;O打开关闭文件&#x2F;改变文件位置&#x2F;读写文件 RIO包（Robust I&#x2F;O)提供两类函数  无缓冲的输入输出：直接在存储器和文件间传送数据 带缓冲的输入：rio_readlineb 他是线程安全的  读取文件元数据：stat&#x2F;fstat 内核用三个数据结构表示打开的文件：  描述符表：每个进程有独立的描述符表，每个描述符表指向文件表的一个表项 文件表：文件表的表项包括当前的文件位置、引用计数和">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://yoursite.com/2020/02/14/csapp10/io.png">
+<meta property="og:image" content="http://yoursite.com/2020/02/14/csapp10/connect.png">
+<meta property="og:image" content="http://yoursite.com/2020/02/14/csapp10/socket.png">
+<meta property="article:published_time" content="2020-02-14T08:22:35.000Z">
+<meta property="article:modified_time" content="2020-02-13T15:31:58.999Z">
+<meta property="article:author" content="Hulieu">
+<meta property="article:tag" content="琉璃猫">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2020/02/14/csapp10/io.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/02/14/csapp10/"/>
+
+
+
+
+
+  <title>从四开始的汇编 | Hulieu</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hulieu</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/14/csapp10/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Hulieu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hulieu">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">从四开始的汇编</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-02-14T16:22:35+08:00">
+                2020-02-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%8C%AB%E7%88%AA%E8%AE%B0/" itemprop="url" rel="index">
+                    <span itemprop="name">猫爪记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="系统I-O"><a href="#系统I-O" class="headerlink" title="系统I/O"></a>系统I/O</h3><p>打开关闭文件/改变文件位置/读写文件</p>
+<p>RIO包（Robust I/O)提供两类函数</p>
+<ul>
+<li>无缓冲的输入输出：直接在存储器和文件间传送数据</li>
+<li>带缓冲的输入：rio_readlineb 他是线程安全的</li>
+</ul>
+<p>读取文件元数据：stat/fstat</p>
+<p>内核用三个数据结构表示打开的文件：</p>
+<ul>
+<li>描述符表：每个进程有独立的描述符表，每个描述符表指向文件表的一个表项</li>
+<li>文件表：文件表的表项包括当前的文件位置、引用计数和指向v-node的指针，所有进程共享</li>
+<li>v-node表：包含stat大多数信息，所有进程共享</li>
+</ul>
+<p><em>共享文件即多个文件表指向一个v-node表</em></p>
+<p>I/O重定向（&gt;）：拷贝旧的描述符表项到新的描述符表项</p>
+<p>标准I/O：libc的fopen/fclose、fread/fwrite、fgets/fputs、scanf/printf</p>
+<p>三个流stdin、stdout、stderr</p>
+<p><img src="io.png" alt=""></p>
+<p>一般使用标准I/O，但是网络输入输出等情况需要用低级Unix I/O（或者RIO）</p>
+<p><u>这是因为Unix对网络的抽象为<em>套接字</em>类型文件，对流的限制和对套接字的限制会有冲突。标准I/O是在同一个流输入输出的，而套接字需要打开两个流一个读一个写。</u></p>
+<h3 id="网络编程"><a href="#网络编程" class="headerlink" title="网络编程"></a>网络编程</h3><p>网络是个I/O设备</p>
+<p>最低层的是局域网LAN，流行的局域网技术是以太网Ethernet，每个以太网适配器有一个全球唯一的48位地址。使用网桥bridge可以将多个以太网段连接成桥接以太网bridged ethernet。</p>
+<p>多个不兼容的局域网可以通过路由器router连接，组成互联网络internet。每台路由器对它连接的每个网络都有一个适配器（端口）。路由器也能连接高速点到点通话，这就是广域网WAN。</p>
+<p>网络协议消除不同网络之间的差异，他需要两种基本能力：</p>
+<ul>
+<li>命名机制：一致的主机格式</li>
+<li>传送机制：把数据捆扎成不连续片（称为包）</li>
+</ul>
+<h3 id="全球IP因特网Internet"><a href="#全球IP因特网Internet" class="headerlink" title="全球IP因特网Internet"></a>全球IP因特网Internet</h3><p>最成功的的互联网络的实现。</p>
+<p>每台主机都实现TCP/IP协议，这实际上是个协议族。</p>
+<p>IP协议提供基本的命名方法和传送机制；UDP扩展了IP协议，包可以在进程间传递；TCP则是一个复杂协议，提供进程间双向连接。</p>
+<ul>
+<li><p>主机集合被映射为一组32位的IP地址</p>
+<p><em>用机构存放IP地址这一标量是套接字接口早期实现的不幸产物。</em></p>
+<p>总是以大端法存放在包头，常以点分十进制表示。</p>
+</li>
+<li><p>这组IP地址被映射为一组被称为因特网域名的标识符</p>
+<p>一级域名由ICANN定义，常见的有com、edu、gov、org、net</p>
+<p>二级域名由ICANN各个授权代理分配</p>
+<p>本机回传地址总是为localhost 127.0.0.1</p>
+<p>一般域名和IP地址是一一映射，也有多个域名映射到多个IP地址的</p>
+</li>
+<li><p>主机上的进程能和其他任何主机上的进程通信</p>
+<p>一个套接字是连接的一个端口，每个套接字都有相应的地址，是一个因特网地址和16位整数端口组成。客户端端口是内核自动分配的，称为临时端口；然而服务器端口通常是知名端口，如Web常用80，电子邮件使用25。连接由两端的套接字地址唯一确定。</p>
+<p><img src="connect.png" alt=""></p>
+</li>
+</ul>
+<h3 id="套接字端口"><a href="#套接字端口" class="headerlink" title="套接字端口"></a>套接字端口</h3><p>套接字接口（socket interface）是一组函数。</p>
+<p><img src="socket.png" alt=""></p>
+<p>套接字地址结构</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* Generic socket address structure (for connet bind and accept)*/</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">sockaddr</span> &#123;</span></span><br><span class="line">    <span class="keyword">unsigned</span> short sa_family; <span class="comment">/*protocol family*/</span></span><br><span class="line">    <span class="keyword">char</span>           sa_data[<span class="number">14</span>]; <span class="comment">/*address data*/</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* Internet-syle socket address structure*/</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">sockaddr_in</span> &#123;</span></span><br><span class="line">    <span class="keyword">unsigned</span> short sin_family; <span class="comment">/*address family (always AF_INET)*/</span></span><br><span class="line">    <span class="keyword">unsigned</span> short sin_port;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">in_addr</span> <span class="title">sin_addr</span>;</span> <span class="comment">/*IP address in network*/</span></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">char</span>  sin_zero[<span class="number">8</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>客户端和服务器用socket函数创建一个套接字描述符。</p>
+<p>客户端调用connect函数建立连接，得到的连接是套接字对(x:y, serv.sin_addr:serv.sin_port)刻画的。x是客户端IP地址，y是临时端口。</p>
+<p>open_clientfd包装socket和connect函数。</p>
+<p>open_listenfd包装socket、bind和listen函数。</p>
+<p>accept等待客户端的连接请求。</p>
+<h3 id="Web服务器"><a href="#Web服务器" class="headerlink" title="Web服务器"></a>Web服务器</h3><p>基于文本的应用级协议HTTP。Web内容可以用HTML来编写。</p>
+<p>Web内容是与MIME（多用途国际邮件扩充协议，multipurpose Internet mail extensions)相关的字节序列。</p>
+<p>URL可以用“？”分割文件名和参数，参数用“&amp;”隔开。</p>
+<p>HTTP支持不同的方法包括GET、POST、OPTIONS、HEAD、PUT、DELETE、TRACE</p>
+<p>HTTP请求由一个请求行和零个或更多请求报头，加上一个空行组成。请求行的形式是<code>&lt;method&gt;&lt;uri&gt;&lt;version&gt;</code>，请求报头的形式为<code>&lt;header name&gt;: &lt;header data&gt;</code>。</p>
+<p>HTTP响应由一个响应行和零个或多个响应报头，加上响应主体组成。响应行格式为<code>&lt;version&gt;&lt;status code&gt;&lt;status message&gt;</code>。响应报头中最重要的是Content-Type告知类型和Content-Length指示大小。</p>
+<p>CGI（通用网关接口Common Gateway Interface）提供标准解决服务动态内容的问题。服务器接收请求后，fork创建子进程，并调用execve在子进程上下文执行程序（CGI程序）。</p>
+<h3 id="并发编程"><a href="#并发编程" class="headerlink" title="并发编程"></a>并发编程</h3><h5 id="基于进程的并发："><a href="#基于进程的并发：" class="headerlink" title="基于进程的并发："></a>基于进程的并发：</h5><p>fork、exec、waitpid</p>
+<p>服务器并发的注意问题</p>
+<ul>
+<li>必须要SIGCHLD处理程序处理僵死子进程</li>
+<li>父子进程必须关闭connfd的拷贝</li>
+</ul>
+<p>进程共享状态信息困难，为了共享信息，必须使用显式的IPC机制</p>
+<h5 id="基于I-O多路复用的并发"><a href="#基于I-O多路复用的并发" class="headerlink" title="基于I/O多路复用的并发"></a>基于I/O多路复用的并发</h5><p>使用select函数，要求内核挂起进程，只有I/O事件发生才将控制返回。</p>
+<p>优点是给了程序员更多的对程序行为的控制，流之间共享数据变得容易</p>
+<p>缺点是编码复杂</p>
+<h5 id="基于线程的并发"><a href="#基于线程的并发" class="headerlink" title="基于线程的并发"></a>基于线程的并发</h5><p>线程就是运行在进程上下文中的逻辑流。线程由内核自动调度，每个线程有自己的线程上下文。</p>
+<p>线程上下文比进程上下文小得多，因而切换更快。线程没有严格的层次，而能对等的读写相同数据。</p>
+<p>Posix线程是个标准接口。</p>
+<p>线程存储器模型：根据存储类型映射到VM</p>
+<ul>
+<li>全局变量/静态变量：VM只包含它的一个实例</li>
+<li>本地自动变量：每个线程的栈包含他自己所有本地自动变量的实例</li>
+</ul>
+<p>利用信号量实现互斥、共享资源</p>
+<p>四个线程不安全函数</p>
+<ul>
+<li>不保护共享变量的函数</li>
+<li>跨越多个调用的状态（比如随机数）</li>
+<li>返回静态变量指针</li>
+<li>调用线程不安全函数的函数</li>
+</ul>
+<p>竞争：一个线程要在另一个线程到达y点前到达x点，会发生竞争（race）。为了消除竞争，我们可以动态地为y分配一个独立的块并传递给线程例程一个指向这个块的指针。</p>
+<p>信号量会导致一种错误叫死锁（deadlock），就是一组线程被阻塞，等待永远不真的条件。</p>
+<p>709-723</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/%E7%90%89%E7%92%83%E7%8C%AB/" rel="tag"># 琉璃猫</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/02/08/csapp7/" rel="next" title="从三开始的汇编">
+                <i class="fa fa-chevron-left"></i> 从三开始的汇编
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/02/14/ConvexOptimization/" rel="prev" title="ConvexOptimization">
+                ConvexOptimization <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Hulieu</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+<br>
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=1364161141&auto=1&height=66"></iframe>
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#系统I-O"><span class="nav-number">1.</span> <span class="nav-text">系统I&#x2F;O</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#网络编程"><span class="nav-number">2.</span> <span class="nav-text">网络编程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#全球IP因特网Internet"><span class="nav-number">3.</span> <span class="nav-text">全球IP因特网Internet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#套接字端口"><span class="nav-number">4.</span> <span class="nav-text">套接字端口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Web服务器"><span class="nav-number">5.</span> <span class="nav-text">Web服务器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#并发编程"><span class="nav-number">6.</span> <span class="nav-text">并发编程</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#基于进程的并发："><span class="nav-number">6.0.1.</span> <span class="nav-text">基于进程的并发：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#基于I-O多路复用的并发"><span class="nav-number">6.0.2.</span> <span class="nav-text">基于I&#x2F;O多路复用的并发</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#基于线程的并发"><span class="nav-number">6.0.3.</span> <span class="nav-text">基于线程的并发</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Hulieu</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

@@ -249,6 +249,755 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/14/ConvexOptimization/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Hulieu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hulieu">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/02/14/ConvexOptimization/" itemprop="url">ConvexOptimization</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-02-14T18:07:45+08:00">
+                2020-02-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%8C%AB%E7%88%AA%E8%AE%B0/" itemprop="url" rel="index">
+                    <span itemprop="name">猫爪记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>凸优化问题具有如下形式</p>
+<script type="math/tex; mode=display">
+min\:f_0(x)</script><script type="math/tex; mode=display">
+subject\:to\:f_i(x)\leq b_i\:, \:i=1,...,m</script><p>其中 $f_i$ 是凸函数</p>
+<h3 id="凸集"><a href="#凸集" class="headerlink" title="凸集"></a>凸集</h3><p>C的<strong>仿射包</strong>为C中的点的所有仿射组合，即为<strong>affC</strong></p>
+<p>定义集合C的<strong>仿射维数</strong>为其<strong>仿射包</strong>的维数。</p>
+<p>定义集合C的<strong>相对内部</strong>为<strong>affC</strong>里C的内部，记为<strong>relintC</strong></p>
+<script type="math/tex; mode=display">
+relint\:C=\{x\in C|B(x, r)\cap aff\: C\subseteq C \: for \:some\: r \}</script><p><strong>凸集</strong>定义为对$x_1\:,\:x_2\in C\:,\:0\leq\theta\leq 1$</p>
+<script type="math/tex; mode=display">
+\theta x_1+(1-\theta)x_2\in C</script><p><strong>锥</strong>定义为<strong>非负齐次</strong>集合，对$x_1\:,\:x_2\in C\:,\:0\leq\theta_1\:,\:theta_2$</p>
+<script type="math/tex; mode=display">
+\theta_1 x_1+\theta_2 x_2\in C</script><p>集合C的<strong>锥包</strong>是C中元素的所有锥组合，也是包含C的<strong>最小凸锥</strong>。</p>
+<p>凸集的例子</p>
+<ul>
+<li><p>空集、单点、直线、全空间</p>
+</li>
+<li><p>任意子空间都是<strong>凸锥</strong></p>
+</li>
+<li><p>超平面定义的半空间</p>
+</li>
+<li><p>Euclid球和椭球</p>
+</li>
+<li><p>范数球和范数锥</p>
+</li>
+<li><p>多面体和单纯形</p>
+<p><u>如何表示多面体：凸包描述和不等式解集，n很大时两种描述规模相差极大。</u></p>
+</li>
+<li><p>半正定锥（半正定矩阵的元素在n(n+1)/2的向量空间里）</p>
+</li>
+</ul>
+<p>保凸运算</p>
+<ul>
+<li><p>交集</p>
+</li>
+<li><p><strong>仿射</strong>函数</p>
+</li>
+<li><p>透视函数：$P:R^{n+1}\to R^n\:,\: P(z,t)=z/t \:,\: t&gt;0$</p>
+</li>
+<li><p>线性分式：</p>
+<script type="math/tex; mode=display">
+f(x)=(Ax+b)/(c^T x+d)\:,\:dom\: f = \{x|c^T x+d>0\}</script><p><u>凸集在透视函数或线性分式下的原相也是凸的。</u></p>
+</li>
+</ul>
+<p><strong>正常锥</strong>K是满足下列条件的锥</p>
+<ul>
+<li>凸集</li>
+<li>闭集</li>
+<li><strong>实</strong>的：有非空内部</li>
+<li><strong>尖</strong>的：不包含直线的</li>
+</ul>
+<p><strong>正常锥</strong>K可以用来定义<strong>广义不等式</strong> ，即偏序关系</p>
+<script type="math/tex; mode=display">
+x\preceq_K \: y \Leftrightarrow y - x \in K</script><p>（$K=R^+$时这个偏序关系就是通常意义上的不等式）</p>
+<p>广义不等式定义的偏序关系$\preceq_K$具有加法保序性、传递性、自反性、反对称性等等。</p>
+<p>但是它不具有<strong>线性序</strong>，即并非任意两点都可比。如果对每个$y\in S$，都有$x\preceq_K \: y$，那么我们称x为S的<strong>最小元</strong>，类似可定义<strong>最大元</strong>。最小元符号定义为</p>
+<script type="math/tex; mode=display">
+S \subseteq x +K</script><p>如果$y\in S$，而且$y\preceq_K \: x$可以推得$y=x$，那么我们称x为S的<strong>极小元</strong>，类似可定义<strong>极大元</strong>。极小（极大）元不一定唯一。极小元符号定义为 </p>
+<script type="math/tex; mode=display">
+(x-K)\cap S=\{x\}</script>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/14/csapp10/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Hulieu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hulieu">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/02/14/csapp10/" itemprop="url">从四开始的汇编</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-02-14T16:22:35+08:00">
+                2020-02-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%8C%AB%E7%88%AA%E8%AE%B0/" itemprop="url" rel="index">
+                    <span itemprop="name">猫爪记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="系统I-O"><a href="#系统I-O" class="headerlink" title="系统I/O"></a>系统I/O</h3><p>打开关闭文件/改变文件位置/读写文件</p>
+<p>RIO包（Robust I/O)提供两类函数</p>
+<ul>
+<li>无缓冲的输入输出：直接在存储器和文件间传送数据</li>
+<li>带缓冲的输入：rio_readlineb 他是线程安全的</li>
+</ul>
+<p>读取文件元数据：stat/fstat</p>
+<p>内核用三个数据结构表示打开的文件：</p>
+<ul>
+<li>描述符表：每个进程有独立的描述符表，每个描述符表指向文件表的一个表项</li>
+<li>文件表：文件表的表项包括当前的文件位置、引用计数和指向v-node的指针，所有进程共享</li>
+<li>v-node表：包含stat大多数信息，所有进程共享</li>
+</ul>
+<p><em>共享文件即多个文件表指向一个v-node表</em></p>
+<p>I/O重定向（&gt;）：拷贝旧的描述符表项到新的描述符表项</p>
+<p>标准I/O：libc的fopen/fclose、fread/fwrite、fgets/fputs、scanf/printf</p>
+<p>三个流stdin、stdout、stderr</p>
+<p><img src="io.png" alt=""></p>
+<p>一般使用标准I/O，但是网络输入输出等情况需要用低级Unix I/O（或者RIO）</p>
+<p><u>这是因为Unix对网络的抽象为<em>套接字</em>类型文件，对流的限制和对套接字的限制会有冲突。标准I/O是在同一个流输入输出的，而套接字需要打开两个流一个读一个写。</u></p>
+<h3 id="网络编程"><a href="#网络编程" class="headerlink" title="网络编程"></a>网络编程</h3><p>网络是个I/O设备</p>
+<p>最低层的是局域网LAN，流行的局域网技术是以太网Ethernet，每个以太网适配器有一个全球唯一的48位地址。使用网桥bridge可以将多个以太网段连接成桥接以太网bridged ethernet。</p>
+<p>多个不兼容的局域网可以通过路由器router连接，组成互联网络internet。每台路由器对它连接的每个网络都有一个适配器（端口）。路由器也能连接高速点到点通话，这就是广域网WAN。</p>
+<p>网络协议消除不同网络之间的差异，他需要两种基本能力：</p>
+<ul>
+<li>命名机制：一致的主机格式</li>
+<li>传送机制：把数据捆扎成不连续片（称为包）</li>
+</ul>
+<h3 id="全球IP因特网Internet"><a href="#全球IP因特网Internet" class="headerlink" title="全球IP因特网Internet"></a>全球IP因特网Internet</h3><p>最成功的的互联网络的实现。</p>
+<p>每台主机都实现TCP/IP协议，这实际上是个协议族。</p>
+<p>IP协议提供基本的命名方法和传送机制；UDP扩展了IP协议，包可以在进程间传递；TCP则是一个复杂协议，提供进程间双向连接。</p>
+<ul>
+<li><p>主机集合被映射为一组32位的IP地址</p>
+<p><em>用机构存放IP地址这一标量是套接字接口早期实现的不幸产物。</em></p>
+<p>总是以大端法存放在包头，常以点分十进制表示。</p>
+</li>
+<li><p>这组IP地址被映射为一组被称为因特网域名的标识符</p>
+<p>一级域名由ICANN定义，常见的有com、edu、gov、org、net</p>
+<p>二级域名由ICANN各个授权代理分配</p>
+<p>本机回传地址总是为localhost 127.0.0.1</p>
+<p>一般域名和IP地址是一一映射，也有多个域名映射到多个IP地址的</p>
+</li>
+<li><p>主机上的进程能和其他任何主机上的进程通信</p>
+<p>一个套接字是连接的一个端口，每个套接字都有相应的地址，是一个因特网地址和16位整数端口组成。客户端端口是内核自动分配的，称为临时端口；然而服务器端口通常是知名端口，如Web常用80，电子邮件使用25。连接由两端的套接字地址唯一确定。</p>
+<p><img src="connect.png" alt=""></p>
+</li>
+</ul>
+<h3 id="套接字端口"><a href="#套接字端口" class="headerlink" title="套接字端口"></a>套接字端口</h3><p>套接字接口（socket interface）是一组函数。</p>
+<p><img src="socket.png" alt=""></p>
+<p>套接字地址结构</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* Generic socket address structure (for connet bind and accept)*/</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">sockaddr</span> &#123;</span></span><br><span class="line">    <span class="keyword">unsigned</span> short sa_family; <span class="comment">/*protocol family*/</span></span><br><span class="line">    <span class="keyword">char</span>           sa_data[<span class="number">14</span>]; <span class="comment">/*address data*/</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* Internet-syle socket address structure*/</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">sockaddr_in</span> &#123;</span></span><br><span class="line">    <span class="keyword">unsigned</span> short sin_family; <span class="comment">/*address family (always AF_INET)*/</span></span><br><span class="line">    <span class="keyword">unsigned</span> short sin_port;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">in_addr</span> <span class="title">sin_addr</span>;</span> <span class="comment">/*IP address in network*/</span></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">char</span>  sin_zero[<span class="number">8</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>客户端和服务器用socket函数创建一个套接字描述符。</p>
+<p>客户端调用connect函数建立连接，得到的连接是套接字对(x:y, serv.sin_addr:serv.sin_port)刻画的。x是客户端IP地址，y是临时端口。</p>
+<p>open_clientfd包装socket和connect函数。</p>
+<p>open_listenfd包装socket、bind和listen函数。</p>
+<p>accept等待客户端的连接请求。</p>
+<h3 id="Web服务器"><a href="#Web服务器" class="headerlink" title="Web服务器"></a>Web服务器</h3><p>基于文本的应用级协议HTTP。Web内容可以用HTML来编写。</p>
+<p>Web内容是与MIME（多用途国际邮件扩充协议，multipurpose Internet mail extensions)相关的字节序列。</p>
+<p>URL可以用“？”分割文件名和参数，参数用“&amp;”隔开。</p>
+<p>HTTP支持不同的方法包括GET、POST、OPTIONS、HEAD、PUT、DELETE、TRACE</p>
+<p>HTTP请求由一个请求行和零个或更多请求报头，加上一个空行组成。请求行的形式是<code>&lt;method&gt;&lt;uri&gt;&lt;version&gt;</code>，请求报头的形式为<code>&lt;header name&gt;: &lt;header data&gt;</code>。</p>
+<p>HTTP响应由一个响应行和零个或多个响应报头，加上响应主体组成。响应行格式为<code>&lt;version&gt;&lt;status code&gt;&lt;status message&gt;</code>。响应报头中最重要的是Content-Type告知类型和Content-Length指示大小。</p>
+<p>CGI（通用网关接口Common Gateway Interface）提供标准解决服务动态内容的问题。服务器接收请求后，fork创建子进程，并调用execve在子进程上下文执行程序（CGI程序）。</p>
+<h3 id="并发编程"><a href="#并发编程" class="headerlink" title="并发编程"></a>并发编程</h3><h5 id="基于进程的并发："><a href="#基于进程的并发：" class="headerlink" title="基于进程的并发："></a>基于进程的并发：</h5><p>fork、exec、waitpid</p>
+<p>服务器并发的注意问题</p>
+<ul>
+<li>必须要SIGCHLD处理程序处理僵死子进程</li>
+<li>父子进程必须关闭connfd的拷贝</li>
+</ul>
+<p>进程共享状态信息困难，为了共享信息，必须使用显式的IPC机制</p>
+<h5 id="基于I-O多路复用的并发"><a href="#基于I-O多路复用的并发" class="headerlink" title="基于I/O多路复用的并发"></a>基于I/O多路复用的并发</h5><p>使用select函数，要求内核挂起进程，只有I/O事件发生才将控制返回。</p>
+<p>优点是给了程序员更多的对程序行为的控制，流之间共享数据变得容易</p>
+<p>缺点是编码复杂</p>
+<h5 id="基于线程的并发"><a href="#基于线程的并发" class="headerlink" title="基于线程的并发"></a>基于线程的并发</h5><p>线程就是运行在进程上下文中的逻辑流。线程由内核自动调度，每个线程有自己的线程上下文。</p>
+<p>线程上下文比进程上下文小得多，因而切换更快。线程没有严格的层次，而能对等的读写相同数据。</p>
+<p>Posix线程是个标准接口。</p>
+<p>线程存储器模型：根据存储类型映射到VM</p>
+<ul>
+<li>全局变量/静态变量：VM只包含它的一个实例</li>
+<li>本地自动变量：每个线程的栈包含他自己所有本地自动变量的实例</li>
+</ul>
+<p>利用信号量实现互斥、共享资源</p>
+<p>四个线程不安全函数</p>
+<ul>
+<li>不保护共享变量的函数</li>
+<li>跨越多个调用的状态（比如随机数）</li>
+<li>返回静态变量指针</li>
+<li>调用线程不安全函数的函数</li>
+</ul>
+<p>竞争：一个线程要在另一个线程到达y点前到达x点，会发生竞争（race）。为了消除竞争，我们可以动态地为y分配一个独立的块并传递给线程例程一个指向这个块的指针。</p>
+<p>信号量会导致一种错误叫死锁（deadlock），就是一组线程被阻塞，等待永远不真的条件。</p>
+<p>709-723</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/08/csapp7/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Hulieu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hulieu">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/02/08/csapp7/" itemprop="url">从三开始的汇编</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-02-08T16:10:30+08:00">
+                2020-02-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%8C%AB%E7%88%AA%E8%AE%B0/" itemprop="url" rel="index">
+                    <span itemprop="name">猫爪记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="编译"><a href="#编译" class="headerlink" title="编译"></a>编译</h3><p>C预处理器cpp 将 .c 翻译成 .i</p>
+<p>C编译器cc1 将.i 翻译成汇编 .s</p>
+<p>汇编器as 将 .s 翻译成可重定向目标文件 .o</p>
+<p>连接器程序 ld 将 .o 结合起来创建可执行文件</p>
+<p>连接器的两个任务</p>
+<ul>
+<li>符号解析 symbol resolution 将每个符号引用和符号定义联系起来</li>
+<li>重定位 relocation 将符号定义与存储器位置联系起来</li>
+</ul>
+<p>目标文件</p>
+<ul>
+<li>可重定位目标文件</li>
+<li>可执行目标文件</li>
+<li>共享目标文件</li>
+</ul>
+<p>最早的Unix使用.out，现代Unix使用ELF，Windows NT使用COFF的变种PE。</p>
+<h3 id="ELF"><a href="#ELF" class="headerlink" title="ELF"></a>ELF</h3><p>一个典型的ELF可重定位目标文件格式。</p>
+<p><img src="elf.png" alt=""></p>
+<ul>
+<li>ELF头以16字节序列描述生成该文件的系统的字的大小和字节顺序，然后是语法分析和解释（包括ELF头大小、目标文件类型、机器类型、节头部表的文件偏移等。</li>
+<li>.text：已编译的代码</li>
+<li>.rodata：只读数据</li>
+<li>.data：初始化的全局变量</li>
+<li>.bss：未初始化的全局变量</li>
+<li>.symtab：符号表，存放程序中定义和引用的函数和全局变量</li>
+<li>.rel.text：.text中位置的列表</li>
+<li>.rel.data：全局变量的重定位信息</li>
+<li>.debug：调试符号表 -g才会得到</li>
+<li>.line ：行号 -g才会得到</li>
+<li>.strtab：字符串表，包括.symtab和.debug和节头部的名字</li>
+</ul>
+<p><u>static变量是在符号表定义</u>。</p>
+<p><u>重载函数类名为原始名字前加上名字中字符数，比如Foo被编码成3Foo；方法被编码为原始方法加上类名加上每个参数的单字母编码，比如Foo::bar(int, long)被编码为bar__3Fooil。</u></p>
+<p><u>多重定义：会选择强定义（初始化的定义），不同类型可能导致错误。</u></p>
+<h3 id="重定位"><a href="#重定位" class="headerlink" title="重定位"></a>重定位</h3><p>代码的重定位条目放在.rel.text</p>
+<p>已初始化数据的重定位条目放在.rel.data</p>
+<p>重定位条目格式如下</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> &#123;</span></span><br><span class="line">    <span class="keyword">int</span> offset; <span class="comment">/* offset of the refence to relocate*/</span></span><br><span class="line">    <span class="keyword">int</span> symbol:<span class="number">24</span>, <span class="comment">/*symbol the reference should point to*/</span></span><br><span class="line">    	type:<span class="number">8</span>; <span class="comment">/*Relocation type 有11中不同类型*/</span></span><br><span class="line">&#125; Elf32_Rel</span><br></pre></td></tr></table></figure>
+<p>重定位符号引用</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">refptr = s + r.offset;</span><br><span class="line"><span class="comment">/* 相对引用 */</span></span><br><span class="line"><span class="keyword">if</span> (r.type == R_386_PC32) &#123;</span><br><span class="line">    refaddr = ADDR(s) + r.offset;</span><br><span class="line">    *refptr = (<span class="keyword">unsigned</span>)(ADD(r.symbol) + *refptr - refaddr);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/* 绝对引用 */</span></span><br><span class="line"><span class="keyword">if</span> (r.type == R_386_32) &#123;</span><br><span class="line">    *refptr = (<span class="keyword">unsigned</span>)(ADD(r.symbol) + *refptr)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="可执行文件"><a href="#可执行文件" class="headerlink" title="可执行文件"></a>可执行文件</h3><p>下图是个典型的ELF可执行文件</p>
+<p><img src="elfexe.png" alt=""></p>
+<p>ELF头部包含程序的入口（entry point)，.init定义了初始化函数，不再需要.rel。</p>
+<h3 id="静态库"><a href="#静态库" class="headerlink" title="静态库"></a>静态库</h3><p>静态库（.o）是所有相关的目标打包称为独立的文件。</p>
+<p>优点：不需要重复定义、只拷贝被引用的模块、只需要较少的库文件名</p>
+<p><em>AR工具创建库</em></p>
+<h3 id="动态链接共享库"><a href="#动态链接共享库" class="headerlink" title="动态链接共享库"></a>动态链接共享库</h3><p>.so（Unix）或者.dll（Windows）</p>
+<p>解决静态库需要显式链接、浪费资源的问题</p>
+<p><em>gcc -shared -fPIC 创建库</em> </p>
+<blockquote>
+<p>PIC是位置无关代码 position-independent code，通过全局偏移量表实现，但是有性能缺陷。</p>
+<p>因而ELF有延迟绑定lazy binding技术，通过GOT和PLT。</p>
+<p>GOT[1] 是连接器标识信息，GOT[2] 是连接器入口点</p>
+<p>调用时控制传递到PLT中，然后通过GOT做间接跳转。第一次调用时，GOT跳转回PLT下一条指令，通过将标识信息压入栈中并跳转动态链接器，覆盖GOT跳转地址。以后调用时，只是间接引用而没有额外开销。</p>
+</blockquote>
+<p><u>应用程序还可能在运行时要求链接共享库而无需在编译时链接。（dlopen、dlsym、dlclose）</u></p>
+<h3 id="异常控制流（Exception-Control-Flow）"><a href="#异常控制流（Exception-Control-Flow）" class="headerlink" title="异常控制流（Exception Control Flow）"></a>异常控制流（Exception Control Flow）</h3><p>异常处理是在内核模式（kernel mode）</p>
+<p>每个异常有一个异常号。异常可分为四类</p>
+<ul>
+<li>中断 interrupt：来自I/O设备，异步</li>
+<li>陷阱 trap：有意的异常，提供系统调用接口，比如system call</li>
+<li>故障 fault</li>
+<li>终止 abort</li>
+</ul>
+<h3 id="进程"><a href="#进程" class="headerlink" title="进程"></a>进程</h3><p>一个执行中的程序的实例</p>
+<ul>
+<li>独立的逻辑控制流</li>
+<li>私有的地址空间</li>
+</ul>
+<p>内核为每个进程维持一个上下文context，内核通过上下文切换context switch来实现多任务。在进程执行的某些时刻，内核可以通过调度器进行调度schedule，选择一个新的进程运行。</p>
+<p>获取ID getpid（进程PID） getppid（父进程PID）</p>
+<p><u>fork在新的子进程中运行相同程序，而execve函数在当前进程上下文加载并运行新程序，会覆盖当前进程的地址，仍然有相同的PID。Unix和Web服务器大量使用fork和execve。</u></p>
+<h3 id="回收子进程"><a href="#回收子进程" class="headerlink" title="回收子进程"></a>回收子进程</h3><p>终止而未被回收的称为僵死进程zombie，它们仍然消耗系统资源。</p>
+<ul>
+<li>判定等待集合成员 pid</li>
+<li>修改默认行为 WNOHANG 和 WUNTRACED</li>
+<li>waitpid函数</li>
+<li>检查已回收子进程的退出状态 WIFEXITED等 见wait.h</li>
+<li>错误条件：没有子进程 waitpid=-1 ECHILD/被信号中断 返回-1 EINTR</li>
+</ul>
+<h3 id="信号"><a href="#信号" class="headerlink" title="信号"></a>信号</h3><p>Unix信号允许进程中断其他进程。</p>
+<p>一个发送而没被接受的信号为待处理信号pending signal。一个类型至多只有一个待处理信号，多余的会简单丢弃。一个待处理信号只能被接受一次。</p>
+<p>发送信号的机制基于进程组。一个负的PID会导致信号被发送到进程组PID中的每个进程。</p>
+<p>可以通过signal函数修改接收到信号的默认行为。</p>
+<p>几个信号处理中的问题</p>
+<ul>
+<li>信号会阻塞和不会排队等待：改成while尽可能多的接收信号</li>
+<li>系统调用被中断的可能性：while手动重启</li>
+</ul>
+<p>Signal是sigaction的一个包装函数，提供了可移植的信号处理。</p>
+<p>sigprocmask显式改变阻塞信号集合。</p>
+<p><u>同步流以避免并发问题。这个问题称之为竞争race，通过阻塞信号来就解决。暴露竞争的问题的方法就是随机决定父进程和子进程执行的顺序。</u></p>
+<h3 id="非本地跳转"><a href="#非本地跳转" class="headerlink" title="非本地跳转"></a>非本地跳转</h3><p>用户级异常控制流，直接从一个函数跳转另一个函数。</p>
+<p>setjmp和longjump（catch相当于setjmp，throw相当于longjump</p>
+<h3 id="虚拟存储器VM"><a href="#虚拟存储器VM" class="headerlink" title="虚拟存储器VM"></a>虚拟存储器VM</h3><p>虚拟寻址时，CPU生成虚拟地址来访问主存。</p>
+<p><img src="pte.png" alt=""></p>
+<p>这里DRAM缓存是全相连的。</p>
+<p><u>页面调度</u></p>
+<p>虚拟存储器作为存储器管理工具</p>
+<ul>
+<li>简化链接</li>
+<li>简化加载</li>
+<li>简化共享</li>
+<li>简化存储器分配</li>
+</ul>
+<p>同时能通过读写权限控制保护存储器。</p>
+<h3 id="地址翻译"><a href="#地址翻译" class="headerlink" title="地址翻译"></a>地址翻译</h3><p>符号定义</p>
+<ul>
+<li>N 虚拟空间地址数 M 物理空间地址数 P 页大小</li>
+<li>VPO 虚拟页面偏移 VPN 虚拟页号 </li>
+<li>TLBI TLB索引 TLBT TLB标记</li>
+<li>PPO 物理页面偏移 PPN 物理页号</li>
+<li>CO 缓冲块偏移</li>
+<li>CI 高速缓存索引 CT 高速缓存标记</li>
+</ul>
+<p>地址翻译：虚拟地址空间VAS到物理地址空间PAS的映射</p>
+<p><img src="translate.png" alt=""></p>
+<p>MMU利用VPN选择适当的PTE，得到PPN，PPO和VPO是相同的。</p>
+<p><u>利用TLB加速地址翻译：TLB是个小的虚拟寻址的缓存，每行保存一个PTE块。VPN的t个低位组成TLB索引，其余n-p-t位是TLB标记。</u></p>
+<p><u>每次MMU从TLB取出相应PTE，如果TLB不命中，则从L1缓存取出PTE并存放在TLB。</u></p>
+<p><img src="tlb.png" alt=""></p>
+<p><u>多级页表：减小主存压力，地址翻译也并不比单级页表慢很多。</u></p>
+<p>Core i7地址翻译概况如下</p>
+<p><img src="corei7translate.png" alt=""></p>
+<p><u>优化地址翻译：CPU翻译时，发送VPN到MMU，发送VPO到L1，同时进行。</u></p>
+<h3 id="存储器映射"><a href="#存储器映射" class="headerlink" title="存储器映射"></a>存储器映射</h3><p>存储器映射是将虚拟存储器区域和一个磁盘上的对象关联起来。这个对象可以是普通文件，也可以是匿名文件。一旦一个虚拟页面被初始化了，就在一个专门的交换文件（也叫做交换空间或交换区域）之间转换。</p>
+<p><u>一个对象可以被映射到虚拟存储器的一个区域，要么作为共享对象，要么作为私有对象。共享对象即使被映射到了多个共享区域，也只需存放它的一个拷贝。私有对象使用写时拷贝copy-on-write的技术充分使用了稀有的物理存储器。</u></p>
+<h3 id="动态存储器分配"><a href="#动态存储器分配" class="headerlink" title="动态存储器分配"></a>动态存储器分配</h3><p>低级的mmap和munmap可以创建和删除虚拟存储器的区域。</p>
+<p>动态存储器分配dynamic memory allocater更方便且更好移植。它维护一个进程的虚拟存储器区域，称为堆heap。每个进程维护一个brk，指向堆的顶部。</p>
+<ul>
+<li><p>显式分配</p>
+<p>malloc和free（C++里的new和delete）</p>
+<p>想要已初始化的动态存储calloc，改变已分配块大小realloc</p>
+<p>sbrk通过移动brk指针来改变堆</p>
+</li>
+<li><p>隐式分配</p>
+<p>也叫垃圾收集器，自动释放未使用的已分配块，见JAVA等高级语言。</p>
+</li>
+</ul>
+<p>分配器的目标</p>
+<ul>
+<li><p>最大化吞吐率</p>
+</li>
+<li><p>最大化利用率</p>
+<p>利用率低是因为碎片fragmentation</p>
+<ul>
+<li>内部碎片：已分配块比有效载荷大（对齐约束）</li>
+<li>外部碎片：组织/放置/分割/合并 空闲块（空闲链表）</li>
+</ul>
+</li>
+</ul>
+<h3 id="隐式空闲链表"><a href="#隐式空闲链表" class="headerlink" title="隐式空闲链表"></a>隐式空闲链表</h3><p>因为双字的对齐约束，块大小总是8的倍数，块大小最低三位总是0，所以只需存储块大小的29个高位，剩余3位编码其他信息。1表示已分配，0表示空闲。</p>
+<p><img src="list.png" alt=""></p>
+<p>优点是简单，缺点是开销与块总数呈线性关系。</p>
+<p>放置策略：首次适配、下次适配（对首次适配的改进）、最佳适配</p>
+<p>合并策略：立即合并（会产生抖动？）、推迟合并</p>
+<p><u>Knuth提出边界标记（boundary tag），通过在块结尾处添加脚部（头部的副本），允许常数时间内对前面块进行合并。</u></p>
+<h5 id="显式空闲链表"><a href="#显式空闲链表" class="headerlink" title="显式空闲链表"></a>显式空闲链表</h5><p>加入pred和succ的指针，使得开销与<strong>空闲块</strong>总数呈线性关系</p>
+<p>缺点是空闲块必须足够大，潜在提高了内部碎片程度</p>
+<h5 id="分离的空闲链表"><a href="#分离的空闲链表" class="headerlink" title="分离的空闲链表"></a>分离的空闲链表</h5><p>维护多个空闲链表，每个表中块大小大致相等</p>
+<ul>
+<li>简单分离存储：快速但是容易造成碎片</li>
+<li>分离适配：GNU malloc就是这种方法</li>
+<li>伙伴系统：特殊的分离适配，都是2的幂次；块地址和伙伴地址只有一位不同、主要缺点是要求块大小为2的幂次，导致显著的内部碎片。</li>
+</ul>
+<h5 id="垃圾收集"><a href="#垃圾收集" class="headerlink" title="垃圾收集"></a>垃圾收集</h5><p>C和C++保守的垃圾收集器：每个可达的都被正确标记了，但一些不可达的也被错误标记为可达了（因为int或float可以伪装成指针，而收集器无法判断）</p>
+<p>Mark&amp;Sweep：由于C的保守，需要维护一个已分配块的平衡二叉树</p>
+<h3 id="常见存储器错误"><a href="#常见存储器错误" class="headerlink" title="常见存储器错误"></a>常见存储器错误</h3><ul>
+<li>间接引用坏指针：错误的把int或float当做指针</li>
+<li>读未初始化的存储器：<strong>堆存储器</strong>不总是初始化为零，正确方法是用calloc代替malloc或者显式初始化</li>
+<li>缓冲区溢出</li>
+<li>假设指针和对象相同大小</li>
+<li>引用不存在的变量/空闲堆栈</li>
+<li>存储器泄露（不释放空间）</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/29/csapp5/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -355,6 +1104,160 @@
 <p>可以使用内联函数替换（将函数代码展开）对此进行优化（-finline或者-02以上）</p>
 </li>
 </ul>
+<p>运行时间可以通过最小二乘拟合得到，线性因子系数称为每元素的周期数（CPE）的有效数</p>
+<p>CPE是主要的优化目标</p>
+<p>两种优化界限：</p>
+<ul>
+<li>延迟界限：指令级并行的能力</li>
+<li>吞吐量界限：终极限制，处理器功能单元的计算能力</li>
+</ul>
+<p>整体操作：分为指令控制单元ICU和执行单元EU，可以乱序执行指令</p>
+<p>功能单元的性能：</p>
+<ul>
+<li>延迟：完成运算总时间</li>
+<li>发射：连续运算需要的时钟周期数，发射时间为1即为完全流水线化的</li>
+</ul>
+<h3 id="循环里的优化"><a href="#循环里的优化" class="headerlink" title="循环里的优化"></a>循环里的优化</h3><ul>
+<li>代码移动：将strlen或vec_length的计算移出循环（特别是strlen，因为它是O(n)的）</li>
+<li>减少过程调用</li>
+<li>减少不必要的存储调用：在临时变量里存放结果代替直接访问</li>
+<li>-02 的优化：会最后将结果写到目标位置，而不是重复读写</li>
+<li><u>循环展开：通过增加每次迭代计算的元素数量，减少循环迭代次数。比如在求数组累加和的时候，每次计算两个元素。因为减少了循环分支以及减少了关键路径操作数量，可以提升延迟界限。但是并不能提升浮点数计算的CPE。</u></li>
+<li><u>并行计算：将一组合并运算分割成两个或更多的部分，最后合并结果以提高性能。但是需要注意浮点乘法和加法由于四舍五入或溢出的不可结合性，可能会改变最终结果。</u></li>
+<li><u>重新结合变换：在循环中改变元素合并顺序，减少关键路径操作。同上，可能改变最终结果。</u></li>
+</ul>
+<p>高级设计、编码原则、低级优化</p>
+<h3 id="SIMD"><a href="#SIMD" class="headerlink" title="SIMD"></a>SIMD</h3><p>SSE=Streaming SIMD Extensions</p>
+<p>SIMD是单指令多数据Single-Instruction, Multiple-Data</p>
+<p>16字节的XMM可以存放多个值，因此指令会读取多个值并行计算</p>
+<p>-msse4</p>
+<h3 id="一些限制"><a href="#一些限制" class="headerlink" title="一些限制"></a>一些限制</h3><ul>
+<li>寄存器溢出</li>
+<li>分支预测和预测错误处罚<ul>
+<li>可预测的分支不太影响</li>
+<li>使用功能式风格的代码（用条件操作计算值），而非命令式（用条件语句来选择更新）</li>
+</ul>
+</li>
+<li>加载/存储性能</li>
+</ul>
+<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><ul>
+<li><p>程序剖析 GCC -pg </p>
+</li>
+<li><p>Amdahl定律 </p>
+<p>加速比S，其中\alpha是加速部分所占时间比例，k是加速到的倍数。</p>
+<script type="math/tex; mode=display">
+S=\frac{1}{1-\alpha+\alpha/k}</script></li>
+</ul>
+<h3 id="存储器"><a href="#存储器" class="headerlink" title="存储器"></a>存储器</h3><ul>
+<li>高速缓存存储器</li>
+<li>主存储器</li>
+<li>磁盘</li>
+</ul>
+<p><img src="memory.png" alt=""></p>
+<p>随机访问存储器（RAM），SRAM更快更贵，作为高速存储，一般不超过几MB，而DRAM有可以有几GB</p>
+<ul>
+<li><p>静态RAM（SRAM）</p>
+<p>存储在双稳态单元，用六晶体管来实现，可以无限保持在两个不同状态，其他状态都是不稳定的，即使有干扰，也能在干扰消除时恢复稳态。</p>
+</li>
+<li><p>动态RAM（DRAM）</p>
+<p>存储为对一个电容充电，因此对干扰敏感。</p>
+</li>
+<li><p>传统DRAM</p>
+<p>DRAM芯片中的单元被分成d个超单元(supercell)，每个超单元有w个DRAM单元，信息通过引脚(pin)流入流出。</p>
+</li>
+<li><p>存储器模块</p>
+<p>DRAM芯片包装在存储器模块里，常见的168引脚的双列直插存储器模块DIMM，以64位为块，也有72个引脚的单列直插存储器模块SIMM，以32位为块。存储器将地址A转换为超单元地址，然后广播到每个DRAM，每个DRAM输出超单元地址处的8位内容，然后将他们合并为64位双字。</p>
+</li>
+<li><p>增强的DRAM</p>
+<ul>
+<li>快页模式 FPM DRAM 允许对同一行连续地址从缓存区访问</li>
+<li>扩展数据输出 EDO DRAM 允许单独CAS信号时间上更紧密</li>
+<li>同步 SDRAM 用外部时钟信号上升代替控制信号，输出更快</li>
+<li>双倍速率同步DRAM（DDR SDRAM）通过两个时钟作为控制，不同DDR是根据预取缓存区大小来划分的 DDR（2位）DDR2（4位） DDR3（8位）</li>
+<li>Rambus DRAM 最大带宽更高</li>
+<li>视频RAM（Video RAM） 对内部缓存区整个内容移位</li>
+</ul>
+</li>
+<li><p>非易失性存储器</p>
+<p>即使断电也能保存，ROM、PROM、EPROM、EEPROM、闪存</p>
+</li>
+<li><p>读取主存</p>
+<p>I/O通过主线(bus)</p>
+</li>
+</ul>
+<h3 id="磁盘"><a href="#磁盘" class="headerlink" title="磁盘"></a>磁盘</h3><p>磁盘存储，比DRAM慢10万倍，比SRAM慢100万倍。</p>
+<p>磁盘由多个盘片（platter）构成，盘片有表面（surface）和主轴（spindle），有固定的旋转速率（54k-150k RPM）。每个表面是一组同心圆（磁道track）组成，每个磁道划分为一组扇区（sector）用以储存等长的数据，扇区之间有间隙（gap）。</p>
+<p>磁盘操作时，通过传动臂（actuator arm）连接到读写头，通过寻道（seek）定位到磁道上，然后进行读写。读写时间=寻道时间+旋转时间+传送时间，其中寻道时间和旋转延迟大致相等。</p>
+<p>磁盘还有逻辑磁盘块，维护逻辑块好和磁盘扇区的映射关系。</p>
+<p>连接到I/O设备：通用串行总线（USB）、图形卡、主机总线适配器（将磁盘连接到I/O总线，包括SCSI和SATA）</p>
+<p><img src="IObus.png" alt=""></p>
+<p>磁盘控制器收到CPU读命令后，将逻辑块号翻译成扇区地址，然后将这些内容直接传送到主存，不需要CPU干涉，称为直接存储器访问（DMA）。</p>
+<p>固态硬盘 SSD：基于闪存技术，更快能耗也更低。</p>
+<p>趋势：降低成本（增加密度）比降低访问时间更容易。</p>
+<h3 id="局部性"><a href="#局部性" class="headerlink" title="局部性"></a>局部性</h3><p>DRAM和磁盘的性能滞后于CPU的性能。现代计算机频繁使用基于SRAM的高速缓存试图弥补这一差距（利用局部性）。</p>
+<p>一个编写良好的程序具有良好的局部性（倾向于引用最近引用数据的邻近数据或其本身）。</p>
+<p>步长为k的引用模式：stride-k reference pattern，一个连续向量中，每隔k个元素进行访问，随着步长的增加，空间局部性下降。步长为1的引用模式有良好的空间局部性。</p>
+<p>取指令的局部性：循环具有好的时间局部性。</p>
+<h3 id="存储器层次结构"><a href="#存储器层次结构" class="headerlink" title="存储器层次结构"></a>存储器层次结构</h3><p>离CPU越远的存储器缓存越大，延迟越高，传送的块越大。</p>
+<p>核心思想是k层的存储设备作为k+1层的存储设备的缓存</p>
+<ul>
+<li>缓存命中</li>
+<li>缓存不命中<ul>
+<li>冷缓存（强制性不命中）：缓存是空的</li>
+<li>冲突不命中</li>
+<li>容量不命中</li>
+</ul>
+</li>
+</ul>
+<p>高速缓存（S，E，B，m）的通用组织：S个高速缓存组数组，每个组含有E个高速缓存行，每个行有B字节的数据块，1个有效位和t个标记位。m个地址划分为t个标记位，s个组索引位和b个块偏移位。</p>
+<p><img src="cache.png" alt=""></p>
+<p><u>抖动冲突不命中问题：即使有良好的空间局部性，引用还是会导致冲突不命中，因为这些块被映射到了同一个高速缓存组，一个简单的方法就是在数组结尾放B子节的填充。</u></p>
+<p><u>用中间位做索引，使得连续存储器映射到不同的高速缓存块。</u></p>
+<p>写的问题：</p>
+<ul>
+<li>直写 write-through</li>
+<li>写回 write-back 块要被驱逐时才更新存储器，能显著减少总线流量，但是需要维护额外的修改位</li>
+<li>写分配 write-allocate（加载之后写）/ 非写分配 not-write-allocate</li>
+</ul>
+<p><u>越往下层传送时间更差，因此越可能使用写回。</u></p>
+<p>举例：矩阵乘法 C=AB</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>乘法版本</th>
+<th>存储次数</th>
+<th>A不命中次数</th>
+<th>B不命中次数</th>
+<th>C不命中次数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ijk&amp;jik</td>
+<td>0</td>
+<td>0.25</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>jki&amp;kji</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>kij&amp;ikj</td>
+<td>1</td>
+<td>0</td>
+<td>0.25</td>
+<td>0.25</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>kij和ikj性能最好。</p>
 
           
         
@@ -527,6 +1430,33 @@
 <p>贵为美国白人的众卿家内讧一无所获，仰望着从巴基斯坦人手里买来的生父老宅； 身为巴西移民的本宫站在老宅阳台，端起“My House My Rules My Coffee”杯具轻呷，俯视着一切。 哈哈哈哈……吐！</p>
 </blockquote>
 <p>就是<em>粉刺</em>川普大帝的移民政策。还有那个用装饰画挡住的窗，也暗指了偷渡。</p>
+<h3 id="别告诉她-7-5-10"><a href="#别告诉她-7-5-10" class="headerlink" title="别告诉她 7.5/10"></a>别告诉她 7.5/10</h3><p>偶然看见的电影，故事并不复杂</p>
+<blockquote>
+<p>影片讲述一个华人家庭的奶奶被诊断罹癌，但家人选择隐瞒奶奶，假借一场婚礼的名义让所有家人回家见奶奶最后一面，但在纽约长大的碧莉（奥卡菲娜饰演）认为知道自己病况是奶奶的人权，因此在华人家庭中上演一场中西文化冲突，一部寻根家庭喜剧。</p>
+</blockquote>
+<p>整体上探讨了中西文化，但是影片却意外地西方。相比之下，我猜导演更了解西方（或者为了面向西方社会），所以对于西方的个人主义和bili所主张的知情权有较为深刻的认识，而对中国的人情只有一句“生命是集体的”来概括。整体比较轻松，观影体验还行。</p>
+<h3 id="哪吒之魔童降世7-5-10"><a href="#哪吒之魔童降世7-5-10" class="headerlink" title="哪吒之魔童降世7.5/10"></a>哪吒之魔童降世7.5/10</h3><p>去年以来名声很大的一部动画电影</p>
+<blockquote>
+<p>天地灵气孕育出一颗能量巨大的混元珠，元始天尊将混元珠提炼成灵珠和魔丸，灵珠投胎为人，助周伐纣时可堪大用；而魔丸则会诞出魔王，为祸人间。元始天尊启动了天劫咒语，3年后天雷将会降临，摧毁魔丸。太乙受命将灵珠托生于陈塘关李靖家的儿子哪吒身上。然而阴差阳错，灵珠和魔丸竟然被掉包。本应是灵珠英雄的哪吒却成了混世大魔王。调皮捣蛋顽劣不堪的哪吒却徒有一颗做英雄的心。然而面对众人对魔丸的误解和即将来临的天雷的降临，哪吒是否命中注定会立地成魔？他将何去何从？</p>
+</blockquote>
+<p>动画效果感觉比不上玄机娘娘（反正都是“国产动漫最高水平“啦）</p>
+<p>细细看完，却发现设定上有问题。哪吒生性顽劣因为魔丸附身（考虑到哪吒对关心爱护他的父母师父也这么残暴），那么灵丸附身的小龙就不会因为龙族水淹陈塘关了。</p>
+<p>更重要的是，仔细一想这部电影三观并不是那么正。哪吒魔丸附身，被村民视为妖怪，之后再李靖等人的感化之下，想要反抗命运。但是那句高燃台词“我命由我不由天”却是对小龙喊出的；而在天尊引天雷的时候，哪吒却束手就擒。细想之下，是魔丸还是灵丸本是天尊所定，那些村民不过是无知的愚民罢了，而真正应该反抗的命运应该是天尊（或者其化身天雷）。影片消解了这层对天的反抗，就退化成了纨绔子弟哪吒作威作福多年终于良心发现的故事了。</p>
+<h3 id="爱尔兰人-9-5-10"><a href="#爱尔兰人-9-5-10" class="headerlink" title="爱尔兰人 9.5/10"></a>爱尔兰人 9.5/10</h3><p>爱尔兰人没能得奥斯卡奖很可惜（虽然因为《教父》在前，这也是必然的</p>
+<blockquote>
+<p>　　《爱尔兰人》为马丁·斯科塞斯执导的传奇巨制，罗伯特·德尼罗、阿尔·帕西诺和乔·佩西主演。通过二战老兵弗兰克·希兰的视角，讲述了战后美国有组织犯罪的故事。弗兰克·希兰是一名骗子和杀手，曾经在 20 世纪最恶名昭彰的人物身边工作。该电影跨越数十年，记录了美国历史上最大的悬案之一，即传奇工会领袖吉米·霍法失踪案，以宏大的故事之旅，展现有组织犯罪的隐秘通道：其内部运作、仇敌以及与主流政治的瓜葛。</p>
+</blockquote>
+<p>电影属于半纪实的性质，讲述了黑帮的往事。电影中的很多事情都是历史上的悬案，很难说黑帮的这些人物到底在里面参与了多少。整部电影很明显带着《教父》的风格（从整体的布景、到人物的谈吐甚至是四个小时的片长），讲述故事的方式也有《阿甘正传》的味道（意外参与了当时的重大事件的感觉），以主角黑帮杀手Frank Sheeran的视角展开意识流的叙事。</p>
+<p>整部片中没有什么伟光正的人物，气氛都比较压抑。三个老戏骨扮演着三个黑道的重要人物，互相飙戏确实精彩（虽然都不是什么好人</p>
+<p>Frank作为黑帮杀手，冷酷无情而且计划周密，是个心狠手辣的人物。他因为工会的起诉搭上了黑帮的船，而后一步步成长为令人闻风丧胆的“爱尔兰人”。影片从Frank的自传改编，选取了一些看起来比较可信的片段（虽然也很大一部分不可考证，依旧被认为悬案）。Frank对于生死的思考是超越常人的（当然不是说这种理解是正确的），他对黑帮的一切都感到坦然，因而保持着绝对的冷静，到最后一刻问及Hoffa的死时第一反应还是找律师。可以说，电影塑造的Frank的形象，诠释了一个近乎完美的黑帮杀手。</p>
+<p>Russell是黑帮大佬，提携Frank的恩人。地位很高，但是身形很小，说话很轻柔。片中表现的性格还是比较单一的（当然演技没的说</p>
+<p>Jimmy Hoffa是历史上的传奇人物，创立了美国分布最广的工会，鼎盛时有两百三十万会员，而最后又神秘失踪，称为一桩悬案。剧里的Hoffa也表现出了对工会的热爱和重视，他在重新夺回工会的时候揭露黑帮和工会的内幕交易也并非只是为了竞选，相比之下他可能不是那么“黑帮”，所以最后Hoffa一定会和黑帮分道扬镳。</p>
+<p>最后Frank杀Hoffa这段是全剧的高潮，整个刺杀行动策划的看着随意，实则周密。比如对一切一无所知的大侄子运送Frank和Hoffa，降低了Hoffa的警惕心；Frank必须亲手杀了Hoffa，一方面为了让Hoffa彻底放心，另一方面也为了表明立场。刺杀过程中也有死鱼的暗喻这样的表现手法，Frank一瞬间的犹豫……在Hoffa被刺杀之后的四十分钟倒显得比较平淡，这些辉煌一时的黑帮大佬也都渐渐老去（情节虽然缓和，镜头也放的很慢，但就是有一种深深的悲凉？</p>
+<p>最后片中两句著名的黑话（看了影评才懂…当时就这么划过去了</p>
+<blockquote>
+<p>Jimmy Hoffa：”I heard you paint houses“</p>
+<p>Frank Sheeran：”I do my own carpentry work, too.” </p>
+</blockquote>
 
           
         
@@ -1743,7 +2673,7 @@ CPI（每指令周期数）=1+C_b/C_i
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/01/12/hello-world/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/09/claudius/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Hulieu">
@@ -1762,7 +2692,7 @@ CPI（每指令周期数）=1+C_b/C_i
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/01/12/hello-world/" itemprop="url">Hello World</a></h1>
+                <a class="post-title-link" href="/2019/04/09/claudius/" itemprop="url">claudius</a></h1>
         
 
         <div class="post-meta">
@@ -1774,8 +2704,8 @@ CPI（每指令周期数）=1+C_b/C_i
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-01-12T00:00:00+08:00">
-                2019-01-12
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-04-09T17:48:15+08:00">
+                2019-04-09
               </time>
             
 
@@ -1784,6 +2714,28 @@ CPI（每指令周期数）=1+C_b/C_i
             
           </span>
 
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%96%B5%E5%90%8E%E8%AE%B0/" itemprop="url" rel="index">
+                    <span itemprop="name">喵后记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -1814,28 +2766,37 @@ CPI（每指令周期数）=1+C_b/C_i
       
         
           
-            <h1 id="Hexo-official-start"><a href="#Hexo-official-start" class="headerlink" title="Hexo official start"></a>Hexo official start</h1><p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-<h1 id="Quick-Start-of-This-Blog"><a href="#Quick-Start-of-This-Blog" class="headerlink" title="Quick Start of This Blog"></a>Quick Start of This Blog</h1><p>First you need to clone from git.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone ***.git</span><br></pre></td></tr></table></figure>
-<p>then checkout branch hexo</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout hexo</span><br></pre></td></tr></table></figure>
-<p>you can add a post by</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo new post_name</span><br></pre></td></tr></table></figure>
-<p>or modify a post by directly modifying the .md in source/_post</p>
-<p>then you can preview the modified blog by running on local server</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo s --debug</span><br><span class="line"># on localhost:4000</span><br></pre></td></tr></table></figure>
-<p>If you want to deploy</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo clean # if delete something</span><br><span class="line">hexo d -g</span><br></pre></td></tr></table></figure>
-<p>then don’t forget to update branch hexo </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git add *</span><br><span class="line">git commit -m &quot;why you update&quot;</span><br><span class="line">git push</span><br></pre></td></tr></table></figure>
+            <p><strong>Claudius</strong> - The villain of the play, a calculating, ambitious politician, driven by his sexual appetites and his lust for power, but he occasionally shows signs of guilt and human feeling—his love for Gertrude, for instance, seems sincere. </p>
+<p><strong>Hamlet</strong> - melancholy, bitter, and cynical, full of hatred for his uncle’s scheming and his mother’s frailty. </p>
+<p><strong>Gertrude</strong> - Danish queen, the prince’s own mother. Pharaoh died she remarried Claudius. </p>
+<p><strong>Ophelia</strong> - Polonius’s daughter, a beautiful young lady with whom Hamlet has been in love. Ophelia is a sweet and innocent young girl, who obeys her father and her brother, Laertes. </p>
+<p><strong>The Ghost</strong> - The spectre of Hamlet’s recently deceased father. The ghost, who claims to have been murdered by Claudius, calls upon Hamlet to avenge him. </p>
+<p><strong>Laertes</strong> - Polonius’s son. For his father and his sister’s death with swords killed Hamlet. He also died in the poison of the sword, though Hamlet didn’t realize sword is poisoned.</p>
+<p><strong>Hamlet’s Madness is Feigned</strong></p>
+<p>Some hold that Shakespeare never intended to represent Hamlet as mad but expressly a feigner of madness, and even created the real madness of Ophelia, to contrast it with feigned madness. In every single instance in which Hamlet’s madness is manifested, he has good reason for assuming that madness: while, on the other hand, whenever there was no need to hoodwink anyone, his thought, language and action, bear no resemblance to unsoundness of intellect.” In Act I, Scene V, Hamlet tells Horatio and others that from now on he shall behave like a mad. His feigned madness provides him a great opportunity to find out the reality.:</p>
+<p><strong><em>Here, as before, never, so help you mercy,\</em></strong><br> <strong><em>How strange or odd so e’er I bear myself,\</em></strong><br> <strong><em>As I perchance hereafter shall think meet,\</em></strong><br> <strong><em>To put an antic disposition on……..\</em></strong></p>
+<p>Hamlet’s madness is feigned on the ground that, on various occasions, he is seen in a good temper. His usage of phrases and ideas are not like that of an insane man. He rarely talks in a manner that compels us to say that Hamlet’s madness is real. In the Closet Scene, Hamlet tells his mother:</p>
+<p><strong><em>That I essentially am not in madness\</em></strong><br> <strong><em>But mad in craft.\</em></strong></p>
+<p>To prove the words of the ghost, Hamlet is going to stage a mock-play. No mad person can handle such things. Moreover, Hamlet also directs the actors about the play they are going to enact before the King. Hamlet also tells his friend, Horatio, to keep an eye on the King to catch his conscience, which no one can manage but a man of sense and intellect. Even Guildenstern and Rosencrantz do not think that Hamlet is mad. They describe his behaviour as a “crafty madness.” </p>
+<p>In the Closet Scene, Hamlet convinces her mother in such a manner that she is compelled to accept her guilt.</p>
+<blockquote>
+<p> She says:</p>
+<p><strong><em>O Hamlet, speak no more:\</em></strong><br> <strong><em>Thou turn’st mine eyes into my very soul;\</em></strong><br> <strong><em>And there I see such black and grained spots\</em></strong><br> <strong><em>As will not leave their tinct.\</em></strong></p>
+<p>Hamlet’s comments on the art of acting are so effective and precise that such kinds of statements could not have come from the lips of an insane man. He advises the actors in the following manner:</p>
+<p><strong><em>Speak the speech, I pray you, as I pronounced it to\</em></strong><br> <strong><em>you, trippingly on the tongue: but if you mouth it,\</em></strong><br> <strong><em>as many of your players do, I had as lief the\</em></strong><br> <strong><em>town-crier spoke my lines. Nor do not saw t***</em></strong>he air*<strong><br> *</strong>too much with your hand, thus, but use all gently;*<strong><br> *</strong>for in the very torrent, tempest, and, as I may say,*<strong><br> *</strong>the whirlwind of passion, you must acquire and beget*<strong><br> *</strong>a temperance that may give it smoothness..…….***</p>
+</blockquote>
+<p>Polonius is so much impressed with the replies of Hamlet that he remarks:</p>
+<p>“ How pregnant sometimes his replies are! a happiness that often madness his on, which reason and sanity could not so prosperously be delivered of.”</p>
+<p><strong>Hamlet’s Madness is Real</strong></p>
+<p>Many critics are of the opinion that Hamlet’s madness is real on the basis of some grounds. Though, in the beginning of the play, he tells his friends that he is going to pretend as mad, yet due to the circumstances, his melancholic nature and grief over hasty marriage of his mother bring about drastic changes in his mental behaviour. Look at the following lines taken from Act II, Scene I, wherein Ophelia gives an account of the strange behaviour of Hamlet:</p>
+<p><strong><em>My lord, as I was sewing in my closet,\</em></strong><br> <strong><em>Lord Hamlet, with his doublet all unbraced;\</em></strong><br> <strong><em>No hat upon his head; his stockings foul’d,\</em></strong><br> <strong><em>Ungarter’d, and down-gyved to his ancle;\</em></strong><br> <strong><em>Pale as his shirt; his knees knocking each other;\</em></strong><br> <strong><em>And with a look so piteous in purport\</em></strong><br> <strong><em>As if he had been loosed out of hell\</em></strong><br> <strong><em>To speak of horrors,—he comes before me.\</em></strong></p>
+<p>She also tells her father that he took her by hand and took such a sigh, which was “so piteous and profound as it did seem to shatter all his bulk.” Polonius, when hears her statement about the strange behaviour of Hamlet, concludes that the strange behaviour of Hamlet is due to disappointment in love. Polonius calls his strange behaviour as “the very ecstasy of love.” </p>
+<p>And in the nunnery scene, Hamlet insults Ophelia in the same manner as he insulted her earlier in the play. He advises her not to marry but to go to nunnery.</p>
+<p>(“If thou dost marry, I’ll give thee this plague for thy dowry. Be thou as chaste as ice, as pure as snow, thou shalt not escape calumny. Get thee to a nunnery, go. Farewell. Or, if thou wilt needs marry, marry a fool, for wise men know well enough what monsters you make of them. To a nunnery, go, and quickly too. Farewell.”)</p>
+<p>This strange behaviour of Hamlet convinces Ophelia that he has really gone mad. She expresses her grief over the mental ailment of Hamlet in the following words:</p>
+<p><strong><em>Oh, what a noble mind is here o’erthrown!—\</em></strong><br> <strong>*The courtier’s, soldier’s, scholar’s, eye, to</strong>ngue, sword,……*<strong><br> *</strong>Oh, woe is me,*<strong><br> *</strong>T’ have seen what I have seen, see what I see!***</p>
+<p>On the “vile king” Claudius.</p>
+<p>Actually both Claudius and Hamlet ultimately sacrifice humanity and humaneness in the acquisition of their goals. But what makes Claudius a villain is that he is wrong to kill people merely to fulfill his own thirst for power and sex, and Hamlet is right for the vengeance on the vile king with a flag of integrity; Claudius is a sneak who murdered and lied. Hamlet commits his murders in the open and suffers the pangs of his own conscience. Claudius subverts his conscience and refuses to ask for divine forgiveness; Hamlet seeks contrition and absolves himself of guilt before he dies; Claudius receives no absolution and seeks none. Hamlet will spend eternity in Heaven; Claudius will burn in Hell.</p>
 
           
         
@@ -1874,6 +2835,10 @@ CPI（每指令周期数）=1+C_b/C_i
   </section>
 
   
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">&lt;i class&#x3D;&quot;fa fa-angle-right&quot;&gt;&lt;&#x2F;i&gt;</a>
+  </nav>
+
 
 
           </div>
@@ -1917,7 +2882,7 @@ CPI（每指令周期数）=1+C_b/C_i
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-count">11</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -1939,7 +2904,7 @@ CPI（每指令周期数）=1+C_b/C_i
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-count">2</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
