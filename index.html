@@ -401,7 +401,38 @@ x\preceq_K \: y \Leftrightarrow y - x \in K</script><p>（$K=R^+$时这个偏序
 <script type="math/tex; mode=display">
 S \subseteq x +K</script><p>如果$y\in S$，而且$y\preceq_K \: x$可以推得$y=x$，那么我们称x为S的<strong>极小元</strong>，类似可定义<strong>极大元</strong>。极小（极大）元不一定唯一。极小元符号定义为 </p>
 <script type="math/tex; mode=display">
-(x-K)\cap S=\{x\}</script>
+(x-K)\cap S=\{x\}</script><p><strong>超平面分离定理</strong>：两个不相交的凸集C、D可以用一个超平面分离，即存在a，b</p>
+<script type="math/tex; mode=display">
+a^Tx+b\leq 0 \:for \:x\in C</script><script type="math/tex; mode=display">
+a^Tx+b\geq 0 \:for \:x\in D</script><p><strong>严格分离</strong>是更强的条件（上式为严格不等号时），不相交的凸集也不一定能被严格分离。</p>
+<p>超平面分离定理逆定理<strong>不成立</strong>，但是加上条件的如下结论：任何两个凸集C、D，如果其中至少有一个是<strong>开集</strong>，那么当且仅当存在分离超平面时，它们不相交。</p>
+<p><strong>支撑超平面</strong>是指对C<strong>边界(bd C)</strong>上一点$x_0$，如果对</p>
+<script type="math/tex; mode=display">
+a\neq0\:,\:\forall x\in C\:,\:a^Tx\leq a^Tx_0</script><p>那么称$\{x|a^Tx=a^Tx_0\}$为C在$x_0$处的支撑超平面。一个基本结论<strong>支撑超平面定理</strong>：对任意凸集C和任意$x_0\in bd\:C$，存在支撑超平面。一个<strong>不完全的逆定理</strong>：具有非空内部的闭集，若其边界每个点都存在支撑超平面，那么他是凸的。（证明大概是从内点出发找到不满足凸集要求的点？</p>
+<p>对一个锥K，集合</p>
+<script type="math/tex; mode=display">
+K^*=\{y|x^Ty\geq 0\:,\forall x\in K\}</script><p>称为K的<strong>对偶锥</strong>。几何上看，$y\in K^*$当且仅当-y是K在原点的一个支撑超平面的法线。</p>
+<p>对偶锥的例子：</p>
+<ul>
+<li>子空间的对偶锥是其正交补</li>
+<li>非负象限、半正定锥自对偶</li>
+<li>范数锥的对偶由<strong>对偶范数</strong>定义</li>
+</ul>
+<p>一些性质：</p>
+<ul>
+<li>$K^*$总是闭+凸的</li>
+<li>K有非空内部，则$K^*$是尖的</li>
+<li>K的闭包是尖的，则$K^*$有非空内部</li>
+<li>$K^{**}$是K的凸包的闭包</li>
+<li>由上述性质可知当K是正常锥时$K^{**}=K$</li>
+</ul>
+<p><strong>广义不等式的对偶的性质</strong>：$x\preceq_K\:y$ 当且仅当对任意$\lambda\succeq_{K^<em>}0$有$\lambda^Tx\leq \lambda^Ty$。由于$K^{*</em>}=K$，显然对K的对偶也成立。</p>
+<p><strong>线性严格广义不等式的择一定理</strong>：考虑严格广义不等式</p>
+<script type="math/tex; mode=display">
+Ax\prec_K\:b</script><p>，假设它不可行，即仿射集合$\{b-Ax\}$和int K不相交，那么存在一个分离超平面，因此存在$\lambda$和$\mu$使得对任意x，$\lambda^T(b-Ax)\leq\mu$，以及对任意$y\in K$，$\lambda^Ty\geq\mu$。第一个条件表明$A^T\lambda=0$以及$\lambda^Tb\leq\mu$；第二个条件表明$\lambda\in K^{*}$以及$\mu\leq 0$。所以，即存在$\lambda$，</p>
+<script type="math/tex; mode=display">
+\lambda\succeq_{K^*}0\:,\:A^T\lambda=0\:,\:\lambda^Tb\leq0</script><p>由此两个不等式构成一对择一，仅有一个可行。</p>
+
           
         
       
@@ -3144,7 +3175,7 @@ CPI（每指令周期数）=1+C_b/C_i
         }
       });
     </script>
-    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="//cdn.staticfile.org/MathJax/MathJax-2.6-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
   
 
 
