@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="琉璃猫," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="条件期望给定概率空间$(\Omega,F,P)$，随机变量X，定义随机变量$Y&#x3D;E(X|F)$如果它满足  $Y\in F$ for all $A\in F$，$\int_A XdP &#x3D; \int_A YdP$  显然Y可积且唯一 Radon-Nikodym定理：测度$\nu &lt;&lt;\mu$，那么存在函数$f\in F$，对所有$A\in F$，  \int_A fd\mu&#x3D;\nu(A)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="随机过程论">
+<meta property="og:url" content="http://yoursite.com/2020/02/18/StochasticProcess/index.html">
+<meta property="og:site_name" content="Hulieu">
+<meta property="og:description" content="条件期望给定概率空间$(\Omega,F,P)$，随机变量X，定义随机变量$Y&#x3D;E(X|F)$如果它满足  $Y\in F$ for all $A\in F$，$\int_A XdP &#x3D; \int_A YdP$  显然Y可积且唯一 Radon-Nikodym定理：测度$\nu &lt;&lt;\mu$，那么存在函数$f\in F$，对所有$A\in F$，  \int_A fd\mu&#x3D;\nu(A)">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-02-18T04:26:47.000Z">
+<meta property="article:modified_time" content="2020-03-04T14:42:14.541Z">
+<meta property="article:author" content="Hulieu">
+<meta property="article:tag" content="琉璃猫">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/02/18/StochasticProcess/"/>
+
+
+
+
+
+  <title>随机过程论 | Hulieu</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hulieu</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/18/StochasticProcess/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Hulieu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hulieu">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">随机过程论</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-02-18T12:26:47+08:00">
+                2020-02-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%8C%AB%E7%88%AA%E8%AE%B0/" itemprop="url" rel="index">
+                    <span itemprop="name">猫爪记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="条件期望"><a href="#条件期望" class="headerlink" title="条件期望"></a>条件期望</h1><p>给定概率空间$(\Omega,F,P)$，随机变量X，定义随机变量$Y=E(X|F)$如果它满足</p>
+<ul>
+<li>$Y\in F$</li>
+<li>for all $A\in F$，$\int_A XdP = \int_A YdP$</li>
+</ul>
+<p>显然Y可积且唯一</p>
+<p><strong>Radon-Nikodym定理</strong>：测度$\nu &lt;&lt;\mu$，那么存在函数$f\in F$，对所有$A\in F$，</p>
+<script type="math/tex; mode=display">
+\int_A fd\mu=\nu(A)</script><p>先假设$X\geq 0$然后显然$\nu(A)=\int_A XdP$是测度，所以易证条件期望存在。</p>
+<p>几个例子（小污猫说“这几个例子很重要”）</p>
+<ul>
+<li><p>$X\in F$，那么$E(X|F)=X$</p>
+</li>
+<li><p>$X$与$F$独立，则$E(X|F)=EX$</p>
+</li>
+<li><p>$F=\sigma(\Omega_1,\Omega_2,…)$，则$E(X|F)=\frac{E(X;\Omega_i)}{P(\Omega_i)}\:on\:\Omega_i$。所以初等概率论里的条件期望是其一个特例。</p>
+</li>
+<li><p>$X$，$Y$有联合概率密度$f(x,y)$，则</p>
+<script type="math/tex; mode=display">
+E(g(X)|Y)=h(Y)=\frac{\int g(x)f(X,y)dx}{\int f(X,y)dx}</script></li>
+<li><p>$X$，$Y$独立，$E(\phi(X,Y)|X)=E(\phi(x,Y))$</p>
+</li>
+</ul>
+<p>性质：</p>
+<ul>
+<li>$E(aX+Y|F)=aE(X|F)+E(Y|F)$</li>
+<li>$X\leq Y\Rightarrow E(X|F)\leq E(Y|F)$</li>
+<li>$X_n\geq 0$，$X_n\uparrow X$，$EX&lt;\infty$，那么$E(X_n|F)\uparrow E(X|F)$（Levi单调收敛定理）</li>
+<li>$X_n\geq 0$，$E(lim_{n\to\infty}X_n|F)\leq lim_{n\to\infty}E(X_n|F)$（Fatou引理，由lim xn=lim inf xk）</li>
+<li>$|X_n|&lt;Y&lt;\infty$，$lim_{n\to\infty}X_n=X$，那么$lim_{n\to\infty}E(X_n|F)=E(X|F)$（Lebesgue控制收敛定理）</li>
+<li>如果$\phi$凸，则$\phi(E(X|F))\leq E(\phi(X)|F)$（Jensen不等式，直线显然，然后利用直线包络）</li>
+<li>$F\subset G$，且$E(X|G)\in F$，那么$E(X|F)=E(X|G)$</li>
+<li>$F\subset G$，那么$E(E(X|F)|G)=E(E(X|G)|F)=E(X|F)$（条件期望平滑性）</li>
+</ul>
+<p>如果$X\in F$且$E|X|\:,\:E|XY|&lt;\infty$，那么$E(XY|F)=XE(Y|F)$。（典型four-step的证明）</p>
+<h3 id="正则条件概率："><a href="#正则条件概率：" class="headerlink" title="正则条件概率："></a>正则条件概率：</h3><p>可测映射$X\::\:(\Omega,F)\rightarrow (S,S)$（随机变量）。for X given G，<strong>正则条件分布</strong>$\mu\::\:\Omega\times S\rightarrow [0,1]$满足</p>
+<ul>
+<li>对每个A，$\omega\rightarrow\mu(\omega,A)$是$P(X\in A|G)$的一个版本</li>
+<li>对a.e. $\omega$，$A\rightarrow\mu(\omega,A)$是一个$(S,S)$上的测度。</li>
+</ul>
+<p>如果$S=\Omega$，X是恒等映射，$\mu$是<strong>正则条件概率</strong>。（此时$\mu(A)=PX^{-1}(A)=P(X\in A)$）</p>
+<p>正则条件分布可以<strong>同时计算X的所有函数的条件期望</strong>。</p>
+<p>由$E(f(x))=\int_R f(x)dPX^{-1}$可得</p>
+<p>定理：$\mu(\omega,A)$是<strong>正则条件分布</strong>，$f:(S,S)\rightarrow (R,R)$，且$E|f(X)|&lt;\infty$，那么f关于测度$\mu(\omega,·)$的积分存在，且</p>
+<script type="math/tex; mode=display">
+E(f(x)|F)(\omega)=\int \mu(\omega,dx)f(x)\:a.s.</script><p>正则条件分布并不总是存在。但是当$(S,S)$ <strong>is nice</strong>的时候，它总是存在。(定义：<strong>好的可测空间是指标准Borel空间</strong>，即存在从$S\to R$的一一可测映射。若S是<strong>Polish空间（完备+可分）的Borel子集</strong>，S是S上Borel $\sigma$域，那么是一个好的可测空间）</p>
+<p>证明：设$\phi:S\to R$是一一可测映射。则$\phi(X):(\Omega,F)\to(R,R)$，那么，$\forall A\in S$</p>
+<script type="math/tex; mode=display">
+P(X\in A|G)=P(\phi(X)\in\phi(A)|G)\\
+=P(Y\in\phi(A)|G)=P(Y\in B|G)\\
+(B=\phi(A)\in R)</script><p>然后构造$Y=\phi(x)$关于G的正则条件分布函数$P(Y\leq y|G)$：取除掉一个零测集以外的集合$\Omega_0$使得任意$\omega\in\Omega_0$</p>
+<script type="math/tex; mode=display">
+G(q,\omega)=P(Y\leq q|G)(\omega)</script><p>然后$F(x,\omega)=inf\{G(q,\omega),q&gt;x\}$。所以$F(x,\omega)$是$P(\phi(X)\leq x|G)$的一个版本。然后得到度量$\nu(\omega,·)$</p>
+<script type="math/tex; mode=display">
+\nu(w,(-\infty,x])=F(x,\omega)</script><p>然后得到$\mu(\omega,A)=\nu(\omega,\phi(A))$</p>
+<p>定理：X，Y在<strong>nice space</strong> (S,S)中取值，$G=\sigma(Y)$，那么存在$\mu\::\:S\times S\rightarrow [0,1]$，</p>
+<ul>
+<li>对每个A，$\mu(Y(\omega),A)$是$P(X\in A|G)$</li>
+<li>对a.e. $\omega$，$A\rightarrow\mu(Y(\omega),A)$是$(S,S)$上的测度</li>
+</ul>
+<h1 id="鞅过程Martingales"><a href="#鞅过程Martingales" class="headerlink" title="鞅过程Martingales"></a>鞅过程Martingales</h1><p>$F_n$是一个递增的$\sigma$-域序列，如果序列$X_n$满足</p>
+<ul>
+<li>$E|X_n|&lt;\infty$</li>
+<li>$Xn\in F_n$</li>
+<li>$E(X_{n+1}|F_n)=x_n$</li>
+</ul>
+<p>则称$X_n$为<strong>鞅过程</strong>。</p>
+<p>如果第三个条件改为$E(X_{n+1}|F_n)\geq(\leq) X_n$，则称为<strong>下鞅（上鞅）</strong></p>
+<p>最常见的是线性鞅：$S_n=S_0+\sum_{k=1}^n e_k$，$E(e)=0$。如果$E(e)\leq(\geq)0$，则为上鞅（下鞅）。</p>
+<p>定理：鞅过程满足$E(X_n|F_m)=X_m$，$m&lt;n$</p>
+<p>定理：凸函数$\phi$，那么$\phi(X_n)$下鞅。即$E(\phi(X_{n+1})|F_n)\geq \phi(E(X_{n+1}|F_n))=\phi(X_n)$。如果$X_n$下鞅，$\phi$增也有此结论。</p>
+<p>定义$H_n$为<strong>可预测序列</strong>，即$H_n\in F_{n-1}$。定理：$X_n$上鞅，那么如果$H_n\geq 0$有界，则$(H\cdot X)_n$也是上鞅。显然对下鞅和鞅也有类似结论。</p>
+<p>定理：若N是停时，$X_n$上鞅，则$X_{N\wedge n}$也是上鞅。</p>
+<h3 id="鞅收敛定理"><a href="#鞅收敛定理" class="headerlink" title="鞅收敛定理"></a>鞅收敛定理</h3><p>$\lim_{n\to\infty}X_n(\omega)$不存在$\Leftrightarrow\lim_{n\to\infty}inf\:X_n(\omega)&lt;\lim_{n\to\infty}sup\:X_n(\omega)$，也等价于存在有理数a,b：</p>
+<script type="math/tex; mode=display">
+\lim_{n\to\infty}inf\:X_n(\omega)<a<b<\lim_{n\to\infty}sup\:X_n(\omega)</script><p>定义$N_{2k-1}$为第k次下穿a的停时，$N_{2k}$是第k次上穿b的停时。定义$U_n=\{sup\:k|N_{2k}&lt;n\}$为上穿[a,b]的次数。而</p>
+<script type="math/tex; mode=display">
+\{\lim_{n\to\infty}inf\:X_n(\omega)<a<b<\lim_{n\to\infty}sup\:X_n(\omega)\}\subset \{\lim_{n\to\infty}U_n(\omega)=+\infty\}</script><p>定义$H_m=1_{\bigcup\{N_{2k-1}\leq m\leq N_{2k}\}}$，$W_n=\sum_{m-1}^nH_m(X_m-X_{m-1})$，</p>
+<p>（<strong>下鞅上穿不等式</strong>）若$X_n$下鞅，则对a&lt;b，$(b-a)EU_n\leqE(X_n-a)^+-E(X_0-a)^+$（证明：定义$Y_n=a+(X_n-a)^+$，则也是下鞅且上穿次数与$X_n$相等。那么$W_n=\sum_{m=1}^nH_m(Y_m-Y_{m-1})$\geq (b-a)U_n$。又令$K_m=1-H_m$，$V_n=\sum_{m=1}^nK_m(Y_m-Y_{m-1})$。那么$W_n+V_n=Y_n-Y_0$，且$V_n$下鞅，$EV_N\geq EV_0=0 $。所以</p>
+<script type="math/tex; mode=display">
+E(Y_n-Y_0)=EW_n+EV_n\geq EW_n\geq(b-a)EU_n</script><p> 即得证）</p>
+<p>利用上穿不等式，得到</p>
+<p>（<strong>下鞅基本收敛定理</strong>） 如果下鞅$X_n$满足$sup\:EX_n^+&lt;\infty$，则$X_n\to X$a.s.，且$E|X|&lt;+\infty$。（证明：$(X_n-a)^+$是下鞅，根据上穿不等式$EU_n\leq E(X_n-a)^+/(b-a)$有界，而根据$U_n$单调上升必有极限$U$，因此</p>
+<script type="math/tex; mode=display">
+P(\lim_{n\to\infty}inf\:X_n<a<b<\lim_{n\to\infty}sup\:X_n)=0</script><p>所以$X_n$极限a.s.存在。又由于$EX_n\geq EX_0$，$EX_n^-=EX_n^+-EX_n\leq sup\:EX_n^+-EX_0&lt;+\infty$然后由Fatou引理易得$E|X|&lt;+\infty$。）</p>
+<p> 定理：若$X_n$非负上鞅，则$\lim X_n=X$a.s.，且$EX\leq EX_0$。（证明：$-X_n$下鞅有界，a.s.收敛到极限X。）</p>
+<p><strong>注意：L1收敛并不成立。</strong>一个简单的反例就是$S_0=1$，$P(e_i=-1)=P(e_i=1)=1/2$，N为$S_n=0$的停时，$X_n=S_{n\wedge N}$是鞅。但是由上面的定理可知$X\to 0$a.s.，与$EX_n=1$矛盾。</p>
+<h3 id="四个例子"><a href="#四个例子" class="headerlink" title="四个例子"></a>四个例子</h3><h5 id="有界增长"><a href="#有界增长" class="headerlink" title="有界增长"></a>有界增长</h5><p>$X_n$为鞅过程，且$|X_{n+1}-X_n|\leq M&lt;\infty$，那么要么$lim\:X_n$存在且有限，要么$X_n$在正负无穷之间摇摆。(停时$N=inf\{X_n\leq k\}$，那么$x_{n\wedge N}+k+M$a.s.收敛)</p>
+<p>（Doob分解）下鞅$X_n$可以写成$X_n=M_n+A_n$。其中$M_n$是鞅过程，$A_n$是可预测序列。(令$A_n-A_{n-1}=E(X_n|F_{n-1})-X_{n-1}$)</p>
+<p>（第二Borel-Cantelli引理）$A_n\in F_n$，那么</p>
+<script type="math/tex; mode=display">
+\{A_n\:i.o.\}=\{\sum_{n=1}^\infty P(A_n|F_{n-1})=\infty\}</script><p>（第二B-C引理是第一引理的推广，去掉了独立性要求）</p>
+<p>证明：由Doob分解可得$M_n=\sum_{m=1}^n 1_{A_m}-P(A_m|F_{m-1})$是有界增长的鞅过程。</p>
+<h5 id="Polya’s-Urn-Scheme"><a href="#Polya’s-Urn-Scheme" class="headerlink" title="Polya’s Urn Scheme"></a>Polya’s Urn Scheme</h5><p>坛子模型：坛子里有r个红球、g个绿球，每次取出一个并放进与之同色的c+1个球。n次抽取后绿球比例$X_n$是鞅。</p>
+<p>如果r=g=c=1，可得$P(X_n=\frac{k}{n+2})=\frac{1}{n+1}$。</p>
+<h5 id="R-N微分"><a href="#R-N微分" class="headerlink" title="R-N微分"></a>R-N微分</h5><p>有限测度$\mu$，$\nu$，上升的$\sigma-$域$F_n$，定义$\mu_n=\mu|F_n$，$\nu_n=\nu|F_n$。</p>
+<p>定理：若$\mu_n&lt;&lt;\nu_n$，定义$X_n=\frac{d\mu_n}{d\nu_n}$，令$X=\lim_{n\to\infty}sup\:X_n$，则</p>
+<script type="math/tex; mode=display">
+\mu(A)=\int_AXd\nu+\mu(A\cap\{X=+\infty\})</script><p>证明：根据定义，$A\in F_n$，则$\mu(A)=\int_AX_nd\nu$。将$\mu$关于$\nu$作Lebesgue分解即得。</p>
+<h5 id="分支过程"><a href="#分支过程" class="headerlink" title="分支过程"></a>分支过程</h5><h3 id="Doob不等式"><a href="#Doob不等式" class="headerlink" title="Doob不等式"></a>Doob不等式</h3><p>(Doob不等式)$X_m$下鞅，令$\bar{X_n}=max_{0\leq m\leq n}X_m^+$，$A=\{\bar{X_n}\geq\lambda\}$，那么</p>
+<script type="math/tex; mode=display">
+\lambda P(X)\leq EX_n1_A\leq EX_n^+</script><p>（LP不等式）下鞅$X_n$，p&gt;1，那么</p>
+<script type="math/tex; mode=display">
+E(\bar{X_n^p})\leq(\frac{p}{p-1})E(X_n^+)^p</script><p>Durrent第四章 </p>
+<p>206</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/%E7%90%89%E7%92%83%E7%8C%AB/" rel="tag"># 琉璃猫</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/02/14/ConvexOptimization/" rel="next" title="凸优化问题">
+                <i class="fa fa-chevron-left"></i> 凸优化问题
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/02/21/ConvexOptimization2/" rel="prev" title="凸优化问题-应用和算法">
+                凸优化问题-应用和算法 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Hulieu</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+<br>
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=1364161141&auto=1&height=66"></iframe>
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#条件期望"><span class="nav-number">1.</span> <span class="nav-text">条件期望</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#正则条件概率："><span class="nav-number">1.0.1.</span> <span class="nav-text">正则条件概率：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#鞅过程Martingales"><span class="nav-number">2.</span> <span class="nav-text">鞅过程Martingales</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#鞅收敛定理"><span class="nav-number">2.0.1.</span> <span class="nav-text">鞅收敛定理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#四个例子"><span class="nav-number">2.0.2.</span> <span class="nav-text">四个例子</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#有界增长"><span class="nav-number">2.0.2.0.1.</span> <span class="nav-text">有界增长</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Polya’s-Urn-Scheme"><span class="nav-number">2.0.2.0.2.</span> <span class="nav-text">Polya’s Urn Scheme</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#R-N微分"><span class="nav-number">2.0.2.0.3.</span> <span class="nav-text">R-N微分</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#分支过程"><span class="nav-number">2.0.2.0.4.</span> <span class="nav-text">分支过程</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Doob不等式"><span class="nav-number">2.0.3.</span> <span class="nav-text">Doob不等式</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Hulieu</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.staticfile.org/MathJax/MathJax-2.6-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
