@@ -2,7 +2,7 @@
 title: 凸优化问题
 date: 2020-02-14 18:07:45
 categories:
-  - 猫爪记
+  - [猫爪记, Mathematics]
 tags:
   - 琉璃猫
 mathjax: true

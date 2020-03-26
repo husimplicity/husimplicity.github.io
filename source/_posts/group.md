@@ -4,8 +4,9 @@ date: 2020-02-26 16:00:15
 tags:
   - 琉璃猫
 categories:
-  - 猫爪记
+  - [猫爪记, Mathematics]
 mathjax: true
+
 ---
 
 ### 群论

@@ -2,7 +2,7 @@
 title: 从一开始的汇编
 date: 2020-01-10 15:49:05
 categories:
-  - 猫爪记
+  - [猫爪记, Computer-Science]
 tags:
   - 琉璃猫
 ---

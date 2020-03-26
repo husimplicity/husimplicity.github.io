@@ -2,7 +2,7 @@
 title: 凸优化问题-应用和算法
 date: 2020-02-21 11:04:43
 categories:
-  - 猫爪记
+  - [猫爪记, Mathematics]
 tags:
   - 琉璃猫
 mathjax: true
@@ -105,7 +105,112 @@ $$
 $$
 \Delta x_{nsd}=argmin\{\nabla f(x)^Tv|||v||=1\}
 $$
+465
 
 
-457
 
+### 线性规划问题的解法
+
+**Primal单纯形法**
+
+对于线性规划
+$$
+min\:c^Tx\\
+s.t.\:Ax=b\\
+x\geq 0
+$$
+和对偶问题
+$$
+max\:b^Ty\\
+s.t.\:A^Ty+s=c\\
+s\geq 0
+$$
+得到KKT条件
+$$
+Ax=b,x\geq 0\\
+A^Ty+s=c,s\geq 0\\
+x_is_i=0
+$$
+Primal单纯形法得到
+$$
+x_B=B^{-1}b\geq 0,x_N=0\\
+y=B^{-T}c_B\\
+s_B=c_B-B^Ty=0,s_N=c_N-N^Ty？？0
+$$
+（B是一个基，N是自由基）然后判断$s_N$和0的大小关系，决定是否停止迭代。如果$s_j\geq 0$那么x是最优解，否则可以找到q，$s_q<0$。那么就找到$p\in B$移出基。
+
+令$u=B^{-1}A_q$，那么$x_B^+=x_B-ux_q^+$。如果$u\leq 0$则原问题无界；否则找到$u_k>0$，就可以找到$x_q^+$和$p$满足$ x_B^+\geq 0$和$x_p^+=0，确定
+$$
+p=argmin\frac{x_B(i)}{u_i}
+$$
+<u>单纯形法工业级应用还需要解决很多问题，比如快速求逆、防止循环迭代等等。</u>
+
+**对偶单纯形法**
+$$
+x_B=B^{-1}b？？0,x_N=0\\
+y=B^{-T}c_B\\
+s_B=c_B-B^Ty=0,s_N=c_N-N^Ty\geq 0
+$$
+ 如果$x_B\geq 0$，则达到最优，否则找到$q\in B$使得$x_q<0$退出基，选择r加入基，$s_r^+=0$。然后进行更新：
+$$
+s_B^+=s_b+ae_q\\
+y^+=y+av(e_q=-B^Tv)
+$$
+<u>对偶单纯形法和单纯形法有时候速度差距很大。</u>
+
+**内点法**
+
+$(x,y,s)$为当前估计，$(\Delta x,\Delta y,\Delta s)$是搜索方向，定义$\mu=\sum x_is_i/n$。所以要找到
+$$
+A(x+\Delta x)=b\\
+A^T(y+\Delta y)+s+\Delta s=c\\
+(x_i+\Delta x_i)(s_i+\Delta s_i)=\sigma_\mu
+$$
+舍弃二阶小量得到
+$$
+A\Delta x=r_p:=b-Ax\\
+A^T\Delta y+\Delta s=r_d:=c-A^Ty-s\\
+x_i\Delta s_i+\Delta x_is_i=(r_c)_i:=\sigma_\mu-x_is_i
+$$
+写成矩阵形式如下，令$L_x=Diag(x)$，$L_s=Diag(s)$
+$$
+\begin{pmatrix}A&0&0\\
+0&A^T&I\\
+L_s&0&L_x\end{pmatrix}
+\begin{pmatrix}\Delta x\\
+\Delta y\\
+\Delta s\end{pmatrix}
+=
+\begin{pmatrix}r_p\\
+r_d\\
+r_c
+\end{pmatrix}
+$$
+如果A满秩，$AL_s^{-1}L_xA^T$是对称正定的，可以解得到
+$$
+\Delta y=(AL_s^{-1}L_xA^T)^{-1}(r_p+AL_s^{-1}(L_xr_d-r_c))\\
+\Delta s = r_d-A^T\Delta y\\
+\Delta x = -L_s^{-1}(L_x\Delta s-r_c)
+$$
+然后进行步长搜索，保证$(x^{k+1},s^{k+1})>0$。
+
+<u>步长搜索用Central Path，具体定义如下：</u> $C=\{(x_\tau,y_\tau,s_\tau|\tau>0\}$满足
+$$
+Ax_\tau=b,x_\tau>0\\
+A^Ty_\tau+s_\tau=c,s_\tau>0\\
+(x_\tau)_i(s_\tau)_i=\tau
+$$
+Central Path neighborhoods是对$\theta,\gamma\in[0,1)$：
+$$
+N_2(\theta)=\{(x,y,s)|||L_xL_se-\mu e||_2\leq\theta\mu\}\\
+N_{-\infty}(\gamma)=\{(x,y,s)|x_is_i\geq\gamma\mu\}
+$$
+一般而言$\theta=0.5$，$\gamma=10^{-3}$。
+
+Path-Following：设定步长$\alpha_k$为最大的满足$(x^{k+1},y^{k+1},s^{k+1})\in N_{-\infty}(\gamma)$的值。那么$|\Delta x\cdot\Delta s|\leq 2^{-3/2}(1+1/\gamma)n\mu$，更新
+$$
+\mu_{k+1}\leq(1-\delta/n)\mu_k,\delta=2^{3/2}\gamma\frac{1-\gamma}{1+\gamma}\sigma(1-\sigma)
+$$
+那么如果$(x^0,y^0,s^0)\in N_{-\infty}(\gamma)$，存在$K=O(nln(1/\epsilon))$使得$\mu_k\leq\epsilon\mu_0$
+
+<u>内点法是很少见的多项式时间算法</u>

@@ -2,7 +2,7 @@
 title: 从零开始的汇编
 date: 2020-01-02 19:59:31
 categories:
-  - 猫爪记
+  - [猫爪记, Computer-Science]
 tags:
   - 琉璃猫
 ---

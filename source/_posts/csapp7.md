@@ -2,7 +2,7 @@
 title: 从三开始的汇编
 date: 2020-02-08 16:10:30
 categories:
-  - 猫爪记
+  - [猫爪记, Computer-Science]
 tags:
   - 琉璃猫
 mathjax: true
