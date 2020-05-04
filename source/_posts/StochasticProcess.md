@@ -343,9 +343,196 @@ $$
 + $X_n\to^{L1}X$
 + 存在可积随机变量X，$X_n=E(X|F_n)$
 
-定理：若$\sigma$域流$F_n\uparrow F_\infty$，$F_\infty=\sigma(\bigcup F_n)$
+定理：若$\sigma$域流$F_n\uparrow F_\infty$，$F_\infty=\sigma(\bigcup F_n)$，随机变量X满足$E|X|<+\infty$，那么$E(X|F_n)\to^{a.s.,L1} E(X|F_\infty)$。
 
-Durrent第四章 
+证明：定义$Y_n=E(X|F_n)$是鞅过程。通过典型方法可得$EX1_A=EY_\infty 1_A$，因而$Y_n\to Y_\infty$。
+
+定理（Levy 0-1律）：若$F_n\uparrow F_\infty$，$A\in F_\infty$，那么$E(1_A|F_n)\to^{a.s.}1_A(n\to\infty)$
+
+特例：独立随机变量$X_n$，$A\in\tau(尾\sigma 代数)$，则$E(1_A|F_n)=E1_A=P(A)$。（$\tau=\bigcap_{n\geq 1}\sigma(X_{n+1},...)$）此时即为Kolmogorov 0-1律。
+
+定理（条件期望控制收敛）：$Y_n\to^{a.s.}Y$，$|Y_n|\leq Z$，$EZ<+\infty$，$F_n\uparrow F$，那么$E(Y_n|F_n)\to^{a.s.}E(Y|F_\infty)$
+
+证明：
+$$
+|E(Y_n|F_n)-E(Y|F_\infty)|\leq |E(Y_n|F_n)-E(Y|F_n)|+|E(Y|F_n)-E(Y|F_\infty)|
+$$
+后一部分易证。为证明前一部分，令$W_N=\sup\{|Y_n-Y_m|,n,m\geq N\}$单调收敛可证。
+
+### 倒向鞅
+
+鞅$\{X_n:n\leq 0\}$称为倒向鞅，定义$F_{-\infty}=\bigcap F_n$
+
+定理：$X_{-\infty}=\lim_{n\to -\infty}X_n$a.s.存在且L1收敛
+
+证明：记$U_n[a,b]$为$X_{-n}$上穿$[a,b]$的次数，根据上穿不等式，$(b-a)EU_n\leq E(X_0-a)^+$，根据单调收敛定理，$U_\infty[a,b]<+\infty$。所以$X_{-n}$的极限a.s.存在。 然后根据一致可积得到L1收敛。
+
+定理：$\{X_n\}$倒向鞅，则
+$$
+X_{-\infty}=E(X_0|F_{-\infty})
+$$
+证明：先证$X_{-\infty}\in F_{-\infty}$，然后证明条件概率。
+
+定理：若$F_n\downarrow F_{-\infty}$且$E|Y|<+\infty$，那么
+$$
+\lim_{n\to-\infty}E(Y|F_n)=E(Y|F_{-\infty}),a.s.,L1
+$$
+令$A_n(\omega)=\omega_n$
+
+如果单+满的映射$\pi:N\to N$，使得仅对有限个i，有$\pi(i)=i$，则称$\pi$为**有限置换**。定义$(\pi\omega)_i=\omega_{\pi(i)}$。若对任意有限置换$\pi$，$\pi^{-1}A=A$，则称A为**可置换集合**。$\{A|A可置换\}$构成$\sigma-$域，即为E。
+
+例：$(S,S)=(R,R)$，$S_n(\omega)=\sum_{i=1}^nX_i(\omega)$，那么
+
++ $\{\omega|S_n(\omega)\in B\}$是可置换的，对$\forall B$Borel
++ 任意正常数列$C_n$，$\{\omega|\bar{\lim}S_n(\omega)/C_n\geq 1\}$可置换
++ 任意$A\in \tau$可换，则$\tau\subset E$
+
+$E_n=\{\A|\forall 有限置换\pi s.t.\pi(n+k)=n+k有\pi^{-1}A=A}$，$E=\bigcap E_n$
+
+定理（Hewitt-Savage 0-1律）：若$X_n$独立同分布，则任意$A\in E$，$P(A)=0或1$。
+
+证明：引理：若$X_n$独立同分布，$\phi:R^k\to R$，令$A_n(\phi)=\frac{1}{A_n^k}\sum\phi(X_{i_1},...,X_{i_k})$其中$A_n^k=\frac{n!}{(n-k)!}$。若$\phi$有界可测，则$A_n(\phi)\to E\phi(X_1,...,X_k)$a.s.。
+
+引理的证明：$A_n(\phi)\in E_n$，$A_n(\phi)=E(\phi(X_1,...,X_k)|E_n)$，令$F_{****-m}=E_m$，所以$E(\phi(X_1,...,X_k)|E_n)\to{a.s.L1}E(\phi(X_1,...,X_k)|E)$
+
+通过引理可知$E(\phi(X_1,...,X_k)|E)=E\phi(X_1,...,X_k)$，所以E与$\sigma(X_1,...,X_k)$独立，所以E与F独立。又由$E\subset F$可证。
+
+引理：若$EX^2<\infty$，$E(X|G)\in F$，X和F独立，则$E(X|G)=EX$。
+
+例：（强大数律）：$e_n$独立同分布，$E|e_1|<+\infty$，令$X_{-n}=S_n/n$。$F_{-n}=\sigma(S_n,...)$，可证$\{X_{-n},F_{-n}\}$倒向鞅。因而$X_{-n}\to{a.s.L1}E(X_{-1}|F_{-\infty})$。由于$F_{-n}\subset E_n$，所以$F_{-\infty}\subset E$，由H-S 0-1律，$E(X_{-1}|F_{-\infty})=EX_{-1}$
+
+例：（选票定理）设$e_n$非负整数，$G=\{S_j<j\}$，则$P(G|S_n)=(1-\frac{S_n}{n})^+$
+
+### 停时定理
+
+问题：若$X_n$下鞅，任意停时$M\geq N$，什么条件下$E(X_M|F_N)\geq X_N$，$X_M\geq X_N$？
+
+定理：若$X_n$下鞅一致可积，则对停时N，则$X_{N\wedge n}$一致可积。（由下鞅基本收敛定理，$X_{n\wedge N}\to^{a.s.}X_N$，易证）
+
+定理：对独立同分布的随机变量$X_n$和非负整数N，s.t. $E|X_N|<+\infty。如果$\{|X_n|1_{N>n}\}$一致可积，那么$\{X_{N\wedge n\}$一致可积。若还有$X_n$下鞅，停时$N<+\infty$，则$EX_0\leq X_N$。
+
+定理：若$X_n$下鞅一致可积，任意停时$N\leq +\infty$，有$EX_0\leq EX_N\leq EX_\infty$。
+
+定理：若$X_n$非负上鞅，停时$N<+\infty$，则$EX_0\geq EX_N$
+
+定理：$X_n$下鞅，$E(|X_{n+1}-X_n||F_n)\leq B$，那么对任意停时$EN<+\infty$，有$\{X_{N\wedge n}\}$一致可积，从而$EX_0\leq EX_N$。
+
+定理（Wald等式）：$e_n$独立同分布，停时N有限，则$ES_N=EeEN$
+
+证明：$S_n-nEe$是鞅，由上面的定理可证。
+
+定理（Doob可选停止定理）：若$L\leq M$是停时，$Y_n\in F_n$，$\{Y_{M\wedge n}\}$一致可积，下鞅，则$EY_L\leq EY_M$，$Y_L\leq E(Y_M|F_L)$。其中$F_L=\{\A\in F|A\cap \{L=n\}\in F_n}$
+
+证明：令$X_n=Y_{M\wedge n}$，则$EX_N\leq EX_\infty=EY_M$，取N=L，则$EY_L\leq EY_M$。对任意A，N在A上取L，否则取M，则N为停时，$EY_N\leq EY_M$，所以$EY_L1_A\leq EY_M1_A=E(E(Y_M1_A|F_L))$。令$A_n=\{Y_L-E(Y_M|F_L)>1/n\}$，所以$1/nP(A_n)\leq 0$
+
+例：随机游动，$\mu=Ee$有限，则$S_n-n\mu$鞅。这里设$\mu=0$，$Ee^2=\sigma^2<+\infty$。则$S_n^2-n\sigma^2$也是鞅。
+
+（简单对称随机游动）$P(e=1)=P(e=-1)=1/2$，$S_0=x\in(a,b)$，停时N为S首次出区间(a,b)的时间。则$P(S_N=a)=\frac{b-x}{b-a}$，$E_xN=(x-a)(b-x)$
+
+(非对称简单随机游动)$P(e=1)=p$，$P(e=-1)=q=1-p$。设$0<p<1$，$\phi(y)=(\frac{1-p}{p})^y$，则$\phi(S_n)$鞅。令$T_Z=\inf\{S_n=z\}$，$P_x(T_a<T_b)=\frac{\phi(b)-\phi(x)}{\phi(b)-\phi(a)}$。设$1/2<p<1$，$a<0$，则$P_0(\inf S_n\leq a)=P_0(T_a<+\infty)=()(1-p)/p)^{-a}。$b>0$，则$P_0(T_b<+\infty)=1$，$E_0T_b=b/(2p-1)$
+
+# 遍历定理
+
+如果r.v.s. $X_n$使得$\{X_n\}$和$\{X_{n+k\}$同分布称为**（严）平稳随机变量序列**。
+
+**Birkhoff遍历定理**：若$f:R\to R$可测，$E|f(x_n)|<+\infty$，则
+$$
+\lim_{n\to\infty}\frac1n\sum_{m=0}^{n-1}f(X_m)
+$$
+a.s.存在。
+
+若$\{X_n\}$遍历，则极限为$f(X_0)$
+
+例子：iid序列、随机游动、马氏链
+
+这里**马氏链**定义为任意$B\in S$，$P(X_{n+1}\in B|F_n)=P(X_{n+1}\in B|X_n)$
+
+**转移概率函数**$p:S\times S\to[0,1]$满足：
+
++ 任意$x\in S$，$A\to p(x,A)$是一个概率测度
++ 任意$A\in S$，$x\to p(x,A)$可测
+
+对马氏链$X_n$，定义$p_n(x,A)=P(X_{n+1}\in A|X_n=x)$，则$P(X_{n+1}\in A|F_n)=p_n(X_n,A)$。若正则条件分布存在，则$p_n(x,A)$是转移概率。若$p_n(x,A)$不依赖于n，则称$X_n$时齐。特别的，当S可数集时，$p_n(i,j)$构成转移概率矩阵。
+
+如果可测映射$\phi$满足对任意A，$P(\phi^{-1}A)=P(A)$，则称$\phi$**保测映射**。$X_n(\omega)=X(\phi^n\omega)$是平稳序列。
+
+若$Y_n$平稳序列，取值于nice space，可构造概率测度p，使得
+$$
+P(\omega\in S^N,(\omega_0,\omega_1,...,\omega_n)\in B)=P(B\times\prod_{i=n+1}^\infty S)=\bar{P}((Y_0,Y_1,...,Y_n)\in B)
+$$
+（Kolmogorov相容性定理）令$X_n(\omega)=\omega_n$，则$X_n$与$Y_n$同分布。（可以构造推移算子，可以证明这个算子是保测映射）
+
+保测映射$\phi$对A，满足$P(A\Delta \phi^{-1}A)=0$，称A为**不变集**。若$A=\phi^{-1}A$，称A为**强不变集**。若任意不变集有$P(A)=0$或$1$，则称$\phi$**遍历（ergodic）**。
+
+定义$I=\{A|\phi^{-1}A=A,a.s.\}$，称为**不变$\sigma$域**，则$\phi 遍历\Leftrightarrow I 平凡$
+
+时齐马氏链$X_n$状态空间S可数，平稳分布$\pi$满足对任意状态$\pi(x)>0$（正常返），那么$X_n遍历\Leftrightarrow X_n不可约$。
+
+证明：必要性：反证，可约推出不遍历。充分性：任何不变集A满足，$1_A\theta_n=1_A$，P(A)为0或1，I平凡。
+
+**Birkhoff个别遍历定理**：保测变换$\phi$，X期望有限，则
+$$
+\frac1n \sum_{k=0}^{n-1}X(\phi^k\omega)\to^{a.s.L1}E(X|I)
+$$
+若$\phi$遍历，则$E(X|I)=EX$。
+
+引理（极大遍历定理）：令$X_r(\omega)=X(\phi^r\omega)$，$S_k(\omega)=\sum_{r=0}^{k-1}X_r(\omega)$，$M_k(\omega)=\max(0,S_1(\omega),...,S_k(\omega))$，则
+$$
+EX1_{\{M_k>0\}}\geq 0
+$$
+引理的证明：$X(\omega)\geq S_{j+1}(\omega)-M_k(\phi(\omega))$ 对任意$j\leq k$。所以$X(\omega)\geq \max S_{j+1}(\omega)-M_k(\phi(\omega))$。那么$EX1_{\{M_k>0\}}\geq \int_{\{M_k>0\}}(M_k(\omega)-M_k(\phi(\omega)))dP=0$。
+
+遍历定理的证明：不妨设$E(X|I)=0$，只需证
+$$
+\sup\lim_{n\to\infty}\frac1n S_n(\omega)\leq 0
+$$
+令$D=\{\omega|\sup\lim_{n\to\infty}\frac1n S_n(\omega)>\epsilon\}$。令$X^\*(\omega)=(X(\omega)-\epsilon)1_D(\omega)$，如此定义$S_n^\*(\omega)$和$M_n^\*(\omega)$。定义$F_n=\{M_n^\*>0\}$，F定义为它们的并集。
+
+那么F=D。由极大遍历定理，$EX^\*1_{F_n}\geq 0$，$E|X^\*|\leq E|X|+\epsilon$，由控制收敛定理，$X^\*1_F$存在且大于等于0，即$EX^\*1_D\geq 0$，这就推出$P(D)\leq 0$。由此可以证明a.s.收敛。根据有界收敛+控制收敛可得L1收敛。
+
+<u>Birkhoff遍历定理可以直接推出强大数律</u>
+
+根据Birkhoff遍历定理在圆周旋转上的应用，如果$\theta\in(0,1)$是无理数，$\phi(\omega)=\omega+\theta\:mod\:1$，令$X(\omega)=1_A(\omega)$，那么
+$$
+\frac1n\sum_{m=1}^{n-1}1_{(\phi^m\omega\in A)}\to|A|,a.s.
+$$
+当$\omega=0$时，也称做**Weyl等分布定理**。由此得到以下数论结论
+
+定理：如果$A=[a,b)$，那么倒外集为空集。
+
+**常返**
+
+设$X_n$取值$R^d$的平稳序列，定义
+$$
+R_n=\#\{S_1,S_2,...,S_n\}
+$$
+定理：
+$$
+\lim_{n\to\infty}\frac{R_n}{n}=E(1_A|I)
+$$
+其中$A=\{S_k\neq 0,\forall k\geq 1\}$
+
+证明：对$l\geq m$，$S_l=S_m+S_{l-m}(\phi^m\omega)$，
+$$
+R_n\geq\sum_{m=1}^n1_A(\phi^m\omega)=\#\{m|S_l\neq S_m,\forall l>m\}
+$$
+由Birkhoff，
+$$
+\inf\lim_{n\to\infty}\frac{R_n}n\geq\lim_{n\to\infty}\frac1n\sum_{m=1}^n1_A(\phi^m\omega)=E(1_A|I)
+$$
+令$A_k=\{S_m\neq 0, m\leq k\}$
+$$
+\sum_{m=1}^{n-k}1_{A_k}(\phi^m\omega)=\#\{m|S_l\neq S_m,\forall>m\}
+$$
+所以$R_n\leq k+\sum_{m=1}^{n-k}1_{A_k}(\phi^m\omega)$，如此
+$$
+\sup\lim\frac{R_n}n\leq E(1_{A_k}|I)
+$$
+由于$A_k\downarrow A$，由控制收敛可证上界。
+
+Durrent第四章、第六章
+
+
 
 
 

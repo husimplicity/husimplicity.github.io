@@ -1594,3 +1594,393 @@ libc.cpp_func1(c_char_p(bytes("this高达",encoding="utf-8")));
 #endif
 ```
 
+# STL(Review)
+
+六大部件
+
++ 容器
++ 分配器
++ 算法
++ 迭代器
++ 适配器
++ 仿函式
+
+```C++
+#include <vector>
+#include <algorithm>
+#include <functional>
+#include <iostream>
+using namespace std;
+int main(){
+    int ia[6] = {1, 2, 3, 4, 5, 6};
+    vector<int, allocator<int>> vi(ia, ia+6);
+    // 容器vector，分配器allocator（可以不写）
+    cout << count_if(vi.begin(), vi.end(),
+                    not1(bind2nd(less<int>(), 40))));
+    // 算法count_if 迭代器.begin .end 
+    // 函数适配器negator binder 函数less
+    return 0;
+}
+```
+
+## 容器
+
+Set/Map 都是用红黑树实现的 
+
+单向列表`forward_list`（和GNU_C中的`slist`完全一样），只有`push_front`
+
+`array`无法扩充，`vector`两倍扩充
+
+`deque`是一个本质是map到buffer的一些指针，
+
+`unordered_multimap`相当于hash_map
+
+`hash_set` `hash_map` `hash_multiset` `hash_multimap`并不是规范C++语言，但在编译器中实现（注意include的头文件位置） 
+
+容器分类：
+
+序列式容器：
+
++ array
++ vector
+  - heap
+    - priority_queue
++ list
++ slist（非标准）
++ dequeue（分段连续）
+  - stack
+  - queue
+
+关联式容器
+
++ rb_tree（非公开）
+  - set
+  - map
+  - multiset
+  - multimap
++ hashtable（非公开、非标准）
+  - hash_set
+  - hash_map
+  - hash_multiset
+  - hash_multimap
+
+### list
+
+**GNU2.9** sizeof=4
+
+```C++
+template <class T, class Alloc=alloc >
+class list{
+protected:
+    typedef __list_node<T> list_node;
+public:
+    typedef list_node* link_type;
+    typedef __list_iterator<T, T&, T*> iterator;
+protected:
+    link_type node;
+}
+```
+
+其中list node定义为（这里void pointer是有明显问题的）
+
+```C++
+template <class T>
+struct __list_node {
+    typedef void* void_pointer;
+    void_pointer prev;
+    void_pointer next;
+    T data;
+}
+```
+
+其中list iterator定义为
+
+```C++
+template <class T, class Ref, class Ptr>
+struct __list_iterator {
+    typedef __list_iterator<T, Ref, Ptr> self;
+    typedef bidirectional_iterator_tag iterator_category; // necessary
+    typedef T value_type; // necessary
+    typedef Ptr pointer; // necessary
+    typedef Ref reference; // necessary
+    typedef __list_node<T>* link_type;
+    typedef ptrdiff_t differnece_type; // necessary
+    
+    link_type node;
+    
+    reference operator*() const {return (*node).data;}
+    pointer operato r->() const {return &(operator*())}
+    self& operator++(){node=(link_type)((*node).next);return *this}
+    self operator++(int){self tmp=*this; ++*this; return tmp;} 
+    // tmp=*this 并不会调用重载的*，因为赋值操作被重载，this被解释为参数 
+    // __list_iterator(const iterator& x): node(x.node){}
+    // 之后++*this 也不会调用重载的*，因为*this已被解释为参数 
+    ...
+}
+```
+
+**GNU4.9**
+
+修改了iterator和node的定义
+
+```C++
+// list 定义
+template <typename _Tp, typename _Alloc=std::allocator<_Tp>>
+class list: protected _List_base<_Tp, _Alloc>{
+public:
+    typedef __list_iterator<_Tp> iterator;
+    ...
+}
+// iterator 定义
+template<typename _Tp>
+struct _List_iterator{
+    typedef _Tp* pointer;
+    typedef _Tp& reference;
+}
+// node 定义
+struct _List_node_base{
+    _List_node_base* _M_next;
+    _List_node_base* _M_prev;
+}
+template<typename _Tp>
+struct _List_node: public _List_node_base {
+    _Tp _M_data;
+}
+```
+
+list的父类定义`_List_base`有成员`_List_impl<_Tp,_A>`继承自`_A<List_node<_Tp>>`
+
+<u>list的实际实现是**双向、环状**的，为了符合“前闭后开”的要求。</u>
+
+### vector
+
+两倍扩张
+
+```C++
+void push_back(const T& x){
+    if (finish != end_of_storage){
+        construct(finish, x);
+        ++finish;
+    }else{
+        insert_aux(end(), x);
+    }
+}
+
+template<class T, class Alloc>
+void vector<T, Alloc>::insert_aux(iterator position, const T& x){
+    if (finish != end_of_storage){ // 和push_back里的检查是一样的
+        construct(finish, *(finish - 1));
+        ++finish;
+        T x_copy = x;
+        copy_backward(position, finish - 2, finish - 1);
+        *position = x_copy
+    }else{
+        const size_type old_size = size();
+        const size_type len = old_size != 0 ? 2 * old_size : 1;
+        
+        iterator new_start = data_allocator::allocate(len);
+        iterator new_finish = new_start;
+        try {
+            new_finish = uninitialized_copy(start, position, new_start);
+            construct(new_finish, x);
+            ++new_finish;
+            new_finish = uninitialized_copy(position, finish, new_finish); //拷贝安插点之后的内容，因为insert也可能需要扩充
+        } catch () {
+            ...
+        }
+        // 销毁原vector
+        destroy(begin(), end());
+        deallocate();
+        // 更新
+        start = new_start;
+        finish = new_finish;
+        end_of_storage = new_start + len;
+    }
+}
+```
+
+vector的iterator（GNU4.9：舍近求远）
+
+```C++
+template<typename _Tp, typename _Alloc = std::allocator<_Tp>>
+class vector : protected _Vector_base<_Tp, _Alloc>{
+    typedef _Vector_Base<_Tp, _Alloc> _Base;
+    typedef typename _Base::pointer pointer;
+    typedef __gnu_cxx::__normal_iterator<pointer, vector> iterator;
+    // _M_current:_Tp* 本质与GNU2.9相同
+}
+```
+
+### array
+
+TR1版本（C++1之后）
+
+```C++
+template<typename _Tp, std::size_t _Nm>
+struct array {
+    typedef _Tp value_type;
+    typedef _Tp* pointer;
+    typedef value_type* iterator;
+    
+    value_type _M_instance[_Nm ? _Nm : 1]; // 长度为0的默认为1
+    iterator begin(){
+        return iterator(&_M_instance[0]);
+    }
+    iterator end(){
+        return iterator(&_M_instance[_Nm]);
+    }
+    ...
+}
+```
+
+GNU4.9中的定义方式本质与之相同，变得更加复杂，但没有明显好处
+
+```C++
+template<typename _Tp, std::size_t _Nm>
+struct array{
+    ...
+    //support for zero-sized array
+    typedef _GLIIBCXX_STD_C::__array_traits<_Tp, _Nm> _AT_Type;
+    typename _AT_Type::_Type _M_elems;
+    ...
+}
+
+template<typename _Tp, std::size_t _Nm>
+struct __array_traits{
+    typedef _Tp _Type[_Nm];
+    ...
+}
+```
+
+```C++
+int a[100]; // ok
+int[100] b; // fail
+typedef int T[100]; // OK
+```
+
+### deque
+
+看上去连续，其实是分段的：多个buffer（或者称为node）
+
+有一个中控（称为map）维护这些buffer，map是个vector
+
+iterator分为四格：cur,first,last,node（前三个都是指向node中的位置）
+
+## 迭代器
+
+例：以`rotate`函数为例
+
+```C++
+template<typename _ForwardIterator>
+inline void rotate(_ForwardIterator __first,
+                  _ForwardIterator __middle,
+                  _ForwardITerator __last){
+    std::__rotate(__first, __middle, __last,
+                  std::__iterator_category(__first));    
+}
+```
+
+`rotate`需要知道iterators的三个associated types：为了回答iterator的类型，在C++标准库中设计出5种，`iterator_category`，`difference_type`， `value_type`，`reference`， `pointer`，后两种在STL中从未使用过。
+
+回答的方式：`typedef`
+
+```C++
+// GNU2.9
+template <class T, class Ref, class Ptr>
+struct __list_iterator {
+    typedef bidirectional_iterator_tag iterator_category; // necessary
+    typedef T value_type; // necessary 
+    typedef Ptr pointer; // necessary
+    typedef Ref reference; // necessary
+    typedef ptrdiff_t differnece_type; // necessary
+    ......
+};
+// GNU4.9
+template <typename _Tp>
+struct _List_iterator {
+    typedef std::bidirectional_iterator_tag iterator_category; // necessary
+    typedef _Tp value_type; // necessary 
+    typedef _Tp* pointer; // necessary
+    typedef _Tp& reference; // necessary
+    typedef ptrdiff_t differnece_type; // necessary
+    ......
+};
+```
+
+萃取机`traits`
+
+分辨iterator是class还是pointer
+
+实现方法：*偏特化*
+
+```C++
+template<class I>
+struct iterator_traits {
+    typedef typename I::value_type value_type;
+};
+// 偏特化
+template<class T>
+sturct iterator_traits<T*>{
+    typedef T value_type;
+}
+template<class T>
+struct iterator_traits<const *T>{
+    typedef T value_type;
+}
+```
+
+<u>标准库中有各式各样的萃取机</u>
+
+## 分配器
+
+除了默认的allocator之外还有
+
+mt_allocator，debug_allocator，pool_allocator，bitmap_allocator，malloc_allocator，new_allocator，要`include<ext\相应的头文件>`
+
+<u>分配器可以直接使用，但没有必要</u>
+
+```C++
+allocator<int> alloc;
+p = alloc.allocate(1); // 1个元素
+alloc.deallocate(p, 1);
+```
+
+所有分配内存（包括`new`）都会归结到`malloc`
+
+由于malloc需要记录指针和*分配内存大小*，这是额外开销。但在容器中，利用元素大小相同这一点，G2.9 标准库 alloc对`allocator`的实现设计了16个链表，以节省这一部分开销。G4.9中命名为pool_allocator可以调用（不再是默认）。
+
+## 泛型编程（GP）
+
+面向对象编程（OOP）把方法放进对象
+
+泛型编程（GP）却将datas和methods分开
+
+*算法*通过*迭代器*确定操作范围，并通过*迭代器*取用*容器*元素。这样*算法*和*容器*可以独立开发。
+
+所有的算法，最终涉及元素本身的操作，就是<u>比大小</u>
+
+Template模板（略）
+
+Specialization特化
+
+```C++
+// 泛化
+template<class type>
+struct __type_traits{...}
+// 特化
+template<>
+struct __type_traits<int>{...}
+```
+
+Partial Specialization偏特化：可以特化一部分template（个数偏特化），也可以改变template
+
+```C++
+template <class Iterator>
+struct iterator_traits {...}
+// 偏特化为指针
+template <class T>
+struct iterator_traits<T*> {...}
+```
+
+
+

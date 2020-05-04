@@ -105,9 +105,47 @@ $$
 $$
 \Delta x_{nsd}=argmin\{\nabla f(x)^Tv|||v||=1\}
 $$
-465
+上面范数取Euclid范数时即为梯度下降，采用二次范数$||·||_P$时，$\Delta x_{nsd}=-(\nabla f(x)^TP^{-1}\nabla f(x))^{-1/2}P^{-1}\nabla f(x)$。
 
+**Newton方法**：$\Delta x_{nt}=-\nabla^2 f(x)^{-1}\nabla f(x)$，这其实等价于Hessian矩阵定义的二次范数下的最速下降方法
 
+可以表明，Newton方法的迭代过程分为两个阶段，第一阶段称为**阻尼Newton阶段**，步长t<1，线性收敛速度，第二阶段为**纯Newton阶段**，步长t=1，二次收敛速度。
+
+**自和谐函数**的Newton方法分析不依赖未知常数（强凸性常数、李普西茨常数），且具有仿射不变性。
+
+定义凸函数$f:R\to R$满足对所有x
+$$
+|f'''(x)|\leq 2f''(x)^{3/2}
+$$
+就是**自和谐**的。常数2可以被任何常数k替代。这个条件可以写成
+$$
+|\frac{d}{dt}(f''(t)^{-1/2})|\leq1
+$$
+由此得到$f''(t)$的上下界
+$$
+\frac{f''(0)}{(1+tf''(0)^{1/2})^2}\leq f''(t)\leq \frac{f''(0)}{(1-tf''(0)^{1/2})^2}
+$$
+由此可以得到次优性的界。
+
+### 等式约束优化
+
+$$
+\min f(x)\\s.t. Ax=b
+$$
+
+考虑二阶Taylor近似
+$$
+\min f(x+v)=f(x)+\nabla f(x)^Tv+(1/2)v^T\nabla^2f(x)v\\
+s.t.A(x+v)=b
+$$
+**Newton方向**$\Delta x_{nt}$由以下方程确定
+$$
+\begin{pmatrix}\nabla^2f(x)&A^T\\A&0\end{pmatrix}\begin{pmatrix}\Delta x_{nt}\\w\end{pmatrix}=\begin{pmatrix}-\nabla f(x)\\0\end{pmatrix}
+$$
+对于**不可行初始点**的newton方向，
+$$
+\begin{pmatrix}\nabla^2f(x)&A^T\\A&0\end{pmatrix}\begin{pmatrix}\Delta x_{nt}\\w\end{pmatrix}=\begin{pmatrix}-\nabla f(x)\\b-Ax\end{pmatrix}
+$$
 
 ### 线性规划问题的解法
 
