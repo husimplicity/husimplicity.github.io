@@ -127,6 +127,40 @@ $$
 $$
 由此可以得到次优性的界。
 
+**共轭梯度法**：每次下降要求梯度在共轭空间里
+
+定义$\alpha,\beta$Q-共轭为$\alpha^TQ\beta = 0$
+
+每次计算
+$$
+g^{k+1}=\nabla f(x^{k+1})\\
+d^{k+1}=-g^{k+1}+\beta_kd^k=-g^{k+1}+\frac{(g^{k+1})^TQd^k}{(d^k)^TQd^k}d^k\\
+x^{k+2}=x^{k+1}+\alpha_{k+1}d^{k+1}=x^{k+1}-\frac{(g^{k+1})^Td^{k+1}}{(d^{k+1})^TQd^{k+1}}d^{k+1}
+$$
+对二次式$f(x)=\frac12 x^TQx-b^Tx$进行优化时可以证明$d^i$是Q-共轭的，因而
+$$
+(g^{k+1})^Td^i=0
+$$
+根据这个式子，
+$$
+\beta_k=\frac{(g^{k+1})^Tg^{k+1}}{(g^k)^Tg^k}
+$$
+$\alpha_k$可以通过线性搜索得到。以此避免计算Hessian矩阵。
+
+**Quasi-Newton**
+
+用$H^K$来拟合$F(X^k)^{-1}$
+$$
+d^k=-H_kg^k\\
+\alpha_k=\arg\min_\alpha f(x^k+\alpha d^k)\\
+x^{k+1}=x^k+\alpha_k d^k
+$$
+对$H_k$的更新有三种
+
++ Rank One Correction
++ Davidon-Fletcher-Powell（DFP）
++ Broyden-Fletcher-Goldfarb-Shanno（BFGS）
+
 ### 等式约束优化
 
 $$

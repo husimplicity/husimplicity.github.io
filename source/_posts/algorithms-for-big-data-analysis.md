@@ -1297,3 +1297,300 @@ $$
 $$
 G_{ii}=I_2,G\succeq 0
 $$
+
+### 数据降维
+
+SVD
+$$
+A\approx U\Sigma V^T=\sum_i\sigma_iu_iv_i^T
+$$
+Theorem 
+$$
+\min_{rank(B)=k}||A-B||_2=||A-A_k||_2=\sigma_{k+1}
+$$
+复杂度：O(nm^2)或者O(n^2m)
+
+但是如果我们只想要特征值/只想要k个特征向量/矩阵系数都可以减少计算量
+
+**PCA（主成分分析）**
+
+从X到Y，$y=z^Tx$，使得var(y)是最大的
+$$
+\max z^Tcov(X)z,s.t.||z||_2=1
+$$
+即找到cov(X)最大的特征值
+
+如果是多个特征
+$$
+\max Tr(M^Tcov(X)M),s.t.M^TM=I
+$$
+令
+$$
+\bar{X}=X-\frac1n11^TX=U\Sigma V^T
+$$
+那么
+$$
+cov(X)=V\Sigma^2V^T/(n-1)
+$$
+**MDS（多维尺度分析）**
+
+定义距离矩阵
+$$
+D_2(X)=(d_{ij}^2(X))_{ij}
+$$
+MDS就是找到Y
+$$
+\min_Y ||HD_2(X)H-HD_2(Y)H||_F^2
+$$
+Lemma：$H=I_n-\frac1n 11^T$，$\bar{X}=X-\frac1n11^TX$，那么
+$$
+B=-\frac12HD_2(X)H=\bar{X}\bar{X}^T
+$$
+引理的证明：
+$$
+D_2(X)_{ij}=x_ix_i^T+x_jx_j^T-2x_ix_j^T
+$$
+令$K=XX^T$，$w=diag(K)$，那么
+$$
+D_2(X)=w1^T+1w^T-2K
+$$
+根据引理可以看出：PCA和MDS是等价的，如下。
+$$
+\min_Y||B-YY^T||_F^2
+$$
+Extension of MDS：不同的距离度量，此时$K_{ij}=k(x_i,x_j)$
+
+**MVU**
+
+图G=(V,E)
+$$
+\max\sum_{i,j}||y_i-y_j||^2\\
+s.t.\sum_iy_i=0,||y_i-y_j||^2=||x_i-x_j||^2,\forall(i,j)\in E
+$$
+这个问题非凸
+
+定义$K=YY^T$，那么可以做半定规划松弛
+$$
+\max Tr(K)\\
+s.t.K\succeq 0,1^TK1=0\\
+K_{ii}-2K_{ij}+K_{jj}=D_{ij},\forall(i,j)\in E
+$$
+**Graph Realization and Sensor Network Localization Problems**
+
+蛋白质折叠问题？
+
+输入m个已知点$a_i$，n个未知点$x_j$，以及一些点对的距离，据此估计每个点的位置
+
+定义$Y=X^TX$，半定规划松弛
+$$
+(e_i-e_j)^TY(e_i-e_j)=d_{ij}^2\\
+(a_k;-e_j)^T\begin{pmatrix}I&X\\X^T&Y\end{pmatrix}(a_k;-e_j)=d_{kj}^2
+$$
+
+### 网络流问题
+
+Path、Directed Path、Cycle、Directed Cycle
+
+（这四个No node is repeated）
+
+Walks：Paths that can repeat nodes and arcs
+
+**最短路径**
+$$
+\min \sum c_{ij}x_{ij}\\
+s.t.\sum_jx_{sj}=1,\sum_ix_{it}=1,\\
+\sum_jx_{ij}=\sum_jx_{ji},\forall i\neq s,t\\
+x_{ij}\geq 0
+$$
+其对偶形式
+$$
+\max d(t)-d(s)\\
+s.t.d(j)-d(i)\leq c_{ij}
+$$
+**最大流**
+$$
+\max v\\
+s.t.\sum x_{sj}=v,\sum x_{jt}=v,\\
+\sum_jx_{ij}=\sum_jx_{ji},\forall i\neq s,t\\
+x_{ij}\leq c_{ij}
+$$
+**Max-Weight Bipartite Matching**
+
+find a set of edges covering each node at most once
+$$
+\max\sum w_{ij}x_{ij}\\
+s.t.\sum_jx_{ij}\leq 1,i\in L\\
+\sum_ix_{ij}\leq1,j\in R\\
+x_{ij}\in[0,1]
+$$
+LP relaxtion：最后一个条件放宽为$x_{ij}\geq 0$
+
+对偶问题：顶点覆盖，找到最小集合S，使得每条边至少一端在S里
+$$
+\min\sum_iy_i\\
+s.t.y_i+y_j\geq w_{ij},\:(i,j)\in A\\
+y_i\geq 0
+$$
+定义：矩阵A Totally Unimodular如果每个正方形子矩阵特征值为0,1或-1
+
+定理：A totoal unimodular，b是整数向量，Ax=b的解为整数
+
+Claim: The constraint matrix of the bipartite matching LP is totally unimodular.
+
+**Modularity Maximization for Coummunity Detection**
+
+define partition matrix X，$X_{ij}=1$，如果i和j在同一个社群，否则为0
+
+modularity (MEJ Newman, M Girvan, 2004) defined by
+$$
+Q=<A-\frac{1}{2\lambda}dd^T,X>,\lambda=|E|
+$$
+SDP 松弛后
+$$
+\max<A-\frac1{2\lambda}dd^T,X>\\
+s.t.X\succ0,0\leq X_{ij}\leq 1,X_{ii}=1
+$$
+为了进一步简化，进行非凸松弛
+$$
+\min<-A+\frac1{2\lambda}dd^T,UU^T>\\
+s.t.||u_i||^2=1,||u_i||_0\leq p,U\geq0
+$$
+算法：固定U其他行，最小化第i行
+$$
+u_i=\arg\min f(u_1,u_2,...,x,...,u_n)+\frac\sigma2||x-\bar{u_i}||^2
+$$
+
+### 次模优化
+
+推荐系统：Relevance and Diversity
+
+简单的抽象模型：用户集W，广告集V，对每个广告i，有用户集合$S_i$，定义
+$$
+F(A)=|\bigcup_{i\in A}S_i|
+$$
+优化问题选在k篇来最大化用户覆盖
+$$
+\max_{|A|<k}F(A)
+$$
+这是NP-hard问题
+
+**定义**
+
+模函数F，如果对任意A，B
+$$
+F(A)+F(B)=F(A\cap B)+F(A\cup B)
+$$
+模函数可以写成
+$$
+F(A)=F(\emptyset)+\sum_{a\in A}(F(\{a\})-F(\emptyset))
+$$
+显然模函数单调、非负
+
+次模函数F，如果对任意A，B
+$$
+F(A)+F(B)\geq F(A\cap B)+F(A\cup B)
+$$
+（次模函数的另一种定义，边际效益递减）对任意$A\subseteq B$，$s\notin B$
+$$
+F(B\cup\{s\})-F(B)\leq F(A\cup\{s\})-F(A)
+$$
+性质：$F(A)=\sum_i\lambda_i F_i(A)$也是次模函数
+
+性质：次模函数F限制在集合W上也是次模函数
+
+性质：凹函数复合模函数是次模函数
+
+定义 coverage function $cover_d(c)=p(d\:covers\:c)$，集合coverage function
+$$
+cover_A(c)=1-\prod_{d\in A}(1-cover_d(c))
+$$
+原式化作
+$$
+\max_{|A|\leq k}F(A)=\sum_cw_ccover_A(c)
+$$
+**回到原问题**
+
+这是个次模最大值问题
+
+定理：在一般条件下，贪心法的解
+$$
+F(A)\geq(1-1/e)*optimal-value\approx63\%
+$$
+引理：F单调+次模，那么$F_A(S)=F(A\cup S)-F(A)$是单调+次模
+
+引理：如果F正则+次模，那么存在$j\in A$，$F(\{j\})\geq \frac{1}{|A|}F(A)$
+
+证明：k词迭代之后，$F(A^\*)-F(A_{k})$ shrink to $(1-1/k)^k<(1-1/e)$
+
+贪心法的改进：“Lazy” Greedy，保持ordered list，只重新计算top的更新
+
+**次模最小化**
+$$
+\min F(S)\\
+s.t.S\subseteq X
+$$
+多项式时间算法
+
+Choquet integral - Lovasz Extention：将$\{0,1\}$上定义的函数拓展为$[0,1]$上的函数
+
+Given any set-function F and w such that $w_{j_1}\geq ...\geq w_{j_n}$
+$$
+f(w)=\sum_{k=1}^{n}w_{j_k}[F(\{j_1,...,j_k\})-F(\{j_1,...,f_{k-1}\})]\\
+=\sum_{k=1}^{n-1}(w_{j_k}-w_{j_{k+1}})F(\{j_1,...,j_k\})+w_{j_n}F(\{j_1,...,j_n\})
+$$
+实际上
+$$
+f(w)=\max_{s\in B(F)}w^ts
+$$
+Theorem(Lovasz, 1982) F是次模函数当且仅当f是凸的
+
+Theorem(Lovasz, 1982)
+$$
+\min F(A)=\min_{w\in\{0,1\}^n} f(w)=\min_{w\in[0,1]^n}f(w)
+$$
+第一个等号显然成立，第二个显然大于等于成立。
+
+any $w\in [0,1]^n$可以被分解为$w=\sum_{i=1}^n\lambda_i1_{B_i}$，其中$B_1\subseteq B_2\subseteq ... \subseteq B_n$，其中$\lambda\geq 0$，且$\lambda(V)\leq 1$
+$$
+f(w)=\sum_{i=1}^n\lambda_iF(B_i)\geq\sum_{i=1}^n\lambda_i\min F(A)\geq \min F(A)
+$$
+因而得证。
+
+迭代过程：
+$$
+w_t=\Pi_{[0,1]^n}(w_{t-1}-\frac C{\sqrt{t}}s_t)
+$$
+可以证明
+$$
+f(w_t)-\min f(w)\leq \frac C{\sqrt{t}}
+$$
+
+### 强化学习
+
+MRP（Markov Reward Process）
+$$
+E[\sum_{t=1}^T\gamma^{t-1}r_t|s_t]
+$$
+**Value Functions**
+
+On-Policy Value Function
+$$
+V^\pi(s)=\lim_{T\to\infty}E[\sum_{t=1}^T\gamma^{t-1}r_t|s_1=s]
+$$
+On-Policy Action-Value Function
+$$
+Q^\pi(s,a)=\lim_{T\to\infty}E[\sum_{t=1}^T\gamma^{t-1}r_t|s_1=s,a_1=a]
+$$
+Optimal Value Function
+$$
+V^*(s)=\max_\pi V^\pi(s)
+$$
+Optimal Action-Value Fucntion
+$$
+Q^*(s,a)=\max_\pi Q^\pi(s,a)
+$$
+**Bellman Equations**
+$$
+V^\pi(s)=E[R(s,a,s')+\gamma V^\pi(s')]\\
+Q^\pi(s,a)=E[R(s,a,s')+\gamma E_{a'\sim\pi}[Q^\pi(s',a')]]
+$$

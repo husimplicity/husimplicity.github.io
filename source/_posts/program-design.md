@@ -1866,6 +1866,47 @@ typedef int T[100]; // OK
 
 iterator分为四格：cur,first,last,node（前三个都是指向node中的位置）
 
+`deque<T>::insert()`
+
+```C++
+iterator insert(iterator position, const value_type& x){
+    if (position.cur == start.cur){
+        push_front(x);
+        return start;
+    }
+    else if (position.cur == finish.cur){
+        push_back(x);
+        iterator tmp = finish;
+        --tmp;
+        return tmp;
+    }
+    else{
+        return insert_aux(position, x);
+    }
+}
+
+template<class T, class Alloc, size_t BufSize>
+typename deque<T, Alloc, BufSize>::iterator
+deque<T, Alloc, BufSize>::insert_aux(iterator pos, const value_type& x){
+    difference_type index = pos - start;
+    value_type x_copy = x;
+    if (index < size() / 2){
+        push_front(front());
+        ...
+        copy(front2, pos1, front1);
+    }else{
+        push_back(back());
+        ...
+        copy_backward(pos, back2, back1);
+    }
+    *pos = x_copy;
+    return pos;
+}
+
+```
+
+`stack`和`queue`更像是适配器，底层默认deque实现。它们都不允许遍历，也不提供`iterator`
+
 ## 迭代器
 
 例：以`rotate`函数为例
