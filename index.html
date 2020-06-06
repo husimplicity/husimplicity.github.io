@@ -434,6 +434,524 @@ Q_{ABXY}^S=\{(<\phi,A_a^x\otimes B_b^y\phi>)_{a,b,x,y}:\phi\in H_A\otimes H_B,\\
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/06/database/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Hulieu">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hulieu">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/03/06/database/" class="post-title-link" itemprop="url">数据库概论</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-03-06 21:22:46" itemprop="dateCreated datePublished" datetime="2020-03-06T21:22:46+08:00">2020-03-06</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-05-16 13:27:23" itemprop="dateModified" datetime="2020-05-16T13:27:23+08:00">2020-05-16</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%8C%AB%E7%88%AA%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">猫爪记</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%8C%AB%E7%88%AA%E8%AE%B0/Computer-Science/" itemprop="url" rel="index"><span itemprop="name">Computer-Science</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="关系模型"><a href="#关系模型" class="headerlink" title="关系模型"></a>关系模型</h3><p>关系模型三要素：</p>
+<ul>
+<li>静态</li>
+<li>动态关系</li>
+<li>约束</li>
+</ul>
+<p>关系代数六种基本操作</p>
+<ul>
+<li>一元操作<ul>
+<li>选择$\sigma$</li>
+<li>投影$\pi$</li>
+<li>重命名$\rho$</li>
+</ul>
+</li>
+<li>多元操作<ul>
+<li>并集$\cup$</li>
+<li>差集$-$（先排序减少查重次数）</li>
+<li>笛卡尔积$\times$</li>
+</ul>
+</li>
+</ul>
+<p>其他操作：</p>
+<ul>
+<li>交运算：虽然可以用差集表示，但底层直接实现</li>
+<li>$\theta$连接：笛卡尔积代价很大，所以连接表操作时并非笛卡尔积+选择而是先排序+连接</li>
+<li>自然连接：选取相同属性列上取值相等的元组</li>
+<li>除操作：满足$q\times s\subseteq r$的最大关系q（可以表示为笛卡尔积+差集，实现是排序）</li>
+<li>赋值运算：临时表，不支持递归定义（连接次数和数据相关）</li>
+<li>外连接：</li>
+<li>聚集函数：五个函数 sum、count、mean、max、mean（-distinct）</li>
+<li>分组和聚集函数</li>
+<li>广义投影：投影+计算</li>
+</ul>
+<p>删除/修改操作</p>
+<p>空值返回Unknown，计算为false</p>
+<p>视图View：虚表，限制数据访问范围，作为基本表和外模式之间的映像；更新原表需要满足列数一样等限制</p>
+<p>物化视图：1、频繁使用的；2、固定的</p>
+<p>关系代数表达式的等价规则：oracle有约50条等价优化规则</p>
+<p>关系代数树：合并投影，投影/选择尽可能移向叶节点</p>
+<p>元组关系演算：存在/任意/否</p>
+<p><u>元组关系演算与关系代数等价</u></p>
+<h3 id="SQL概述"><a href="#SQL概述" class="headerlink" title="SQL概述"></a>SQL概述</h3><ul>
+<li>数据操作：SELECT，INSERT，UPDATE，DELETE</li>
+<li>数据定义：CREATE，ALTER，DROP</li>
+<li>数据控制：GRANT，REVOKE</li>
+</ul>
+<p><strong>SQL查询和关系模型</strong></p>
+<ul>
+<li>SQL Parser</li>
+<li>Query Optimization and Execution</li>
+<li>Relational Operators（基本运算实现）</li>
+<li>Files and Access Methods（堆文件、顺序文件、B+树）</li>
+<li>Buffer Management（数据库特性的缓存管理）</li>
+<li>Disk Space Management（定长纪录、非定长纪录）</li>
+</ul>
+<p>SQL和关系代数的差别</p>
+<ul>
+<li>SQL引入排序符号</li>
+<li>SQL支持单值集合直接使用</li>
+<li>SQL投影默认不去重（去重加distinct），集合默认去重（不去重加All）</li>
+<li>SQL支持递归、group by等操作</li>
+</ul>
+<p>SQL查询语句</p>
+<ul>
+<li>SELECT子句：支持*、支持四则运算、支持不加FROM实现数值运算</li>
+<li>FROM子句</li>
+<li>WHERE子句</li>
+</ul>
+<p>其他语句</p>
+<ul>
+<li><p>去重distinct</p>
+</li>
+<li><p>ORDER BY排序</p>
+</li>
+<li><p>AS重命名（可省略AS）</p>
+</li>
+<li><p>字符串操作：(not) like “”，</p>
+<p><code>%</code>匹配零个或多个，<code>_</code>匹配任意单个字符，<code>escape \</code>转义字符</p>
+</li>
+</ul>
+<p>关系连接</p>
+<ul>
+<li>连接类型：<code>inner join</code> <code>left outer join</code> <code>right outer join</code> <code>full outer join</code></li>
+<li>链接条件：<code>nature</code> <code>on&lt;谓词&gt;</code> `using(A1,A2,..,An)</li>
+</ul>
+<p><u>写法比较简单，并不标准，执行和集合操作等价</u></p>
+<p>集合操作</p>
+<p>union/intersect/except</p>
+<p><u>集合操作是自动去重的，不去重要加上<code>all</code></u></p>
+<p>聚集函数</p>
+<p><code>max</code> <code>min</code> <code>avg</code> <code>sum</code> <code>count</code></p>
+<p>如果select后有聚集函数，则非聚集函数列必须在<code>group by</code>中出现</p>
+<p>分组</p>
+<p><code>group by 列名 [having 条件表达式]</code></p>
+<p>空值</p>
+<p><code>is [not] null</code></p>
+<p>空值参与算术运算，结果也为null，逻辑运算为false，聚集函数直接忽略</p>
+<p><code>ISNULL(check_expression,replacement)</code>：如果check_expression为空则用replacement替代</p>
+<p>嵌套子查询</p>
+<ul>
+<li>集合成员资格：<code>in</code></li>
+<li>集合之间比较：<code>&gt;= all</code> <code>some</code> </li>
+<li>集合基数的测试<ul>
+<li>测试集合是否为空 <code>[not] exists</code></li>
+<li>测试集合是否存在重复元组 <code>unique</code> 没有重复元组则返回true（可用count替代所以并不常用）</li>
+</ul>
+</li>
+</ul>
+<p>派生关系</p>
+<p><code>AS</code>命名为临时关系 </p>
+<p>临时视图</p>
+<p><code>with ... as ..., ... as ... select ...</code> </p>
+<p><strong>SQL修改功能</strong></p>
+<p><code>insert into 表名 [列名] values (...)</code> 插入一条指定好值的元组</p>
+<p><code>insert into 表名 [列名] (子查询)</code>插入子查询结果的若干条元组</p>
+<p>多行数据的插入可以用union实现</p>
+<p><code>delete from 表名 [where 条件表达式]</code></p>
+<p><code>truncate table</code>删除表中所有行（比delete快，但不能带条件）</p>
+<p><code>update 表名 set 列名=表达式|子查询 [where 条件表达式]</code></p>
+<p> ORACLE数据库支持 <code>case</code> <code>when</code>根据条件update</p>
+<p>SQL Servert支持用其他表更新某个表的数据（注意可能出现结果不确定的情况）</p>
+<p><strong>视图</strong></p>
+<p><code>create view view_name [列名] as (查询表达式) [with check option]</code></p>
+<p>取消视图<code>drop view view_name</code></p>
+<p>用视图更新原表需要满足很多条件，视图更新约束如下</p>
+<ul>
+<li>有主码</li>
+<li>select子句目标列不能包括聚集函数，不能有group by</li>
+<li>select子句不能用distinct</li>
+<li>不能包括计算出的列</li>
+</ul>
+<p><strong>事务</strong></p>
+<p>大多是数据库中，每个SQL执行成功后自动提交</p>
+<p>每个事务包含一个语句</p>
+<p>我们可以取消自动提交，使之支持多事务</p>
+<p><strong>数据定义语言（DDL）</strong></p>
+<p>域定义：</p>
+<p>基本表的定义：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> 表名 (</span><br><span class="line">    列名 数据类型 [<span class="keyword">default</span> 缺省值] [<span class="keyword">not</span> <span class="literal">null</span>] </span><br><span class="line">    [, primary <span class="keyword">key</span> (列名)] </span><br><span class="line">    [, <span class="keyword">foreign</span> <span class="keyword">key</span> (列名)] </span><br><span class="line">    [, <span class="keyword">check</span>(约束条件)]</span><br><span class="line">)<span class="string">`</span></span><br></pre></td></tr></table></figure>
+<p>修改表的定义</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> 表名</span><br><span class="line">[<span class="keyword">add</span> 子句] 增加新列和约束</span><br><span class="line">[<span class="keyword">drop</span> 子句] 删除列和约束 某些数据库不支持</span><br><span class="line">[<span class="keyword">modify</span> 子句] 修改列定义</span><br></pre></td></tr></table></figure>
+<p>删除表 <code>drop table 表名</code></p>
+<p>索引的定义</p>
+<p><code>create [unique] [clustr] index 索引名 on 表名 (列名[asc/desc])</code></p>
+<p>unique：唯一性索引，不允许不同行索引值相同</p>
+<p>cluster：聚集索引，影响物理存储位置，一张表只能有一个聚集索引（主要影响区间查询速度）</p>
+<p><u>如果是非unique且非cluster的索引可能速度反而更慢</u></p>
+<p>删除索引 <code>drop index 索引名</code></p>
+<h3 id="高级SQL"><a href="#高级SQL" class="headerlink" title="高级SQL"></a>高级SQL</h3><h4 id="完整性"><a href="#完整性" class="headerlink" title="完整性"></a>完整性</h4><h5 id="域约束："><a href="#域约束：" class="headerlink" title="域约束："></a>域约束：</h5><p><code>create domain 域名 域定义</code></p>
+<p>还可以通过<code>constraint value-test check(value &gt; 4)</code>或者更复杂的<code>constraint account-type-test check(value in (&#39;A&#39;, &#39;B&#39;))</code>甚至还可以使用动态check</p>
+<h5 id="引用完整性："><a href="#引用完整性：" class="headerlink" title="引用完整性："></a>引用完整性：</h5><p>删除操作根据外码定义方式决定<code>restrict</code> 不能删除 <code>cascade</code>  一起删除 <code>set null</code>设为空值</p>
+<h5 id="断言"><a href="#断言" class="headerlink" title="断言"></a>断言</h5><p><code>create assertion 断言名 check 语句</code> ：表明数据库所满足的条件，实现一般性约束。check约束、主码约束、外键约束可以看作其特例。</p>
+<p>断言会导致显著的代价。目前数据库一般不支持assertion。</p>
+<h4 id="功能增强"><a href="#功能增强" class="headerlink" title="功能增强"></a>功能增强</h4><h5 id="SQL数据分析-递归SQL："><a href="#SQL数据分析-递归SQL：" class="headerlink" title="SQL数据分析/递归SQL："></a>SQL数据分析/递归SQL：</h5><p>扩展<code>Group by</code>按照不同标准聚集—&gt;多维数据分析模型：</p>
+<ul>
+<li><code>rollup</code>  在指定属性列表的每个前缀上分组聚集的并集（相当于依次<code>group by</code>结果合集）</li>
+<li><code>cube</code>：2^n次<code>group by</code>合集</li>
+</ul>
+<h5 id="支持排序、支持扩展聚集函数"><a href="#支持排序、支持扩展聚集函数" class="headerlink" title="支持排序、支持扩展聚集函数"></a>支持排序、支持扩展聚集函数</h5><p>基本分析句法 <code>&lt;function name&gt; () OVER ([partition by &lt;exp1&gt;] order by &lt;exp2&gt; [ASC|DESC] [NULLS FIRST|NULLS LAST])</code> 其中<code>partition by</code>用以分组，<code>NULL FIRST</code>确定空值的处理</p>
+<p>排序函数<code>rank</code> <code>dense_rank</code>具体例子是<code>select student, rank() over (order by marks desc) from ...</code> <u>否则实现需要用连接+count</u></p>
+<p>滑动窗口<code>AVG(price) OVER (Order by date ROWS BETWEEN 3 PRECEDING AND 3 FOLLOWING)</code></p>
+<p>递归SQL <code>with A as (select ...(初始条件) union all select ... from A where ...)</code> 结束条件是A不再变化，<u>考虑到具体执行方式是分层执行，内层不支持聚集函数</u> </p>
+<h5 id="触发器"><a href="#触发器" class="headerlink" title="触发器"></a>触发器</h5><p>在SQL 99被引入，机制包括三点</p>
+<ul>
+<li>E 执行时机：触发动作为insert、delete或者update</li>
+<li>C 执行条件</li>
+<li>A 完成动作</li>
+</ul>
+<p><code>create trigger 触发器名字 after|before insert|delete|update [of 列名] on 表名</code></p>
+<p><code>referencing old|new table</code> 指定新旧数据</p>
+<p>示例</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TRIGGER</span> overdraft-<span class="keyword">trigger</span> <span class="keyword">AFTER</span> <span class="keyword">UPDATE</span> <span class="keyword">ON</span> <span class="keyword">account</span></span><br><span class="line"><span class="keyword">REFERENCING</span> <span class="keyword">NEW</span> <span class="keyword">ROW</span> <span class="keyword">AS</span> nrow <span class="keyword">FOR</span> <span class="keyword">EACH</span> <span class="keyword">ROW</span></span><br><span class="line"><span class="keyword">WHEN</span> nrow.balance &lt; <span class="number">0</span></span><br><span class="line"><span class="keyword">BEGIN</span> atomic</span><br><span class="line">    <span class="keyword">insert</span> <span class="keyword">into</span> ...</span><br><span class="line"><span class="keyword">END</span></span><br></pre></td></tr></table></figure>
+<p><u>功能强大，对数据库负担也很大</u></p>
+<p>可以用于实现数据一致性、维护概要表、完成特定审计、记录关键变化</p>
+<p>但是很难被优化、判定触发链终止条件比较复杂</p>
+<h5 id="存储过程"><a href="#存储过程" class="headerlink" title="存储过程"></a>存储过程</h5><p>数据库中的一段程序，执行代码会存储到数据库</p>
+<p>适合功能单一、逻辑复杂、相对集中的任务</p>
+<p>应用：手机月度账单计算</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">PROCEDURE</span> <span class="keyword">Move</span>(</span><br><span class="line">    <span class="keyword">IN</span> oldAddr <span class="built_in">VARCHAR</span>[<span class="number">255</span>],</span><br><span class="line">    <span class="keyword">IN</span> newAddr <span class="built_in">VARCHAR</span>[<span class="number">255</span>]</span><br><span class="line">)</span><br><span class="line"><span class="keyword">UPDATE</span> MovieStar</span><br><span class="line"><span class="keyword">SET</span> address = newAddr</span><br><span class="line"><span class="keyword">WHERE</span> address = oldAddr;</span><br></pre></td></tr></table></figure>
+<p>使用方式<code>CALL Move(&quot;old&quot;, &quot;new&quot;)</code></p>
+<p>安全性+性能+可维护性</p>
+<h5 id="嵌入式SQL"><a href="#嵌入式SQL" class="headerlink" title="嵌入式SQL"></a>嵌入式SQL</h5><p>SQL提供的预编译器将SQL语句预编译为C语句</p>
+<p>如果返回只有一条记录可以用<code>select ... into ...</code></p>
+<p>返回多个记录用<u>游标</u>（相当于迭代器）<code>fetch</code></p>
+<p>游标分为滚动游标（可以取任意元组）、非滚动游标（只能顺序取下一个元组）、更新游标（增加更新锁）</p>
+<p>使用游标需要先声明，再打开，然后检索。之后需要关闭和释放。</p>
+<p><code>declare 游标名[scroll] cursor for select ... [for update]</code></p>
+<p><code>open</code>  <code>fetch ... from 游标名</code> <code>close</code> <code>free</code></p>
+<p>通过游标更新<code>update ... where current of 游标名</code></p>
+<h5 id="SQL模块化"><a href="#SQL模块化" class="headerlink" title="SQL模块化"></a>SQL模块化</h5><p>ODBC（Open Database Connectivity）标准：微软提出的应用程序和数据库交互的标准</p>
+<p>JDBC基于ODBC+跨平台</p>
+<p>好处：易实用，易移植，不需要预编译</p>
+<p>缺点：动态绑定，执行效率低，运行时检查SQL语法</p>
+<h5 id="图数据查询"><a href="#图数据查询" class="headerlink" title="图数据查询"></a>图数据查询</h5><p>创建点<code>CREATE TABLE 表名 (...) AS NODE;</code></p>
+<p>创建边<code>CREATE TABLE 表名 (...) AS EDGE;</code></p>
+<p>查询：<code>... WHERE MATCH (点名-(边名)-&gt;点名[-...-&gt;...])</code></p>
+<h4 id="安全性"><a href="#安全性" class="headerlink" title="安全性"></a>安全性</h4><p>防止不合法使用造成的数据<em>泄露</em>和<em>破坏</em></p>
+<h5 id="安全性控制"><a href="#安全性控制" class="headerlink" title="安全性控制"></a>安全性控制</h5><p>DBA</p>
+<p>完备的策略是收回用户权限的时候，删除用户给出的权限和<u>不是从管理员出发的给这用户的权限</u>。</p>
+<p>每一个权限应该形成从管理员出发的完整的权限链</p>
+<p>授权命令<code>GRANT 表级权限 ON 表名|视图名 TO 用户 [WITH GRANT OPTION]</code></p>
+<p>表级权限包括select,update,…,以及 all。select和update可以指定列名</p>
+<p><code>with grant option</code>表示用户可以再把权限授予其他用户</p>
+<p>收回权限 <code>REVOKE</code> 用法和授权一样</p>
+<p>GRANTh和REVOKE权限不能细化到某个元组，但是可以通过<u>和视图结合支持元组级别授权</u></p>
+<p>基于<u>角色</u>的安全访问控制：<code>CREATE ROLE 角色名</code> <code>GRANT 角色名 TO 用户</code></p>
+<h5 id="自主访问控制"><a href="#自主访问控制" class="headerlink" title="自主访问控制"></a>自主访问控制</h5><p>DAC：基于用户-对象权限访问矩阵和授权机制</p>
+<p>桔皮书C1级别</p>
+<h5 id="强制访问控制"><a href="#强制访问控制" class="headerlink" title="强制访问控制"></a>强制访问控制</h5><p>MAC：每一个数据库对象有安全级别，用户也有安全级别</p>
+<p>桔皮书B1级别</p>
+<p>两条规则：</p>
+<ul>
+<li><p>主体级别&gt;=客体 才能读</p>
+</li>
+<li><p>主体=客体 才能写</p>
+</li>
+</ul>
+<p>修正规则：</p>
+<ul>
+<li>主体级别 &lt;= 客体 才能写</li>
+<li>用户可以为写入数据对象赋予高于自己的级别</li>
+</ul>
+<p>共同点</p>
+<ul>
+<li>禁止高级别主体更新低级别数据</li>
+<li>禁止低级别主体查询高级别数据</li>
+</ul>
+<p><u>Multilevel Relation</u>：每个数据用标签表明写入的级别（可以有相同主码）</p>
+<h5 id="审计"><a href="#审计" class="headerlink" title="审计"></a>审计</h5><p>DBA事前，审计事后</p>
+<p>审计权限在DBA之外</p>
+<h5 id="SQL注入攻击"><a href="#SQL注入攻击" class="headerlink" title="SQL注入攻击"></a>SQL注入攻击</h5><p>例1</p>
+<p>在username输入<code>&#39;;DROP TABLE USERS; --</code></p>
+<p>那么后台验证时执行 </p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">password</span> <span class="keyword">FROM</span> <span class="keyword">USERS</span> <span class="keyword">WHERE</span> username <span class="keyword">IS</span> <span class="string">''</span>;<span class="keyword">DROP</span> <span class="keyword">TABLE</span> <span class="keyword">USERS</span>; <span class="comment">--'</span></span><br></pre></td></tr></table></figure>
+<p>(<code>--</code>是SQL注释符号，保证语句正确性)</p>
+<p>例2</p>
+<p>在参数输入 <code>0 OR 1=1</code> 获得更多数据</p>
+<p>其他</p>
+<ul>
+<li>通过特殊函数，使得服务器反馈详细信息，如版本和补丁信息</li>
+<li>分析反馈错误信息，获取模式信息，例如 <code>union select top 1 name from sysobjects</code>报错将’admin’转换为int时失败</li>
+</ul>
+<p>解决方法</p>
+<ul>
+<li>动态绑定SQL语句：应用程序+后台数据，将输入作为参数接收</li>
+<li>验证所有的输入：验证输入有效性，防止注释符号等</li>
+<li>设置合理权限</li>
+</ul>
+<h3 id="实体关系模型"><a href="#实体关系模型" class="headerlink" title="实体关系模型"></a>实体关系模型</h3><p>标准Entity-Relationship图</p>
+<p>E-R图：用以交流，需要表达</p>
+<ul>
+<li>实体（方形）</li>
+<li>关系（菱形）</li>
+<li>属性（椭圆）</li>
+<li>多值属性（双椭圆）</li>
+<li>派生属性（虚椭圆）</li>
+<li>码（主码）</li>
+<li>参与（单线）/完全参与（双线）</li>
+<li>多对一/一对一（箭头）：此时不一定需要关系表</li>
+</ul>
+<p>扩展属性（<em>微妙</em>）</p>
+<ul>
+<li>存在依赖（一个实体存在依赖于另一个实体）</li>
+<li>弱实体集（实体自身的属性不足以区分自己）（双长方形，需要以双菱形标识联系）</li>
+<li>父类-子类（标记为ISA三角形）<ul>
+<li>成员资格由条件定义/用户定义</li>
+<li>子类不相交/有重叠</li>
+</ul>
+</li>
+</ul>
+<p>E-R图转换为表关系</p>
+<ul>
+<li>一般情况：属性对应多列</li>
+<li>复合属性：不支持</li>
+<li>多值属性：新的关系表</li>
+<li><p>一对一联系：</p>
+<ul>
+<li>均部分参与：定义为新的关系</li>
+<li>一方全部参与：作为一列，省略关系表</li>
+</ul>
+</li>
+<li><p>一对多：作为列</p>
+</li>
+<li>多对多：关系表</li>
+<li>弱实体：加入依赖强实体的码</li>
+<li>ISA：三表方案/两表方案</li>
+</ul>
+<p><strong>E-R模型的设计</strong></p>
+<ol>
+<li>需求分析</li>
+<li>确定局部结构范围</li>
+<li>实体定义</li>
+<li>联系定义</li>
+<li>属性分配</li>
+<li>局部E-R设计</li>
+</ol>
+<p>…之后…</p>
+<ol>
+<li>局部E-R图</li>
+<li>确定公共实体类型</li>
+<li>合并局部E-R</li>
+<li>检查并消除冲突（属性冲突、命名冲突、结构冲突）</li>
+<li>全局E-R优化</li>
+</ol>
+<p>工具：PowerDesigner</p>
+<h3 id="关系数据库设计"><a href="#关系数据库设计" class="headerlink" title="关系数据库设计"></a>关系数据库设计</h3><ol>
+<li>需求分析</li>
+<li>概要设计（E-R图）</li>
+<li>逻辑设计（DBMS模型）</li>
+<li><strong>模式细化</strong>（规范化操作/逆规范化）</li>
+<li>物理设计</li>
+<li>安全设计</li>
+</ol>
+<p>不良设计—&gt;范式—&gt;模式分解—&gt;去范式的模式设计</p>
+<h5 id="函数依赖"><a href="#函数依赖" class="headerlink" title="函数依赖"></a>函数依赖</h5><p>问题：数据冗余、插入/删除异常（限制信息表达能力）</p>
+<p>问题本质是<strong>函数依赖</strong>：对客观世界的提炼（而非根据数据得出）</p>
+<p>函数依赖分类</p>
+<ul>
+<li>平凡依赖：$Y\subset X$，$X\to Y$显然成立</li>
+<li>完全/部分依赖：是否存在X的子集$X’$，$X’\to Y$</li>
+<li>传递函数依赖：$X\to Y$，$Y\to Z$，且X不依赖于Y，$(X\cup Y)\cap Z=null$，称Z对X传递函数依赖。</li>
+</ul>
+<p><u>SQL没用提供函数依赖的支持，但是可以通过断言实现</u></p>
+<p><strong>多值依赖</strong>：</p>
+<p>关系U=(X,Y,Z)，给定(x,z)，有一组y，这组y仅仅取决于x而与z无关，此时y、z都是多值依赖于x（具有对称性），如果z是空集，则为平凡的多值依赖。函数依赖是多值依赖的特例。</p>
+<p>多值依赖的有效性与属性集范围有关（增加属性不一定成立，而减少属性一定成立）</p>
+<p>这是1NF范式的要求导致的</p>
+<p><strong>码的术语</strong>：</p>
+<ul>
+<li>属性K决定关系U，称K为<strong>超码</strong></li>
+<li>U完全依赖于K，称K为<strong>候选码</strong></li>
+<li>候选码中选一个作为<strong>主码</strong></li>
+<li>包括在任一候选码中的属性称为<strong>主属性</strong></li>
+<li>关系模式的码由整个属性组成，称为<strong>全码</strong>，（此时不存在非平凡的函数依赖）</li>
+</ul>
+<h5 id="范式"><a href="#范式" class="headerlink" title="范式"></a>范式</h5><ul>
+<li>1NF：元素不可再分（考虑查询代价）</li>
+<li>2NF：非主属性完全依赖于码（考虑数据冗余及插入/删除异常）</li>
+<li>3NF：不存在非主属性对码<em>传递依赖</em>（同上）</li>
+<li>BCNF：不存在主属性对码的依赖</li>
+<li>4NF：不存在对码的多值依赖（主要是冗余）</li>
+<li>5NF</li>
+</ul>
+<p>一般3NF/BCNF综合收益最高</p>
+<script type="math/tex; mode=display">
+BCNF\subset 3NF\subset 2NF</script><p>模式分解</p>
+<p>模式分解的要求</p>
+<ul>
+<li>无损</li>
+<li>保持依赖</li>
+<li>无冗余</li>
+</ul>
+<h5 id="Armstrong公理系统"><a href="#Armstrong公理系统" class="headerlink" title="Armstrong公理系统"></a>Armstrong公理系统</h5><p>正确的、完备的推理规则集</p>
+<p>Armstrong公理：</p>
+<ul>
+<li>自反律：$Y\subset X\Rightarrow X\to Y$</li>
+<li>增广律：$X\to Y\Rightarrow XZ\to YZ$</li>
+<li>传递性</li>
+</ul>
+<p>根据公理导出的规则</p>
+<ul>
+<li>合并律：$X\to Y,\:X\to Z\Rightarrow X\to YZ$</li>
+<li>分解律：上式反向</li>
+<li>伪传递率：$X\to Y,\: YW\to Z\Rightarrow XW\to Z$</li>
+</ul>
+<p><u>闭包的概念</u></p>
+<h5 id="候选码的计算"><a href="#候选码的计算" class="headerlink" title="候选码的计算"></a>候选码的计算</h5><p>考察属性出现在依赖F左边还是右边</p>
+<p>启发式规则</p>
+<ul>
+<li>左部属性必是主属性</li>
+<li>右部属性必是非主属性</li>
+<li>外部属性必是主属性</li>
+</ul>
+<h5 id="模式分解相关算法"><a href="#模式分解相关算法" class="headerlink" title="模式分解相关算法"></a>模式分解相关算法</h5><p><strong>正则覆盖</strong>：没有冗余依赖的等价依赖集合</p>
+<p><strong>无损连接分解定理</strong>：分解$\rho=\{R_1,R_2\}$是无损连接分解的条件是$R_1\cap R_2\to R_1-R_2$或者$R_1\cap R_2\to R_2-R_1$</p>
+<p><strong>函数依赖保持</strong>：分解之后不需要连接表也可以验证函数依赖</p>
+<p><strong>BCNF分解算法</strong></p>
+<p>如果模式$R_i$不属于BCNF，那么找到$R_i$上的非平凡函数依赖$\alpha\to\beta$使得$\alpha\to R_i$不属于$F^+$（即$\alpha$不是码），那么将$R_i$分解为$R_i-\beta$和$(\alpha,\beta)$</p>
+<p><strong>3NF分解算法</strong></p>
+<p>正则覆盖的每个依赖是一张表</p>
+<p>如果没有模式包含R的候选码，则再加一张表</p>
+<p><u>3NF分解是函数依赖保持的</u></p>
+<h3 id="事务"><a href="#事务" class="headerlink" title="事务"></a>事务</h3><p>事务是程序逻辑运行单位</p>
+<p>必须保持数据库的一致性</p>
+<p>ACID性质</p>
+<ul>
+<li>Atomicity：事务的原子性</li>
+<li>Consistency：保持数据库的一致性</li>
+<li>Isolation：每个事务不了解其他并发事务—依靠<strong>事务调度</strong>实现</li>
+<li>Durability：将更新永久化</li>
+</ul>
+<p>事务调度</p>
+<ul>
+<li><p>串行</p>
+</li>
+<li><p>并发—要求<strong>可串行化</strong>，即等价于某个串行调度</p>
+<p>两个事务的指令冲突当且仅当两者都存/取数据项Q，且至少有一个write指令</p>
+</li>
+</ul>
+<p><strong>视图可串行化</strong>是指在任意调度中，事务read到的值都是一样的。</p>
+<p><strong>冲突可串行化</strong>调度的结果相同</p>
+<p><u>视图可串行化而非冲突可串行化必有盲写（blind write，不读直接写）</u></p>
+<p>事务调度好坏的标准：可恢复性，要求撤销<em>读取了失败事务写入数据的</em>事务</p>
+<p>—&gt;<strong>无级联调度</strong>：不读没有commit的数据，一定是可恢复的</p>
+<p>冲突可串行化判定</p>
+<p>—&gt;<strong>优先图</strong>：要求不能有环，绘制方法是根据对一个数据的write有关的前后顺序判定箭头指向</p>
+<p>事务隔离性级别：</p>
+<ul>
+<li>serializable：串行（最高级别）</li>
+<li>repeatable read：可能发生幻象（没有index锁）</li>
+<li>read committed：重复读值可能改变（没有数据锁）</li>
+<li>read uncommitted：读脏数据</li>
+</ul>
+<h5 id="并发策略的实现"><a href="#并发策略的实现" class="headerlink" title="并发策略的实现"></a>并发策略的实现</h5><p>事务调度器</p>
+<p>事务协议</p>
+<ul>
+<li><p>悲观控制策略：采取等待的方式避免冲突</p>
+<p>两种锁：排他锁（X-锁）、共享锁（S-锁），这样调度器只负责锁的控制</p>
+<p>锁控制协议：两阶段锁协议，第一阶段只能获得锁，第二阶段只能释放锁，事务结束的顺序就是事务lock point的先后。</p>
+<p>改进：可能存在级联回滚，提交时释放锁</p>
+<ul>
+<li>严格（Strict）：提交时才能释放排它锁</li>
+<li>严密（Rigorous）：提交时才能释放锁</li>
+</ul>
+<p>带有锁转换的两阶段锁协议：提高并发性（并无副作用）</p>
+<p>锁的自动获得：read/write</p>
+<p>锁的自动释放：commit </p>
+<p><u>另一种方式：图协议，要求所有数据项施加偏序</u></p>
+<p><u>另一种方式：树协议，避免重复加锁，缺陷是假设了数据的树状结构</u></p>
+<p><u>另一种方式：多粒度协议—多粒度锁（IS、IX、SIX锁，其中I表示其后裔）</u></p>
+<p>共同缺陷：死锁，两种处理方法，都需要回滚</p>
+<ul>
+<li>预防：预先占据所需全部资源/资源预先排序/事务排序（wait-die非抢占式和wound-wait抢占式，都使得老事务具有对新事务的优先级）</li>
+<li>检测+恢复：基于时间戳的协议（空间代价）—&gt;Thomas写规则，会被覆盖的Write可以忽略不回滚</li>
+</ul>
+<p>多版本时间戳序列：方便回滚读取</p>
+<p>—&gt;多版本两阶段锁协议：区分只读事务和更新事务</p>
+</li>
+<li><p>乐观控制策略：采取事务回滚的方式避免冲突</p>
+</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/05/KMT-History/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -784,7 +1302,7 @@ Q_{ABXY}^S=\{(<\phi,A_a^x\otimes B_b^y\phi>)_{a,b,x,y}:\phi\in H_A\otimes H_B,\\
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-03-20 11:04:55" itemprop="dateModified" datetime="2020-03-20T11:04:55+08:00">2020-03-20</time>
+                <time title="Modified: 2020-05-20 15:01:06" itemprop="dateModified" datetime="2020-05-20T15:01:06+08:00">2020-05-20</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -811,24 +1329,7 @@ Q_{ABXY}^S=\{(<\phi,A_a^x\otimes B_b^y\phi>)_{a,b,x,y}:\phi\in H_A\otimes H_B,\\
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="单词"><a href="#单词" class="headerlink" title="单词"></a>单词</h1><h3 id="单词："><a href="#单词：" class="headerlink" title="单词："></a>单词：</h3><p>学生 がくせい</p>
-<p>留学生 りゆうがくせい</p>
-<p>教授 きようじゆ</p>
-<p>职员しやいん</p>
-<p>包 かばん</p>
-<p>本子 ノート</p>
-<p>伞 かさ</p>
-<p>鞋 くつ</p>
-<p>报纸 しんぶん</p>
-<p>杂志 ざつし</p>
-<p>照相机 カメラ</p>
-<p>电视机 テレビ</p>
-<p>照片 しやしん</p>
-<p>礼物 おみやげ</p>
-<p>电脑 パソコン</p>
-<p>JR ジエーアール</p>
-<p>朋友 ともだち</p>
-<h3 id="数字"><a href="#数字" class="headerlink" title="数字"></a>数字</h3><p>１　いち</p>
+          <h1 id="单词"><a href="#单词" class="headerlink" title="单词"></a>单词</h1><h3 id="数字"><a href="#数字" class="headerlink" title="数字"></a>数字</h3><p>１　いち</p>
 <p>２　に</p>
 <p>３　さん</p>
 <p>４　し／よん</p>
@@ -836,14 +1337,15 @@ Q_{ABXY}^S=\{(<\phi,A_a^x\otimes B_b^y\phi>)_{a,b,x,y}:\phi\in H_A\otimes H_B,\\
 <p>６　ろく</p>
 <p>７　しち／なな</p>
 <p>８　はち</p>
-<p>９　く／きゆう</p>
-<p>１０　じゆう</p>
+<p>９　く／きゅう</p>
+<p>10　じゅう</p>
+<p>100　ひゃく</p>
+<p>1000 せん</p>
+<p>0.1 れいてんいち</p>
 <h3 id="亲属"><a href="#亲属" class="headerlink" title="亲属"></a>亲属</h3><p>父亲 おどうさん</p>
 <p>母亲 おかあさん</p>
-<h3 id="地点"><a href="#地点" class="headerlink" title="地点"></a>地点</h3><p>百货商店 デパート</p>
-<p>图书馆 としよかん</p>
-<p>宾馆 ホテル</p>
-<p>便利店 コンビニ</p>
+<p>爷爷 おじいさん</p>
+<p>奶奶 おばあさん</p>
 <h3 id="方位"><a href="#方位" class="headerlink" title="方位"></a>方位</h3><p>上 うえ</p>
 <p>下　した</p>
 <p>前　まえ　</p>
@@ -851,31 +1353,37 @@ Q_{ABXY}^S=\{(<\phi,A_a^x\otimes B_b^y\phi>)_{a,b,x,y}:\phi\in H_A\otimes H_B,\\
 <p>相邻　となり</p>
 <p>中　なか</p>
 <p>外　そと</p>
-<h3 id="动物"><a href="#动物" class="headerlink" title="动物"></a>动物</h3><p>猫 ねこ</p>
-<p>狗 いぬ</p>
-<h3 id="星期"><a href="#星期" class="headerlink" title="星期"></a>星期</h3><p>周日 日曜日 にちようび</p>
+<h3 id="时间"><a href="#时间" class="headerlink" title="时间"></a>时间</h3><h4 id="星期"><a href="#星期" class="headerlink" title="星期"></a>星期</h4><p>周日 日曜日 にちようび</p>
 <p>周一 月曜日　げつようび</p>
 <p>周二 火曜日　かようび</p>
 <p>周三 水曜日　すいようび</p>
 <p>周四 木曜日　もくようび</p>
 <p>周五 金曜日　きんようび</p>
 <p>周六 土曜日　どようび</p>
-<h3 id="程度副词"><a href="#程度副词" class="headerlink" title="程度副词"></a>程度副词</h3><p>非常 とても／たいへん</p>
-<p>一点儿 すこし／ちよつと</p>
+<h4 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h4><p>…时 じ</p>
+<p>…分 ぶん</p>
+<p>前天 おととい</p>
+<p>昨天 きのう（昨日）</p>
+<p>今日 きょう（今日）</p>
+<p>明天 あした（明日）　</p>
+<p>后天 あさって　</p>
+<p>询问时间なんじ（几点）、いつ（什么时候）</p>
+<p>…开始 时间+から</p>
+<p>…结束 时间+まで</p>
+<p>ごろ在时间后面，表大概</p>
+<p>时间后面+過（す）ぎ 表示…过了</p>
+<h3 id="副词"><a href="#副词" class="headerlink" title="副词"></a>副词</h3><h4 id="程度副词"><a href="#程度副词" class="headerlink" title="程度副词"></a>程度副词</h4><p>非常 とても／たいへん</p>
+<p>一点儿　少（すこ）し／ちょっと</p>
 <p>不太 あまり～ません</p>
-<p>根本不 ぜんぜん～ません</p>
-<h3 id="频率副词"><a href="#频率副词" class="headerlink" title="频率副词"></a>频率副词</h3><p>总是 いつも</p>
+<p>根本不 全然（ぜんぜん）～ません</p>
+<p>正好 ちょうど</p>
+<h4 id="频率副词"><a href="#频率副词" class="headerlink" title="频率副词"></a>频率副词</h4><p>总是 いつも</p>
 <p>经常 よく</p>
-<p>偶尔 たまに</p>
-<p>有时 時々</p>
+<p>有时 時々（ときどき）</p>
+<p>偶尔 たまに（偶に）</p>
 <p>不太 あまり～ません</p>
 <p>从不 ぜんぜん～ません</p>
-<h3 id="连词"><a href="#连词" class="headerlink" title="连词"></a>连词</h3><p>表转折 でも</p>
-<p>表转折 けど</p>
-<p>表并列 そして</p>
-<p>所以 だから</p>
-<p>表“正如所料”  やはり（日常可用 やっぱり）</p>
-<p>但是 が （连接两个小句）</p>
+<h4 id="其他副词"><a href="#其他副词" class="headerlink" title="其他副词"></a>其他副词</h4><p>好好地，也表示速度慢 ゆっくり</p>
 <h3 id="动词1"><a href="#动词1" class="headerlink" title="动词1"></a>动词1</h3><p>休息 やすみます</p>
 <p>工作 はたらきます</p>
 <p>开始 はじまります（始まります）</p>
@@ -891,29 +1399,47 @@ Q_{ABXY}^S=\{(<\phi,A_a^x\otimes B_b^y\phi>)_{a,b,x,y}:\phi\in H_A\otimes H_B,\\
 <p>睡觉 ねます（寝ます）</p>
 <p>打（电话） かけます</p>
 <h3 id="动词3"><a href="#动词3" class="headerlink" title="动词3"></a>动词3</h3><p>学习 べんきようします（勉強します）</p>
-<h3 id="形容词"><a href="#形容词" class="headerlink" title="形容词"></a>形容词</h3><p>简单的 やさしい（易しい）</p>
+<h3 id="形容词１"><a href="#形容词１" class="headerlink" title="形容词１"></a>形容词１</h3><p>简单的 やさしい（易しい）</p>
 <p>难的 むずかしい（難しい）</p>
 <p>无聊的 つまらない</p>
 <p>有趣的 おもしろい（面白い）</p>
+<h3 id="其他-1"><a href="#其他-1" class="headerlink" title="其他"></a>其他</h3><p>合起来   まとめて</p>
+<h1 id="短语"><a href="#短语" class="headerlink" title="短语"></a>短语</h1><h3 id="疑问句"><a href="#疑问句" class="headerlink" title="疑问句"></a>疑问句</h3><p>问人用だれ，问东西用なん，问场所用どこ，</p>
+<p>问价格用いくら，</p>
+<p>询问时间なんじ（几点）、いつ（什么时候）</p>
+<p>问怎么样用 どんな+名词　询问材料（内容）用なんの</p>
+<p>询问对方意见どうですか，询问过去的事情どうでしだか，另一种询问方式いかがですか</p>
+<p>询问原因 どうしてですか，完整的问题是どうして　～の／ん　ですか</p>
+<p>多久 どの かかります</p>
 <h3 id="词义辨析"><a href="#词义辨析" class="headerlink" title="词义辨析"></a>词义辨析</h3><p>建筑物的家用いえ，指家人用うち</p>
-<p>刚刚，离现在很近たつたいま，稍前一点用さつき</p>
+<p>刚刚，离现在很近たったいま，稍前一点用さっき</p>
 <p>お湯（ゆ）指热水，水（みず）仅指凉水</p>
+<p>三种店从大到小：馆 かん 店 てん 屋 や </p>
+<p>从近到远これ、それ、あれ，修饰名词时要用この、その、あの，三个以上事物不能确定哪一个时用的疑问句どれ、どの</p>
+<p>指示场所时用ここ、そこ、あそこ表示位置关系</p>
+<p>声（こえ）是物体发出的声音，音（おと）是人/动物发出的声音。</p>
+<p>間（ま）もなく和もう　すく都表示不久的意思，但前者更加书面</p>
+<p>さらに和もっと都是更加的意思，前者更郑重</p>
+<p>长期爱好是趣味（しゅみ），兴趣是興味（きょうみ）</p>
 <h3 id="常用句子："><a href="#常用句子：" class="headerlink" title="常用句子："></a>常用句子：</h3><p>你好 こんにちは</p>
+<p>早上好 おはよう</p>
 <p>对不起 すみません</p>
 <p>请 どうそ</p>
 <p>请多关照 よろしく（おねがいします）</p>
 <p>初次见面 はじめまして</p>
-<p>是 そうです（+か 是应答时常用的说法，+ね用于同意对方的提议）</p>
+<p>是 そうです</p>
 <p>不是 ちがいます</p>
 <p>不知道 わかいますん</p>
 <p>非常 どうも</p>
-<p>感谢 ありがとうございまし</p>
+<p>感谢 （どうも）　ありがとう　ございます</p>
 <p>对不起（搭话、提出请求的时候） あのう</p>
-<p>表不完全有把握 たしか</p>
+<p>表不确定 たしか</p>
 <p>表正在思考 ええと</p>
 <p>我先走了 お先（さき）に失礼（しつれい）します</p>
-<p>欢迎光临 いらつしやいませ</p>
+<p>离开（还要返回该处） いってまいります／いってきます（比较随便） 回答（去吧） いってらっしゃい</p>
+<p>欢迎光临 いらっしゃいませ</p>
 <p>请给我（点餐/购物时的） ～を　ください</p>
+<p>明白了 かしこまりました</p>
 <p>那么（接过话题或者中断谈话） じやあ</p>
 <p>正合适 ちようど　いいです</p>
 <p>转换话题 ところで</p>
@@ -921,22 +1447,23 @@ Q_{ABXY}^S=\{(<\phi,A_a^x\otimes B_b^y\phi>)_{a,b,x,y}:\phi\in H_A\otimes H_B,\\
 <p>赶快（暗示其他动作等一会） とりあえず</p>
 <p>没错（口语） ちやんと</p>
 <p>大丈夫   だいじょうぶ</p>
-<p>根据…不同 ～に　よつて</p>
-<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><p>なん+量词+も+肯定形式 表示数量多</p>
+<p>根据…不同 ～に　よって</p>
+<p>搭话（难以启齿的事情） あのう</p>
+<p>打扰了（拜访别人） お邪魔（じゃま）します</p>
+<p>太好了 よかったです</p>
+<p>喜欢吗 気（き）に　入（い）りましたか</p>
+<p>简体会话中，常有はい说成うん，いいえ说成ううん</p>
+<p>感谢关照（分别的寒暄） お世話（せわ）に　なります。</p>
+<p>向…问好 ～に　よろしく　お伝（つた）え　ください</p>
+<p>请多保重 お元気で。</p>
+<p>一路平安 お気を　つけて</p>
+<h3 id="其他-2"><a href="#其他-2" class="headerlink" title="其他"></a>其他</h3><p>なん+量词+も+肯定形式 表示数量多</p>
 <p>だいぶ 强调程度高（变化中）</p>
-<h1 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h1><h3 id="语法-1"><a href="#语法-1" class="headerlink" title="语法"></a>语法</h3><p>从近到远これ、それ、あれ，修饰名词时要用この、その、あの，三个以上事物不能确定哪一个时用的疑问句どれ、どの</p>
-<p>知识场所时用ここ、そこ、あそこ表示位置关系</p>
-<p>问人用だれ，问东西用なん，问场所用どこ，问价格用いくら，询问时间なんじ、いつ</p>
-<p>问怎么样+名词用 どんな　询问材料（内容）用なんの</p>
-<p>も代替は的位子，相当于“也”</p>
-<p>と在两个名词中间，表示“和”，共同做某事的对象也用这个</p>
-<p>や和と的差异在于と列举所有项目，や只用于许多项目中的两项。</p>
+<h1 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h1><h3 id="语法-1"><a href="#语法-1" class="headerlink" title="语法"></a>语法</h3><p>と在两个名词中间，表示“和”，共同做某事的对象也用这个</p>
+<p>や和と的差异在于と列举所有项目，や只用于许多项目中的两项。や常与など呼应。</p>
 <p>か在名词之间，表示“或者”</p>
-<p>ごろ在时间后面，表大概</p>
-<p>は可以表对比，此时可以单独使用，也可以加在助词后面构成复合形式</p>
+<p>は可以表对比或者强调（此时发音略重），此时可以单独使用加在名词后面，也可以加在助词后面构成复合形式</p>
 <p>“何”根据后续音节不同，读音不同，基本读音是なに，但在助词の前面和量词前读なん，で前都可以　</p>
-<p>よ在句末用来表示提醒，读升调　</p>
-<p>~から表示原因</p>
 <p>たり表示列举：</p>
 <ul>
 <li>动词た形改为たり</li>
@@ -948,21 +1475,45 @@ Q_{ABXY}^S=\{(<\phi,A_a^x\otimes B_b^y\phi>)_{a,b,x,y}:\phi\in H_A\otimes H_B,\\
 <li>不包含疑问的疑问句：将动词、一类形容词变为简体形+か　どうか</li>
 <li>疑问词小句+か</li>
 </ul>
-<p>小句（简体形）+と+</p>
+<p>（人/物+は）+小句（必须是简体形）+と+</p>
 <ul>
-<li>おもいます 想…</li>
-<li>いいます 说…</li>
+<li>思（おも）います 想…</li>
+<li>言（い）います 说…</li>
 </ul>
-<p>～のです／んです 表示所讲的内容解释情况</p>
+<p>～のです／んです 表示所讲的内容与前句有关，包括解释情况等。前者更正式。</p>
 <p>～に　ついて 关于…</p>
-<h3 id="句法"><a href="#句法" class="headerlink" title="句法"></a>句法</h3><p>——は—— 可以表示 xx是xx，xx在xx</p>
-<p>句末+ね 表示征求同意</p>
-<p>疑问词+も+动词（否定）表示全面否定</p>
-<p>动词+ます／ません</p>
-<p>动词+ました／ませんでした（过去时）</p>
+<p>あまり+否定形式 表示程度不高</p>
+<h3 id="句末语气词"><a href="#句末语气词" class="headerlink" title="句末语气词"></a>句末语气词</h3><p>句末+ね 表示征求同意或者同意对方的提议</p>
+<p>句末+よね 对自己想法没有足够把握的时候的提议</p>
+<p>よ在句末用来表示提醒，读升调　</p>
+<p>+か 表示提问，也是应答时常用的说法</p>
+<p>+が 而不把话说完显得委婉含蓄</p>
+<p>二类形容词/名词+よ 一般是女性用</p>
+<p>+わ 一般是女性用</p>
+<h3 id="连词语法"><a href="#连词语法" class="headerlink" title="连词语法"></a>连词语法</h3><p>那么（中断谈话） では／じゃあ（不正式）</p>
+<p>所以 ですから／だから（不正式）</p>
+<p>表转折 でも</p>
+<p>表转折 けど</p>
+<p>表并列 そして</p>
+<p>表“正如所料”  やはり（日常可用 やっぱり）</p>
+<p>建议(口语) さあ</p>
+<p>表铺垫/转折 小句+が，小句</p>
+<h3 id="助词语法"><a href="#助词语法" class="headerlink" title="助词语法"></a>助词语法</h3><ul>
+<li>は：是…，在…</li>
+<li>で：用…方式，在…地点，动作的场所、工具、手段、原材料+で+动词</li>
+<li>が：<em>自动词</em>的宾语，或者表示<em>能力</em></li>
+<li>に：在…时间/地点，也表收付关系宾语的人</li>
+<li>を：<em>他动词</em>的宾语，名词（动作的对象）+を+动词，这里读作お，如果前面名词作话题时用は</li>
+<li>も：代替は的位子，相当于“也是”，另外，疑问词+も+动词（否定）表示全面否定</li>
+<li>から：从…，也可表示原因</li>
+<li>へ：去….</li>
+<li>より：比较的基准，空间/时间的起点</li>
+<li>かな：原本只用于自言自语，也用来表明信息不准确</li>
+<li>の：用于要求说明或确认</li>
+</ul>
 <p>表物体存在的两种用法</p>
 <ul>
-<li>（场所）に（物/人）が　あります／います</li>
+<li>（场所）には（物/人）が　あります／います</li>
 <li>（物/人）は（场所）に　あります／います</li>
 </ul>
 <p>表示动作时间的</p>
@@ -982,25 +1533,26 @@ Q_{ABXY}^S=\{(<\phi,A_a^x\otimes B_b^y\phi>)_{a,b,x,y}:\phi\in H_A\otimes H_B,\\
 <li>场所+へ+动词（干什么）+に+动词 去哪儿干什么，移动行为目的的动词去掉ます</li>
 <li>场所+を+动词 经过哪儿</li>
 </ul>
-<p>名词（动作的对象）+を+动词，这里读作お</p>
-<p>动作的场所、工具、手段、原材料+で+动词</p>
 <p>给予东西的表达</p>
 <ul>
-<li><p>名1（人）+は+名2（人）+に+名3（物）+を+あげます　表示1给2物品3</p>
-</li>
-<li><p>名1（人）+は+名2（人）+に+名3（物）+を+もらいます　表示1得到2的物品3</p>
-</li>
+<li>名1（人）+は+名2（人）+に+名3（物）+を+あげます　表示1给2物品3</li>
+<li>名1（人）+は+名2（人）+に+名3（物）+を+もらいます　表示1得到2的物品3</li>
 </ul>
-<p>あまり+否定形式 表示程度不高</p>
-<p>询问对方意见どうですか，询问过去的事情どうでしだか</p>
-<p>另一种询问方式いかがですか</p>
-<p>名词（主体）+は+名词（对象）+が+わかります／できます 会不会做某事</p>
+<p>名词（主体）+は+名词（对象）+が+わかります／できます 会/不会做某事</p>
 <p>名词（主体）+は+名词（对象）+が+ほしいです 想要什么</p>
-<p>名词（主体）+は+名词（对象）+を+动词+たいです 想要干什么（有时也用が）</p>
-<h3 id="动词语法"><a href="#动词语法" class="headerlink" title="动词语法"></a>动词语法</h3><p>三类动词：ます形去掉ます后，最后一个音位于い段的动词绝大部分属于一类；最后一个音位于え段的和少部分位于い段（初级大约15个）的属于第二类；来ます和します结尾的动词属于第三类。</p>
+<p>名词（主体）+は+名词（对象）+を+动词基本形+たいです 想要干什么（有时也用が）</p>
+<p>みんな＋で 表示动作主体的状态</p>
+<h3 id="动词语法"><a href="#动词语法" class="headerlink" title="动词语法"></a>动词语法</h3><p>动词+ます／ません</p>
+<p>动词+ました／ませんでした（过去时）</p>
+<p>三类动词：</p>
+<ul>
+<li>ます形去掉ます后，最后一个音位于い段的动词绝大部分属于一类；</li>
+<li>最后一个音位于え段的和少部分位于い段（初级大约15个）的属于第二类；</li>
+<li>来ます和します<em>结尾</em>的动词属于第三类。汉字/外来词+します构成新的单词。</li>
+</ul>
 <p><strong>动词て形</strong></p>
 <p>一类动词“て形”变换方式是去掉ます加て时，发音会有一些变化。</p>
-<p>き变いて或いで，びみに变んで，ちりい变つて，し变して</p>
+<p>き变いて或いで，ひみに变んで，ちりい变って，し变して</p>
 <p>二类和三类动词的“て形”变换方式是去掉ます直接加て。</p>
 <p>动词て形+动词 表示相继发生（也可以用 动词て形+から+动词，但から只能在一个句子里用一次）</p>
 <p>动词て形+ください 请某人做某事</p>
@@ -1009,45 +1561,52 @@ Q_{ABXY}^S=\{(<\phi,A_a^x\otimes B_b^y\phi>)_{a,b,x,y}:\phi\in H_A\otimes H_B,\\
 <p>动词て形+は+いけません 表示禁止</p>
 <p>（提问方式　～ても　いいですか）</p>
 <p>まだ+动词否定 相当于还没有</p>
-<p>动词+ましょう表示提议、也可用于回应提议</p>
+<p>动词将ます换成ましょう表示提议、也可用于回应提议</p>
 <p><strong>动词ない形</strong></p>
 <p>一类动词“ない形”变换方式是去掉ます最后一个音变相应的あ段音，然后加ない（注意い变成わ）。二、三类动词去掉ます直接加ない。</p>
 <p>动词ない形+で+ください 表示否定的命令</p>
-<p>动词ない形换成なければ+なりません表示必须</p>
-<p>动词ない形换成なくても+いいです表示不作也可以</p>
+<p>动词ない形换成なければ　なりません表示必须（口语也可以用ないと　いけません，常省略为ないと）</p>
+<p>动词ない形换成なくても+いいです表示不做也可以</p>
 <p><strong>动词基本形</strong></p>
-<p>一类动词的基本形最后发音为う段</p>
-<p>二、三类动词基本形为去掉ます加る</p>
-<p>名词+は+动词基本形+ことが　できます 询问可能（回答用できます／できません）</p>
+<p>一类动词的基本形最后发音变为う段</p>
+<p>二、三类动词基本形为去掉ます加る（します变为する）</p>
+<p><em>动词基本形+こと起到和名词相同的作用</em></p>
+<p>名词/人+は+动词基本形+ことが　できます 询问允许或者可以吗（回答用できます／できません）</p>
 <p>名词+は+动词基本形+こと　です 谓语是一种动作时使用</p>
 <p>动词基本形+まえに、～　动作发生在另一个动作之前</p>
 <p><strong>动词た形</strong></p>
 <p>就是动词て形的て改为た，で改为だ</p>
-<p>动词た形+ことが　あります 经历过</p>
-<p>动词た形+あとで、～　动作发生在另一个动作之后</p>
+<p>动词た形+ことが　あります 经历过（过去式）</p>
+<p>动词た形+後（あと）で、～　动作发生在另一个动作之后</p>
 <p>动词た形+ほうが　いいです 用于两种事物选择（否定用动词ない形）</p>
 <p>动词+ましょうか　提议</p>
 <p>动词ます形去掉ます加上かた就是“~的方法”的意思。</p>
-<p>动词+たり用来列举</p>
-<h3 id="形容词语法"><a href="#形容词语法" class="headerlink" title="形容词语法"></a>形容词语法</h3><p>形容词分两类，<strong>一类是以 い结尾</strong>，做谓语要加です</p>
+<p>动词+たり用来列举：动词+たり 动词+たり します</p>
+<p><strong>其他动词语法</strong></p>
+<p>动词+ませんか 表面是疑问，实际是提议</p>
+<p>动词ます形去掉ます加上方（かた）是“~的方法”的意思</p>
+<p>表示某个动作进行用  ～中（ちゅう）</p>
+<h3 id="形容词语法"><a href="#形容词语法" class="headerlink" title="形容词语法"></a>形容词语法</h3><p>形容词分两类，<strong>一类是以 い结尾</strong>，做<em>谓语</em>要加です</p>
 <p>名+は+一类形容词+です</p>
 <p>他的否定形式是将词尾的い变成く，再加上ないです或者ありません</p>
 <p>过去式是将词尾的い变为かつた，再加です</p>
 <p>过去形式的否定式是将词尾的い变成く，再加上ないつたです或者ありませんした</p>
-<p>一类形容词可以直接修饰名词</p>
-<p><strong>第二类是不以 い结尾</strong>，做谓语要加です，过去式是加でした</p>
+<p>一类形容词可以直接<em>修饰名词</em></p>
+<p><strong>第二类是不以 い结尾</strong>，做<em>谓语</em>要加です，过去式是加でした</p>
 <p>否定形式是＋では　ありません</p>
 <p>过去式的否定形式+ では　ありませんでした</p>
-<p>修饰名词时： 形容词+な+名词</p>
+<p><em>修饰名词</em>时： 形容词+な+名词</p>
+<p><u>形容词修饰名词时可以用 形容词+の 指代名词</u></p>
 <p><strong>表达情感的形容词</strong>（如喜欢等）</p>
 <p>名词（主体）+ は+名词（对象）+が+形容词+です</p>
 <p><strong>比较</strong></p>
-<p>名词（主体）+ は+名词（对象）+よい+形容词+です（主体比对象更XX）</p>
-<p>名词（主体）+ より+名词（对象）+の　ほうが+形容词+です（对象比主体更XX）</p>
-<p>名词（主体）+ は+名词（对象）+ほど+形容词否定形式（对象比主体更XX）</p>
+<p>名词（主体）+ は+名词（对象）+より+形容词+です（主体比对象更XX）</p>
+<p>名词（主体）+ より+名词（对象）+の　ほうが+形容词+です（相比主体，对象更XX）</p>
+<p>名词（主体）+ は+名词（对象）+ほど+形容词否定形式（主体不如对象XX） </p>
+<p>ほうが …比较…　（ほうが　いいです表示建议）</p>
 <p>いちばん最高级</p>
-<p>提问：名词+と+名词+と+どちらが+形容词+ですか（どちら指多个总称）</p>
-<p>回答：名词+の+ほうが，两者相当则用どちらも　～です</p>
+<p>提问：名词+と+名词+と+どちらが+形容词+ですか（どちら 哪个）</p>
+<p>回答：名词+の+ほうが+形容词，两者相当则用どちらも　～です</p>
 <p>问形容词时回答：形容词+ほうが+いいです</p>
 <p><strong>形容词连用</strong></p>
 <p>形容词て形+形容词 表并列（一类去掉い加くて，二类加で）</p>
@@ -1057,7 +1616,8 @@ Q_{ABXY}^S=\{(<\phi,A_a^x\otimes B_b^y\phi>)_{a,b,x,y}:\phi\in H_A\otimes H_B,\\
 <h3 id="量词语法"><a href="#量词语法" class="headerlink" title="量词语法"></a>量词语法</h3><p>量词用在动词前面 </p>
 <p>名词+が／を+数量+量词+动词</p>
 <p>数量+量词+で+500円（1个时不加）</p>
-<p>数量的词后面+くらい 表示大概</p>
+<p>数量的词后面+くらい／ぐらい 表示大概</p>
+<p>还有省去量词直接用３つ的</p>
 <h3 id="名词语法"><a href="#名词语法" class="headerlink" title="名词语法"></a>名词语法</h3><p>名词做谓语的时候加です，过去式是加でした</p>
 <p>否定形式是＋では　ありません</p>
 <p>过去式的否定形式+ では　ありませんでした</p>
@@ -1068,7 +1628,8 @@ Q_{ABXY}^S=\{(<\phi,A_a^x\otimes B_b^y\phi>)_{a,b,x,y}:\phi\in H_A\otimes H_B,\\
 <p>ここ、そこ、あそこ、どこ的礼貌用语こちら、そちら、あちら、どちら</p>
 <p>なかなか还不错，只能用于对下级</p>
 <p>ください（＋ませんか）表达请求</p>
-<h3 id="敬体形和简体形"><a href="#敬体形和简体形" class="headerlink" title="敬体形和简体形"></a>敬体形和简体形</h3><p>～ます／～です都是敬体形，用于对长辈或不亲密的人。动词的基本形、ない形、た形都属于简体形。</p>
+<p>…の　件（けん）　…一事，正式说法</p>
+<h3 id="敬体形和简体形"><a href="#敬体形和简体形" class="headerlink" title="敬体形和简体形"></a>敬体形和简体形</h3><p>动词～ます／～です都是敬体形，用于对长辈或不亲密的人。动词的基本形、ない形、た形都属于简体形。</p>
 <div class="table-container">
 <table>
 <thead>
@@ -1084,30 +1645,30 @@ Q_{ABXY}^S=\{(<\phi,A_a^x\otimes B_b^y\phi>)_{a,b,x,y}:\phi\in H_A\otimes H_B,\\
 <td>现在将来形式</td>
 <td>肯定</td>
 <td>～ます</td>
-<td>う段（基本形）</td>
+<td>う段和る（基本形）</td>
 </tr>
 <tr>
 <td></td>
 <td>否定</td>
 <td>～ません</td>
-<td>たい（たい形）</td>
+<td>あ段+ない（ない形）</td>
 </tr>
 <tr>
 <td>过去形式</td>
 <td>肯定</td>
 <td>～ました</td>
-<td>た（た形）</td>
+<td>て形变化+た（た形）</td>
 </tr>
 <tr>
 <td></td>
 <td>否定</td>
 <td>～ませんでした</td>
-<td>（なかした形）</td>
+<td>あ段+なかった（なかった形）</td>
 </tr>
 </tbody>
 </table>
 </div>
-<p>一类形容词、二类形容词和名词本身没有敬体形和简体形之分，只有作谓语的时候</p>
+<p>一类形容词、二类形容词和名词本身没有敬体形和简体形之分，<strong>只有作谓语的时候</strong></p>
 <p>一类形容词（い结尾）：</p>
 <div class="table-container">
 <table>
@@ -1135,14 +1696,14 @@ Q_{ABXY}^S=\{(<\phi,A_a^x\otimes B_b^y\phi>)_{a,b,x,y}:\phi\in H_A\otimes H_B,\\
 <tr>
 <td>过去形式</td>
 <td>肯定</td>
-<td>～かつたです</td>
-<td>～かした</td>
+<td>～かったです</td>
+<td>～かった</td>
 </tr>
 <tr>
 <td></td>
 <td>否定</td>
-<td>～く　なかしたです</td>
-<td>～く　なかした</td>
+<td>～く　なかったです</td>
+<td>～く　なかった</td>
 </tr>
 </tbody>
 </table>
@@ -1175,42 +1736,22 @@ Q_{ABXY}^S=\{(<\phi,A_a^x\otimes B_b^y\phi>)_{a,b,x,y}:\phi\in H_A\otimes H_B,\\
 <td>过去形式</td>
 <td>肯定</td>
 <td>～でした</td>
-<td>～だした</td>
+<td>～だった</td>
 </tr>
 <tr>
 <td></td>
 <td>否定</td>
 <td>～では　ありませんでした</td>
-<td>～では　なかした</td>
+<td>～では　なかった</td>
 </tr>
 </tbody>
 </table>
 </div>
-<p>名词差不多 过去形式的简体后缀改为だつた</p>
+<p>名词和二类形容词一样</p>
 <ul>
 <li>简体疑问省略敬体的ですか，读升调。</li>
 <li>かな和の这两个助词只用在简体形后面</li>
 </ul>
-<h1 id="拼音"><a href="#拼音" class="headerlink" title="拼音"></a>拼音</h1><p>前鼻音 -ん，后鼻音是-よ/ゆう</p>
-<p>翘舌音-ang/-ing/-ao -よう</p>
-<p>翘舌音-ong/-ou/-iu/-u -ゆう</p>
-<p>zh- ち-</p>
-<p>ch-/x- し-</p>
-<p>xian せん</p>
-<p>shi せい</p>
-<p>che/she/xie しや</p>
-<p>shang しやん</p>
-<p>yuan いん </p>
-<p>馆 かん</p>
-<p>屋 や</p>
-<p>店 てん</p>
-<p>v一般变成b</p>
-<p>附近 となり</p>
-<p>大的 おおきな</p>
-<p>考试 しけん（試験）</p>
-<p>おみやげ</p>
-<p>やすみ</p>
-<p>１６４</p>
 
       
     </div>
@@ -1261,7 +1802,7 @@ Q_{ABXY}^S=\{(<\phi,A_a^x\otimes B_b^y\phi>)_{a,b,x,y}:\phi\in H_A\otimes H_B,\\
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-04-08 23:03:02" itemprop="dateModified" datetime="2020-04-08T23:03:02+08:00">2020-04-08</time>
+                <time title="Modified: 2020-05-07 22:40:57" itemprop="dateModified" datetime="2020-05-07T22:40:57+08:00">2020-05-07</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1345,6 +1886,28 @@ f(x^+)-p^*\leq (1-m/M)(f(x)-p^*)</script><p>因此是<strong>线性收敛</stron
 |\frac{d}{dt}(f''(t)^{-1/2})|\leq1</script><p>由此得到$f’’(t)$的上下界</p>
 <script type="math/tex; mode=display">
 \frac{f''(0)}{(1+tf''(0)^{1/2})^2}\leq f''(t)\leq \frac{f''(0)}{(1-tf''(0)^{1/2})^2}</script><p>由此可以得到次优性的界。</p>
+<p><strong>共轭梯度法</strong>：每次下降要求梯度在共轭空间里</p>
+<p>定义$\alpha,\beta$Q-共轭为$\alpha^TQ\beta = 0$</p>
+<p>每次计算</p>
+<script type="math/tex; mode=display">
+g^{k+1}=\nabla f(x^{k+1})\\
+d^{k+1}=-g^{k+1}+\beta_kd^k=-g^{k+1}+\frac{(g^{k+1})^TQd^k}{(d^k)^TQd^k}d^k\\
+x^{k+2}=x^{k+1}+\alpha_{k+1}d^{k+1}=x^{k+1}-\frac{(g^{k+1})^Td^{k+1}}{(d^{k+1})^TQd^{k+1}}d^{k+1}</script><p>对二次式$f(x)=\frac12 x^TQx-b^Tx$进行优化时可以证明$d^i$是Q-共轭的，因而</p>
+<script type="math/tex; mode=display">
+(g^{k+1})^Td^i=0</script><p>根据这个式子，</p>
+<script type="math/tex; mode=display">
+\beta_k=\frac{(g^{k+1})^Tg^{k+1}}{(g^k)^Tg^k}</script><p>$\alpha_k$可以通过线性搜索得到。以此避免计算Hessian矩阵。</p>
+<p><strong>Quasi-Newton</strong></p>
+<p>用$H^K$来拟合$F(X^k)^{-1}$</p>
+<script type="math/tex; mode=display">
+d^k=-H_kg^k\\
+\alpha_k=\arg\min_\alpha f(x^k+\alpha d^k)\\
+x^{k+1}=x^k+\alpha_k d^k</script><p>对$H_k$的更新有三种</p>
+<ul>
+<li>Rank One Correction</li>
+<li>Davidon-Fletcher-Powell（DFP）</li>
+<li>Broyden-Fletcher-Goldfarb-Shanno（BFGS）</li>
+</ul>
 <h3 id="等式约束优化"><a href="#等式约束优化" class="headerlink" title="等式约束优化"></a>等式约束优化</h3><script type="math/tex; mode=display">
 \min f(x)\\s.t. Ax=b</script><p>考虑二阶Taylor近似</p>
 <script type="math/tex; mode=display">
@@ -2404,258 +2967,6 @@ A^Ty+c=0,\:y\succeq0</script><p>是一对强择一系统。</p>
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/08/csapp7/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Hulieu">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hulieu">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/02/08/csapp7/" class="post-title-link" itemprop="url">从三开始的汇编</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2020-02-08 16:10:30" itemprop="dateCreated datePublished" datetime="2020-02-08T16:10:30+08:00">2020-02-08</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-03-20 11:00:35" itemprop="dateModified" datetime="2020-03-20T11:00:35+08:00">2020-03-20</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%8C%AB%E7%88%AA%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">猫爪记</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%8C%AB%E7%88%AA%E8%AE%B0/Computer-Science/" itemprop="url" rel="index"><span itemprop="name">Computer-Science</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="编译"><a href="#编译" class="headerlink" title="编译"></a>编译</h3><p>C预处理器cpp 将 .c 翻译成 .i</p>
-<p>C编译器cc1 将.i 翻译成汇编 .s</p>
-<p>汇编器as 将 .s 翻译成可重定向目标文件 .o</p>
-<p>连接器程序 ld 将 .o 结合起来创建可执行文件</p>
-<p>连接器的两个任务</p>
-<ul>
-<li>符号解析 symbol resolution 将每个符号引用和符号定义联系起来</li>
-<li>重定位 relocation 将符号定义与存储器位置联系起来</li>
-</ul>
-<p>目标文件</p>
-<ul>
-<li>可重定位目标文件</li>
-<li>可执行目标文件</li>
-<li>共享目标文件</li>
-</ul>
-<p>最早的Unix使用.out，现代Unix使用ELF，Windows NT使用COFF的变种PE。</p>
-<h3 id="ELF"><a href="#ELF" class="headerlink" title="ELF"></a>ELF</h3><p>一个典型的ELF可重定位目标文件格式。</p>
-<p><img src="elf.png" alt=""></p>
-<ul>
-<li>ELF头以16字节序列描述生成该文件的系统的字的大小和字节顺序，然后是语法分析和解释（包括ELF头大小、目标文件类型、机器类型、节头部表的文件偏移等。</li>
-<li>.text：已编译的代码</li>
-<li>.rodata：只读数据</li>
-<li>.data：初始化的全局变量</li>
-<li>.bss：未初始化的全局变量</li>
-<li>.symtab：符号表，存放程序中定义和引用的函数和全局变量</li>
-<li>.rel.text：.text中位置的列表</li>
-<li>.rel.data：全局变量的重定位信息</li>
-<li>.debug：调试符号表 -g才会得到</li>
-<li>.line ：行号 -g才会得到</li>
-<li>.strtab：字符串表，包括.symtab和.debug和节头部的名字</li>
-</ul>
-<p><u>static变量是在符号表定义</u>。</p>
-<p><u>重载函数类名为原始名字前加上名字中字符数，比如Foo被编码成3Foo；方法被编码为原始方法加上类名加上每个参数的单字母编码，比如Foo::bar(int, long)被编码为bar__3Fooil。</u></p>
-<p><u>多重定义：会选择强定义（初始化的定义），不同类型可能导致错误。</u></p>
-<h3 id="重定位"><a href="#重定位" class="headerlink" title="重定位"></a>重定位</h3><p>代码的重定位条目放在.rel.text</p>
-<p>已初始化数据的重定位条目放在.rel.data</p>
-<p>重定位条目格式如下</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> &#123;</span></span><br><span class="line">    <span class="keyword">int</span> offset; <span class="comment">/* offset of the refence to relocate*/</span></span><br><span class="line">    <span class="keyword">int</span> symbol:<span class="number">24</span>, <span class="comment">/*symbol the reference should point to*/</span></span><br><span class="line">    	type:<span class="number">8</span>; <span class="comment">/*Relocation type 有11中不同类型*/</span></span><br><span class="line">&#125; Elf32_Rel</span><br></pre></td></tr></table></figure>
-<p>重定位符号引用</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">refptr = s + r.offset;</span><br><span class="line"><span class="comment">/* 相对引用 */</span></span><br><span class="line"><span class="keyword">if</span> (r.type == R_386_PC32) &#123;</span><br><span class="line">    refaddr = ADDR(s) + r.offset;</span><br><span class="line">    *refptr = (<span class="keyword">unsigned</span>)(ADD(r.symbol) + *refptr - refaddr);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/* 绝对引用 */</span></span><br><span class="line"><span class="keyword">if</span> (r.type == R_386_32) &#123;</span><br><span class="line">    *refptr = (<span class="keyword">unsigned</span>)(ADD(r.symbol) + *refptr)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="可执行文件"><a href="#可执行文件" class="headerlink" title="可执行文件"></a>可执行文件</h3><p>下图是个典型的ELF可执行文件</p>
-<p><img src="elfexe.png" alt=""></p>
-<p>ELF头部包含程序的入口（entry point)，.init定义了初始化函数，不再需要.rel。</p>
-<h3 id="静态库"><a href="#静态库" class="headerlink" title="静态库"></a>静态库</h3><p>静态库（.o）是所有相关的目标打包称为独立的文件。</p>
-<p>优点：不需要重复定义、只拷贝被引用的模块、只需要较少的库文件名</p>
-<p><em>AR工具创建库</em></p>
-<h3 id="动态链接共享库"><a href="#动态链接共享库" class="headerlink" title="动态链接共享库"></a>动态链接共享库</h3><p>.so（Unix）或者.dll（Windows）</p>
-<p>解决静态库需要显式链接、浪费资源的问题</p>
-<p><em>gcc -shared -fPIC 创建库</em> </p>
-<blockquote>
-<p>PIC是位置无关代码 position-independent code，通过全局偏移量表实现，但是有性能缺陷。</p>
-<p>因而ELF有延迟绑定lazy binding技术，通过GOT和PLT。</p>
-<p>GOT[1] 是连接器标识信息，GOT[2] 是连接器入口点</p>
-<p>调用时控制传递到PLT中，然后通过GOT做间接跳转。第一次调用时，GOT跳转回PLT下一条指令，通过将标识信息压入栈中并跳转动态链接器，覆盖GOT跳转地址。以后调用时，只是间接引用而没有额外开销。</p>
-</blockquote>
-<p><u>应用程序还可能在运行时要求链接共享库而无需在编译时链接。（dlopen、dlsym、dlclose）</u></p>
-<h3 id="异常控制流（Exception-Control-Flow）"><a href="#异常控制流（Exception-Control-Flow）" class="headerlink" title="异常控制流（Exception Control Flow）"></a>异常控制流（Exception Control Flow）</h3><p>异常处理是在内核模式（kernel mode）</p>
-<p>每个异常有一个异常号。异常可分为四类</p>
-<ul>
-<li>中断 interrupt：来自I/O设备，异步</li>
-<li>陷阱 trap：有意的异常，提供系统调用接口，比如system call</li>
-<li>故障 fault</li>
-<li>终止 abort</li>
-</ul>
-<h3 id="进程"><a href="#进程" class="headerlink" title="进程"></a>进程</h3><p>一个执行中的程序的实例</p>
-<ul>
-<li>独立的逻辑控制流</li>
-<li>私有的地址空间</li>
-</ul>
-<p>内核为每个进程维持一个上下文context，内核通过上下文切换context switch来实现多任务。在进程执行的某些时刻，内核可以通过调度器进行调度schedule，选择一个新的进程运行。</p>
-<p>获取ID getpid（进程PID） getppid（父进程PID）</p>
-<p><u>fork在新的子进程中运行相同程序，而execve函数在当前进程上下文加载并运行新程序，会覆盖当前进程的地址，仍然有相同的PID。Unix和Web服务器大量使用fork和execve。</u></p>
-<h3 id="回收子进程"><a href="#回收子进程" class="headerlink" title="回收子进程"></a>回收子进程</h3><p>终止而未被回收的称为僵死进程zombie，它们仍然消耗系统资源。</p>
-<ul>
-<li>判定等待集合成员 pid</li>
-<li>修改默认行为 WNOHANG 和 WUNTRACED</li>
-<li>waitpid函数</li>
-<li>检查已回收子进程的退出状态 WIFEXITED等 见wait.h</li>
-<li>错误条件：没有子进程 waitpid=-1 ECHILD/被信号中断 返回-1 EINTR</li>
-</ul>
-<h3 id="信号"><a href="#信号" class="headerlink" title="信号"></a>信号</h3><p>Unix信号允许进程中断其他进程。</p>
-<p>一个发送而没被接受的信号为待处理信号pending signal。一个类型至多只有一个待处理信号，多余的会简单丢弃。一个待处理信号只能被接受一次。</p>
-<p>发送信号的机制基于进程组。一个负的PID会导致信号被发送到进程组PID中的每个进程。</p>
-<p>可以通过signal函数修改接收到信号的默认行为。</p>
-<p>几个信号处理中的问题</p>
-<ul>
-<li>信号会阻塞和不会排队等待：改成while尽可能多的接收信号</li>
-<li>系统调用被中断的可能性：while手动重启</li>
-</ul>
-<p>Signal是sigaction的一个包装函数，提供了可移植的信号处理。</p>
-<p>sigprocmask显式改变阻塞信号集合。</p>
-<p><u>同步流以避免并发问题。这个问题称之为竞争race，通过阻塞信号来就解决。暴露竞争的问题的方法就是随机决定父进程和子进程执行的顺序。</u></p>
-<h3 id="非本地跳转"><a href="#非本地跳转" class="headerlink" title="非本地跳转"></a>非本地跳转</h3><p>用户级异常控制流，直接从一个函数跳转另一个函数。</p>
-<p>setjmp和longjump（catch相当于setjmp，throw相当于longjump</p>
-<h3 id="虚拟存储器VM"><a href="#虚拟存储器VM" class="headerlink" title="虚拟存储器VM"></a>虚拟存储器VM</h3><p>虚拟寻址时，CPU生成虚拟地址来访问主存。</p>
-<p><img src="pte.png" alt=""></p>
-<p>这里DRAM缓存是全相连的。</p>
-<p><u>页面调度</u></p>
-<p>虚拟存储器作为存储器管理工具</p>
-<ul>
-<li>简化链接</li>
-<li>简化加载</li>
-<li>简化共享</li>
-<li>简化存储器分配</li>
-</ul>
-<p>同时能通过读写权限控制保护存储器。</p>
-<h3 id="地址翻译"><a href="#地址翻译" class="headerlink" title="地址翻译"></a>地址翻译</h3><p>符号定义</p>
-<ul>
-<li>N 虚拟空间地址数 M 物理空间地址数 P 页大小</li>
-<li>VPO 虚拟页面偏移 VPN 虚拟页号 </li>
-<li>TLBI TLB索引 TLBT TLB标记</li>
-<li>PPO 物理页面偏移 PPN 物理页号</li>
-<li>CO 缓冲块偏移</li>
-<li>CI 高速缓存索引 CT 高速缓存标记</li>
-</ul>
-<p>地址翻译：虚拟地址空间VAS到物理地址空间PAS的映射</p>
-<p><img src="translate.png" alt=""></p>
-<p>MMU利用VPN选择适当的PTE，得到PPN，PPO和VPO是相同的。</p>
-<p><u>利用TLB加速地址翻译：TLB是个小的虚拟寻址的缓存，每行保存一个PTE块。VPN的t个低位组成TLB索引，其余n-p-t位是TLB标记。</u></p>
-<p><u>每次MMU从TLB取出相应PTE，如果TLB不命中，则从L1缓存取出PTE并存放在TLB。</u></p>
-<p><img src="tlb.png" alt=""></p>
-<p><u>多级页表：减小主存压力，地址翻译也并不比单级页表慢很多。</u></p>
-<p>Core i7地址翻译概况如下</p>
-<p><img src="corei7translate.png" alt=""></p>
-<p><u>优化地址翻译：CPU翻译时，发送VPN到MMU，发送VPO到L1，同时进行。</u></p>
-<h3 id="存储器映射"><a href="#存储器映射" class="headerlink" title="存储器映射"></a>存储器映射</h3><p>存储器映射是将虚拟存储器区域和一个磁盘上的对象关联起来。这个对象可以是普通文件，也可以是匿名文件。一旦一个虚拟页面被初始化了，就在一个专门的交换文件（也叫做交换空间或交换区域）之间转换。</p>
-<p><u>一个对象可以被映射到虚拟存储器的一个区域，要么作为共享对象，要么作为私有对象。共享对象即使被映射到了多个共享区域，也只需存放它的一个拷贝。私有对象使用写时拷贝copy-on-write的技术充分使用了稀有的物理存储器。</u></p>
-<h3 id="动态存储器分配"><a href="#动态存储器分配" class="headerlink" title="动态存储器分配"></a>动态存储器分配</h3><p>低级的mmap和munmap可以创建和删除虚拟存储器的区域。</p>
-<p>动态存储器分配dynamic memory allocater更方便且更好移植。它维护一个进程的虚拟存储器区域，称为堆heap。每个进程维护一个brk，指向堆的顶部。</p>
-<ul>
-<li><p>显式分配</p>
-<p>malloc和free（C++里的new和delete）</p>
-<p>想要已初始化的动态存储calloc，改变已分配块大小realloc</p>
-<p>sbrk通过移动brk指针来改变堆</p>
-</li>
-<li><p>隐式分配</p>
-<p>也叫垃圾收集器，自动释放未使用的已分配块，见JAVA等高级语言。</p>
-</li>
-</ul>
-<p>分配器的目标</p>
-<ul>
-<li><p>最大化吞吐率</p>
-</li>
-<li><p>最大化利用率</p>
-<p>利用率低是因为碎片fragmentation</p>
-<ul>
-<li>内部碎片：已分配块比有效载荷大（对齐约束）</li>
-<li>外部碎片：组织/放置/分割/合并 空闲块（空闲链表）</li>
-</ul>
-</li>
-</ul>
-<h3 id="隐式空闲链表"><a href="#隐式空闲链表" class="headerlink" title="隐式空闲链表"></a>隐式空闲链表</h3><p>因为双字的对齐约束，块大小总是8的倍数，块大小最低三位总是0，所以只需存储块大小的29个高位，剩余3位编码其他信息。1表示已分配，0表示空闲。</p>
-<p><img src="list.png" alt=""></p>
-<p>优点是简单，缺点是开销与块总数呈线性关系。</p>
-<p>放置策略：首次适配、下次适配（对首次适配的改进）、最佳适配</p>
-<p>合并策略：立即合并（会产生抖动？）、推迟合并</p>
-<p><u>Knuth提出边界标记（boundary tag），通过在块结尾处添加脚部（头部的副本），允许常数时间内对前面块进行合并。</u></p>
-<h5 id="显式空闲链表"><a href="#显式空闲链表" class="headerlink" title="显式空闲链表"></a>显式空闲链表</h5><p>加入pred和succ的指针，使得开销与<strong>空闲块</strong>总数呈线性关系</p>
-<p>缺点是空闲块必须足够大，潜在提高了内部碎片程度</p>
-<h5 id="分离的空闲链表"><a href="#分离的空闲链表" class="headerlink" title="分离的空闲链表"></a>分离的空闲链表</h5><p>维护多个空闲链表，每个表中块大小大致相等</p>
-<ul>
-<li>简单分离存储：快速但是容易造成碎片</li>
-<li>分离适配：GNU malloc就是这种方法</li>
-<li>伙伴系统：特殊的分离适配，都是2的幂次；块地址和伙伴地址只有一位不同、主要缺点是要求块大小为2的幂次，导致显著的内部碎片。</li>
-</ul>
-<h5 id="垃圾收集"><a href="#垃圾收集" class="headerlink" title="垃圾收集"></a>垃圾收集</h5><p>C和C++保守的垃圾收集器：每个可达的都被正确标记了，但一些不可达的也被错误标记为可达了（因为int或float可以伪装成指针，而收集器无法判断）</p>
-<p>Mark&amp;Sweep：由于C的保守，需要维护一个已分配块的平衡二叉树</p>
-<h3 id="常见存储器错误"><a href="#常见存储器错误" class="headerlink" title="常见存储器错误"></a>常见存储器错误</h3><ul>
-<li>间接引用坏指针：错误的把int或float当做指针</li>
-<li>读未初始化的存储器：<strong>堆存储器</strong>不总是初始化为零，正确方法是用calloc代替malloc或者显式初始化</li>
-<li>缓冲区溢出</li>
-<li>假设指针和对象相同大小</li>
-<li>引用不存在的变量/空闲堆栈</li>
-<li>存储器泄露（不释放空间）</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -2727,7 +3038,7 @@ A^Ty+c=0,\:y\succeq0</script><p>是一对强择一系统。</p>
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-count">19</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
