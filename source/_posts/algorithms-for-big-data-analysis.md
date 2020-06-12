@@ -1594,3 +1594,175 @@ $$
 V^\pi(s)=E[R(s,a,s')+\gamma V^\pi(s')]\\
 Q^\pi(s,a)=E[R(s,a,s')+\gamma E_{a'\sim\pi}[Q^\pi(s',a')]]
 $$
+for optimal value functions：
+$$
+V^*(s)=\max_{a}E[R(s,a)+\gamma V^*(s')]\\
+Q^*(s,a)=E[R(s,a)+\gamma \max_{a'} E_{a'\sim\pi}[Q^*(s',a')]]
+$$
+**Bellman方程的不动点**
+
+可以通过LP来找到
+$$
+\min_v \sum_s w_sv_s\\
+s.t.\:v_s\geq R(s,a)+\gamma P(s,a)^Tv
+$$
+其中的约束等价于
+$$
+(I-\gamma P^{\pi^*})v\geq R^{\pi^*}
+$$
+因此
+$$
+v\geq (I-\gamma P^{\pi^*})^{-1}R^{\pi^*}=V^*
+$$
+这就证明了这个问题与Bellman方程等价。
+
+**Bellman算子**
+$$
+LV(s)=\max_{a}R(s,a)+\gamma \sum_{s'}P(s,a,s')V(s')\\
+L^\pi V(s)=E_\pi[R(s,a)+\gamma \sum_{s'}P(s,a,s') V(s')]
+$$
+所以对任意policy
+$$
+V^*=LV^*,\:V^\pi=L^\pi V^\pi
+$$
+这两个算子都是压缩映射，这证明了收敛性和唯一性。
+
+可以证明
+$$
+||v_k-v^*||\leq \frac{\gamma^k}{1-\gamma}||v_0-v^*||
+$$
+**Q-value iteration**
+$$
+Q^*(s,a)=R(s,a)+\gamma\sum_{s'}P(s,a,s')(\max_{a'}Q^*(s',a'))
+$$
+迭代方法
+$$
+Q^k(s,a)=R(s,a)+\gamma E_{s'}[\max_{a'}Q^{k-1}(s',a')|s,a]
+$$
+**Policy Iteration**
+
+k-th iteration has two steps
+
+1. Policy evaluation: find $v^k$ by solving $v^k=L^{\pi^k}v^k$
+
+$$
+v^k(s)=E[R(s,a,s')+\gamma\sum_{s'}P(s,a,s')v^k(s')]
+$$
+
+2. Policy improvement: find $\pi^{k+1}$ such that $L^{\pi^{k+1}}v^k=Lv^k$
+
+$$
+\pi^{k+1}(s)=\arg\max_aR(s,a)+\gamma E_{s'}[v^k(s')|s,a]
+$$
+
+这是个Greedy算法
+
+**Platform**
+
++ Gym: support Atari and Mujoco
++ Universe
++ Deepmind Lab
++ ViZDoom
+
+Packages: Rllab/Baselines/Github
+
+**Taxonomy**
+
+![RLtaxonomy](RLtaxonomy.png)
+
+**Temporal Difference**
+$$
+v(s_t)\leftarrow (1-\alpha_t)v(s_t)+\alpha_tG_t
+$$
+TD:
+$$
+G_t=r_t+\gamma v(s_{t+1})
+$$
+TD(n)：
+$$
+G_t^{(n)}=r_{t}+\gamma R_{t+1}+...+\gamma ^{n-1}r_{t+n-1}+\gamma ^{n}v(s_{t+n})
+$$
+TD( $\lambda$ )： 
+$$
+G_t^{\lambda}=(1-\lambda) \sum_{n=0}^{\infty}\lambda^{n-1}G_t^{(n)}
+$$
+ TD(0)即TD, TD(1)接近MC
+
+##### Q-learning
+
+**Q-learning**
+$$
+Q_{k+1}(s_t,a_t)=(1-\alpha)Q_k(s_t,a_t)+\alpha(r_t+\gamma\max_{a'}Q_k(s_{t+1},a'))
+$$
+
+**Deep Q-learning**
+
+以e的概率选择随机action，否则选择最大化Q的action $a_t$，然后得到$s_{t+1}$，$\phi_{t+1}=\phi(s_{t+1})$，然后将$(\phi_t,a_t,r_t,\phi_{t+1})$存储在D里
+
+构造$y_j=r_j+\gamma\max_{a'} Q(\phi,a';\theta)$，然后perform GD on $(y_j-Q(\phi_j,a_j;\theta))^2$
+
+**DDPG**：连续学习Q-function
+$$
+\max_a Q(s,a)\approx Q(s,\mu(s))
+$$
+选择action $a=clip(\mu_\theta(s)+e,low,high),\:e\sim N$。在Buffer D中存储(s,a,r,s',done)
+
+每次构造targets 
+$$
+y(r.s',d)=r+\gamma(1-d)Q_{\phi targ}(s',\mu_{\theta targ}(s'))
+$$
+update Q-function by GD
+$$
+(Q_\phi(s,a)-y(r,s',a'))^2
+$$
+update policy $\theta$ by GD
+$$
+Q_\phi(s,\mu_\theta(s))
+$$
+然后按比例更新
+
+**Twin Delayed DDPG**
+
+三个trick：
+
+1、learn two Q-function
+$$
+y(r.s',d)=r+\gamma(1-d)\min_{1,2}Q_{\phi targ}(s',\mu_{\theta targ}(s'))
+$$
+2、延迟更新policy（两次更新Q再更新policy）
+
+3、对噪声e做截断
+
+**Approximate dynamic programming**
+
+update $\theta$ instead of value function
+$$
+V_\theta(s)=\theta_0f_0(s)+\theta_1f_1(s)+...+\theta_nf_n(s)
+$$
+TD(0) approximation: 
+$$
+\min\delta_t=r_t+\gamma V_\theta(s_{t+1})-V_\theta(s_t)
+$$
+Fitted value-iteration:
+
+update $\theta$ by finding $\theta$ to fit data
+$$
+(V_\theta(s),LV_{\theta^{k-1}}(s))
+$$
+问题：不一定能收敛
+
+定义approximation operator $M_A$
+$$
+v^i=(L\odot M_A)v^{i-1}
+$$
+要求这个算子Non-expansive
+
+##### Policy Gradient
+
+$$
+\max_\theta \rho(\pi_\theta)
+$$
+
+
+
+ 
