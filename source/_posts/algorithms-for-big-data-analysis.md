@@ -15,7 +15,7 @@ mathjax: true
 + split（拆分问题，比如换元法）
 + 交替极小（BCD）
 
-### 凸优化
+# 凸优化
 
 强对偶/KKT条件
 
@@ -23,7 +23,7 @@ mathjax: true
 
 内点法
 
-### 压缩感知
+# 压缩感知
 
 稀疏表示问题：
 $$
@@ -155,13 +155,13 @@ $$
 |u_j|=|\lambda^*A_j|\leq\frac{\theta_{S,S'}}{(1-\delta_S-\theta_{S,2S})\sqrt{S}}||sgn(x)||\leq 1
 $$
 
-### 压缩感知（算法）
+# 压缩感知（算法）
 
 L1正则的最小二乘问题
 $$
 min\:\mu||x||_1+\frac{1}{2}||Ax-b||_2^2
 $$
-##### Proximal Gradient Method/ISTA/FPC
+## Proximal Gradient Method/ISTA/FPC
 
 **Proximal Gradient Method**
 $$
@@ -291,7 +291,7 @@ x_{k+1}=(1-\theta_k)x_k+\theta_kz_{k+1}\\
 $$
 三个变体收敛性都是$\sim \frac{1}{k^2}LD(....)$
 
-##### 增广拉格朗日框架
+## 增广拉格朗日框架
 
 $$
 \min||x||_1,s.t.Ax=b
@@ -363,13 +363,15 @@ $$
 \arg \min\mu||x||_1+\frac1{2\delta}||x||_2^2,s.t.Ax=b
 $$
 
-### 矩阵恢复
+
+
+# 矩阵恢复
 
 常见于推荐系统
 
 起源：Netflix电影推荐竞赛
 
-##### Collaborative Filtering（协同过滤）
+## Collaborative Filtering（协同过滤）
 
 $$
 \hat{r}_{si}=b_{si}+\sum_{j\in N(i:x)}w_{ij}(r_{xj}-b_{xj})
@@ -385,7 +387,7 @@ $$
 $$
 梯度下降求解：GD、SGD
 
-##### Latent factor models
+## Latent factor models
 
 “SVD” on Netflix data: 
 $$
@@ -413,7 +415,7 @@ $$
 
 另外还有加上bias的latent factor model。
 
-##### General Matrix Completion
+## General Matrix Completion
 
 $$
 \min rank(X)\\
@@ -431,7 +433,7 @@ $$
 \min_{rank(B)=k}||A-B||_2=||A-\sum_{i=1}^k\sigma_iu_iv_i^*||_2
 $$
 
-##### Positive semidefinite unknown
+## Positive semidefinite unknown
 
 假设X半正定，那么可以转换为半定规划
 $$
@@ -467,7 +469,7 @@ s.t.\begin{pmatrix}I&A^*(y)\\(A^*(y))^T&I\end{pmatrix}\succeq 0
 \end{aligned}\right.
 $$
 
-##### Matrix Shrink Operator
+## Matrix Shrink Operator
 
 $$
 \min v||X||_*+\frac12||X-Y||_F^2
@@ -516,7 +518,7 @@ Y_+\leftarrow V^TZ\\
 Z_+\leftarrow X_+Y_++P_\Omega(M-X_+Y_+)
 $$
 
-##### 矩阵分离
+## 矩阵分离
 
 M=W+E，其中W为低秩矩阵，E为系数矩阵
 $$
@@ -570,11 +572,11 @@ ADMM依次优化U、V、Z、A。
 
 ADMM
 
-### 运输优化
+# 运输优化
 
 Application：image color adaption、shape interpolation、word mover's distance
 
-##### Kantorovitch's Formulation
+## Kantorovitch's Formulation
 
 输入两个离散概率度量
 $$
@@ -613,7 +615,7 @@ d\alpha=\rho(x)dx,\:d\beta=e(x)dx\\
 T_\#\alpha=\beta\Leftrightarrow \rho(T(x))|det(\partial T(x))|=e(x)
 $$
 
-##### Monge Problem
+## Monge Problem
 
 找到这样的T，使得
 $$
@@ -628,7 +630,7 @@ $$
 \min_T\int_Xc(x,T(x))d\alpha(x)\:s.t.T_\#\alpha=\beta
 $$
 
-##### Wasserstein Distance
+## Wasserstein Distance
 
 Kantorovitch Problem for General Measures
 $$
@@ -653,14 +655,14 @@ $$
 \min_{X,a}\frac1N\sum_{i=1}^NL(a,b^{k},M_{XY})
 $$
 
-##### Dual form
+## Dual form
 
 $$
 \max f^Ta+g^Tb\\
 s.t. f_i+g_j\leq C_{ij}
 $$
 
-##### Entropy regularization
+## Entropy regularization
 
 定义
 $$
@@ -717,7 +719,7 @@ d_{C,\alpha}(a,b)=\min_{P\in U_\alpha(a,b)}(C,P)
 $$
 这是一个距离。
 
-##### Shielding Neighborhood Method
+## Shielding Neighborhood Method
 
 Proposed by Bernhard Schmitzer in 2016
 
@@ -763,7 +765,7 @@ SolveSparse算法：利用当前等级k和可行邻居N来计算$\pi$
 5. ​    i+=1
 6. return
 
-### Large-scale ML
+# Large-scale ML
 
 $$
 (x,y)\sim P
@@ -796,7 +798,7 @@ $$
 n\geq\frac1{2\epsilon^2}log(2|H|/\delta)
 $$
 
-##### VC dimension
+## VC dimension
 
 VC dimension是集合的集合
 $$
@@ -813,7 +815,7 @@ $$
 \sup_{h\in H}|R_n[h]-R[h]|\leq O(\sqrt{\frac{VC[H]log(n/VC[H])+log(1/\delta)}{n}})
 $$
 
-##### 次梯度方法
+## 次梯度方法
 
 **次梯度方法**
 $$
@@ -892,7 +894,7 @@ $$
 
 <u>总结：合适的步长策略可以提升收敛性。</u>
 
-##### 随机梯度下降
+## 随机梯度下降
 
 收敛性：假设f是L-光滑且$\mu$-强凸的
 
@@ -913,7 +915,7 @@ $$
 E[f(x_T)-f(x^*)]\leq\frac L2E[\Delta_T^2]\leq\frac L2\frac{v}{\gamma+T}
 $$
 
-##### Variance Reduction
+## Variance Reduction
 
 f(x)是L-光滑和$\mu$-强凸的
 
@@ -951,7 +953,7 @@ $$
 + GD：$T\sim klog(1/e)$
 + SGD：$T\sim k/e$
 
-##### DL 中的随机算法
+## DL 中的随机算法
 
 $$
 \min_x\frac1n\sum_{i=1}^nf_i(x)
@@ -963,11 +965,11 @@ Nesterov加速算法（外推算法）
 
 Adagrad、Adadelta
 
-### Randomized Numerical Linear Algebra
+# Randomized Numerical Linear Algebra
 
 provably accurate algorithms for problems that are **massive or computationally expensive**
 
-##### 矩阵乘法近似
+## 矩阵乘法近似
 
 $$
 AB\approx CR
@@ -977,7 +979,7 @@ SVD分解取前k个特征值
 
 CX分解：最小化A-CX，显然$X=C^-A$ 
 
-##### sampling rows/columns
+## sampling rows/columns
 
 $$
 AB=\sum_{i=1}^nA_iB_i
@@ -1025,7 +1027,7 @@ $$
 + Bounds for the Frobenius norm are similar
 + need a sufficiently large value c
 
-##### Approximate SVD
+## Approximate SVD
 
 Linear Time SVD algorithm:
 
@@ -1060,7 +1062,7 @@ $$
 
 <u>Fewer sampling</u>
 
-##### Random Sampling for SVD
+## Random Sampling for SVD
 
 Range finding problem：找到Q，$A\approx QQ^TA$
 
@@ -1070,7 +1072,7 @@ input A，draw a random matrix X，Y=AX，
 
 对$Q^TAQ$做SVD分解得到$T^TDT$，那么QT是U的估计。
 
-##### Single View Algorithm for Matrix Approximation
+## Single View Algorithm for Matrix Approximation
 
 低秩矩阵重建：
 
@@ -1103,7 +1105,7 @@ $$
 \hat{A_+}=\Pi_{H_+^n}(\hat{A})=(UV)D_+(UV)^*
 $$
 
-### 相位恢复
+# 相位恢复
 
 $$
 |Ax|=b\in C^m
@@ -1113,7 +1115,7 @@ $$
 
 应用：物理问题如Xray/天文观察，一般不能观测到辅角
 
-##### classical phase retrieval 
+## classical phase retrieval 
 
 $$
 find\:x\in S\cap M\\
@@ -1145,7 +1147,7 @@ L(x,y,\lambda)=\lambda^T(x-y)+\frac12||x-y||^2
 $$
 ADMM与HIO/HPR在一些假设下等价
 
-##### Discrete model
+## Discrete model
 
 $$
 find\: x\\
@@ -1180,7 +1182,7 @@ $$
 \min_U Tr(UM)
 $$
 
-##### Phase retrieval by non-convex optimization
+## Phase retrieval by non-convex optimization
 
 $$
 \min_z f(z)=\frac1{4m}\sum_{k=1}^m(y_k-|<a_k,z>|^2)^2
@@ -1247,7 +1249,7 @@ $$
 |\bar{z_0}^*x|^2\geq 1-2\epsilon\Rightarrow dist^2(\bar{z_0},x)\leq2-2\sqrt{1-2\epsilon}
 $$
 
-##### Gauss-Newton Method
+## Gauss-Newton Method
 
 Nonlinear least square problem
 $$
@@ -1275,7 +1277,7 @@ $$
 dist(z_{k+1},x)<c_2dist(z_k,x)^2
 $$
 
-##### Cryo-Electron Microscopy
+## Cryo-Electron Microscopy
 
 冷冻光镜问题
 
@@ -1298,7 +1300,7 @@ $$
 G_{ii}=I_2,G\succeq 0
 $$
 
-### 数据降维
+# 数据降维
 
 SVD
 $$
@@ -1387,7 +1389,7 @@ $$
 (a_k;-e_j)^T\begin{pmatrix}I&X\\X^T&Y\end{pmatrix}(a_k;-e_j)=d_{kj}^2
 $$
 
-### 网络流问题
+# 网络流问题
 
 Path、Directed Path、Cycle、Directed Cycle
 
@@ -1460,7 +1462,7 @@ $$
 u_i=\arg\min f(u_1,u_2,...,x,...,u_n)+\frac\sigma2||x-\bar{u_i}||^2
 $$
 
-### 次模优化
+# 次模优化
 
 推荐系统：Relevance and Diversity
 
@@ -1565,7 +1567,7 @@ $$
 f(w_t)-\min f(w)\leq \frac C{\sqrt{t}}
 $$
 
-### 强化学习
+# 强化学习
 
 MRP（Markov Reward Process）
 $$
@@ -1688,7 +1690,7 @@ G_t^{\lambda}=(1-\lambda) \sum_{n=0}^{\infty}\lambda^{n-1}G_t^{(n)}
 $$
  TD(0)即TD, TD(1)接近MC
 
-##### Q-learning
+## Q-learning
 
 **Q-learning**
 $$
@@ -1757,12 +1759,9 @@ v^i=(L\odot M_A)v^{i-1}
 $$
 要求这个算子Non-expansive
 
-##### Policy Gradient
+## Policy Gradient
 
 $$
 \max_\theta \rho(\pi_\theta)
 $$
 
-
-
- 

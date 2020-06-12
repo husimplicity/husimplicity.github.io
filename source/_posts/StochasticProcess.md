@@ -51,7 +51,7 @@ $$
 
 如果$X\in F$且$E|X|\:,\:E|XY|<\infty$，那么$E(XY|F)=XE(Y|F)$。（典型four-step的证明）
 
-### 正则条件概率：
+## 正则条件概率：
 
 可测映射$X\::\:(\Omega,F)\rightarrow (S,S)$（随机变量）。for X given G，**正则条件分布**$\mu\::\:\Omega\times S\rightarrow [0,1]$满足
 
@@ -113,7 +113,7 @@ $F_n$是一个递增的$\sigma$-域序列，如果序列$X_n$满足
 
 定理：若N是停时，$X_n$上鞅，则$X_{N\wedge n}$也是上鞅。
 
-### 鞅收敛定理
+## 鞅收敛定理
 
 $\lim_{n\to\infty}X_n(\omega)$不存在$\Leftrightarrow\lim_{n\to\infty}inf\:X_n(\omega)<\lim_{n\to\infty}sup\:X_n(\omega)$，也等价于存在有理数a,b：
 $$
@@ -143,9 +143,9 @@ $$
 
 **注意：L1收敛并不成立。**一个简单的反例就是$S_0=1$，$P(e_i=-1)=P(e_i=1)=1/2$，N为$S_n=0$的停时，$X_n=S_{n\wedge N}$是鞅。但是由上面的定理可知$X\to 0$a.s.，与$EX_n=1$矛盾。
 
-### 四个例子
+## 四个例子
 
-##### 有界增长
+### 有界增长
 
 $X_n$为鞅过程，且$|X_{n+1}-X_n|\leq M<\infty$，那么要么$lim\:X_n$存在且有限，要么$X_n$在正负无穷之间摇摆。(停时$N=inf\{X_n\leq k\}$，那么$x_{n\wedge N}+k+M$a.s.收敛)
 
@@ -159,7 +159,7 @@ $$
 
 证明：由Doob分解可得$M_n=\sum_{m=1}^n 1_{A_m}-P(A_m|F_{m-1})$是有界增长的鞅过程。
 
-##### Polya's Urn Scheme
+### Polya's Urn Scheme
 
 坛子模型：坛子里有r个红球、g个绿球，每次取出一个并放进与之同色的c+1个球。n次抽取后绿球比例$X_n$是鞅。
 
@@ -170,7 +170,7 @@ $$
 \frac{\Gamma((g+r)/c)}{\Gamma(g/c)\Gamma(r/c)}x^{(g/c)-1}(1-x)^{(r/c)-1}
 $$
 
-##### R-N微分
+### R-N微分
 
 有限测度$\mu$，$\nu$，上升的$\sigma-$域$F_n$，定义$\mu_n=\mu|F_n$，$\nu_n=\nu|F_n$。
 
@@ -208,7 +208,7 @@ $$
 
 $EX=\lim EX_n=1$，所以$\nu(X=0)<1$，故而$\nu(X=0)=0$，$\nu(X>0)=1$，$\mu\sim\nu$。
 
-##### 分支过程
+### 分支过程
 
 $e_n$独立非负，定义$Z_n$，满足$Z_0=1$以及
 $$
@@ -233,7 +233,7 @@ $$
 P(W=\lim \frac{Z_n}{\mu^n}>0)>0\Leftrightarrow\sum P_kkln(k)<+\infty
 $$
 
-### Doob不等式(以及LP收敛)
+## Doob不等式(以及LP收敛)
 
 定理：设$X_n$下鞅，N有界停时，$P(N\leq k)=1$，那么$EX_0\leq EX_N\leq EX_k$。
 
@@ -274,7 +274,7 @@ $$
 
 **（条件方差公式）**若$X_n$鞅，$EX_n^2<\infty$，则$E((X_n-X_m)^2|F_m)=E(X_n^2|F_m)-X_m^2$。
 
-##### 平方可积鞅
+### 平方可积鞅
 
 $X_n$鞅，$X_0=0$，且$EX_n^2<+\infty$，$X_n^2$下鞅，因而可以Doob分解为$X_n=M_n+A_n$，$M_n$鞅，而$A_n$非降。定义$A_\infty=\lim_{n\to\infty}A_n$。
 $$
@@ -296,7 +296,7 @@ $$
 $$
 证明：定义$X_n=\sum_{m=1}^n1_{B_m}-\sum_{m=1}^nP_m$，定义$f(t)=t\vee 1$，由上可得。
 
-##### 一致可积L1收敛
+### 一致可积L1收敛
 
 一致可积$\{X_i,\:i\in I\}$满足
 $$
@@ -359,7 +359,7 @@ $$
 $$
 后一部分易证。为证明前一部分，令$W_N=\sup\{|Y_n-Y_m|,n,m\geq N\}$单调收敛可证。
 
-### 倒向鞅
+## 倒向鞅
 
 鞅$\{X_n:n\leq 0\}$称为倒向鞅，定义$F_{-\infty}=\bigcap F_n$
 
@@ -403,7 +403,7 @@ $E_n=\{\A|\forall 有限置换\pi s.t.\pi(n+k)=n+k有\pi^{-1}A=A}$，$E=\bigcap 
 
 例：（选票定理）设$e_n$非负整数，$G=\{S_j<j\}$，则$P(G|S_n)=(1-\frac{S_n}{n})^+$
 
-### 停时定理
+## 停时定理
 
 问题：若$X_n$下鞅，任意停时$M\geq N$，什么条件下$E(X_M|F_N)\geq X_N$，$X_M\geq X_N$？
 
