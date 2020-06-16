@@ -104,3 +104,12 @@ git push
 
 `<!--more-->`
 
+## _config的设置
+
+### LocalSearch
+
+在`_config.yml`中将localsearch的`enable: true`
+
+### 图片放大可查看
+
+`fancybox: true`
