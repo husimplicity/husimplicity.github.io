@@ -27,6 +27,8 @@ int scanf(const char * , ...);
 + 0 没有被赋值
 + EOF 第一个尝试输入的字符是EOF
 
+<!--more-->
+
 ## printf
 
 参数可变函数

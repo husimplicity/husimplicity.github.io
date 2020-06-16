@@ -19,6 +19,10 @@ tags:
 
 **Laertes** - Polonius’s son. For his father and his sister’s death with swords killed Hamlet. He also died in the poison of the sword, though Hamlet didn’t realize sword is poisoned.
 
+
+
+<!--more-->
+
  
 
 **Hamlet’s Madness is Feigned**

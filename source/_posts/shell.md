@@ -11,6 +11,8 @@ categories: 小鱼干
 
 ` ls -l DATA_DIR | awk 'BEGIN{srand();} {print rand(), $0}' | sort -k1n | awk '{print $10}' | awk 'FNR<=2000' | xargs -i sudo mv DATA_DIR/{} TEST-DIR/. `【魏武精修版】
 
+<!--more-->
+
 ### 杀幽灵的方法
 
 `ps aux | grep "cuda 1" | awk '{print $2}' | xargs kill -9 `

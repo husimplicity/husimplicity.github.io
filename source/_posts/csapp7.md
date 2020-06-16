@@ -33,6 +33,8 @@ C编译器cc1 将.i 翻译成汇编 .s
 
 最早的Unix使用.out，现代Unix使用ELF，Windows NT使用COFF的变种PE。
 
+<!--more-->
+
 ### ELF
 
 一个典型的ELF可重定位目标文件格式。

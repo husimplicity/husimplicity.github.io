@@ -54,6 +54,8 @@ $$
 $$
 ||\hat{x}-x||_2^2\leq\inf_{1\leq s\leq\bar{s}}||x-x_s||_2^2+log(n\frac{s\delta^2}{m})
 $$
+<!--more-->
+
 **SPARK**
 
 spark(A)定义为A最小的线性相关列个数，一般情况下，$spark(A)\neq rank(A)+1$
@@ -1759,9 +1761,125 @@ v^i=(L\odot M_A)v^{i-1}
 $$
 要求这个算子Non-expansive
 
-## Policy Gradient
+## Policy Gradient (On-Policy)
 
 $$
 \max_\theta \rho(\pi_\theta)
 $$
+
+<u>Policy Gradient通常会震荡剧烈，甚至可能出现明显下降</u>
+
+**Finite horizon MDP**
+$$
+\rho(\pi)=E[\sum_{t=1}^H\gamma^{t-1}r_t|\pi,s_t]
+$$
+令$D^{\pi}(\tau)$为轨迹$\tau=(s_1,a_1,...,s_H)$的概率。
+
+定理（log-trick）
+$$
+\nabla_\theta\rho(\pi_\theta)=E_{\tau\sim D^{\pi_\theta}}[R(\tau)\nabla_\theta log(D^{\pi_\theta}(\tau))]=E_\tau[R(\tau)\sum_{t=1}^{H-1}\nabla_\theta log(\pi_\theta(s_t,a))]
+$$
+<u>一个很大的问题是采样必须有整条轨迹，否则一些情况下无法计算reward</u>
+
+方差减少的技术：加入Baseline b，这是无偏估计
+$$
+g=\frac1m\sum_{i=1}^m\sum_{r=1}^{H-1}(R(\tau^i)-b)\nabla_\theta log(\pi_\theta(s_t^i,s_t^i))
+$$
+**Long term average reward**
+$$
+\rho(\pi,s_1)=\lim_{T\to\infty}E[\sum_{t=1}^T\gamma^{t-1}r_t|\pi]=\sum_sd^\pi(s)\sum_a\pi(s,a)R(s,a)
+$$
+利用下面的V和Q
+$$
+V^\pi(s)=\sum_a\pi(s_1,a)Q^\pi(s_1,a)
+$$
+定义
+$$
+Q^\pi(s,a)=R(s,a)+\gamma\sum_{s'}P(s,a,s')V^\pi(s')
+$$
+当$\gamma=1$时，定义Q的时候要减去$\rho(\pi)$（Advantage）。
+
+定理
+$$
+\nabla_\theta\rho(\pi_\theta,s_1)=\sum d^{\pi_\theta}(s)\sum Q^{\pi_\theta}(s,a)\nabla_\theta\pi_\theta(s,a)\\
+=\sum_sd^{\pi_\theta}(s)(E_{a\sim\pi(s)}[Q^{\pi_\theta}(s,a)\nabla_\theta log(\pi_\theta(s,a))])
+$$
+
+Estimation using samples：根据policy $\pi$得到一系列轨迹，然后再每个step定义$Q_t$，那么这是一个$Q(s_t,a_t)$的无偏估计。 
+
+<u>上面为Actor-only methods，又称vanilla policy gradient。</u>
+
+**Actor-Critic methods**
+
+定义函数
+$$
+\nabla_wf_w(s,a)=\frac1{\pi_\theta(s,a)}\nabla_\theta\pi_\theta(s,a)=\nabla_\theta log(\pi_\theta(s,a))
+$$
+对任意baseline b，参数w是下式的解
+$$
+\min_w E_{s,a}[(Q^{\pi_\theta}(s,a)-b(s;\theta)-f_w(s,a))^2]
+$$
+那么可以得到
+$$
+\nabla_\theta\rho(\pi_\theta)=E_sE_af_w(s,a)\nabla_\theta log(\pi_\theta(s,a))
+$$
+分为两步
+
+1、Policy Evaluation：find w
+
+2、Policy Improvement：update $\pi$
+
+**Trust Region Policy Optimization（TRPO）**
+
+定义 total expected discounted reward
+$$
+\eta(\pi)=E_\pi[\sum_{t=0}^\infty \gamma^t r(s_t)]
+$$
+maximizie the approximator
+$$
+L_\pi(\hat{\pi})=\eta(\pi)+\sum_sd_\pi(s)\sum_a\hat{\pi}(a|s)A_\pi(s,a)
+$$
+一个足够小的$\pi$的增量improve L的同时也improve $\eta$。有下界
+$$
+\eta(\pi_{new})\geq L_\pi(\pi_{new})-\frac{2\epsilon\gamma}{(1-\gamma)^2}\alpha^2
+$$
+其中的$\alpha$是TV divergence，这个可以由KL divergence控制。
+$$
+\max L\\
+s.t.KL(\theta||\theta_k)\leq\delta
+$$
+但这个问题仍然是高度非线性的
+
+TRPO将这个问题近似为
+$$
+L_{\theta_k}(\theta)\approx g^T(\theta-\theta_k)\\
+D_{KL}(\theta_k||\theta)=\frac12(\theta-\theta_k)^TH(\theta-\theta_k)
+$$
+这个问题是有显式解的，
+$$
+\theta=\theta_k+\sqrt{\frac{2\delta}{g^TH^{-1}g}}H^{-1}g
+$$
+但是效果并不好。
+
+**Proximal Policy Optimization（PPO）**
+
+PPO-clip updates polices
+$$
+\theta_{k+1}=\arg\max_\theta E_{s,a}[L(s,a,\theta_k,\theta)]
+$$
+其中
+$$
+L(s,a,\theta_k,\theta)=\min(\frac{\pi_\theta(a|s)}{\pi_{\theta_k}(a|s)}A^{\pi_{\theta_k}}(s,a),clip(\frac{\pi_\theta(a|s)}{\pi_{\theta_k}(a|s)},1-\epsilon,1+\epsilon)A^{\pi_{\theta_k}}(s,a))
+$$
+**Monte-Carlo Tree Search(MCTS)**
+
+Alpha-Go
+
+Selection, Expansion, Simulation, Backpropagation
+
+每个节点j的选取是要最大化
+$$
+UCT=X_j+2C_p\sqrt{2ln(n)/n_j}
+$$
+其中n是当前节点访问次数，$n_j$是j的访问次数，$C_p$是常数，$X_j$是节点平均价值
 

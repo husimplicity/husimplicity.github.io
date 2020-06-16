@@ -22,6 +22,8 @@ PCP Theorem begins at MIT in the early 1980s: *The Knowledge Complexity of Inter
 
 Babai证明了（定理 1）对任何常数k，AM[k]=AM[2]，因此AM[2]也被写作AM。AM[poly]和IP很相似，区别在于coin是否public，Goldwasser和Sipser很快证明了他们等价。
 
+<!--more-->
+
 定义 3：Graph Non-Isomorphism是给定两个图的邻接表，判断他们是否同构
 
 定理 2： Graph Non-Isomorphism是IP问题。（证明：随机重命名图，然后给prover判断是哪个）

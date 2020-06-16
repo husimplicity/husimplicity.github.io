@@ -33,6 +33,8 @@ $$
 $$
 \theta x_1+(1-\theta)x_2\in C
 $$
+<!--more-->
+
 **锥**定义为**非负齐次**集合，对$x_1\:,\:x_2\in C\:,\:0\leq\theta_1\:,\:theta_2$
 $$
 \theta_1 x_1+\theta_2 x_2\in C

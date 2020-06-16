@@ -32,6 +32,8 @@ subject\:to\:Ax=b
 $$
 这是个凸优化问题。
 
+<!--more-->
+
 正则化逼近：
 $$
 min\:||Ax-b||+\gamma||x||
