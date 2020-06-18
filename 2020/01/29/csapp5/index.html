@@ -14,24 +14,25 @@
 
 
 <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="编写高效程序 合适的算法和数据结构 高效执行的源代码  GCC 命令行标志 -01 到 -03 提供不同程度的优化 妨碍优化的几个因素  存储器别名使用：两个指针可能指向同一个存储器  函数调用：大多数编译器不会判断函数是否有副作用，并保持所有函数调用不变 可以使用内联函数替换（将函数代码展开）对此进行优化（-finline或者-02以上）   运行时间可以通过最小二乘拟合得到，线性因子系数称为每">
+  <meta name="description" content="上一篇：从一开始的汇编 编写高效程序 合适的算法和数据结构 高效执行的源代码  GCC 命令行标志 -01 到 -03 提供不同程度的优化 妨碍优化的几个因素  存储器别名使用：两个指针可能指向同一个存储器  函数调用：大多数编译器不会判断函数是否有副作用，并保持所有函数调用不变 可以使用内联函数替换（将函数代码展开）对此进行优化（-finline或者-02以上）   运行时间可以通过最小二乘拟合">
 <meta property="og:type" content="article">
 <meta property="og:title" content="从二开始的汇编">
 <meta property="og:url" content="http://yoursite.com/2020/01/29/csapp5/index.html">
 <meta property="og:site_name" content="Hulieu">
-<meta property="og:description" content="编写高效程序 合适的算法和数据结构 高效执行的源代码  GCC 命令行标志 -01 到 -03 提供不同程度的优化 妨碍优化的几个因素  存储器别名使用：两个指针可能指向同一个存储器  函数调用：大多数编译器不会判断函数是否有副作用，并保持所有函数调用不变 可以使用内联函数替换（将函数代码展开）对此进行优化（-finline或者-02以上）   运行时间可以通过最小二乘拟合得到，线性因子系数称为每">
+<meta property="og:description" content="上一篇：从一开始的汇编 编写高效程序 合适的算法和数据结构 高效执行的源代码  GCC 命令行标志 -01 到 -03 提供不同程度的优化 妨碍优化的几个因素  存储器别名使用：两个指针可能指向同一个存储器  函数调用：大多数编译器不会判断函数是否有副作用，并保持所有函数调用不变 可以使用内联函数替换（将函数代码展开）对此进行优化（-finline或者-02以上）   运行时间可以通过最小二乘拟合">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://yoursite.com/2020/01/29/csapp5/memory.png">
 <meta property="og:image" content="http://yoursite.com/2020/01/29/csapp5/IObus.png">
 <meta property="og:image" content="http://yoursite.com/2020/01/29/csapp5/cache.png">
 <meta property="article:published_time" content="2020-01-29T05:41:03.000Z">
-<meta property="article:modified_time" content="2020-03-20T03:00:29.191Z">
+<meta property="article:modified_time" content="2020-06-16T04:06:23.167Z">
 <meta property="article:author" content="Hulieu">
 <meta property="article:tag" content="琉璃猫">
 <meta name="twitter:card" content="summary">
@@ -108,6 +109,7 @@
 
   <div class="site-nav-right">
     <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -142,11 +144,38 @@
     <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
 
   </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
   </ul>
 </nav>
 
 
 
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
 
 </div>
     </header>
@@ -200,7 +229,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-03-20 11:00:29" itemprop="dateModified" datetime="2020-03-20T11:00:29+08:00">2020-03-20</time>
+                <time title="Modified: 2020-06-16 12:06:23" itemprop="dateModified" datetime="2020-06-16T12:06:23+08:00">2020-06-16</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -234,7 +263,8 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h3 id="编写高效程序"><a href="#编写高效程序" class="headerlink" title="编写高效程序"></a>编写高效程序</h3><ul>
+        <p><a href="/2020/01/10/csapp4/">上一篇：从一开始的汇编</a></p>
+<h3 id="编写高效程序"><a href="#编写高效程序" class="headerlink" title="编写高效程序"></a>编写高效程序</h3><ul>
 <li>合适的算法和数据结构</li>
 <li>高效执行的源代码</li>
 </ul>
@@ -260,6 +290,7 @@
 <li>延迟：完成运算总时间</li>
 <li>发射：连续运算需要的时钟周期数，发射时间为1即为完全流水线化的</li>
 </ul>
+<a id="more"></a>
 <h3 id="循环里的优化"><a href="#循环里的优化" class="headerlink" title="循环里的优化"></a>循环里的优化</h3><ul>
 <li>代码移动：将strlen或vec_length的计算移出循环（特别是strlen，因为它是O(n)的）</li>
 <li>减少过程调用</li>
@@ -401,6 +432,7 @@ S=\frac{1}{1-\alpha+\alpha/k}</script></li>
 </table>
 </div>
 <p>kij和ikj性能最好。</p>
+<p><a href="/2020/02/08/csapp7/">下一篇：从三开始的汇编</a></p>
 
     </div>
 
@@ -500,14 +532,14 @@ S=\frac{1}{1-\alpha+\alpha/k}</script></li>
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">19</span>
+          <span class="site-state-item-count">22</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -596,6 +628,8 @@ S=\frac{1}{1-\alpha+\alpha/k}</script></li>
 
   
   <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
 
@@ -615,6 +649,10 @@ S=\frac{1}{1-\alpha+\alpha/k}</script></li>
   
 
 
+
+
+  
+<script src="/js/local-search.js"></script>
 
 
 

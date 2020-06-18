@@ -14,18 +14,19 @@
 
 
 <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="Y86(一个玩具)定义Y86指令集只处理四字节的数据   将movl拆分成四个指令，显示指定源和目的。i表示立即数，r表示寄存器，m表示存储器。 OPl包含四个整数操作，分别是addl,subl,andl,xorl 三个条件码ZF、SF和OF 7个跳转指令jmp、jle、jl、je、jne、jge、jg 6个条件传送cmovle、cmovl、cmove、cmovne、cmovge、cmovg（属于">
+  <meta name="description" content="上一篇：从零开始的汇编 Y86(一个玩具)定义Y86指令集只处理四字节的数据   将movl拆分成四个指令，显示指定源和目的。i表示立即数，r表示寄存器，m表示存储器。 OPl包含四个整数操作，分别是addl,subl,andl,xorl 三个条件码ZF、SF和OF 7个跳转指令jmp、jle、jl、je、jne、jge、jg 6个条件传送cmovle、cmovl、cmove、cmovne、cmo">
 <meta property="og:type" content="article">
 <meta property="og:title" content="从一开始的汇编">
 <meta property="og:url" content="http://yoursite.com/2020/01/10/csapp4/index.html">
 <meta property="og:site_name" content="Hulieu">
-<meta property="og:description" content="Y86(一个玩具)定义Y86指令集只处理四字节的数据   将movl拆分成四个指令，显示指定源和目的。i表示立即数，r表示寄存器，m表示存储器。 OPl包含四个整数操作，分别是addl,subl,andl,xorl 三个条件码ZF、SF和OF 7个跳转指令jmp、jle、jl、je、jne、jge、jg 6个条件传送cmovle、cmovl、cmove、cmovne、cmovge、cmovg（属于">
+<meta property="og:description" content="上一篇：从零开始的汇编 Y86(一个玩具)定义Y86指令集只处理四字节的数据   将movl拆分成四个指令，显示指定源和目的。i表示立即数，r表示寄存器，m表示存储器。 OPl包含四个整数操作，分别是addl,subl,andl,xorl 三个条件码ZF、SF和OF 7个跳转指令jmp、jle、jl、je、jne、jge、jg 6个条件传送cmovle、cmovl、cmove、cmovne、cmo">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://yoursite.com/2020/01/10/csapp4/y86.png">
 <meta property="og:image" content="http://yoursite.com/2020/01/10/csapp4/register.png">
@@ -40,7 +41,7 @@
 <meta property="og:image" content="http://yoursite.com/2020/01/10/csapp4/pipe.png">
 <meta property="og:image" content="http://yoursite.com/2020/01/10/csapp4/bubble.png">
 <meta property="article:published_time" content="2020-01-10T07:49:05.000Z">
-<meta property="article:modified_time" content="2020-03-20T03:00:21.401Z">
+<meta property="article:modified_time" content="2020-06-16T04:06:14.880Z">
 <meta property="article:author" content="Hulieu">
 <meta property="article:tag" content="琉璃猫">
 <meta name="twitter:card" content="summary">
@@ -117,6 +118,7 @@
 
   <div class="site-nav-right">
     <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -151,11 +153,38 @@
     <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
 
   </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
   </ul>
 </nav>
 
 
 
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
 
 </div>
     </header>
@@ -209,7 +238,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-03-20 11:00:21" itemprop="dateModified" datetime="2020-03-20T11:00:21+08:00">2020-03-20</time>
+                <time title="Modified: 2020-06-16 12:06:14" itemprop="dateModified" datetime="2020-06-16T12:06:14+08:00">2020-06-16</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -243,7 +272,8 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h3 id="Y86-一个玩具"><a href="#Y86-一个玩具" class="headerlink" title="Y86(一个玩具)"></a>Y86(一个玩具)</h3><p>定义Y86指令集只处理四字节的数据</p>
+        <p><a href="/2020/01/02/csapp3/">上一篇：从零开始的汇编</a></p>
+<h3 id="Y86-一个玩具"><a href="#Y86-一个玩具" class="headerlink" title="Y86(一个玩具)"></a>Y86(一个玩具)</h3><p>定义Y86指令集只处理四字节的数据</p>
 <p><img src="y86.png" alt=""></p>
 <ul>
 <li>将movl拆分成四个指令，显示指定源和目的。i表示立即数，r表示寄存器，m表示存储器。</li>
@@ -255,6 +285,7 @@
 <li>halt相当于X86里的hlt，会直接导致处理器暂停</li>
 </ul>
 <p>指令集模拟器YIS</p>
+<a id="more"></a>
 <h3 id="HCL"><a href="#HCL" class="headerlink" title="HCL"></a>HCL</h3><p>位级电路-&gt;字级电路</p>
 <p>多路复用电路</p>
 <p>ALU（算术单元）：根据输入做一次算术运算</p>
@@ -364,17 +395,17 @@
 <p><img src="seq.png" alt=""></p>
 <h3 id="SEQ实现"><a href="#SEQ实现" class="headerlink" title="SEQ实现"></a>SEQ实现</h3><p>所使用的常数如下（除了指令之外还包括了状态码）</p>
 <p><img src="seqconstant.png" alt=""></p>
-<h5 id="取指阶段"><a href="#取指阶段" class="headerlink" title="取指阶段"></a>取指阶段</h5><ul>
+<h4 id="取指阶段"><a href="#取指阶段" class="headerlink" title="取指阶段"></a>取指阶段</h4><ul>
 <li>instr_valid：合法指令</li>
 <li>need_regids：包括寄存器指示符</li>
 <li>need_valC：包含常数</li>
 </ul>
 <p><img src="seqfetch.png" alt=""></p>
 <p>增加器产生值p+1+need_rigids+4*need_valC</p>
-<h5 id="译码和写回阶段"><a href="#译码和写回阶段" class="headerlink" title="译码和写回阶段"></a>译码和写回阶段</h5><p><img src="seqfetch.png" alt=""></p>
-<h5 id="执行阶段"><a href="#执行阶段" class="headerlink" title="执行阶段"></a>执行阶段</h5><p><img src="seqexecute.png" alt=""></p>
-<h5 id="访存阶段"><a href="#访存阶段" class="headerlink" title="访存阶段"></a>访存阶段</h5><p><img src="seqmemory.png" alt=""></p>
-<h5 id="更新PC阶段"><a href="#更新PC阶段" class="headerlink" title="更新PC阶段"></a>更新PC阶段</h5><p>HCL描述如下</p>
+<h4 id="译码和写回阶段"><a href="#译码和写回阶段" class="headerlink" title="译码和写回阶段"></a>译码和写回阶段</h4><p><img src="seqfetch.png" alt=""></p>
+<h4 id="执行阶段"><a href="#执行阶段" class="headerlink" title="执行阶段"></a>执行阶段</h4><p><img src="seqexecute.png" alt=""></p>
+<h4 id="访存阶段"><a href="#访存阶段" class="headerlink" title="访存阶段"></a>访存阶段</h4><p><img src="seqmemory.png" alt=""></p>
+<h4 id="更新PC阶段"><a href="#更新PC阶段" class="headerlink" title="更新PC阶段"></a>更新PC阶段</h4><p>HCL描述如下</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">int new_pc &#x3D; [</span><br><span class="line">	icode &#x3D;&#x3D; ICALL: valC; # 调用</span><br><span class="line">	icode &#x3D;&#x3D; IJXX &amp;&amp; Cnd: valC; # 跳转</span><br><span class="line">	icode &#x3D;&#x3D; IRET: valM; # 返回</span><br><span class="line">	1: valP; # 默认</span><br><span class="line">];</span><br></pre></td></tr></table></figure>
 <h3 id="流水线"><a href="#流水线" class="headerlink" title="流水线"></a>流水线</h3><p>SEQ的问题在于每个单元只在整个时钟周期的一部分时间里被使用</p>
 <p>理想流水线：划分成n个相互独立的周期，每个阶段需要的时间是原来的1/n，其他因素：</p>
@@ -384,9 +415,9 @@
 </ul>
 <p>现代处理器采用15或更深的流水线，因而需要划分指令的执行减小延迟、设计更好的流水线寄存器、设计时钟传播网络</p>
 <p><u>带反馈的流水线：处理有数据相关的相邻指令</u></p>
-<h3 id="Y86流水线的实现"><a href="#Y86流水线的实现" class="headerlink" title="Y86流水线的实现"></a>Y86流水线的实现</h3><h5 id="SEQ-：重新安排计算阶段"><a href="#SEQ-：重新安排计算阶段" class="headerlink" title="SEQ+：重新安排计算阶段"></a>SEQ+：重新安排计算阶段</h5><p>PC计算移到了时钟周期开始</p>
+<h3 id="Y86流水线的实现"><a href="#Y86流水线的实现" class="headerlink" title="Y86流水线的实现"></a>Y86流水线的实现</h3><h4 id="SEQ-：重新安排计算阶段"><a href="#SEQ-：重新安排计算阶段" class="headerlink" title="SEQ+：重新安排计算阶段"></a>SEQ+：重新安排计算阶段</h4><p>PC计算移到了时钟周期开始</p>
 <p><img src="seq+.png" alt=""></p>
-<h5 id="插入流水线寄存器"><a href="#插入流水线寄存器" class="headerlink" title="插入流水线寄存器"></a>插入流水线寄存器</h5><p><img src="pipe.png" alt=""></p>
+<h4 id="插入流水线寄存器"><a href="#插入流水线寄存器" class="headerlink" title="插入流水线寄存器"></a>插入流水线寄存器</h4><p><img src="pipe.png" alt=""></p>
 <p>寄存器按以下方式标号</p>
 <ul>
 <li>F 保存计数器的预测值</li>
@@ -395,10 +426,10 @@
 <li>M 保存执行指令的结果</li>
 <li>W 提供计算出来的值，提供返回地址</li>
 </ul>
-<h5 id="预测下一个PC"><a href="#预测下一个PC" class="headerlink" title="预测下一个PC"></a>预测下一个PC</h5><p>除了条件转移指令和ret之外，我们能够根据取指信息确定下一条指令地址。</p>
+<h4 id="预测下一个PC"><a href="#预测下一个PC" class="headerlink" title="预测下一个PC"></a>预测下一个PC</h4><p>除了条件转移指令和ret之外，我们能够根据取指信息确定下一条指令地址。</p>
 <p>这里分支预测总是预测选择了条件分支，预测PC为valC。 <u>这种预测成功率约为60%。其他还有根据分支地址高低进行预测（分支地址低则预测选择分支），成功率约为65%，这种改进源自循环是由后向分支结束这一事实。</u></p>
 <p>ret只是简单地暂停处理新指令。<u>大多数程序可以利用栈顶的值作为预测的返回值。</u></p>
-<h5 id="数据冒险"><a href="#数据冒险" class="headerlink" title="数据冒险"></a>数据冒险</h5><p>加入暂停（nop）自动产生的nop指令为气泡（bubble）</p>
+<h4 id="数据冒险"><a href="#数据冒险" class="headerlink" title="数据冒险"></a>数据冒险</h4><p>加入暂停（nop）自动产生的nop指令为气泡（bubble）</p>
 <p><img src="bubble.png" alt=""></p>
 <p>但这会导致流水线暂停过长，降低整体吞吐量。</p>
 <p>解决方法是将要写的值传到流水线寄存器E作为源操作数。在译码阶段发现有写回阶段对寄存器未进行的写，则用这个值作为源操作数。</p>
@@ -406,7 +437,7 @@
 <p>有两个不同的转发目的valA, valB</p>
 <p>在结构中就是加入Sel+Fwd A和Fwd B的模块更新valA和valB</p>
 <p><u>加载互锁和转发技术结合起来处理所有可能的数据冒险</u></p>
-<h5 id="异常处理"><a href="#异常处理" class="headerlink" title="异常处理"></a>异常处理</h5><p>没有实际的异常指令</p>
+<h4 id="异常处理"><a href="#异常处理" class="headerlink" title="异常处理"></a>异常处理</h4><p>没有实际的异常指令</p>
 <p>异常处理的几个细节</p>
 <ul>
 <li>多条指令引起异常</li>
@@ -414,7 +445,7 @@
 <li>异常指令之后的指令改变了部分状态</li>
 </ul>
 <p><u>当处于访存或写回阶段中的指令导致异常时，流线控制逻辑必须禁止更新条件码或数据存储器。</u></p>
-<h5 id="PIPE各阶段"><a href="#PIPE各阶段" class="headerlink" title="PIPE各阶段"></a>PIPE各阶段</h5><ul>
+<h4 id="PIPE各阶段"><a href="#PIPE各阶段" class="headerlink" title="PIPE各阶段"></a>PIPE各阶段</h4><ul>
 <li><p>取指：增加了f_pred</p>
 </li>
 <li><p>译码和写回：使用sel+fwd A和fwd B </p>
@@ -425,7 +456,7 @@
 <li><p>访存阶段</p>
 </li>
 </ul>
-<h5 id="控制逻辑"><a href="#控制逻辑" class="headerlink" title="控制逻辑"></a>控制逻辑</h5><p>处理4种控制</p>
+<h4 id="控制逻辑"><a href="#控制逻辑" class="headerlink" title="控制逻辑"></a>控制逻辑</h4><p>处理4种控制</p>
 <ul>
 <li><p>ret</p>
 <p>ret后加入三个bubble</p>
@@ -442,13 +473,14 @@
 </ul>
 <p>我们可以由此产生各个流水线控制信号的HCL描述</p>
 <p><u>遇到加载/使用冒险和ret指令组合时，寄存器D不应该插入气泡。</u></p>
-<h5 id="性能分析"><a href="#性能分析" class="headerlink" title="性能分析"></a>性能分析</h5><script type="math/tex; mode=display">
+<h4 id="性能分析"><a href="#性能分析" class="headerlink" title="性能分析"></a>性能分析</h4><script type="math/tex; mode=display">
 CPI（每指令周期数）=1+C_b/C_i 
 =1+\sum 指令频率*条件频率*气泡数</script><p>其中C_b是气泡数，C_i是指令数，分加载/使用、预测错误、ret三种情况考虑。</p>
-<h5 id="未完成工作"><a href="#未完成工作" class="headerlink" title="未完成工作"></a>未完成工作</h5><ul>
+<h4 id="未完成工作"><a href="#未完成工作" class="headerlink" title="未完成工作"></a>未完成工作</h4><ul>
 <li>多周期指令：计算单元做不同运算所需时间不同</li>
 <li>存储系统的接口</li>
 </ul>
+<p><a href="/2020/01/29/csapp5/">下一篇：从二开始的汇编</a></p>
 
     </div>
 
@@ -532,7 +564,7 @@ CPI（每指令周期数）=1+C_b/C_i
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Y86-一个玩具"><span class="nav-number">1.</span> <span class="nav-text">Y86(一个玩具)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HCL"><span class="nav-number">2.</span> <span class="nav-text">HCL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#寄存器"><span class="nav-number">3.</span> <span class="nav-text">寄存器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#顺序实现"><span class="nav-number">4.</span> <span class="nav-text">顺序实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SEQ实现"><span class="nav-number">5.</span> <span class="nav-text">SEQ实现</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#取指阶段"><span class="nav-number">5.0.1.</span> <span class="nav-text">取指阶段</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#译码和写回阶段"><span class="nav-number">5.0.2.</span> <span class="nav-text">译码和写回阶段</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#执行阶段"><span class="nav-number">5.0.3.</span> <span class="nav-text">执行阶段</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#访存阶段"><span class="nav-number">5.0.4.</span> <span class="nav-text">访存阶段</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#更新PC阶段"><span class="nav-number">5.0.5.</span> <span class="nav-text">更新PC阶段</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#流水线"><span class="nav-number">6.</span> <span class="nav-text">流水线</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Y86流水线的实现"><span class="nav-number">7.</span> <span class="nav-text">Y86流水线的实现</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#SEQ-：重新安排计算阶段"><span class="nav-number">7.0.1.</span> <span class="nav-text">SEQ+：重新安排计算阶段</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#插入流水线寄存器"><span class="nav-number">7.0.2.</span> <span class="nav-text">插入流水线寄存器</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#预测下一个PC"><span class="nav-number">7.0.3.</span> <span class="nav-text">预测下一个PC</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#数据冒险"><span class="nav-number">7.0.4.</span> <span class="nav-text">数据冒险</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#异常处理"><span class="nav-number">7.0.5.</span> <span class="nav-text">异常处理</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#PIPE各阶段"><span class="nav-number">7.0.6.</span> <span class="nav-text">PIPE各阶段</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#控制逻辑"><span class="nav-number">7.0.7.</span> <span class="nav-text">控制逻辑</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#性能分析"><span class="nav-number">7.0.8.</span> <span class="nav-text">性能分析</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#未完成工作"><span class="nav-number">7.0.9.</span> <span class="nav-text">未完成工作</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Y86-一个玩具"><span class="nav-number">1.</span> <span class="nav-text">Y86(一个玩具)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HCL"><span class="nav-number">2.</span> <span class="nav-text">HCL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#寄存器"><span class="nav-number">3.</span> <span class="nav-text">寄存器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#顺序实现"><span class="nav-number">4.</span> <span class="nav-text">顺序实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SEQ实现"><span class="nav-number">5.</span> <span class="nav-text">SEQ实现</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#取指阶段"><span class="nav-number">5.1.</span> <span class="nav-text">取指阶段</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#译码和写回阶段"><span class="nav-number">5.2.</span> <span class="nav-text">译码和写回阶段</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#执行阶段"><span class="nav-number">5.3.</span> <span class="nav-text">执行阶段</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#访存阶段"><span class="nav-number">5.4.</span> <span class="nav-text">访存阶段</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#更新PC阶段"><span class="nav-number">5.5.</span> <span class="nav-text">更新PC阶段</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#流水线"><span class="nav-number">6.</span> <span class="nav-text">流水线</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Y86流水线的实现"><span class="nav-number">7.</span> <span class="nav-text">Y86流水线的实现</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#SEQ-：重新安排计算阶段"><span class="nav-number">7.1.</span> <span class="nav-text">SEQ+：重新安排计算阶段</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#插入流水线寄存器"><span class="nav-number">7.2.</span> <span class="nav-text">插入流水线寄存器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#预测下一个PC"><span class="nav-number">7.3.</span> <span class="nav-text">预测下一个PC</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#数据冒险"><span class="nav-number">7.4.</span> <span class="nav-text">数据冒险</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#异常处理"><span class="nav-number">7.5.</span> <span class="nav-text">异常处理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#PIPE各阶段"><span class="nav-number">7.6.</span> <span class="nav-text">PIPE各阶段</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#控制逻辑"><span class="nav-number">7.7.</span> <span class="nav-text">控制逻辑</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#性能分析"><span class="nav-number">7.8.</span> <span class="nav-text">性能分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#未完成工作"><span class="nav-number">7.9.</span> <span class="nav-text">未完成工作</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -548,14 +580,14 @@ CPI（每指令周期数）=1+C_b/C_i
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">19</span>
+          <span class="site-state-item-count">22</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -644,6 +676,8 @@ CPI（每指令周期数）=1+C_b/C_i
 
   
   <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
 
@@ -663,6 +697,10 @@ CPI（每指令周期数）=1+C_b/C_i
   
 
 
+
+
+  
+<script src="/js/local-search.js"></script>
 
 
 

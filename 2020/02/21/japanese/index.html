@@ -14,21 +14,22 @@
 
 
 <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="单词数字１　いち ２　に ３　さん ４　し／よん ５　ご ６　ろく ７　しち／なな ８　はち ９　く／きゅう 10　じゅう 100　ひゃく 1000 せん 0.1 れいてんいち 亲属父亲 おどうさん 母亲 おかあさん 爷爷 おじいさん 奶奶 おばあさん 方位上 うえ 下　した 前　まえ　 后　うし 相邻　となり 中　なか 外　そと 时间星期周日 日曜日 にちようび 周一 月曜日　げつようび 周二">
+  <meta name="description" content="单词">
 <meta property="og:type" content="article">
 <meta property="og:title" content="王的日语笔记本">
 <meta property="og:url" content="http://yoursite.com/2020/02/21/japanese/index.html">
 <meta property="og:site_name" content="Hulieu">
-<meta property="og:description" content="单词数字１　いち ２　に ３　さん ４　し／よん ５　ご ６　ろく ７　しち／なな ８　はち ９　く／きゅう 10　じゅう 100　ひゃく 1000 せん 0.1 れいてんいち 亲属父亲 おどうさん 母亲 おかあさん 爷爷 おじいさん 奶奶 おばあさん 方位上 うえ 下　した 前　まえ　 后　うし 相邻　となり 中　なか 外　そと 时间星期周日 日曜日 にちようび 周一 月曜日　げつようび 周二">
+<meta property="og:description" content="单词">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-02-21T06:21:39.000Z">
-<meta property="article:modified_time" content="2020-05-20T07:01:06.476Z">
+<meta property="article:modified_time" content="2020-06-18T08:25:37.269Z">
 <meta property="article:author" content="Hulieu">
 <meta property="article:tag" content="琉璃猫">
 <meta name="twitter:card" content="summary">
@@ -104,6 +105,7 @@
 
   <div class="site-nav-right">
     <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -138,11 +140,38 @@
     <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
 
   </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
   </ul>
 </nav>
 
 
 
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
 
 </div>
     </header>
@@ -196,7 +225,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-05-20 15:01:06" itemprop="dateModified" datetime="2020-05-20T15:01:06+08:00">2020-05-20</time>
+                <time title="Modified: 2020-06-18 16:25:37" itemprop="dateModified" datetime="2020-06-18T16:25:37+08:00">2020-06-18</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -230,7 +259,8 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="单词"><a href="#单词" class="headerlink" title="单词"></a>单词</h1><h3 id="数字"><a href="#数字" class="headerlink" title="数字"></a>数字</h3><p>１　いち</p>
+        <h1 id="单词"><a href="#单词" class="headerlink" title="单词"></a>单词</h1><a id="more"></a>
+<h2 id="数字"><a href="#数字" class="headerlink" title="数字"></a>数字</h2><p>１　いち</p>
 <p>２　に</p>
 <p>３　さん</p>
 <p>４　し／よん</p>
@@ -243,25 +273,34 @@
 <p>100　ひゃく</p>
 <p>1000 せん</p>
 <p>0.1 れいてんいち</p>
-<h3 id="亲属"><a href="#亲属" class="headerlink" title="亲属"></a>亲属</h3><p>父亲 おどうさん</p>
+<h2 id="亲属"><a href="#亲属" class="headerlink" title="亲属"></a>亲属</h2><p>父亲 おどうさん</p>
 <p>母亲 おかあさん</p>
 <p>爷爷 おじいさん</p>
 <p>奶奶 おばあさん</p>
-<h3 id="方位"><a href="#方位" class="headerlink" title="方位"></a>方位</h3><p>上 うえ</p>
+<h2 id="方位"><a href="#方位" class="headerlink" title="方位"></a>方位</h2><p>上 うえ</p>
 <p>下　した</p>
 <p>前　まえ　</p>
 <p>后　うし</p>
 <p>相邻　となり</p>
 <p>中　なか</p>
 <p>外　そと</p>
-<h3 id="时间"><a href="#时间" class="headerlink" title="时间"></a>时间</h3><h4 id="星期"><a href="#星期" class="headerlink" title="星期"></a>星期</h4><p>周日 日曜日 にちようび</p>
+<h2 id="天气"><a href="#天气" class="headerlink" title="天气"></a>天气</h2><p>大雨 大雨（おおあめ）</p>
+<p>小雨 小雨（こさめ）</p>
+<p>夏天傍晚 夕立（ゆうだち）</p>
+<p>大雪 大雪（おおゆき）</p>
+<p>小雪 小雪（こゆき）</p>
+<p>大风 大風（おおかぜ）</p>
+<p>暴风 暴風（ぼうふう）</p>
+<p>小风 小風（こかぜ）</p>
+<p>微风 微風（そよかぜ）</p>
+<h2 id="时间"><a href="#时间" class="headerlink" title="时间"></a>时间</h2><h3 id="星期"><a href="#星期" class="headerlink" title="星期"></a>星期</h3><p>周日 日曜日 にちようび</p>
 <p>周一 月曜日　げつようび</p>
 <p>周二 火曜日　かようび</p>
 <p>周三 水曜日　すいようび</p>
 <p>周四 木曜日　もくようび</p>
 <p>周五 金曜日　きんようび</p>
 <p>周六 土曜日　どようび</p>
-<h4 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h4><p>…时 じ</p>
+<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><p>…时 じ</p>
 <p>…分 ぶん</p>
 <p>前天 おととい</p>
 <p>昨天 きのう（昨日）</p>
@@ -273,19 +312,21 @@
 <p>…结束 时间+まで</p>
 <p>ごろ在时间后面，表大概</p>
 <p>时间后面+過（す）ぎ 表示…过了</p>
-<h3 id="副词"><a href="#副词" class="headerlink" title="副词"></a>副词</h3><h4 id="程度副词"><a href="#程度副词" class="headerlink" title="程度副词"></a>程度副词</h4><p>非常 とても／たいへん</p>
+<h2 id="副词"><a href="#副词" class="headerlink" title="副词"></a>副词</h2><h3 id="程度副词"><a href="#程度副词" class="headerlink" title="程度副词"></a>程度副词</h3><p>非常 とても／たいへん</p>
 <p>一点儿　少（すこ）し／ちょっと</p>
 <p>不太 あまり～ません</p>
 <p>根本不 全然（ぜんぜん）～ません</p>
 <p>正好 ちょうど</p>
-<h4 id="频率副词"><a href="#频率副词" class="headerlink" title="频率副词"></a>频率副词</h4><p>总是 いつも</p>
+<p>相当 ずいぶん</p>
+<h3 id="频率副词"><a href="#频率副词" class="headerlink" title="频率副词"></a>频率副词</h3><p>总是 いつも</p>
 <p>经常 よく</p>
 <p>有时 時々（ときどき）</p>
 <p>偶尔 たまに（偶に）</p>
 <p>不太 あまり～ません</p>
 <p>从不 ぜんぜん～ません</p>
-<h4 id="其他副词"><a href="#其他副词" class="headerlink" title="其他副词"></a>其他副词</h4><p>好好地，也表示速度慢 ゆっくり</p>
-<h3 id="动词1"><a href="#动词1" class="headerlink" title="动词1"></a>动词1</h3><p>休息 やすみます</p>
+<h3 id="其他副词"><a href="#其他副词" class="headerlink" title="其他副词"></a>其他副词</h3><p>好好地，也表示速度慢 ゆっくり</p>
+<h2 id="动词1"><a href="#动词1" class="headerlink" title="动词1"></a>动词1</h2><p><strong>ある</strong>，其否定形式为ありません，简体形的否定为ない</p>
+<p>休息 やすみます</p>
 <p>工作 はたらきます</p>
 <p>开始 はじまります（始まります）</p>
 <p>结束 おわります（終わります）</p>
@@ -296,23 +337,23 @@
 <p>かきます（描きます）</p>
 <p>かります（借ります）</p>
 <p>かします（貸します）</p>
-<h3 id="动词2"><a href="#动词2" class="headerlink" title="动词2"></a>动词2</h3><p>起床  おきます</p>
+<h2 id="动词2"><a href="#动词2" class="headerlink" title="动词2"></a>动词2</h2><p>起床  おきます</p>
 <p>睡觉 ねます（寝ます）</p>
 <p>打（电话） かけます</p>
-<h3 id="动词3"><a href="#动词3" class="headerlink" title="动词3"></a>动词3</h3><p>学习 べんきようします（勉強します）</p>
-<h3 id="形容词１"><a href="#形容词１" class="headerlink" title="形容词１"></a>形容词１</h3><p>简单的 やさしい（易しい）</p>
+<h2 id="动词3"><a href="#动词3" class="headerlink" title="动词3"></a>动词3</h2><p>学习 べんきようします（勉強します）</p>
+<h2 id="形容词１"><a href="#形容词１" class="headerlink" title="形容词１"></a>形容词１</h2><p>简单的 やさしい（易しい）</p>
 <p>难的 むずかしい（難しい）</p>
 <p>无聊的 つまらない</p>
 <p>有趣的 おもしろい（面白い）</p>
-<h3 id="其他-1"><a href="#其他-1" class="headerlink" title="其他"></a>其他</h3><p>合起来   まとめて</p>
-<h1 id="短语"><a href="#短语" class="headerlink" title="短语"></a>短语</h1><h3 id="疑问句"><a href="#疑问句" class="headerlink" title="疑问句"></a>疑问句</h3><p>问人用だれ，问东西用なん，问场所用どこ，</p>
+<h2 id="其他-1"><a href="#其他-1" class="headerlink" title="其他"></a>其他</h2><p>合起来   まとめて</p>
+<h1 id="短语"><a href="#短语" class="headerlink" title="短语"></a>短语</h1><h2 id="疑问句"><a href="#疑问句" class="headerlink" title="疑问句"></a>疑问句</h2><p>问人用だれ，问东西用なん，问场所用どこ，</p>
 <p>问价格用いくら，</p>
 <p>询问时间なんじ（几点）、いつ（什么时候）</p>
 <p>问怎么样用 どんな+名词　询问材料（内容）用なんの</p>
 <p>询问对方意见どうですか，询问过去的事情どうでしだか，另一种询问方式いかがですか</p>
 <p>询问原因 どうしてですか，完整的问题是どうして　～の／ん　ですか</p>
 <p>多久 どの かかります</p>
-<h3 id="词义辨析"><a href="#词义辨析" class="headerlink" title="词义辨析"></a>词义辨析</h3><p>建筑物的家用いえ，指家人用うち</p>
+<h2 id="词义辨析"><a href="#词义辨析" class="headerlink" title="词义辨析"></a>词义辨析</h2><p>建筑物的家用いえ，指家人用うち</p>
 <p>刚刚，离现在很近たったいま，稍前一点用さっき</p>
 <p>お湯（ゆ）指热水，水（みず）仅指凉水</p>
 <p>三种店从大到小：馆 かん 店 てん 屋 や </p>
@@ -322,7 +363,7 @@
 <p>間（ま）もなく和もう　すく都表示不久的意思，但前者更加书面</p>
 <p>さらに和もっと都是更加的意思，前者更郑重</p>
 <p>长期爱好是趣味（しゅみ），兴趣是興味（きょうみ）</p>
-<h3 id="常用句子："><a href="#常用句子：" class="headerlink" title="常用句子："></a>常用句子：</h3><p>你好 こんにちは</p>
+<h2 id="常用句子："><a href="#常用句子：" class="headerlink" title="常用句子："></a>常用句子：</h2><p>你好 こんにちは</p>
 <p>早上好 おはよう</p>
 <p>对不起 すみません</p>
 <p>请 どうそ</p>
@@ -358,9 +399,9 @@
 <p>向…问好 ～に　よろしく　お伝（つた）え　ください</p>
 <p>请多保重 お元気で。</p>
 <p>一路平安 お気を　つけて</p>
-<h3 id="其他-2"><a href="#其他-2" class="headerlink" title="其他"></a>其他</h3><p>なん+量词+も+肯定形式 表示数量多</p>
+<h2 id="其他-2"><a href="#其他-2" class="headerlink" title="其他"></a>其他</h2><p>なん+量词+も+肯定形式 表示数量多</p>
 <p>だいぶ 强调程度高（变化中）</p>
-<h1 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h1><h3 id="语法-1"><a href="#语法-1" class="headerlink" title="语法"></a>语法</h3><p>と在两个名词中间，表示“和”，共同做某事的对象也用这个</p>
+<h1 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h1><h2 id="语法-1"><a href="#语法-1" class="headerlink" title="语法"></a>语法</h2><p>と在两个名词中间，表示“和”，共同做某事的对象也用这个</p>
 <p>や和と的差异在于と列举所有项目，や只用于许多项目中的两项。や常与など呼应。</p>
 <p>か在名词之间，表示“或者”</p>
 <p>は可以表对比或者强调（此时发音略重），此时可以单独使用加在名词后面，也可以加在助词后面构成复合形式</p>
@@ -384,14 +425,16 @@
 <p>～のです／んです 表示所讲的内容与前句有关，包括解释情况等。前者更正式。</p>
 <p>～に　ついて 关于…</p>
 <p>あまり+否定形式 表示程度不高</p>
-<h3 id="句末语气词"><a href="#句末语气词" class="headerlink" title="句末语气词"></a>句末语气词</h3><p>句末+ね 表示征求同意或者同意对方的提议</p>
+<p>名词+のところ 表示…的附近，把不是场所的名词变成场所</p>
+<h2 id="句末语气词"><a href="#句末语气词" class="headerlink" title="句末语气词"></a>句末语气词</h2><p>句末+ね 表示征求同意或者同意对方的提议</p>
 <p>句末+よね 对自己想法没有足够把握的时候的提议</p>
 <p>よ在句末用来表示提醒，读升调　</p>
 <p>+か 表示提问，也是应答时常用的说法</p>
 <p>+が 而不把话说完显得委婉含蓄</p>
 <p>二类形容词/名词+よ 一般是女性用</p>
 <p>+わ 一般是女性用</p>
-<h3 id="连词语法"><a href="#连词语法" class="headerlink" title="连词语法"></a>连词语法</h3><p>那么（中断谈话） では／じゃあ（不正式）</p>
+<p>+でしたね　用于表示确认</p>
+<h2 id="连词语法"><a href="#连词语法" class="headerlink" title="连词语法"></a>连词语法</h2><p>那么（中断谈话） では／じゃあ（不正式）</p>
 <p>所以 ですから／だから（不正式）</p>
 <p>表转折 でも</p>
 <p>表转折 けど</p>
@@ -399,7 +442,7 @@
 <p>表“正如所料”  やはり（日常可用 やっぱり）</p>
 <p>建议(口语) さあ</p>
 <p>表铺垫/转折 小句+が，小句</p>
-<h3 id="助词语法"><a href="#助词语法" class="headerlink" title="助词语法"></a>助词语法</h3><ul>
+<h2 id="助词语法"><a href="#助词语法" class="headerlink" title="助词语法"></a>助词语法</h2><ul>
 <li>は：是…，在…</li>
 <li>で：用…方式，在…地点，动作的场所、工具、手段、原材料+で+动词</li>
 <li>が：<em>自动词</em>的宾语，或者表示<em>能力</em></li>
@@ -443,7 +486,7 @@
 <p>名词（主体）+は+名词（对象）+が+ほしいです 想要什么</p>
 <p>名词（主体）+は+名词（对象）+を+动词基本形+たいです 想要干什么（有时也用が）</p>
 <p>みんな＋で 表示动作主体的状态</p>
-<h3 id="动词语法"><a href="#动词语法" class="headerlink" title="动词语法"></a>动词语法</h3><p>动词+ます／ません</p>
+<h2 id="动词语法"><a href="#动词语法" class="headerlink" title="动词语法"></a>动词语法</h2><p>动词+ます／ません</p>
 <p>动词+ました／ませんでした（过去时）</p>
 <p>三类动词：</p>
 <ul>
@@ -457,7 +500,7 @@
 <p>二类和三类动词的“て形”变换方式是去掉ます直接加て。</p>
 <p>动词て形+动词 表示相继发生（也可以用 动词て形+から+动词，但から只能在一个句子里用一次）</p>
 <p>动词て形+ください 请某人做某事</p>
-<p>动词て形+います 正在进行，或者结果状态（类似于认识、有这样的动词）</p>
+<p><u>动词て形+います 正在进行，或者结果状态（类似于认识、有这样的动词）</u></p>
 <p>动词て形+も+いいます 表示许可</p>
 <p>动词て形+は+いけません 表示禁止</p>
 <p>（提问方式　～ても　いいですか）</p>
@@ -487,7 +530,8 @@
 <p>动词+ませんか 表面是疑问，实际是提议</p>
 <p>动词ます形去掉ます加上方（かた）是“~的方法”的意思</p>
 <p>表示某个动作进行用  ～中（ちゅう）</p>
-<h3 id="形容词语法"><a href="#形容词语法" class="headerlink" title="形容词语法"></a>形容词语法</h3><p>形容词分两类，<strong>一类是以 い结尾</strong>，做<em>谓语</em>要加です</p>
+<p>动词（简体形）+名词/小句（动词简体形）+名词 用来修饰名词</p>
+<h2 id="形容词语法"><a href="#形容词语法" class="headerlink" title="形容词语法"></a>形容词语法</h2><p>形容词分两类，<strong>一类是以 い结尾</strong>，做<em>谓语</em>要加です</p>
 <p>名+は+一类形容词+です</p>
 <p>他的否定形式是将词尾的い变成く，再加上ないです或者ありません</p>
 <p>过去式是将词尾的い变为かつた，再加です</p>
@@ -514,23 +558,25 @@
 <p><strong>形容词表示变化</strong></p>
 <p>一类形容词去掉い+く+なります／します（后者是由于主观动作引起的变化）</p>
 <p>二类形容词/名词+に+なります／します</p>
-<h3 id="量词语法"><a href="#量词语法" class="headerlink" title="量词语法"></a>量词语法</h3><p>量词用在动词前面 </p>
+<h2 id="量词语法"><a href="#量词语法" class="headerlink" title="量词语法"></a>量词语法</h2><p>量词用在动词前面 </p>
 <p>名词+が／を+数量+量词+动词</p>
 <p>数量+量词+で+500円（1个时不加）</p>
 <p>数量的词后面+くらい／ぐらい 表示大概</p>
 <p>还有省去量词直接用３つ的</p>
-<h3 id="名词语法"><a href="#名词语法" class="headerlink" title="名词语法"></a>名词语法</h3><p>名词做谓语的时候加です，过去式是加でした</p>
+<h2 id="名词语法"><a href="#名词语法" class="headerlink" title="名词语法"></a>名词语法</h2><p>名词做谓语的时候加です，过去式是加でした</p>
 <p>否定形式是＋では　ありません</p>
 <p>过去式的否定形式+ では　ありませんでした</p>
 <p>下面两种方式等价，名词1是旧信息，名词2是新信息</p>
 <p>名词1+は+名词2+です</p>
 <p>名词2+が+名词1+です</p>
-<h3 id="礼貌用语"><a href="#礼貌用语" class="headerlink" title="礼貌用语"></a>礼貌用语</h3><p>对应该尊敬的对象或者交往不多的人，会将この人后面的人（ひと）变为方（かた）</p>
+<p>动词（简体形）+名词/小句（动词简体形）+名词 用来修饰名词</p>
+<p>小句（一类形/二类形/名）+名词 也可以修饰名词</p>
+<h2 id="礼貌用语"><a href="#礼貌用语" class="headerlink" title="礼貌用语"></a>礼貌用语</h2><p>对应该尊敬的对象或者交往不多的人，会将この人后面的人（ひと）变为方（かた）</p>
 <p>ここ、そこ、あそこ、どこ的礼貌用语こちら、そちら、あちら、どちら</p>
 <p>なかなか还不错，只能用于对下级</p>
 <p>ください（＋ませんか）表达请求</p>
 <p>…の　件（けん）　…一事，正式说法</p>
-<h3 id="敬体形和简体形"><a href="#敬体形和简体形" class="headerlink" title="敬体形和简体形"></a>敬体形和简体形</h3><p>动词～ます／～です都是敬体形，用于对长辈或不亲密的人。动词的基本形、ない形、た形都属于简体形。</p>
+<h2 id="敬体形和简体形"><a href="#敬体形和简体形" class="headerlink" title="敬体形和简体形"></a>敬体形和简体形</h2><p>动词～ます／～です都是敬体形，用于对长辈或不亲密的人。动词的基本形、ない形、た形都属于简体形。</p>
 <div class="table-container">
 <table>
 <thead>
@@ -736,7 +782,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#单词"><span class="nav-number">1.</span> <span class="nav-text">单词</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#数字"><span class="nav-number">1.0.1.</span> <span class="nav-text">数字</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#亲属"><span class="nav-number">1.0.2.</span> <span class="nav-text">亲属</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方位"><span class="nav-number">1.0.3.</span> <span class="nav-text">方位</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#时间"><span class="nav-number">1.0.4.</span> <span class="nav-text">时间</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#星期"><span class="nav-number">1.0.4.1.</span> <span class="nav-text">星期</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#其他"><span class="nav-number">1.0.4.2.</span> <span class="nav-text">其他</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#副词"><span class="nav-number">1.0.5.</span> <span class="nav-text">副词</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#程度副词"><span class="nav-number">1.0.5.1.</span> <span class="nav-text">程度副词</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#频率副词"><span class="nav-number">1.0.5.2.</span> <span class="nav-text">频率副词</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#其他副词"><span class="nav-number">1.0.5.3.</span> <span class="nav-text">其他副词</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#动词1"><span class="nav-number">1.0.6.</span> <span class="nav-text">动词1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#动词2"><span class="nav-number">1.0.7.</span> <span class="nav-text">动词2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#动词3"><span class="nav-number">1.0.8.</span> <span class="nav-text">动词3</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#形容词１"><span class="nav-number">1.0.9.</span> <span class="nav-text">形容词１</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他-1"><span class="nav-number">1.0.10.</span> <span class="nav-text">其他</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#短语"><span class="nav-number">2.</span> <span class="nav-text">短语</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#疑问句"><span class="nav-number">2.0.1.</span> <span class="nav-text">疑问句</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#词义辨析"><span class="nav-number">2.0.2.</span> <span class="nav-text">词义辨析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常用句子："><span class="nav-number">2.0.3.</span> <span class="nav-text">常用句子：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他-2"><span class="nav-number">2.0.4.</span> <span class="nav-text">其他</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#语法"><span class="nav-number">3.</span> <span class="nav-text">语法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#语法-1"><span class="nav-number">3.0.1.</span> <span class="nav-text">语法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#句末语气词"><span class="nav-number">3.0.2.</span> <span class="nav-text">句末语气词</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#连词语法"><span class="nav-number">3.0.3.</span> <span class="nav-text">连词语法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#助词语法"><span class="nav-number">3.0.4.</span> <span class="nav-text">助词语法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#动词语法"><span class="nav-number">3.0.5.</span> <span class="nav-text">动词语法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#形容词语法"><span class="nav-number">3.0.6.</span> <span class="nav-text">形容词语法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#量词语法"><span class="nav-number">3.0.7.</span> <span class="nav-text">量词语法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#名词语法"><span class="nav-number">3.0.8.</span> <span class="nav-text">名词语法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#礼貌用语"><span class="nav-number">3.0.9.</span> <span class="nav-text">礼貌用语</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#敬体形和简体形"><span class="nav-number">3.0.10.</span> <span class="nav-text">敬体形和简体形</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#单词"><span class="nav-number">1.</span> <span class="nav-text">单词</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#数字"><span class="nav-number">1.1.</span> <span class="nav-text">数字</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#亲属"><span class="nav-number">1.2.</span> <span class="nav-text">亲属</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#方位"><span class="nav-number">1.3.</span> <span class="nav-text">方位</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#天气"><span class="nav-number">1.4.</span> <span class="nav-text">天气</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#时间"><span class="nav-number">1.5.</span> <span class="nav-text">时间</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#星期"><span class="nav-number">1.5.1.</span> <span class="nav-text">星期</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他"><span class="nav-number">1.5.2.</span> <span class="nav-text">其他</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#副词"><span class="nav-number">1.6.</span> <span class="nav-text">副词</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#程度副词"><span class="nav-number">1.6.1.</span> <span class="nav-text">程度副词</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#频率副词"><span class="nav-number">1.6.2.</span> <span class="nav-text">频率副词</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他副词"><span class="nav-number">1.6.3.</span> <span class="nav-text">其他副词</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#动词1"><span class="nav-number">1.7.</span> <span class="nav-text">动词1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#动词2"><span class="nav-number">1.8.</span> <span class="nav-text">动词2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#动词3"><span class="nav-number">1.9.</span> <span class="nav-text">动词3</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#形容词１"><span class="nav-number">1.10.</span> <span class="nav-text">形容词１</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他-1"><span class="nav-number">1.11.</span> <span class="nav-text">其他</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#短语"><span class="nav-number">2.</span> <span class="nav-text">短语</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#疑问句"><span class="nav-number">2.1.</span> <span class="nav-text">疑问句</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#词义辨析"><span class="nav-number">2.2.</span> <span class="nav-text">词义辨析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常用句子："><span class="nav-number">2.3.</span> <span class="nav-text">常用句子：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他-2"><span class="nav-number">2.4.</span> <span class="nav-text">其他</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#语法"><span class="nav-number">3.</span> <span class="nav-text">语法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#语法-1"><span class="nav-number">3.1.</span> <span class="nav-text">语法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#句末语气词"><span class="nav-number">3.2.</span> <span class="nav-text">句末语气词</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#连词语法"><span class="nav-number">3.3.</span> <span class="nav-text">连词语法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#助词语法"><span class="nav-number">3.4.</span> <span class="nav-text">助词语法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#动词语法"><span class="nav-number">3.5.</span> <span class="nav-text">动词语法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#形容词语法"><span class="nav-number">3.6.</span> <span class="nav-text">形容词语法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#量词语法"><span class="nav-number">3.7.</span> <span class="nav-text">量词语法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#名词语法"><span class="nav-number">3.8.</span> <span class="nav-text">名词语法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#礼貌用语"><span class="nav-number">3.9.</span> <span class="nav-text">礼貌用语</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#敬体形和简体形"><span class="nav-number">3.10.</span> <span class="nav-text">敬体形和简体形</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -752,14 +798,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">19</span>
+          <span class="site-state-item-count">22</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -848,6 +894,8 @@
 
   
   <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
 
@@ -867,6 +915,10 @@
   
 
 
+
+
+  
+<script src="/js/local-search.js"></script>
 
 
 

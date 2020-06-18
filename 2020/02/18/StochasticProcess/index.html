@@ -14,10 +14,11 @@
 
 
 <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="条件期望给定概率空间$(\Omega,F,P)$，随机变量X，定义随机变量$Y&#x3D;E(X|F)$如果它满足  $Y\in F$ for all $A\in F$，$\int_A XdP &#x3D; \int_A YdP$  显然Y可积且唯一 Radon-Nikodym定理：测度$\nu &lt;&lt;\mu$，那么存在函数$f\in F$，对所有$A\in F$，  \int_A fd\mu&#x3D;\nu(A)">
@@ -28,7 +29,7 @@
 <meta property="og:description" content="条件期望给定概率空间$(\Omega,F,P)$，随机变量X，定义随机变量$Y&#x3D;E(X|F)$如果它满足  $Y\in F$ for all $A\in F$，$\int_A XdP &#x3D; \int_A YdP$  显然Y可积且唯一 Radon-Nikodym定理：测度$\nu &lt;&lt;\mu$，那么存在函数$f\in F$，对所有$A\in F$，  \int_A fd\mu&#x3D;\nu(A)">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-02-18T04:26:47.000Z">
-<meta property="article:modified_time" content="2020-04-08T10:29:01.413Z">
+<meta property="article:modified_time" content="2020-06-16T04:09:18.891Z">
 <meta property="article:author" content="Hulieu">
 <meta property="article:tag" content="琉璃猫">
 <meta name="twitter:card" content="summary">
@@ -104,6 +105,7 @@
 
   <div class="site-nav-right">
     <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -138,11 +140,38 @@
     <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
 
   </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
   </ul>
 </nav>
 
 
 
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
 
 </div>
     </header>
@@ -196,7 +225,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-04-08 18:29:01" itemprop="dateModified" datetime="2020-04-08T18:29:01+08:00">2020-04-08</time>
+                <time title="Modified: 2020-06-16 12:09:18" itemprop="dateModified" datetime="2020-06-16T12:09:18+08:00">2020-06-16</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -239,6 +268,7 @@
 <p><strong>Radon-Nikodym定理</strong>：测度$\nu &lt;&lt;\mu$，那么存在函数$f\in F$，对所有$A\in F$，</p>
 <script type="math/tex; mode=display">
 \int_A fd\mu=\nu(A)</script><p>先假设$X\geq 0$然后显然$\nu(A)=\int_A XdP$是测度，所以易证条件期望存在。</p>
+<a id="more"></a>
 <p>几个例子（小污猫说“这几个例子很重要”）</p>
 <ul>
 <li><p>$X\in F$，那么$E(X|F)=X$</p>
@@ -265,7 +295,7 @@ E(g(X)|Y)=h(Y)=\frac{\int g(x)f(X,y)dx}{\int f(X,y)dx}</script></li>
 <li>$F\subset G$，那么$E(E(X|F)|G)=E(E(X|G)|F)=E(X|F)$（条件期望平滑性）</li>
 </ul>
 <p>如果$X\in F$且$E|X|\:,\:E|XY|&lt;\infty$，那么$E(XY|F)=XE(Y|F)$。（典型four-step的证明）</p>
-<h3 id="正则条件概率："><a href="#正则条件概率：" class="headerlink" title="正则条件概率："></a>正则条件概率：</h3><p>可测映射$X\::\:(\Omega,F)\rightarrow (S,S)$（随机变量）。for X given G，<strong>正则条件分布</strong>$\mu\::\:\Omega\times S\rightarrow [0,1]$满足</p>
+<h2 id="正则条件概率："><a href="#正则条件概率：" class="headerlink" title="正则条件概率："></a>正则条件概率：</h2><p>可测映射$X\::\:(\Omega,F)\rightarrow (S,S)$（随机变量）。for X given G，<strong>正则条件分布</strong>$\mu\::\:\Omega\times S\rightarrow [0,1]$满足</p>
 <ul>
 <li>对每个A，$\omega\rightarrow\mu(\omega,A)$是$P(X\in A|G)$的一个版本</li>
 <li>对a.e. $\omega$，$A\rightarrow\mu(\omega,A)$是一个$(S,S)$上的测度。</li>
@@ -303,7 +333,7 @@ G(q,\omega)=P(Y\leq q|G)(\omega)</script><p>然后$F(x,\omega)=inf\{G(q,\omega),
 <p>定理：凸函数$\phi$，那么$\phi(X_n)$下鞅。即$E(\phi(X_{n+1})|F_n)\geq \phi(E(X_{n+1}|F_n))=\phi(X_n)$。如果$X_n$下鞅，$\phi$增也有此结论。</p>
 <p>定义$H_n$为<strong>可预测序列</strong>，即$H_n\in F_{n-1}$。定理：$X_n$上鞅，那么如果$H_n\geq 0$有界，则$(H\cdot X)_n$也是上鞅。显然对下鞅和鞅也有类似结论。</p>
 <p>定理：若N是停时，$X_n$上鞅，则$X_{N\wedge n}$也是上鞅。</p>
-<h3 id="鞅收敛定理"><a href="#鞅收敛定理" class="headerlink" title="鞅收敛定理"></a>鞅收敛定理</h3><p>$\lim_{n\to\infty}X_n(\omega)$不存在$\Leftrightarrow\lim_{n\to\infty}inf\:X_n(\omega)&lt;\lim_{n\to\infty}sup\:X_n(\omega)$，也等价于存在有理数a,b：</p>
+<h2 id="鞅收敛定理"><a href="#鞅收敛定理" class="headerlink" title="鞅收敛定理"></a>鞅收敛定理</h2><p>$\lim_{n\to\infty}X_n(\omega)$不存在$\Leftrightarrow\lim_{n\to\infty}inf\:X_n(\omega)&lt;\lim_{n\to\infty}sup\:X_n(\omega)$，也等价于存在有理数a,b：</p>
 <script type="math/tex; mode=display">
 \lim_{n\to\infty}inf\:X_n(\omega)<a<b<\lim_{n\to\infty}sup\:X_n(\omega)</script><p>定义$N_{2k-1}$为第k次下穿a的停时，$N_{2k}$是第k次上穿b的停时。定义$U_n=\{sup\:k|N_{2k}&lt;n\}$为上穿[a,b]的次数。而</p>
 <script type="math/tex; mode=display">
@@ -317,17 +347,17 @@ E(Y_n-Y_0)=EW_n+EV_n\geq EW_n\geq(b-a)EU_n</script><p> 即得证）</p>
 P(\lim_{n\to\infty}inf\:X_n<a<b<\lim_{n\to\infty}sup\:X_n)=0</script><p>所以$X_n$极限a.s.存在。又由于$EX_n\geq EX_0$，$EX_n^-=EX_n^+-EX_n\leq sup\:EX_n^+-EX_0&lt;+\infty$然后由Fatou引理易得$E|X|&lt;+\infty$。）</p>
 <p> 定理：若$X_n$非负上鞅，则$\lim X_n=X$a.s.，且$EX\leq EX_0$。（证明：$-X_n$下鞅有界，a.s.收敛到极限X。）</p>
 <p><strong>注意：L1收敛并不成立。</strong>一个简单的反例就是$S_0=1$，$P(e_i=-1)=P(e_i=1)=1/2$，N为$S_n=0$的停时，$X_n=S_{n\wedge N}$是鞅。但是由上面的定理可知$X\to 0$a.s.，与$EX_n=1$矛盾。</p>
-<h3 id="四个例子"><a href="#四个例子" class="headerlink" title="四个例子"></a>四个例子</h3><h5 id="有界增长"><a href="#有界增长" class="headerlink" title="有界增长"></a>有界增长</h5><p>$X_n$为鞅过程，且$|X_{n+1}-X_n|\leq M&lt;\infty$，那么要么$lim\:X_n$存在且有限，要么$X_n$在正负无穷之间摇摆。(停时$N=inf\{X_n\leq k\}$，那么$x_{n\wedge N}+k+M$a.s.收敛)</p>
+<h2 id="四个例子"><a href="#四个例子" class="headerlink" title="四个例子"></a>四个例子</h2><h3 id="有界增长"><a href="#有界增长" class="headerlink" title="有界增长"></a>有界增长</h3><p>$X_n$为鞅过程，且$|X_{n+1}-X_n|\leq M&lt;\infty$，那么要么$lim\:X_n$存在且有限，要么$X_n$在正负无穷之间摇摆。(停时$N=inf\{X_n\leq k\}$，那么$x_{n\wedge N}+k+M$a.s.收敛)</p>
 <p>（Doob分解）下鞅$X_n$可以写成$X_n=M_n+A_n$。其中$M_n$是鞅过程，$A_n$是可预测序列。(令$A_n-A_{n-1}=E(X_n|F_{n-1})-X_{n-1}$)</p>
 <p>（第二Borel-Cantelli引理）$A_n\in F_n$，那么</p>
 <script type="math/tex; mode=display">
 \{A_n\:i.o.\}=\{\sum_{n=1}^\infty P(A_n|F_{n-1})=\infty\}</script><p>（第二B-C引理是第一引理的推广，去掉了独立性要求）</p>
 <p>证明：由Doob分解可得$M_n=\sum_{m=1}^n 1_{A_m}-P(A_m|F_{m-1})$是有界增长的鞅过程。</p>
-<h5 id="Polya’s-Urn-Scheme"><a href="#Polya’s-Urn-Scheme" class="headerlink" title="Polya’s Urn Scheme"></a>Polya’s Urn Scheme</h5><p>坛子模型：坛子里有r个红球、g个绿球，每次取出一个并放进与之同色的c+1个球。n次抽取后绿球比例$X_n$是鞅。</p>
+<h3 id="Polya’s-Urn-Scheme"><a href="#Polya’s-Urn-Scheme" class="headerlink" title="Polya’s Urn Scheme"></a>Polya’s Urn Scheme</h3><p>坛子模型：坛子里有r个红球、g个绿球，每次取出一个并放进与之同色的c+1个球。n次抽取后绿球比例$X_n$是鞅。</p>
 <p>如果r=g=c=1，可得$P(X_n=\frac{k}{n+2})=\frac{1}{n+1}$。</p>
 <p>实际上，$X_\infty$有参数为$g/c$和$r/c$的beta分布：</p>
 <script type="math/tex; mode=display">
-\frac{\Gamma((g+r)/c)}{\Gamma(g/c)\Gamma(r/c)}x^{(g/c)-1}(1-x)^{(r/c)-1}</script><h5 id="R-N微分"><a href="#R-N微分" class="headerlink" title="R-N微分"></a>R-N微分</h5><p>有限测度$\mu$，$\nu$，上升的$\sigma-$域$F_n$，定义$\mu_n=\mu|F_n$，$\nu_n=\nu|F_n$。</p>
+\frac{\Gamma((g+r)/c)}{\Gamma(g/c)\Gamma(r/c)}x^{(g/c)-1}(1-x)^{(r/c)-1}</script><h3 id="R-N微分"><a href="#R-N微分" class="headerlink" title="R-N微分"></a>R-N微分</h3><p>有限测度$\mu$，$\nu$，上升的$\sigma-$域$F_n$，定义$\mu_n=\mu|F_n$，$\nu_n=\nu|F_n$。</p>
 <p>定理：若$\mu_n&lt;&lt;\nu_n$，定义$X_n=\frac{d\mu_n}{d\nu_n}$，令$X=\lim_{n\to\infty}sup\:X_n$，则</p>
 <script type="math/tex; mode=display">
 \mu(A)=\int_AXd\nu+\mu(A\cap\{X=+\infty\})</script><p>证明：根据定义，$A\in F_n$，则$\mu(A)=\int_AX_nd\nu$。$X_n$是非负鞅，所以$X_n\to X$a.s.。又令$\rho=(\mu+\nu)/2$，$\rho_n=\rho|F_n$，$Y_n=\frac{d\mu_n}{d\rho_n}$，$Z_n=\frac{d\nu_n}{d\rho_n}$。显然$Y_n$和%Z_n$都是非负鞅，且$Y_n+Z_n=2$a.s.。所以有$Y_n\to Y$，$Z_n\to Z$。记$Y=\frac{d\mu}{d\rho}$，$Z=\frac{d\nu}{d\rho}$。那么对$A\in F_n$，则由有界收敛</p>
@@ -345,7 +375,7 @@ P(\lim_{n\to\infty}inf\:X_n<a<b<\lim_{n\to\infty}sup\:X_n)=0</script><p>所以$X
 <script type="math/tex; mode=display">
 \mu(A)=\mu_n(A)=\int_AX_nd\nu_n=\int_AX_nd\nu\to\int_AXd\nu</script><p>有$\pi-\lambda$方法，A可以扩展到$R^N$，故而$\mu&lt;&lt;\nu$。</p>
 <p>$EX=\lim EX_n=1$，所以$\nu(X=0)<1$，故而$\nu(X=0)=0$，$\nu(X>0)=1$，$\mu\sim\nu$。</p>
-<h5 id="分支过程"><a href="#分支过程" class="headerlink" title="分支过程"></a>分支过程</h5><p>$e_n$独立非负，定义$Z_n$，满足$Z_0=1$以及</p>
+<h3 id="分支过程"><a href="#分支过程" class="headerlink" title="分支过程"></a>分支过程</h3><p>$e_n$独立非负，定义$Z_n$，满足$Z_0=1$以及</p>
 <script type="math/tex; mode=display">
 Z_{n+1}=\left\{\begin{array}.e_1^{n+1}+...+e_{Z_n}^{n+1}\:if\:Z_n>0\\0\:otherwise\end{array} \right.</script><p>也叫做Galtom-Watson过程，描述繁衍过程。</p>
 <p><em>引理：令$\mu=E(e_i^n)$，则$\{Z_n/\mu^n\}$是鞅过程 。</em></p>
@@ -356,7 +386,7 @@ Z_{n+1}=\left\{\begin{array}.e_1^{n+1}+...+e_{Z_n}^{n+1}\:if\:Z_n>0\\0\:otherwis
 <p>定理：若$\mu&gt;1$，$P(Z_n&gt;0,\forall n)&gt;0$</p>
 <p>定理：(Kesten-Stigum)</p>
 <script type="math/tex; mode=display">
-P(W=\lim \frac{Z_n}{\mu^n}>0)>0\Leftrightarrow\sum P_kkln(k)<+\infty</script><h3 id="Doob不等式-以及LP收敛"><a href="#Doob不等式-以及LP收敛" class="headerlink" title="Doob不等式(以及LP收敛)"></a>Doob不等式(以及LP收敛)</h3><p>定理：设$X_n$下鞅，N有界停时，$P(N\leq k)=1$，那么$EX_0\leq EX_N\leq EX_k$。</p>
+P(W=\lim \frac{Z_n}{\mu^n}>0)>0\Leftrightarrow\sum P_kkln(k)<+\infty</script><h2 id="Doob不等式-以及LP收敛"><a href="#Doob不等式-以及LP收敛" class="headerlink" title="Doob不等式(以及LP收敛)"></a>Doob不等式(以及LP收敛)</h2><p>定理：设$X_n$下鞅，N有界停时，$P(N\leq k)=1$，那么$EX_0\leq EX_N\leq EX_k$。</p>
 <p>证明：$X_n$和$X_{N\wedge n}$下鞅，$Y_n=X_n-X_{N\wedge n}$下鞅，$EY_0\leq EY_k$得到$EX_N\leq EX_k$。</p>
 <p>(反例：当N不是有界的时候，不一定成立，考虑SRW，$S_0=1$，停时N为0的首达时，此时$ES_N=0$。)</p>
 <p><strong>(Doob不等式)</strong>$X_m$下鞅，令$\bar{X_n}=\max_{0\leq m\leq n}X_m^+$，$A=\{\bar{X_n}\geq\lambda\}$，那么</p>
@@ -377,7 +407,7 @@ E(\bar{X_n}\wedge M)^p=\int_0^\infty p\lambda^{p-1}P(\bar{X_n}\wedge M\geq\lambd
 <script type="math/tex; mode=display">
 X_n\to^{a.s.}X,\:X_n\to^{LP}X</script><p><strong>（鞅增量正交性）</strong>若$X_n$鞅，$EX_n^2&lt;\infty$，若$Y\in F_m$，$EY^2&lt;\infty$，那么$E(X_n-X_m)Y=0$。</p>
 <p><strong>（条件方差公式）</strong>若$X_n$鞅，$EX_n^2&lt;\infty$，则$E((X_n-X_m)^2|F_m)=E(X_n^2|F_m)-X_m^2$。</p>
-<h5 id="平方可积鞅"><a href="#平方可积鞅" class="headerlink" title="平方可积鞅"></a>平方可积鞅</h5><p>$X_n$鞅，$X_0=0$，且$EX_n^2&lt;+\infty$，$X_n^2$下鞅，因而可以Doob分解为$X_n=M_n+A_n$，$M_n$鞅，而$A_n$非降。定义$A_\infty=\lim_{n\to\infty}A_n$。</p>
+<h3 id="平方可积鞅"><a href="#平方可积鞅" class="headerlink" title="平方可积鞅"></a>平方可积鞅</h3><p>$X_n$鞅，$X_0=0$，且$EX_n^2&lt;+\infty$，$X_n^2$下鞅，因而可以Doob分解为$X_n=M_n+A_n$，$M_n$鞅，而$A_n$非降。定义$A_\infty=\lim_{n\to\infty}A_n$。</p>
 <script type="math/tex; mode=display">
 A_n=\sum_{m=1}^nE((X_m-X_{m-1})^2|F_{m-1})</script><p>定理：$E\sup_{n\geq 0}|X_n|^2\leq 4 EA_\infty$（由LP不等式和单调收敛定理即得）</p>
 <p>定理：在$\{A_\infty&lt;\infty\}上$\lim_{n\to\infty}X_n$a.s.存在有限。</p>
@@ -387,7 +417,7 @@ A_n=\sum_{m=1}^nE((X_m-X_{m-1})^2|F_{m-1})</script><p>定理：$E\sup_{n\geq 0}|
 <p>定理（第二Borel-Cantelli定理）：$P_n=P(B_n|F_{n-1})$，那么在$\{\sum_{n=1}^\infty P_n=\infty\}$上</p>
 <script type="math/tex; mode=display">
 \frac{\sum_{m=1}^n1_{B_m}}{\sum_{m=1}^nP_m}\to^{a.s.}1</script><p>证明：定义$X_n=\sum_{m=1}^n1_{B_m}-\sum_{m=1}^nP_m$，定义$f(t)=t\vee 1$，由上可得。</p>
-<h5 id="一致可积L1收敛"><a href="#一致可积L1收敛" class="headerlink" title="一致可积L1收敛"></a>一致可积L1收敛</h5><p>一致可积$\{X_i,\:i\in I\}$满足</p>
+<h3 id="一致可积L1收敛"><a href="#一致可积L1收敛" class="headerlink" title="一致可积L1收敛"></a>一致可积L1收敛</h3><p>一致可积$\{X_i,\:i\in I\}$满足</p>
 <script type="math/tex; mode=display">
 \lim_{M\to\infty}\sup E|X_i|1_{|X_i|>M}=0</script><p>（一致）绝对连续$\{X_i,\:i\in I\}$满足</p>
 <script type="math/tex; mode=display">
@@ -430,7 +460,7 @@ A_n=\sum_{m=1}^nE((X_m-X_{m-1})^2|F_{m-1})</script><p>定理：$E\sup_{n\geq 0}|
 <p>证明：</p>
 <script type="math/tex; mode=display">
 |E(Y_n|F_n)-E(Y|F_\infty)|\leq |E(Y_n|F_n)-E(Y|F_n)|+|E(Y|F_n)-E(Y|F_\infty)|</script><p>后一部分易证。为证明前一部分，令$W_N=\sup\{|Y_n-Y_m|,n,m\geq N\}$单调收敛可证。</p>
-<h3 id="倒向鞅"><a href="#倒向鞅" class="headerlink" title="倒向鞅"></a>倒向鞅</h3><p>鞅$\{X_n:n\leq 0\}$称为倒向鞅，定义$F_{-\infty}=\bigcap F_n$</p>
+<h2 id="倒向鞅"><a href="#倒向鞅" class="headerlink" title="倒向鞅"></a>倒向鞅</h2><p>鞅$\{X_n:n\leq 0\}$称为倒向鞅，定义$F_{-\infty}=\bigcap F_n$</p>
 <p>定理：$X_{-\infty}=\lim_{n\to -\infty}X_n$a.s.存在且L1收敛</p>
 <p>证明：记$U_n[a,b]$为$X_{-n}$上穿$[a,b]$的次数，根据上穿不等式，$(b-a)EU_n\leq E(X_0-a)^+$，根据单调收敛定理，$U_\infty[a,b]&lt;+\infty$。所以$X_{-n}$的极限a.s.存在。 然后根据一致可积得到L1收敛。</p>
 <p>定理：$\{X_n\}$倒向鞅，则</p>
@@ -454,7 +484,7 @@ X_{-\infty}=E(X_0|F_{-\infty})</script><p>证明：先证$X_{-\infty}\in F_{-\in
 <p>引理：若$EX^2&lt;\infty$，$E(X|G)\in F$，X和F独立，则$E(X|G)=EX$。</p>
 <p>例：（强大数律）：$e_n$独立同分布，$E|e_1|&lt;+\infty$，令$X_{-n}=S_n/n$。$F_{-n}=\sigma(S_n,…)$，可证$\{X_{-n},F_{-n}\}$倒向鞅。因而$X_{-n}\to{a.s.L1}E(X_{-1}|F_{-\infty})$。由于$F_{-n}\subset E_n$，所以$F_{-\infty}\subset E$，由H-S 0-1律，$E(X_{-1}|F_{-\infty})=EX_{-1}$</p>
 <p>例：（选票定理）设$e_n$非负整数，$G=\{S_j&lt;j\}$，则$P(G|S_n)=(1-\frac{S_n}{n})^+$</p>
-<h3 id="停时定理"><a href="#停时定理" class="headerlink" title="停时定理"></a>停时定理</h3><p>问题：若$X_n$下鞅，任意停时$M\geq N$，什么条件下$E(X_M|F_N)\geq X_N$，$X_M\geq X_N$？</p>
+<h2 id="停时定理"><a href="#停时定理" class="headerlink" title="停时定理"></a>停时定理</h2><p>问题：若$X_n$下鞅，任意停时$M\geq N$，什么条件下$E(X_M|F_N)\geq X_N$，$X_M\geq X_N$？</p>
 <p>定理：若$X_n$下鞅一致可积，则对停时N，则$X_{N\wedge n}$一致可积。（由下鞅基本收敛定理，$X_{n\wedge N}\to^{a.s.}X_N$，易证）</p>
 <p>定理：对独立同分布的随机变量$X_n$和非负整数N，s.t. $E|X_N|&lt;+\infty。如果$\{|X_n|1_{N&gt;n}\}$一致可积，那么$\{X_{N\wedge n\}$一致可积。若还有$X_n$下鞅，停时$N&lt;+\infty$，则$EX_0\leq X_N$。</p>
 <p>定理：若$X_n$下鞅一致可积，任意停时$N\leq +\infty$，有$EX_0\leq EX_N\leq EX_\infty$。</p>
@@ -603,7 +633,7 @@ R_n\geq\sum_{m=1}^n1_A(\phi^m\omega)=\#\{m|S_l\neq S_m,\forall l>m\}</script><p>
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#条件期望"><span class="nav-number">1.</span> <span class="nav-text">条件期望</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#正则条件概率："><span class="nav-number">1.0.1.</span> <span class="nav-text">正则条件概率：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#鞅过程Martingales"><span class="nav-number">2.</span> <span class="nav-text">鞅过程Martingales</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#鞅收敛定理"><span class="nav-number">2.0.1.</span> <span class="nav-text">鞅收敛定理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#四个例子"><span class="nav-number">2.0.2.</span> <span class="nav-text">四个例子</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#有界增长"><span class="nav-number">2.0.2.0.1.</span> <span class="nav-text">有界增长</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Polya’s-Urn-Scheme"><span class="nav-number">2.0.2.0.2.</span> <span class="nav-text">Polya’s Urn Scheme</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#R-N微分"><span class="nav-number">2.0.2.0.3.</span> <span class="nav-text">R-N微分</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#分支过程"><span class="nav-number">2.0.2.0.4.</span> <span class="nav-text">分支过程</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Doob不等式-以及LP收敛"><span class="nav-number">2.0.3.</span> <span class="nav-text">Doob不等式(以及LP收敛)</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#平方可积鞅"><span class="nav-number">2.0.3.0.1.</span> <span class="nav-text">平方可积鞅</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#一致可积L1收敛"><span class="nav-number">2.0.3.0.2.</span> <span class="nav-text">一致可积L1收敛</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#倒向鞅"><span class="nav-number">2.0.4.</span> <span class="nav-text">倒向鞅</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#停时定理"><span class="nav-number">2.0.5.</span> <span class="nav-text">停时定理</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#遍历定理"><span class="nav-number">3.</span> <span class="nav-text">遍历定理</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#条件期望"><span class="nav-number">1.</span> <span class="nav-text">条件期望</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#正则条件概率："><span class="nav-number">1.1.</span> <span class="nav-text">正则条件概率：</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#鞅过程Martingales"><span class="nav-number">2.</span> <span class="nav-text">鞅过程Martingales</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#鞅收敛定理"><span class="nav-number">2.1.</span> <span class="nav-text">鞅收敛定理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四个例子"><span class="nav-number">2.2.</span> <span class="nav-text">四个例子</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#有界增长"><span class="nav-number">2.2.1.</span> <span class="nav-text">有界增长</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Polya’s-Urn-Scheme"><span class="nav-number">2.2.2.</span> <span class="nav-text">Polya’s Urn Scheme</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#R-N微分"><span class="nav-number">2.2.3.</span> <span class="nav-text">R-N微分</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分支过程"><span class="nav-number">2.2.4.</span> <span class="nav-text">分支过程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Doob不等式-以及LP收敛"><span class="nav-number">2.3.</span> <span class="nav-text">Doob不等式(以及LP收敛)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#平方可积鞅"><span class="nav-number">2.3.1.</span> <span class="nav-text">平方可积鞅</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一致可积L1收敛"><span class="nav-number">2.3.2.</span> <span class="nav-text">一致可积L1收敛</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#倒向鞅"><span class="nav-number">2.4.</span> <span class="nav-text">倒向鞅</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#停时定理"><span class="nav-number">2.5.</span> <span class="nav-text">停时定理</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#遍历定理"><span class="nav-number">3.</span> <span class="nav-text">遍历定理</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -619,14 +649,14 @@ R_n\geq\sum_{m=1}^n1_A(\phi^m\omega)=\#\{m|S_l\neq S_m,\forall l>m\}</script><p>
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">19</span>
+          <span class="site-state-item-count">22</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -715,6 +745,8 @@ R_n\geq\sum_{m=1}^n1_A(\phi^m\omega)=\#\{m|S_l\neq S_m,\forall l>m\}</script><p>
 
   
   <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
 
@@ -734,6 +766,10 @@ R_n\geq\sum_{m=1}^n1_A(\phi^m\omega)=\#\{m|S_l\neq S_m,\forall l>m\}</script><p>
   
 
 
+
+
+  
+<script src="/js/local-search.js"></script>
 
 
 

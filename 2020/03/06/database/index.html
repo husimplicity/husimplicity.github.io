@@ -14,21 +14,22 @@
 
 
 <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="关系模型关系模型三要素：  静态 动态关系 约束  关系代数六种基本操作  一元操作 选择$\sigma$ 投影$\pi$ 重命名$\rho$   多元操作 并集$\cup$ 差集$-$（先排序减少查重次数） 笛卡尔积$\times$    其他操作：  交运算：虽然可以用差集表示，但底层直接实现 $\theta$连接：笛卡尔积代价很大，所以连接表操作时并非笛卡尔积+选择而是先排序+连接 自然连接">
+  <meta name="description" content="关系模型关系模型三要素：  静态 动态关系 约束  关系代数六种基本操作  一元操作 选择$\sigma$ 投影$\pi$ 重命名$\rho$   多元操作 并集$\cup$ 差集$-$（先排序减少查重次数） 笛卡尔积$\times$">
 <meta property="og:type" content="article">
 <meta property="og:title" content="数据库概论">
 <meta property="og:url" content="http://yoursite.com/2020/03/06/database/index.html">
 <meta property="og:site_name" content="Hulieu">
-<meta property="og:description" content="关系模型关系模型三要素：  静态 动态关系 约束  关系代数六种基本操作  一元操作 选择$\sigma$ 投影$\pi$ 重命名$\rho$   多元操作 并集$\cup$ 差集$-$（先排序减少查重次数） 笛卡尔积$\times$    其他操作：  交运算：虽然可以用差集表示，但底层直接实现 $\theta$连接：笛卡尔积代价很大，所以连接表操作时并非笛卡尔积+选择而是先排序+连接 自然连接">
+<meta property="og:description" content="关系模型关系模型三要素：  静态 动态关系 约束  关系代数六种基本操作  一元操作 选择$\sigma$ 投影$\pi$ 重命名$\rho$   多元操作 并集$\cup$ 差集$-$（先排序减少查重次数） 笛卡尔积$\times$">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-03-06T13:22:46.000Z">
-<meta property="article:modified_time" content="2020-05-16T05:27:23.905Z">
+<meta property="article:modified_time" content="2020-06-16T04:06:47.595Z">
 <meta property="article:author" content="Hulieu">
 <meta property="article:tag" content="琉璃猫">
 <meta name="twitter:card" content="summary">
@@ -104,6 +105,7 @@
 
   <div class="site-nav-right">
     <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -138,11 +140,38 @@
     <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
 
   </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
   </ul>
 </nav>
 
 
 
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
 
 </div>
     </header>
@@ -196,7 +225,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-05-16 13:27:23" itemprop="dateModified" datetime="2020-05-16T13:27:23+08:00">2020-05-16</time>
+                <time title="Modified: 2020-06-16 12:06:47" itemprop="dateModified" datetime="2020-06-16T12:06:47+08:00">2020-06-16</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -251,6 +280,7 @@
 </ul>
 </li>
 </ul>
+<a id="more"></a>
 <p>其他操作：</p>
 <ul>
 <li>交运算：虽然可以用差集表示，但底层直接实现</li>
@@ -378,21 +408,21 @@
 <p>cluster：聚集索引，影响物理存储位置，一张表只能有一个聚集索引（主要影响区间查询速度）</p>
 <p><u>如果是非unique且非cluster的索引可能速度反而更慢</u></p>
 <p>删除索引 <code>drop index 索引名</code></p>
-<h3 id="高级SQL"><a href="#高级SQL" class="headerlink" title="高级SQL"></a>高级SQL</h3><h4 id="完整性"><a href="#完整性" class="headerlink" title="完整性"></a>完整性</h4><h5 id="域约束："><a href="#域约束：" class="headerlink" title="域约束："></a>域约束：</h5><p><code>create domain 域名 域定义</code></p>
+<h3 id="高级SQL"><a href="#高级SQL" class="headerlink" title="高级SQL"></a>高级SQL</h3><h4 id="完整性"><a href="#完整性" class="headerlink" title="完整性"></a>完整性</h4><h4 id="域约束："><a href="#域约束：" class="headerlink" title="域约束："></a>域约束：</h4><p><code>create domain 域名 域定义</code></p>
 <p>还可以通过<code>constraint value-test check(value &gt; 4)</code>或者更复杂的<code>constraint account-type-test check(value in (&#39;A&#39;, &#39;B&#39;))</code>甚至还可以使用动态check</p>
-<h5 id="引用完整性："><a href="#引用完整性：" class="headerlink" title="引用完整性："></a>引用完整性：</h5><p>删除操作根据外码定义方式决定<code>restrict</code> 不能删除 <code>cascade</code>  一起删除 <code>set null</code>设为空值</p>
-<h5 id="断言"><a href="#断言" class="headerlink" title="断言"></a>断言</h5><p><code>create assertion 断言名 check 语句</code> ：表明数据库所满足的条件，实现一般性约束。check约束、主码约束、外键约束可以看作其特例。</p>
+<h4 id="引用完整性："><a href="#引用完整性：" class="headerlink" title="引用完整性："></a>引用完整性：</h4><p>删除操作根据外码定义方式决定<code>restrict</code> 不能删除 <code>cascade</code>  一起删除 <code>set null</code>设为空值</p>
+<h4 id="断言"><a href="#断言" class="headerlink" title="断言"></a>断言</h4><p><code>create assertion 断言名 check 语句</code> ：表明数据库所满足的条件，实现一般性约束。check约束、主码约束、外键约束可以看作其特例。</p>
 <p>断言会导致显著的代价。目前数据库一般不支持assertion。</p>
-<h4 id="功能增强"><a href="#功能增强" class="headerlink" title="功能增强"></a>功能增强</h4><h5 id="SQL数据分析-递归SQL："><a href="#SQL数据分析-递归SQL：" class="headerlink" title="SQL数据分析/递归SQL："></a>SQL数据分析/递归SQL：</h5><p>扩展<code>Group by</code>按照不同标准聚集—&gt;多维数据分析模型：</p>
+<h4 id="功能增强"><a href="#功能增强" class="headerlink" title="功能增强"></a>功能增强</h4><h4 id="SQL数据分析-递归SQL："><a href="#SQL数据分析-递归SQL：" class="headerlink" title="SQL数据分析/递归SQL："></a>SQL数据分析/递归SQL：</h4><p>扩展<code>Group by</code>按照不同标准聚集—&gt;多维数据分析模型：</p>
 <ul>
 <li><code>rollup</code>  在指定属性列表的每个前缀上分组聚集的并集（相当于依次<code>group by</code>结果合集）</li>
 <li><code>cube</code>：2^n次<code>group by</code>合集</li>
 </ul>
-<h5 id="支持排序、支持扩展聚集函数"><a href="#支持排序、支持扩展聚集函数" class="headerlink" title="支持排序、支持扩展聚集函数"></a>支持排序、支持扩展聚集函数</h5><p>基本分析句法 <code>&lt;function name&gt; () OVER ([partition by &lt;exp1&gt;] order by &lt;exp2&gt; [ASC|DESC] [NULLS FIRST|NULLS LAST])</code> 其中<code>partition by</code>用以分组，<code>NULL FIRST</code>确定空值的处理</p>
+<h4 id="支持排序、支持扩展聚集函数"><a href="#支持排序、支持扩展聚集函数" class="headerlink" title="支持排序、支持扩展聚集函数"></a>支持排序、支持扩展聚集函数</h4><p>基本分析句法 <code>&lt;function name&gt; () OVER ([partition by &lt;exp1&gt;] order by &lt;exp2&gt; [ASC|DESC] [NULLS FIRST|NULLS LAST])</code> 其中<code>partition by</code>用以分组，<code>NULL FIRST</code>确定空值的处理</p>
 <p>排序函数<code>rank</code> <code>dense_rank</code>具体例子是<code>select student, rank() over (order by marks desc) from ...</code> <u>否则实现需要用连接+count</u></p>
 <p>滑动窗口<code>AVG(price) OVER (Order by date ROWS BETWEEN 3 PRECEDING AND 3 FOLLOWING)</code></p>
 <p>递归SQL <code>with A as (select ...(初始条件) union all select ... from A where ...)</code> 结束条件是A不再变化，<u>考虑到具体执行方式是分层执行，内层不支持聚集函数</u> </p>
-<h5 id="触发器"><a href="#触发器" class="headerlink" title="触发器"></a>触发器</h5><p>在SQL 99被引入，机制包括三点</p>
+<h4 id="触发器"><a href="#触发器" class="headerlink" title="触发器"></a>触发器</h4><p>在SQL 99被引入，机制包括三点</p>
 <ul>
 <li>E 执行时机：触发动作为insert、delete或者update</li>
 <li>C 执行条件</li>
@@ -405,13 +435,13 @@
 <p><u>功能强大，对数据库负担也很大</u></p>
 <p>可以用于实现数据一致性、维护概要表、完成特定审计、记录关键变化</p>
 <p>但是很难被优化、判定触发链终止条件比较复杂</p>
-<h5 id="存储过程"><a href="#存储过程" class="headerlink" title="存储过程"></a>存储过程</h5><p>数据库中的一段程序，执行代码会存储到数据库</p>
+<h4 id="存储过程"><a href="#存储过程" class="headerlink" title="存储过程"></a>存储过程</h4><p>数据库中的一段程序，执行代码会存储到数据库</p>
 <p>适合功能单一、逻辑复杂、相对集中的任务</p>
 <p>应用：手机月度账单计算</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">PROCEDURE</span> <span class="keyword">Move</span>(</span><br><span class="line">    <span class="keyword">IN</span> oldAddr <span class="built_in">VARCHAR</span>[<span class="number">255</span>],</span><br><span class="line">    <span class="keyword">IN</span> newAddr <span class="built_in">VARCHAR</span>[<span class="number">255</span>]</span><br><span class="line">)</span><br><span class="line"><span class="keyword">UPDATE</span> MovieStar</span><br><span class="line"><span class="keyword">SET</span> address = newAddr</span><br><span class="line"><span class="keyword">WHERE</span> address = oldAddr;</span><br></pre></td></tr></table></figure>
 <p>使用方式<code>CALL Move(&quot;old&quot;, &quot;new&quot;)</code></p>
 <p>安全性+性能+可维护性</p>
-<h5 id="嵌入式SQL"><a href="#嵌入式SQL" class="headerlink" title="嵌入式SQL"></a>嵌入式SQL</h5><p>SQL提供的预编译器将SQL语句预编译为C语句</p>
+<h4 id="嵌入式SQL"><a href="#嵌入式SQL" class="headerlink" title="嵌入式SQL"></a>嵌入式SQL</h4><p>SQL提供的预编译器将SQL语句预编译为C语句</p>
 <p>如果返回只有一条记录可以用<code>select ... into ...</code></p>
 <p>返回多个记录用<u>游标</u>（相当于迭代器）<code>fetch</code></p>
 <p>游标分为滚动游标（可以取任意元组）、非滚动游标（只能顺序取下一个元组）、更新游标（增加更新锁）</p>
@@ -419,15 +449,15 @@
 <p><code>declare 游标名[scroll] cursor for select ... [for update]</code></p>
 <p><code>open</code>  <code>fetch ... from 游标名</code> <code>close</code> <code>free</code></p>
 <p>通过游标更新<code>update ... where current of 游标名</code></p>
-<h5 id="SQL模块化"><a href="#SQL模块化" class="headerlink" title="SQL模块化"></a>SQL模块化</h5><p>ODBC（Open Database Connectivity）标准：微软提出的应用程序和数据库交互的标准</p>
+<h4 id="SQL模块化"><a href="#SQL模块化" class="headerlink" title="SQL模块化"></a>SQL模块化</h4><p>ODBC（Open Database Connectivity）标准：微软提出的应用程序和数据库交互的标准</p>
 <p>JDBC基于ODBC+跨平台</p>
 <p>好处：易实用，易移植，不需要预编译</p>
 <p>缺点：动态绑定，执行效率低，运行时检查SQL语法</p>
-<h5 id="图数据查询"><a href="#图数据查询" class="headerlink" title="图数据查询"></a>图数据查询</h5><p>创建点<code>CREATE TABLE 表名 (...) AS NODE;</code></p>
+<h4 id="图数据查询"><a href="#图数据查询" class="headerlink" title="图数据查询"></a>图数据查询</h4><p>创建点<code>CREATE TABLE 表名 (...) AS NODE;</code></p>
 <p>创建边<code>CREATE TABLE 表名 (...) AS EDGE;</code></p>
 <p>查询：<code>... WHERE MATCH (点名-(边名)-&gt;点名[-...-&gt;...])</code></p>
 <h4 id="安全性"><a href="#安全性" class="headerlink" title="安全性"></a>安全性</h4><p>防止不合法使用造成的数据<em>泄露</em>和<em>破坏</em></p>
-<h5 id="安全性控制"><a href="#安全性控制" class="headerlink" title="安全性控制"></a>安全性控制</h5><p>DBA</p>
+<h4 id="安全性控制"><a href="#安全性控制" class="headerlink" title="安全性控制"></a>安全性控制</h4><p>DBA</p>
 <p>完备的策略是收回用户权限的时候，删除用户给出的权限和<u>不是从管理员出发的给这用户的权限</u>。</p>
 <p>每一个权限应该形成从管理员出发的完整的权限链</p>
 <p>授权命令<code>GRANT 表级权限 ON 表名|视图名 TO 用户 [WITH GRANT OPTION]</code></p>
@@ -436,9 +466,9 @@
 <p>收回权限 <code>REVOKE</code> 用法和授权一样</p>
 <p>GRANTh和REVOKE权限不能细化到某个元组，但是可以通过<u>和视图结合支持元组级别授权</u></p>
 <p>基于<u>角色</u>的安全访问控制：<code>CREATE ROLE 角色名</code> <code>GRANT 角色名 TO 用户</code></p>
-<h5 id="自主访问控制"><a href="#自主访问控制" class="headerlink" title="自主访问控制"></a>自主访问控制</h5><p>DAC：基于用户-对象权限访问矩阵和授权机制</p>
+<h4 id="自主访问控制"><a href="#自主访问控制" class="headerlink" title="自主访问控制"></a>自主访问控制</h4><p>DAC：基于用户-对象权限访问矩阵和授权机制</p>
 <p>桔皮书C1级别</p>
-<h5 id="强制访问控制"><a href="#强制访问控制" class="headerlink" title="强制访问控制"></a>强制访问控制</h5><p>MAC：每一个数据库对象有安全级别，用户也有安全级别</p>
+<h4 id="强制访问控制"><a href="#强制访问控制" class="headerlink" title="强制访问控制"></a>强制访问控制</h4><p>MAC：每一个数据库对象有安全级别，用户也有安全级别</p>
 <p>桔皮书B1级别</p>
 <p>两条规则：</p>
 <ul>
@@ -458,9 +488,9 @@
 <li>禁止低级别主体查询高级别数据</li>
 </ul>
 <p><u>Multilevel Relation</u>：每个数据用标签表明写入的级别（可以有相同主码）</p>
-<h5 id="审计"><a href="#审计" class="headerlink" title="审计"></a>审计</h5><p>DBA事前，审计事后</p>
+<h4 id="审计"><a href="#审计" class="headerlink" title="审计"></a>审计</h4><p>DBA事前，审计事后</p>
 <p>审计权限在DBA之外</p>
-<h5 id="SQL注入攻击"><a href="#SQL注入攻击" class="headerlink" title="SQL注入攻击"></a>SQL注入攻击</h5><p>例1</p>
+<h4 id="SQL注入攻击"><a href="#SQL注入攻击" class="headerlink" title="SQL注入攻击"></a>SQL注入攻击</h4><p>例1</p>
 <p>在username输入<code>&#39;;DROP TABLE USERS; --</code></p>
 <p>那么后台验证时执行 </p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">password</span> <span class="keyword">FROM</span> <span class="keyword">USERS</span> <span class="keyword">WHERE</span> username <span class="keyword">IS</span> <span class="string">''</span>;<span class="keyword">DROP</span> <span class="keyword">TABLE</span> <span class="keyword">USERS</span>; <span class="comment">--'</span></span><br></pre></td></tr></table></figure>
@@ -544,7 +574,7 @@
 <li>安全设计</li>
 </ol>
 <p>不良设计—&gt;范式—&gt;模式分解—&gt;去范式的模式设计</p>
-<h5 id="函数依赖"><a href="#函数依赖" class="headerlink" title="函数依赖"></a>函数依赖</h5><p>问题：数据冗余、插入/删除异常（限制信息表达能力）</p>
+<h4 id="函数依赖"><a href="#函数依赖" class="headerlink" title="函数依赖"></a>函数依赖</h4><p>问题：数据冗余、插入/删除异常（限制信息表达能力）</p>
 <p>问题本质是<strong>函数依赖</strong>：对客观世界的提炼（而非根据数据得出）</p>
 <p>函数依赖分类</p>
 <ul>
@@ -565,7 +595,7 @@
 <li>包括在任一候选码中的属性称为<strong>主属性</strong></li>
 <li>关系模式的码由整个属性组成，称为<strong>全码</strong>，（此时不存在非平凡的函数依赖）</li>
 </ul>
-<h5 id="范式"><a href="#范式" class="headerlink" title="范式"></a>范式</h5><ul>
+<h4 id="范式"><a href="#范式" class="headerlink" title="范式"></a>范式</h4><ul>
 <li>1NF：元素不可再分（考虑查询代价）</li>
 <li>2NF：非主属性完全依赖于码（考虑数据冗余及插入/删除异常）</li>
 <li>3NF：不存在非主属性对码<em>传递依赖</em>（同上）</li>
@@ -582,7 +612,7 @@ BCNF\subset 3NF\subset 2NF</script><p>模式分解</p>
 <li>保持依赖</li>
 <li>无冗余</li>
 </ul>
-<h5 id="Armstrong公理系统"><a href="#Armstrong公理系统" class="headerlink" title="Armstrong公理系统"></a>Armstrong公理系统</h5><p>正确的、完备的推理规则集</p>
+<h4 id="Armstrong公理系统"><a href="#Armstrong公理系统" class="headerlink" title="Armstrong公理系统"></a>Armstrong公理系统</h4><p>正确的、完备的推理规则集</p>
 <p>Armstrong公理：</p>
 <ul>
 <li>自反律：$Y\subset X\Rightarrow X\to Y$</li>
@@ -596,14 +626,14 @@ BCNF\subset 3NF\subset 2NF</script><p>模式分解</p>
 <li>伪传递率：$X\to Y,\: YW\to Z\Rightarrow XW\to Z$</li>
 </ul>
 <p><u>闭包的概念</u></p>
-<h5 id="候选码的计算"><a href="#候选码的计算" class="headerlink" title="候选码的计算"></a>候选码的计算</h5><p>考察属性出现在依赖F左边还是右边</p>
+<h4 id="候选码的计算"><a href="#候选码的计算" class="headerlink" title="候选码的计算"></a>候选码的计算</h4><p>考察属性出现在依赖F左边还是右边</p>
 <p>启发式规则</p>
 <ul>
 <li>左部属性必是主属性</li>
 <li>右部属性必是非主属性</li>
 <li>外部属性必是主属性</li>
 </ul>
-<h5 id="模式分解相关算法"><a href="#模式分解相关算法" class="headerlink" title="模式分解相关算法"></a>模式分解相关算法</h5><p><strong>正则覆盖</strong>：没有冗余依赖的等价依赖集合</p>
+<h4 id="模式分解相关算法"><a href="#模式分解相关算法" class="headerlink" title="模式分解相关算法"></a>模式分解相关算法</h4><p><strong>正则覆盖</strong>：没有冗余依赖的等价依赖集合</p>
 <p><strong>无损连接分解定理</strong>：分解$\rho=\{R_1,R_2\}$是无损连接分解的条件是$R_1\cap R_2\to R_1-R_2$或者$R_1\cap R_2\to R_2-R_1$</p>
 <p><strong>函数依赖保持</strong>：分解之后不需要连接表也可以验证函数依赖</p>
 <p><strong>BCNF分解算法</strong></p>
@@ -643,7 +673,7 @@ BCNF\subset 3NF\subset 2NF</script><p>模式分解</p>
 <li>read committed：重复读值可能改变（没有数据锁）</li>
 <li>read uncommitted：读脏数据</li>
 </ul>
-<h5 id="并发策略的实现"><a href="#并发策略的实现" class="headerlink" title="并发策略的实现"></a>并发策略的实现</h5><p>事务调度器</p>
+<h4 id="并发策略的实现"><a href="#并发策略的实现" class="headerlink" title="并发策略的实现"></a>并发策略的实现</h4><p>事务调度器</p>
 <p>事务协议</p>
 <ul>
 <li><p>悲观控制策略：采取等待的方式避免冲突</p>
@@ -666,7 +696,7 @@ BCNF\subset 3NF\subset 2NF</script><p>模式分解</p>
 <li>检测+恢复：基于时间戳的协议（空间代价）—&gt;Thomas写规则，会被覆盖的Write可以忽略不回滚</li>
 </ul>
 <p>多版本时间戳序列：方便回滚读取</p>
-<p>—&gt;多版本两阶段锁协议：区分只读事务和更新事务</p>
+<p>—&gt;多版本两阶段锁协议：只区分只读事务和更新事务：这个协议读永远是可以的，但是写更新版本，如果有之后的写读取了之前的版本，则这个写操作不合法</p>
 </li>
 <li><p>乐观控制策略：采取事务回滚的方式避免冲突</p>
 </li>
@@ -754,7 +784,7 @@ BCNF\subset 3NF\subset 2NF</script><p>模式分解</p>
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#关系模型"><span class="nav-number">1.</span> <span class="nav-text">关系模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SQL概述"><span class="nav-number">2.</span> <span class="nav-text">SQL概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#高级SQL"><span class="nav-number">3.</span> <span class="nav-text">高级SQL</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#完整性"><span class="nav-number">3.1.</span> <span class="nav-text">完整性</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#域约束："><span class="nav-number">3.1.1.</span> <span class="nav-text">域约束：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#引用完整性："><span class="nav-number">3.1.2.</span> <span class="nav-text">引用完整性：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#断言"><span class="nav-number">3.1.3.</span> <span class="nav-text">断言</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#功能增强"><span class="nav-number">3.2.</span> <span class="nav-text">功能增强</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#SQL数据分析-递归SQL："><span class="nav-number">3.2.1.</span> <span class="nav-text">SQL数据分析&#x2F;递归SQL：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#支持排序、支持扩展聚集函数"><span class="nav-number">3.2.2.</span> <span class="nav-text">支持排序、支持扩展聚集函数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#触发器"><span class="nav-number">3.2.3.</span> <span class="nav-text">触发器</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#存储过程"><span class="nav-number">3.2.4.</span> <span class="nav-text">存储过程</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#嵌入式SQL"><span class="nav-number">3.2.5.</span> <span class="nav-text">嵌入式SQL</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#SQL模块化"><span class="nav-number">3.2.6.</span> <span class="nav-text">SQL模块化</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#图数据查询"><span class="nav-number">3.2.7.</span> <span class="nav-text">图数据查询</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安全性"><span class="nav-number">3.3.</span> <span class="nav-text">安全性</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#安全性控制"><span class="nav-number">3.3.1.</span> <span class="nav-text">安全性控制</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#自主访问控制"><span class="nav-number">3.3.2.</span> <span class="nav-text">自主访问控制</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#强制访问控制"><span class="nav-number">3.3.3.</span> <span class="nav-text">强制访问控制</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#审计"><span class="nav-number">3.3.4.</span> <span class="nav-text">审计</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#SQL注入攻击"><span class="nav-number">3.3.5.</span> <span class="nav-text">SQL注入攻击</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实体关系模型"><span class="nav-number">4.</span> <span class="nav-text">实体关系模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#关系数据库设计"><span class="nav-number">5.</span> <span class="nav-text">关系数据库设计</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#函数依赖"><span class="nav-number">5.0.1.</span> <span class="nav-text">函数依赖</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#范式"><span class="nav-number">5.0.2.</span> <span class="nav-text">范式</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Armstrong公理系统"><span class="nav-number">5.0.3.</span> <span class="nav-text">Armstrong公理系统</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#候选码的计算"><span class="nav-number">5.0.4.</span> <span class="nav-text">候选码的计算</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#模式分解相关算法"><span class="nav-number">5.0.5.</span> <span class="nav-text">模式分解相关算法</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#事务"><span class="nav-number">6.</span> <span class="nav-text">事务</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#并发策略的实现"><span class="nav-number">6.0.1.</span> <span class="nav-text">并发策略的实现</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#关系模型"><span class="nav-number">1.</span> <span class="nav-text">关系模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SQL概述"><span class="nav-number">2.</span> <span class="nav-text">SQL概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#高级SQL"><span class="nav-number">3.</span> <span class="nav-text">高级SQL</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#完整性"><span class="nav-number">3.1.</span> <span class="nav-text">完整性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#域约束："><span class="nav-number">3.2.</span> <span class="nav-text">域约束：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#引用完整性："><span class="nav-number">3.3.</span> <span class="nav-text">引用完整性：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#断言"><span class="nav-number">3.4.</span> <span class="nav-text">断言</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#功能增强"><span class="nav-number">3.5.</span> <span class="nav-text">功能增强</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SQL数据分析-递归SQL："><span class="nav-number">3.6.</span> <span class="nav-text">SQL数据分析&#x2F;递归SQL：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#支持排序、支持扩展聚集函数"><span class="nav-number">3.7.</span> <span class="nav-text">支持排序、支持扩展聚集函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#触发器"><span class="nav-number">3.8.</span> <span class="nav-text">触发器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#存储过程"><span class="nav-number">3.9.</span> <span class="nav-text">存储过程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#嵌入式SQL"><span class="nav-number">3.10.</span> <span class="nav-text">嵌入式SQL</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SQL模块化"><span class="nav-number">3.11.</span> <span class="nav-text">SQL模块化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#图数据查询"><span class="nav-number">3.12.</span> <span class="nav-text">图数据查询</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安全性"><span class="nav-number">3.13.</span> <span class="nav-text">安全性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安全性控制"><span class="nav-number">3.14.</span> <span class="nav-text">安全性控制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#自主访问控制"><span class="nav-number">3.15.</span> <span class="nav-text">自主访问控制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#强制访问控制"><span class="nav-number">3.16.</span> <span class="nav-text">强制访问控制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#审计"><span class="nav-number">3.17.</span> <span class="nav-text">审计</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SQL注入攻击"><span class="nav-number">3.18.</span> <span class="nav-text">SQL注入攻击</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实体关系模型"><span class="nav-number">4.</span> <span class="nav-text">实体关系模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#关系数据库设计"><span class="nav-number">5.</span> <span class="nav-text">关系数据库设计</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#函数依赖"><span class="nav-number">5.1.</span> <span class="nav-text">函数依赖</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#范式"><span class="nav-number">5.2.</span> <span class="nav-text">范式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Armstrong公理系统"><span class="nav-number">5.3.</span> <span class="nav-text">Armstrong公理系统</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#候选码的计算"><span class="nav-number">5.4.</span> <span class="nav-text">候选码的计算</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#模式分解相关算法"><span class="nav-number">5.5.</span> <span class="nav-text">模式分解相关算法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#事务"><span class="nav-number">6.</span> <span class="nav-text">事务</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#并发策略的实现"><span class="nav-number">6.1.</span> <span class="nav-text">并发策略的实现</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -770,14 +800,14 @@ BCNF\subset 3NF\subset 2NF</script><p>模式分解</p>
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">19</span>
+          <span class="site-state-item-count">22</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -866,6 +896,8 @@ BCNF\subset 3NF\subset 2NF</script><p>模式分解</p>
 
   
   <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
 
@@ -885,6 +917,10 @@ BCNF\subset 3NF\subset 2NF</script><p>模式分解</p>
   
 
 
+
+
+  
+<script src="/js/local-search.js"></script>
 
 
 

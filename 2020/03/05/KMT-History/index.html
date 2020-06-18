@@ -14,10 +14,11 @@
 
 
 <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="国民党的改组国民党改组效仿苏共的组织制度，特别是注重发展群众。国民党基本照抄了苏共党章纪律，而中共的纪律更加严格。 国民党改组之后修改的党章改用通俗的白话文，虽然孙文本人对此不太认同，但是默认了以之在基层发展党员。 国民党党员的组成成分在广东一地以工农为主，而纵观全国，则大多是青年知识分子，特别是中小知识分子。他们热切的想要参与政治，也有想要谋个工作的含义。吸引力远超共产党，青年视共产党为洪水猛兽">
@@ -28,7 +29,7 @@
 <meta property="og:description" content="国民党的改组国民党改组效仿苏共的组织制度，特别是注重发展群众。国民党基本照抄了苏共党章纪律，而中共的纪律更加严格。 国民党改组之后修改的党章改用通俗的白话文，虽然孙文本人对此不太认同，但是默认了以之在基层发展党员。 国民党党员的组成成分在广东一地以工农为主，而纵观全国，则大多是青年知识分子，特别是中小知识分子。他们热切的想要参与政治，也有想要谋个工作的含义。吸引力远超共产党，青年视共产党为洪水猛兽">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-03-05T15:53:33.000Z">
-<meta property="article:modified_time" content="2020-03-08T10:38:37.061Z">
+<meta property="article:modified_time" content="2020-06-16T04:08:17.954Z">
 <meta property="article:author" content="Hulieu">
 <meta property="article:tag" content="琉璃猫">
 <meta name="twitter:card" content="summary">
@@ -104,6 +105,7 @@
 
   <div class="site-nav-right">
     <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -138,11 +140,38 @@
     <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
 
   </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
   </ul>
 </nav>
 
 
 
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
 
 </div>
     </header>
@@ -196,7 +225,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-03-08 18:38:37" itemprop="dateModified" datetime="2020-03-08T18:38:37+08:00">2020-03-08</time>
+                <time title="Modified: 2020-06-16 12:08:17" itemprop="dateModified" datetime="2020-06-16T12:08:17+08:00">2020-06-16</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -226,12 +255,13 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="国民党的改组"><a href="#国民党的改组" class="headerlink" title="国民党的改组"></a>国民党的改组</h2><p>国民党改组效仿苏共的组织制度，特别是注重发展群众。国民党基本照抄了苏共党章纪律，而中共的纪律更加严格。</p>
+        <h1 id="国民党的改组"><a href="#国民党的改组" class="headerlink" title="国民党的改组"></a>国民党的改组</h1><p>国民党改组效仿苏共的组织制度，特别是注重发展群众。国民党基本照抄了苏共党章纪律，而中共的纪律更加严格。</p>
 <p>国民党改组之后修改的党章改用通俗的白话文，虽然孙文本人对此不太认同，但是默认了以之在基层发展党员。</p>
 <p>国民党党员的组成成分在广东一地以工农为主，而纵观全国，则大多是青年知识分子，特别是中小知识分子。他们热切的想要参与政治，也有想要谋个工作的含义。吸引力远超共产党，青年视共产党为洪水猛兽。</p>
 <p>1923年前后国民党改组前党员20万，国内仅5万，群众基础薄弱。26年统计党员达到54.4万，且其中82%为国内党员，27年初党员人数应在百万以上。</p>
 <p>但是国民党组织结构松散，在四一二清党之后，蒋、胡都认识到了这一点。国民党重视上层，忽视基层，就连广州亦是如此。基层经费不足，只能任由豪绅包办，或者豪绅直接伪装加入国民党把持党部。国民党来者不拒，导致党员滥化。一些人利用党籍作为升职工具或者争夺地方权力。这远非孙文所愿。</p>
-<h2 id="国共合作"><a href="#国共合作" class="headerlink" title="国共合作"></a>国共合作</h2><p>关于“容共”，共产党明确是“合作”关系（强调自身独立性），而过国民党方面只是孙中山表明“容共”立场，认为中共是国际组织，与国民党不矛盾，打消党内顽固派的顾虑。</p>
+<a id="more"></a>
+<h1 id="国共合作"><a href="#国共合作" class="headerlink" title="国共合作"></a>国共合作</h1><p>关于“容共”，共产党明确是“合作”关系（强调自身独立性），而过国民党方面只是孙中山表明“容共”立场，认为中共是国际组织，与国民党不矛盾，打消党内顽固派的顾虑。</p>
 <p>24年8月国民党中央全会上，瞿秋白与鲍罗廷与会，会议设立国民党下属国际联络委员会，协调两党问题，导致上海中共中央震怒。25年秋冬间，瞿秋白首次提出“联共”的说法，26年3月出现在中共中央正式文件中，在此前后国民党正式承认合作关系。26年5月二中全会设立5+3人的两党联席会议，国民党承认联共，这是蒋、鲍妥协的结果。</p>
 <p>实际上，在青年中共产主义还是很有吸引力的，乃至孙中山要声称三民主义就是社会主义。</p>
 <p>中共对于两党合作的态度是居高临下的“扶持”“诱导”“掖进”。</p>
@@ -240,18 +270,18 @@
 <p>虽然国共的骨干都是中小知识分子，但国民党向上层，共产党向下层。</p>
 <p>26年1月国民党二大召开前后，国共实力已经逆转，特别是共产党对国民党地方组织控制更深入。</p>
 <p>1924年5月中共中央执委会扩大会议之后，中共逐渐改变策略，开始注意在国民党内部发展组织力量，此事也引起国民党高层注意。对此陈独秀并不否认，还表示“在国民党内成立一个左派，只算是进步，不是破坏”。26年国民党二大以决议的形式限制国民党员转党。25年1月中共四大决定除了工作需要，共产党员不应当加入国民党。事实上，此前中共党员仅有950人，而在26年4月之后一年增加了4.5万。26年5月，蒋介石要求共产党提供党员名单，但中共没有提交。国共两党主客易位在两党合作末期已成为共识，这一事件的根源在孙中山想要创立列宁主义的严密政党而又能包容另一列宁主义政党时就已经注定。</p>
-<h2 id="四一二"><a href="#四一二" class="headerlink" title="四一二"></a>四一二</h2><p>四一二对国共两党都是重大打击。中共六大统计，27年4月至28年上半年清党杀害31万人，其中共产党员2万余人，中共党员从5.7万减少到1万余人。清党前国民党党员总数在100万以上，29年10月统计总数降至65万（考虑新加入的投机分子等，实际清洗、脱党可能不止35万）。</p>
+<h1 id="四一二"><a href="#四一二" class="headerlink" title="四一二"></a>四一二</h1><p>四一二对国共两党都是重大打击。中共六大统计，27年4月至28年上半年清党杀害31万人，其中共产党员2万余人，中共党员从5.7万减少到1万余人。清党前国民党党员总数在100万以上，29年10月统计总数降至65万（考虑新加入的投机分子等，实际清洗、脱党可能不止35万）。</p>
 <p>关于清党到底逮捕、杀害了多少人，分歧很大，大约在10万人以上。但可以肯定的是，被捕被杀的人数远超中共党员人数。</p>
 <p>“逆淘汰”——左派青年被清洗，下层工农阶级脱党 </p>
 <p>“组织瘫痪”——国民党地方党务原多由共党包办，原共党控制的省市党部职位成为权力斗争的目标。而基层组织遭到土豪劣绅侵夺。</p>
 <p>清党之后，党务人才奇缺，地方上听任豪绅和投机分子侵夺资源，上层只能依赖武力来弥补党力虚脱。</p>
-<h2 id="执政党"><a href="#执政党" class="headerlink" title="执政党"></a>执政党</h2><p>27年国民党执掌全国政权以后，与工农民众割裂开来。28年2月撤销农、工、商、青年、妇女五部，对民众运动加以限制。</p>
+<h1 id="执政党"><a href="#执政党" class="headerlink" title="执政党"></a>执政党</h1><p>27年国民党执掌全国政权以后，与工农民众割裂开来。28年2月撤销农、工、商、青年、妇女五部，对民众运动加以限制。</p>
 <p>原来上层国民党-中层共产党-下层民众的结构打破后，民众团体成为国民党的装饰物。比如农会，主要成分从佃农转为“有农地者”以及“习农业者”等。究其原因主要是对民众运动的恐惧、认为民众运动是共党产物。</p>
 <p>清党之后，国民党分为两派，对待民众运动的态度截然不同，分别为胡汉民为首的元老派，汪精卫陈公博为首的改组派，蒋先生立于其间。</p>
 <p>实则在孙中山的思想里，人分先知先觉和后知后觉的，他并不赞同国民党以工农为基础。改组派提出国民党应以工农为基础，蒋先生则认为所有被压迫的人都是（全民都被帝国主义压迫），但是造成了“两不讨好”的局面，比如《工厂法》在劳资双方都有意见。国民党成为执政党之后抛弃了工农联盟，却也没能赢得资本阶级的支持。</p>
 <p>事实上，国民党与资本家阶级一直存在着矛盾。1932-1933期间，由三友实业的劳资纠纷，转变为上海整个劳资两大阵营的正面冲突，上海绝大多数工会都卷入其中。这其中也有资方与国民党中央的较量，引起南京党部28年以来首次对资本家阶级大张挞伐的“卅电”，但政治强权依旧未能把资方压服。资方在法律上完全失败，1932年上海地方法院驳回上诉，1933年1月最高法院再次驳回。但资方仍旧拖延不履行判决，上海当局也显得软弱，最后1933年12月在杜月笙调停下以资方支付解雇金、工人放弃复工告终。</p>
 <p>可以看到，一则国民党的统治力比较有限，二则国民党太想讨好所有的人民了，最后反而都不能讨好。</p>
-<h2 id="党治"><a href="#党治" class="headerlink" title="党治"></a>党治</h2><p>国民党清党之后，党力实则弱化，而党统在派系斗争中 濒于破裂。法理上的“以党治国”演变为“以军治国”。</p>
+<h1 id="党治"><a href="#党治" class="headerlink" title="党治"></a>党治</h1><p>国民党清党之后，党力实则弱化，而党统在派系斗争中 濒于破裂。法理上的“以党治国”演变为“以军治国”。</p>
 <p>在孙中山设想中，训政只维持6年，然后进入宪政。1929年6月国民党三届二中全会也如此决议。但到了1935年并未结束训政。</p>
 <p><strong>中政会：</strong>国民党自上而下设立了党政互动的双轨统治机构，党治的重点放在中央一级，孙中山1924年7月效仿俄共中央政治局设立中政会就是此意。</p>
 <p>国民党改组后的最高权力机关是中央执行委员会。鉴于40余人的中执会难以对复杂多变的局势作出反应，孙中山提出党政军分离，先后设立政治委员会、军事委员会，这两个委员会名义上式中执会的下属机构。孙中山在世时，三个组织都听命于他，实际是党魁独裁制。中政会同时受总理和中执会节制，孙去世之后，中政会地位明显提高。26年国民党推选汪精卫、胡汉民、蒋介石为中政会委员，27年3月鉴于中政会有受蒋介石挟持的嫌疑，对中政会职权进行了限制。国民党实施训政之后，28年10月决议中政会集立法、决策、人事大权于一体。</p>
@@ -425,7 +455,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#国民党的改组"><span class="nav-number">1.</span> <span class="nav-text">国民党的改组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#国共合作"><span class="nav-number">2.</span> <span class="nav-text">国共合作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四一二"><span class="nav-number">3.</span> <span class="nav-text">四一二</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#执政党"><span class="nav-number">4.</span> <span class="nav-text">执政党</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#党治"><span class="nav-number">5.</span> <span class="nav-text">党治</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#派系"><span class="nav-number"></span> <span class="nav-text">派系</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#党员"><span class="nav-number"></span> <span class="nav-text">党员</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#抗战"><span class="nav-number"></span> <span class="nav-text">抗战</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#战后"><span class="nav-number"></span> <span class="nav-text">战后</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number"></span> <span class="nav-text">总结</span></a></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#国民党的改组"><span class="nav-number">1.</span> <span class="nav-text">国民党的改组</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#国共合作"><span class="nav-number">2.</span> <span class="nav-text">国共合作</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#四一二"><span class="nav-number">3.</span> <span class="nav-text">四一二</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#执政党"><span class="nav-number">4.</span> <span class="nav-text">执政党</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#党治"><span class="nav-number">5.</span> <span class="nav-text">党治</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#派系"><span class="nav-number">6.</span> <span class="nav-text">派系</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#党员"><span class="nav-number">7.</span> <span class="nav-text">党员</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#抗战"><span class="nav-number">8.</span> <span class="nav-text">抗战</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#战后"><span class="nav-number">9.</span> <span class="nav-text">战后</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">10.</span> <span class="nav-text">总结</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -441,14 +471,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">19</span>
+          <span class="site-state-item-count">22</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -537,6 +567,8 @@
 
   
   <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
 
@@ -556,6 +588,10 @@
   
 
 
+
+
+  
+<script src="/js/local-search.js"></script>
 
 
 

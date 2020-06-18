@@ -14,10 +14,11 @@
 
 
 <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta property="og:type" content="website">
@@ -99,6 +100,7 @@
 
   <div class="site-nav-right">
     <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -133,11 +135,38 @@
     <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
 
   </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
   </ul>
 </nav>
 
 
 
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
 
 </div>
     </header>
@@ -156,6 +185,258 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/06/12/light-weapons/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Hulieu">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hulieu">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/06/12/light-weapons/" class="post-title-link" itemprop="url">轻兵器</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-06-12 20:41:09" itemprop="dateCreated datePublished" datetime="2020-06-12T20:41:09+08:00">2020-06-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-06-18 23:30:27" itemprop="dateModified" datetime="2020-06-18T23:30:27+08:00">2020-06-18</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%B0%8F%E9%B1%BC%E5%B9%B2/" itemprop="url" rel="index"><span itemprop="name">小鱼干</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="远古手枪"><a href="#远古手枪" class="headerlink" title="远古手枪"></a>远古手枪</h1><h2 id="柯尔特左轮"><a href="#柯尔特左轮" class="headerlink" title="柯尔特左轮"></a>柯尔特左轮</h2><p>左轮手枪是美国人塞缨尔柯尔特于1835年发明的，他在发明转轮手枪后，一方面不断改进，从1847年至1860年间，他共改进与推出12种转轮手枪。由于左轮手枪结构简单，操作灵活，很快受到各国官兵的喜爱，19世纪中期以后，这种枪更是风靡全球。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/06/12/light-weapons/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/06/09/shell/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Hulieu">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hulieu">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/06/09/shell/" class="post-title-link" itemprop="url">阿尔托莉雅的shell</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-06-09 18:11:34" itemprop="dateCreated datePublished" datetime="2020-06-09T18:11:34+08:00">2020-06-09</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-06-16 12:08:59" itemprop="dateModified" datetime="2020-06-16T12:08:59+08:00">2020-06-16</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%B0%8F%E9%B1%BC%E5%B9%B2/" itemprop="url" rel="index"><span itemprop="name">小鱼干</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="切分数据集"><a href="#切分数据集" class="headerlink" title="切分数据集"></a>切分数据集</h3><p> <code>ls -l DATA_DIR | awk &#39;BEGIN{srand();} {printf &quot;%s %s\n&quot;, rand(), $0}&#39; | sort -k1n | awk &#39;{gsub($1FS,&quot;&quot;); print $0}&#39; | awk &#39;{print $9}&#39; | awk &#39;FNR&lt;=2000&#39; | xargs -i sudo mv DATA_DIR/{} TEST-DIR/.</code></p>
+<p><code>ls -l DATA_DIR | awk &#39;BEGIN{srand();} {print rand(), $0}&#39; | sort -k1n | awk &#39;{print $10}&#39; | awk &#39;FNR&lt;=2000&#39; | xargs -i sudo mv DATA_DIR/{} TEST-DIR/.</code>【魏武精修版】</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/06/09/shell/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/25/modern-physics-chemistry/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Hulieu">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hulieu">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/05/25/modern-physics-chemistry/" class="post-title-link" itemprop="url">现代物理有机化学</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-05-25 23:39:48" itemprop="dateCreated datePublished" datetime="2020-05-25T23:39:48+08:00">2020-05-25</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-06-16 12:08:34" itemprop="dateModified" datetime="2020-06-16T12:08:34+08:00">2020-06-16</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%8C%AB%E7%88%AA%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">猫爪记</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%8C%AB%E7%88%AA%E8%AE%B0/Chemistry/" itemprop="url" rel="index"><span itemprop="name">Chemistry</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="导论：分子结构和化学键模型"><a href="#导论：分子结构和化学键模型" class="headerlink" title="导论：分子结构和化学键模型"></a>导论：分子结构和化学键模型</h1><p>原子的<strong>Bohr模型</strong>认为电子在特定轨道上运行。原子轨道是解<strong>Schrodinger方程</strong>得来的。</p>
+<p>薛定谔方程的解是波函数。包括四个量子数，<strong>主量子数</strong>（决定该原子的价层），<strong>角量子数</strong>（或者描述为spdf，定义空间分布），<strong>磁量子数</strong>（决定轨道在空间中的方向），<strong>自旋量子数</strong>（可以取$\pm 1/2$）</p>
+<p><strong>能量最低原理</strong>要求电子填充能量较低的轨道，<strong>Pauli原理</strong>要求同一轨道需要<strong>自旋配对</strong>，<strong>洪特规则</strong>告诉我们<strong>简并轨道</strong>只需要逐个填充保持自选方向一致。</p>
+<p><strong>Lewis结构</strong>和<strong>形式电荷</strong>只是一种记录方法。</p>
+<p><strong>价电子互斥规则（VSEPR）</strong>：配基在空间上会尽量互相原理，这决定了分子的<strong>几何构型</strong>。孤对电子比较“大”一些，只是对观察现象的一个合理解释。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/05/25/modern-physics-chemistry/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -191,7 +472,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-03-22 11:03:12" itemprop="dateModified" datetime="2020-03-22T11:03:12+08:00">2020-03-22</time>
+                <time title="Modified: 2020-06-16 12:04:51" itemprop="dateModified" datetime="2020-06-16T12:04:51+08:00">2020-06-16</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -224,44 +505,14 @@
 <p>独立于上述工作的<em>Arthur-Merlin Games: A Randomized Proof System, and a Hierarchy of Complexity Classes(Babai, Moran)</em>，定义如下：</p>
 <p>定义 2：<strong>AM[k]</strong>是k轮的交互过程。</p>
 <p>Babai证明了（定理 1）对任何常数k，AM[k]=AM[2]，因此AM[2]也被写作AM。AM[poly]和IP很相似，区别在于coin是否public，Goldwasser和Sipser很快证明了他们等价。</p>
-<p>定义 3：Graph Non-Isomorphism是给定两个图的邻接表，判断他们是否同构</p>
-<p>定理 2： Graph Non-Isomorphism是IP问题。（证明：随机重命名图，然后给prover判断是哪个）</p>
-<p>定义 4：<strong>MIP</strong>是和多个独立Prover的交互问题。（Ben-Or, Goldwasser, Kilian, Wigderson, 1988）（他们还证明了多个Prover和两个Prover等价）</p>
-<p>定理 3：$P^{井P}\subseteq IP$（Lund, Fortnow, Karloff, Nisan, 1990）</p>
-<p>定理 4：IP=PSPACE（Shamir, 1990）</p>
-<p>定理 5：MIP=NEXP（Babai, Fortnow, Lund, 1990）</p>
-<p>人们试图给Verifier加限制，比如空间限制，Condon证明了NP是Verifier有对数空间和单向读权限的IP，另一个限制是时间，但是B-F-L-S证明了Prover用特定语言来写证明就可以在多项式时间内证明所有NP。最有趣的是同时限制Verifier的随机数数量和Proof的大小，其定义如下</p>
-<p>定义 5：$PCP[r(n),q(n)]$是PCP系统，使用$O(r(n))$字节的Randomness，$O(q(n))$字节的Proof，并且completeness 1，soundness 1/2。</p>
-<p>在这个定义下，$MIP=NEXP$的结果等价于$NEXP\subseteq PCP[poly, poly]$。B-F-L-S关于时间的限制的结论等价于$NP\subseteq PCP[polylog, polylog]$。</p>
-<p>定理 6：$NP\subseteq PCP(f(n), f(n))$，其中$f(n)=log(n)log(log(n))$，进一步，MAX-CLIQUE无法近似除非$NP\subseteq DTIME(n^{log(log(n))})$（FGLSS，FOCS，1991）</p>
-<p>看上去$NP\subseteq PCP[log(n),log(n)]$是必然的，最终在1992年得到证明，query的数量约$10^6$</p>
-<p>定理 7： $NP\subseteq PCP[log(n), log(n)]$，实际上$NP\subseteq PCP[log(n), log(n)^{.5+\epsilon}]$（Arora，Safra，1992）</p>
-<p>定理 8（<strong>PCP定理</strong>）：$NP\subseteq PCP[log(n), 1]$（Arora-Lund-Motwani-Sudan-Szegedy，1992）</p>
-<h3 id="算子代数"><a href="#算子代数" class="headerlink" title="算子代数"></a>算子代数</h3><p><strong>Connes‘ embeddings conjecture（CEC）</strong>是算子代数最有名的开放问题之一，猜测任意有限冯诺依曼代数可以被有限维矩阵代数接近。</p>
-<p>CEC有很多等价形式，其中之一是<strong>Tsirelson’s Problem</strong>，这个问题从Einstein-Podolsky-Rosen的问题出发，定义希尔伯特空间H，一个Projection valued measure（PVM）定义为H上投影的有限集合$\{P_1,…,P_m\}$满足$\sum P_i=Id$。对于有限指标集$X,Y,A,B$，Tsirelson考虑凸子集$Q_{ABXY}^C$（commuting）和$Q_{ABXY}^S$（spatial），定义如下</p>
-<script type="math/tex; mode=display">
-Q_{ABXY}^C=\{(<\phi,A_a^xB_b^y\phi>)_{a,b,x,y}:\phi\in H,\\
-\{A_a^x\}_{a\in A},\{B_b^y\}_{b\in B}PVM,[A_a^x,B_b^y]=0\}</script><script type="math/tex; mode=display">
-Q_{ABXY}^S=\{(<\phi,A_a^x\otimes B_b^y\phi>)_{a,b,x,y}:\phi\in H_A\otimes H_B,\\
-\{A_a^x\}_{a\in A},\{B_b^y\}_{b\in B}PVM\:on\:H_A,H_B,\:resp.\}</script><p>Tsirelson起初声称两者相等，但很快他把两者是否相等重新设定为开放问题。约25年后Slofstra证明了两者不等，但$\bar{Q_{ABXY}^S}=Q_{ABXY}^C$是否成立依旧开放。Ozawa证明了这个问题和CEC等价，这样将这个问题从量子力学领域转移到算子代数领域。</p>
-<p>Tsirelson的问题的提出源自量子力学的<strong>entanglement</strong>现象。在E-P-R之后30年，Bell提出<strong>Bell实验</strong>，假设两个物理系统从任意状态初始，假设两个系统可以分别被有限集合$A^x,x\in X$和$B^y,y\in Y$度量，假设通过度量产生$(a,b)\in A\times B$，定义<strong>correlation set</strong>为包含所有$p_{abxy}$的凸集$K_{ABXY}\subseteq [0,1]^{A\times B\times X\times Y}$。Bell实验需要联合可测性，冯诺依曼证明这等价于$A^x\in O_A$和$B^y\in O_B$可交换。谱分解为$A^x=\sum_a\lambda_aA_a^x$和$B^y=\sum_b\mu_bB_b^y$，然后可以定义观测到$(a,b)$的概率，可以证明这是well-defined分布族，也即上文定义的$Q_{ABXY}^C$。Bell实验可以表示为<strong>nonlocal game</strong>。</p>
-<p><strong>从IP到MIP</strong>（上文PCP已详述）Babai证明了$NEXP\subseteq MIP$，进而有PCP定理。</p>
-<p>一个nonlocal game有一个Verifier和两个Prover（这里也是Player），每次Verifier从$X\times Y$中选择一对问题$(x,y)$，然后分别发送给两个Prover，得到$a\in A$和$b\in B$两个答案，然后评价$V(a,b|x,y)\in \{0,1\}$。如果V=1，那么认为Prover获胜，否则他们失败。Verifier的问题分布$\pi$已知，V公开，Player可以有预先设定的策略。Player的两个策略函数$f_A:X\times \Omega\to A$，$f_B:Y\times\Omega\to B$，在经典意义下</p>
-<script type="math/tex; mode=display">
-\omega(G)=\sup_{f_A,f_B}\sum_{x,y}\pi(x.y)\sum_{a,b}V(a,b|x,y)\times\int_\Omega1_{f_A(x,\omega)=a}1_{f_B(y,\omega)=b}d\omega</script><p>Spatial value</p>
-<script type="math/tex; mode=display">
-\omega^S(G)=\sup_{A^x,b^y}\sum_{x,y}\pi(x,y)\sum_{a,b}V(a,b|x,y)\times<\phi,(A_a^x\otimes B_b^y)\phi></script><p>Commuting value</p>
-<script type="math/tex; mode=display">
-\omega^C(G)=\sup_{A^x,b^y}\sum_{x,y}\pi(x,y)\sum_{a,b}V(a,b|x,y)\times<\phi,A_a^xB_b^y\phi></script><p>$\omega(G)\leq \omega^S(G)\leq\omega^C(G)$，上文Tsirelson问题等价于$\omega^S(G)=\omega^C(G)$</p>
-<p>我们首先证明$\omega(G)&lt;\omega^S(G)$，以Magic Square(MS)为例，游戏规则如下</p>
-<p><img src="ms.png" alt=""></p>
-<p>可以得到classical value $\omega(MS)=17/18&lt;1$，而spatial value $\omega^S(MS)=1$</p>
-<p>一系列复杂性理论提出了技术来抵抗Prover对entanglement的利用。现在我们知道任何证明系统都可以使得entanglement不再有用，并得出结论$NEXP=MIP\subseteq MIP^*$。前一半等号的证明由Babai等给出。Natarajan和Wright证明了MIP<em>严格大于NEXP，并且$NEEXP\subseteq MIP^\</em>$。</p>
-<p>From below，$O(|X|log|A|+|Y|log|B|)$在多项式时间内，所以$MIP\subseteq NEXP$。在entanglement的情况下，对固定维数d，可以找到一连串有限网络$N_1\subseteq … \subseteq N_k\subseteq …$，$N_k$的大小为$k^{O(d^2)}$，那么对d维的任意策略，有$N_k$中的策略和其误差在$1/k$。令$\omega_{\leq n}^S$表示$d,k\leq n$时$N_k$在d维下的最高准确率。那么$\{\omega_{\leq n}^S\}$是个有界非减数列，并收敛到Spatial Value $\omega^S(G)$。这里Commuting value并没有有限维逼近。</p>
-<p>From above，有一种”dual approach”，最简单的方法就是用一个系数$\alpha_{abxy}$代替$&lt;\phi,A_a^xB_b^y\phi&gt;$，然后考虑其最大值，当然这回极大的高估，所以可以通过引入限制来修正，比如对任意x,y，系数对a,b求和为1，又如增加层次性限制，引入了形如$&lt;\phi,(A_{a_1}^{x_1}B_{b_1}^{y_1}A_{a_2}^{x_2}…B_{b_k}^{y_k})\phi&gt;$，然后考虑在所有乘积长度小于等于n的约束下的最大值，得到非降数列$\{\omega_{\leq n}^C\}$，它收敛到$\omega^C(G)$。</p>
-<p>如果$\bar{Q^S}=Q^C$，现在考虑MIP<em>中的问题L，这意味着有方法可以将问题的实例转换为$G=\{\pi(x,y)V(a,b|x,y)\}$，如果是正例，$\omega^S(G)$接近1，否则会小很多。执行G的算法，可以发现任何L的成员可以被可停机的算法决定，这就是说明$MIP\</em>$是<strong>decidable</strong>。Slofstra证明了如果没有2/3-1/3 promise，那么$\omega^S(G)=1$是<strong>undecidable</strong>，这样就没有<strong>finite gap $\delta$</strong>使得下界达到$1-\delta$。</p>
-<p><strong>2020年1月已经证明了$MIP^*=RE$</strong></p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/03/20/complexity/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -311,7 +562,7 @@ Q_{ABXY}^S=\{(<\phi,A_a^x\otimes B_b^y\phi>)_{a,b,x,y}:\phi\in H_A\otimes H_B,\\
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-03-20 11:01:00" itemprop="dateModified" datetime="2020-03-20T11:01:00+08:00">2020-03-20</time>
+                <time title="Modified: 2020-06-16 12:06:58" itemprop="dateModified" datetime="2020-06-16T12:06:58+08:00">2020-06-16</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -354,68 +605,14 @@ Q_{ABXY}^S=\{(<\phi,A_a^x\otimes B_b^y\phi>)_{a,b,x,y}:\phi\in H_A\otimes H_B,\\
 <li>封装变化点</li>
 <li>面向接口编程</li>
 </ul>
-<p>五个重构技巧</p>
-<ul>
-<li>静态改为动态</li>
-<li>早绑定改为晚绑定</li>
-<li>继承改为组合</li>
-<li>编译时依赖改为运行时依赖</li>
-<li>紧耦合改为松耦合</li>
-</ul>
-<p>二十三个模式分类<em>（斜体为不常用）</em></p>
-<ul>
-<li>组件协作<ul>
-<li>模板（Template Method）</li>
-<li>策略（Strategy）</li>
-<li>观察者（Observer）</li>
-</ul>
-</li>
-<li>单一职责<ul>
-<li>装饰器（Decorator）</li>
-<li>桥（Bridge）</li>
-</ul>
-</li>
-<li>对象创建<ul>
-<li>工厂模式（Factory Method）</li>
-<li>抽象工厂（Abstract Factory）</li>
-<li>原型（Prototype）</li>
-<li><em>构建器（Builder）</em></li>
-</ul>
-</li>
-<li>对象性能<ul>
-<li>Singleton</li>
-<li>Flyweight</li>
-</ul>
-</li>
-<li>接口隔离<ul>
-<li>门面（Facade）</li>
-<li>代理（Proxy）</li>
-<li><em>中介模式（Mediator）：中介对象的具体实现过于复杂</em></li>
-<li>转换器（Adapter）</li>
-</ul>
-</li>
-<li>状态变化<ul>
-<li><em>备忘录（Memento）：被序列化所替代</em></li>
-<li>状态模式（State）</li>
-</ul>
-</li>
-<li>数据结构<ul>
-<li>组合器（Composite）</li>
-<li><em>迭代器（Iterator）：编译时多态</em></li>
-<li><em>职责链（Chain of Responsibility）</em></li>
-</ul>
-</li>
-<li>行为变化<ul>
-<li><em>命令模式（Command）：Function Object</em></li>
-<li><em>访问者（Visitor）：前提苛刻</em></li>
-</ul>
-</li>
-<li>领域问题<ul>
-<li><em>编译器（Interpreter）</em></li>
-</ul>
-</li>
-</ul>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/03/17/design-pattern/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -465,7 +662,7 @@ Q_{ABXY}^S=\{(<\phi,A_a^x\otimes B_b^y\phi>)_{a,b,x,y}:\phi\in H_A\otimes H_B,\\
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-05-16 13:27:23" itemprop="dateModified" datetime="2020-05-16T13:27:23+08:00">2020-05-16</time>
+                <time title="Modified: 2020-06-16 12:06:47" itemprop="dateModified" datetime="2020-06-16T12:06:47+08:00">2020-06-16</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -513,427 +710,14 @@ Q_{ABXY}^S=\{(<\phi,A_a^x\otimes B_b^y\phi>)_{a,b,x,y}:\phi\in H_A\otimes H_B,\\
 </ul>
 </li>
 </ul>
-<p>其他操作：</p>
-<ul>
-<li>交运算：虽然可以用差集表示，但底层直接实现</li>
-<li>$\theta$连接：笛卡尔积代价很大，所以连接表操作时并非笛卡尔积+选择而是先排序+连接</li>
-<li>自然连接：选取相同属性列上取值相等的元组</li>
-<li>除操作：满足$q\times s\subseteq r$的最大关系q（可以表示为笛卡尔积+差集，实现是排序）</li>
-<li>赋值运算：临时表，不支持递归定义（连接次数和数据相关）</li>
-<li>外连接：</li>
-<li>聚集函数：五个函数 sum、count、mean、max、mean（-distinct）</li>
-<li>分组和聚集函数</li>
-<li>广义投影：投影+计算</li>
-</ul>
-<p>删除/修改操作</p>
-<p>空值返回Unknown，计算为false</p>
-<p>视图View：虚表，限制数据访问范围，作为基本表和外模式之间的映像；更新原表需要满足列数一样等限制</p>
-<p>物化视图：1、频繁使用的；2、固定的</p>
-<p>关系代数表达式的等价规则：oracle有约50条等价优化规则</p>
-<p>关系代数树：合并投影，投影/选择尽可能移向叶节点</p>
-<p>元组关系演算：存在/任意/否</p>
-<p><u>元组关系演算与关系代数等价</u></p>
-<h3 id="SQL概述"><a href="#SQL概述" class="headerlink" title="SQL概述"></a>SQL概述</h3><ul>
-<li>数据操作：SELECT，INSERT，UPDATE，DELETE</li>
-<li>数据定义：CREATE，ALTER，DROP</li>
-<li>数据控制：GRANT，REVOKE</li>
-</ul>
-<p><strong>SQL查询和关系模型</strong></p>
-<ul>
-<li>SQL Parser</li>
-<li>Query Optimization and Execution</li>
-<li>Relational Operators（基本运算实现）</li>
-<li>Files and Access Methods（堆文件、顺序文件、B+树）</li>
-<li>Buffer Management（数据库特性的缓存管理）</li>
-<li>Disk Space Management（定长纪录、非定长纪录）</li>
-</ul>
-<p>SQL和关系代数的差别</p>
-<ul>
-<li>SQL引入排序符号</li>
-<li>SQL支持单值集合直接使用</li>
-<li>SQL投影默认不去重（去重加distinct），集合默认去重（不去重加All）</li>
-<li>SQL支持递归、group by等操作</li>
-</ul>
-<p>SQL查询语句</p>
-<ul>
-<li>SELECT子句：支持*、支持四则运算、支持不加FROM实现数值运算</li>
-<li>FROM子句</li>
-<li>WHERE子句</li>
-</ul>
-<p>其他语句</p>
-<ul>
-<li><p>去重distinct</p>
-</li>
-<li><p>ORDER BY排序</p>
-</li>
-<li><p>AS重命名（可省略AS）</p>
-</li>
-<li><p>字符串操作：(not) like “”，</p>
-<p><code>%</code>匹配零个或多个，<code>_</code>匹配任意单个字符，<code>escape \</code>转义字符</p>
-</li>
-</ul>
-<p>关系连接</p>
-<ul>
-<li>连接类型：<code>inner join</code> <code>left outer join</code> <code>right outer join</code> <code>full outer join</code></li>
-<li>链接条件：<code>nature</code> <code>on&lt;谓词&gt;</code> `using(A1,A2,..,An)</li>
-</ul>
-<p><u>写法比较简单，并不标准，执行和集合操作等价</u></p>
-<p>集合操作</p>
-<p>union/intersect/except</p>
-<p><u>集合操作是自动去重的，不去重要加上<code>all</code></u></p>
-<p>聚集函数</p>
-<p><code>max</code> <code>min</code> <code>avg</code> <code>sum</code> <code>count</code></p>
-<p>如果select后有聚集函数，则非聚集函数列必须在<code>group by</code>中出现</p>
-<p>分组</p>
-<p><code>group by 列名 [having 条件表达式]</code></p>
-<p>空值</p>
-<p><code>is [not] null</code></p>
-<p>空值参与算术运算，结果也为null，逻辑运算为false，聚集函数直接忽略</p>
-<p><code>ISNULL(check_expression,replacement)</code>：如果check_expression为空则用replacement替代</p>
-<p>嵌套子查询</p>
-<ul>
-<li>集合成员资格：<code>in</code></li>
-<li>集合之间比较：<code>&gt;= all</code> <code>some</code> </li>
-<li>集合基数的测试<ul>
-<li>测试集合是否为空 <code>[not] exists</code></li>
-<li>测试集合是否存在重复元组 <code>unique</code> 没有重复元组则返回true（可用count替代所以并不常用）</li>
-</ul>
-</li>
-</ul>
-<p>派生关系</p>
-<p><code>AS</code>命名为临时关系 </p>
-<p>临时视图</p>
-<p><code>with ... as ..., ... as ... select ...</code> </p>
-<p><strong>SQL修改功能</strong></p>
-<p><code>insert into 表名 [列名] values (...)</code> 插入一条指定好值的元组</p>
-<p><code>insert into 表名 [列名] (子查询)</code>插入子查询结果的若干条元组</p>
-<p>多行数据的插入可以用union实现</p>
-<p><code>delete from 表名 [where 条件表达式]</code></p>
-<p><code>truncate table</code>删除表中所有行（比delete快，但不能带条件）</p>
-<p><code>update 表名 set 列名=表达式|子查询 [where 条件表达式]</code></p>
-<p> ORACLE数据库支持 <code>case</code> <code>when</code>根据条件update</p>
-<p>SQL Servert支持用其他表更新某个表的数据（注意可能出现结果不确定的情况）</p>
-<p><strong>视图</strong></p>
-<p><code>create view view_name [列名] as (查询表达式) [with check option]</code></p>
-<p>取消视图<code>drop view view_name</code></p>
-<p>用视图更新原表需要满足很多条件，视图更新约束如下</p>
-<ul>
-<li>有主码</li>
-<li>select子句目标列不能包括聚集函数，不能有group by</li>
-<li>select子句不能用distinct</li>
-<li>不能包括计算出的列</li>
-</ul>
-<p><strong>事务</strong></p>
-<p>大多是数据库中，每个SQL执行成功后自动提交</p>
-<p>每个事务包含一个语句</p>
-<p>我们可以取消自动提交，使之支持多事务</p>
-<p><strong>数据定义语言（DDL）</strong></p>
-<p>域定义：</p>
-<p>基本表的定义：</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> 表名 (</span><br><span class="line">    列名 数据类型 [<span class="keyword">default</span> 缺省值] [<span class="keyword">not</span> <span class="literal">null</span>] </span><br><span class="line">    [, primary <span class="keyword">key</span> (列名)] </span><br><span class="line">    [, <span class="keyword">foreign</span> <span class="keyword">key</span> (列名)] </span><br><span class="line">    [, <span class="keyword">check</span>(约束条件)]</span><br><span class="line">)<span class="string">`</span></span><br></pre></td></tr></table></figure>
-<p>修改表的定义</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> 表名</span><br><span class="line">[<span class="keyword">add</span> 子句] 增加新列和约束</span><br><span class="line">[<span class="keyword">drop</span> 子句] 删除列和约束 某些数据库不支持</span><br><span class="line">[<span class="keyword">modify</span> 子句] 修改列定义</span><br></pre></td></tr></table></figure>
-<p>删除表 <code>drop table 表名</code></p>
-<p>索引的定义</p>
-<p><code>create [unique] [clustr] index 索引名 on 表名 (列名[asc/desc])</code></p>
-<p>unique：唯一性索引，不允许不同行索引值相同</p>
-<p>cluster：聚集索引，影响物理存储位置，一张表只能有一个聚集索引（主要影响区间查询速度）</p>
-<p><u>如果是非unique且非cluster的索引可能速度反而更慢</u></p>
-<p>删除索引 <code>drop index 索引名</code></p>
-<h3 id="高级SQL"><a href="#高级SQL" class="headerlink" title="高级SQL"></a>高级SQL</h3><h4 id="完整性"><a href="#完整性" class="headerlink" title="完整性"></a>完整性</h4><h5 id="域约束："><a href="#域约束：" class="headerlink" title="域约束："></a>域约束：</h5><p><code>create domain 域名 域定义</code></p>
-<p>还可以通过<code>constraint value-test check(value &gt; 4)</code>或者更复杂的<code>constraint account-type-test check(value in (&#39;A&#39;, &#39;B&#39;))</code>甚至还可以使用动态check</p>
-<h5 id="引用完整性："><a href="#引用完整性：" class="headerlink" title="引用完整性："></a>引用完整性：</h5><p>删除操作根据外码定义方式决定<code>restrict</code> 不能删除 <code>cascade</code>  一起删除 <code>set null</code>设为空值</p>
-<h5 id="断言"><a href="#断言" class="headerlink" title="断言"></a>断言</h5><p><code>create assertion 断言名 check 语句</code> ：表明数据库所满足的条件，实现一般性约束。check约束、主码约束、外键约束可以看作其特例。</p>
-<p>断言会导致显著的代价。目前数据库一般不支持assertion。</p>
-<h4 id="功能增强"><a href="#功能增强" class="headerlink" title="功能增强"></a>功能增强</h4><h5 id="SQL数据分析-递归SQL："><a href="#SQL数据分析-递归SQL：" class="headerlink" title="SQL数据分析/递归SQL："></a>SQL数据分析/递归SQL：</h5><p>扩展<code>Group by</code>按照不同标准聚集—&gt;多维数据分析模型：</p>
-<ul>
-<li><code>rollup</code>  在指定属性列表的每个前缀上分组聚集的并集（相当于依次<code>group by</code>结果合集）</li>
-<li><code>cube</code>：2^n次<code>group by</code>合集</li>
-</ul>
-<h5 id="支持排序、支持扩展聚集函数"><a href="#支持排序、支持扩展聚集函数" class="headerlink" title="支持排序、支持扩展聚集函数"></a>支持排序、支持扩展聚集函数</h5><p>基本分析句法 <code>&lt;function name&gt; () OVER ([partition by &lt;exp1&gt;] order by &lt;exp2&gt; [ASC|DESC] [NULLS FIRST|NULLS LAST])</code> 其中<code>partition by</code>用以分组，<code>NULL FIRST</code>确定空值的处理</p>
-<p>排序函数<code>rank</code> <code>dense_rank</code>具体例子是<code>select student, rank() over (order by marks desc) from ...</code> <u>否则实现需要用连接+count</u></p>
-<p>滑动窗口<code>AVG(price) OVER (Order by date ROWS BETWEEN 3 PRECEDING AND 3 FOLLOWING)</code></p>
-<p>递归SQL <code>with A as (select ...(初始条件) union all select ... from A where ...)</code> 结束条件是A不再变化，<u>考虑到具体执行方式是分层执行，内层不支持聚集函数</u> </p>
-<h5 id="触发器"><a href="#触发器" class="headerlink" title="触发器"></a>触发器</h5><p>在SQL 99被引入，机制包括三点</p>
-<ul>
-<li>E 执行时机：触发动作为insert、delete或者update</li>
-<li>C 执行条件</li>
-<li>A 完成动作</li>
-</ul>
-<p><code>create trigger 触发器名字 after|before insert|delete|update [of 列名] on 表名</code></p>
-<p><code>referencing old|new table</code> 指定新旧数据</p>
-<p>示例</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TRIGGER</span> overdraft-<span class="keyword">trigger</span> <span class="keyword">AFTER</span> <span class="keyword">UPDATE</span> <span class="keyword">ON</span> <span class="keyword">account</span></span><br><span class="line"><span class="keyword">REFERENCING</span> <span class="keyword">NEW</span> <span class="keyword">ROW</span> <span class="keyword">AS</span> nrow <span class="keyword">FOR</span> <span class="keyword">EACH</span> <span class="keyword">ROW</span></span><br><span class="line"><span class="keyword">WHEN</span> nrow.balance &lt; <span class="number">0</span></span><br><span class="line"><span class="keyword">BEGIN</span> atomic</span><br><span class="line">    <span class="keyword">insert</span> <span class="keyword">into</span> ...</span><br><span class="line"><span class="keyword">END</span></span><br></pre></td></tr></table></figure>
-<p><u>功能强大，对数据库负担也很大</u></p>
-<p>可以用于实现数据一致性、维护概要表、完成特定审计、记录关键变化</p>
-<p>但是很难被优化、判定触发链终止条件比较复杂</p>
-<h5 id="存储过程"><a href="#存储过程" class="headerlink" title="存储过程"></a>存储过程</h5><p>数据库中的一段程序，执行代码会存储到数据库</p>
-<p>适合功能单一、逻辑复杂、相对集中的任务</p>
-<p>应用：手机月度账单计算</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">PROCEDURE</span> <span class="keyword">Move</span>(</span><br><span class="line">    <span class="keyword">IN</span> oldAddr <span class="built_in">VARCHAR</span>[<span class="number">255</span>],</span><br><span class="line">    <span class="keyword">IN</span> newAddr <span class="built_in">VARCHAR</span>[<span class="number">255</span>]</span><br><span class="line">)</span><br><span class="line"><span class="keyword">UPDATE</span> MovieStar</span><br><span class="line"><span class="keyword">SET</span> address = newAddr</span><br><span class="line"><span class="keyword">WHERE</span> address = oldAddr;</span><br></pre></td></tr></table></figure>
-<p>使用方式<code>CALL Move(&quot;old&quot;, &quot;new&quot;)</code></p>
-<p>安全性+性能+可维护性</p>
-<h5 id="嵌入式SQL"><a href="#嵌入式SQL" class="headerlink" title="嵌入式SQL"></a>嵌入式SQL</h5><p>SQL提供的预编译器将SQL语句预编译为C语句</p>
-<p>如果返回只有一条记录可以用<code>select ... into ...</code></p>
-<p>返回多个记录用<u>游标</u>（相当于迭代器）<code>fetch</code></p>
-<p>游标分为滚动游标（可以取任意元组）、非滚动游标（只能顺序取下一个元组）、更新游标（增加更新锁）</p>
-<p>使用游标需要先声明，再打开，然后检索。之后需要关闭和释放。</p>
-<p><code>declare 游标名[scroll] cursor for select ... [for update]</code></p>
-<p><code>open</code>  <code>fetch ... from 游标名</code> <code>close</code> <code>free</code></p>
-<p>通过游标更新<code>update ... where current of 游标名</code></p>
-<h5 id="SQL模块化"><a href="#SQL模块化" class="headerlink" title="SQL模块化"></a>SQL模块化</h5><p>ODBC（Open Database Connectivity）标准：微软提出的应用程序和数据库交互的标准</p>
-<p>JDBC基于ODBC+跨平台</p>
-<p>好处：易实用，易移植，不需要预编译</p>
-<p>缺点：动态绑定，执行效率低，运行时检查SQL语法</p>
-<h5 id="图数据查询"><a href="#图数据查询" class="headerlink" title="图数据查询"></a>图数据查询</h5><p>创建点<code>CREATE TABLE 表名 (...) AS NODE;</code></p>
-<p>创建边<code>CREATE TABLE 表名 (...) AS EDGE;</code></p>
-<p>查询：<code>... WHERE MATCH (点名-(边名)-&gt;点名[-...-&gt;...])</code></p>
-<h4 id="安全性"><a href="#安全性" class="headerlink" title="安全性"></a>安全性</h4><p>防止不合法使用造成的数据<em>泄露</em>和<em>破坏</em></p>
-<h5 id="安全性控制"><a href="#安全性控制" class="headerlink" title="安全性控制"></a>安全性控制</h5><p>DBA</p>
-<p>完备的策略是收回用户权限的时候，删除用户给出的权限和<u>不是从管理员出发的给这用户的权限</u>。</p>
-<p>每一个权限应该形成从管理员出发的完整的权限链</p>
-<p>授权命令<code>GRANT 表级权限 ON 表名|视图名 TO 用户 [WITH GRANT OPTION]</code></p>
-<p>表级权限包括select,update,…,以及 all。select和update可以指定列名</p>
-<p><code>with grant option</code>表示用户可以再把权限授予其他用户</p>
-<p>收回权限 <code>REVOKE</code> 用法和授权一样</p>
-<p>GRANTh和REVOKE权限不能细化到某个元组，但是可以通过<u>和视图结合支持元组级别授权</u></p>
-<p>基于<u>角色</u>的安全访问控制：<code>CREATE ROLE 角色名</code> <code>GRANT 角色名 TO 用户</code></p>
-<h5 id="自主访问控制"><a href="#自主访问控制" class="headerlink" title="自主访问控制"></a>自主访问控制</h5><p>DAC：基于用户-对象权限访问矩阵和授权机制</p>
-<p>桔皮书C1级别</p>
-<h5 id="强制访问控制"><a href="#强制访问控制" class="headerlink" title="强制访问控制"></a>强制访问控制</h5><p>MAC：每一个数据库对象有安全级别，用户也有安全级别</p>
-<p>桔皮书B1级别</p>
-<p>两条规则：</p>
-<ul>
-<li><p>主体级别&gt;=客体 才能读</p>
-</li>
-<li><p>主体=客体 才能写</p>
-</li>
-</ul>
-<p>修正规则：</p>
-<ul>
-<li>主体级别 &lt;= 客体 才能写</li>
-<li>用户可以为写入数据对象赋予高于自己的级别</li>
-</ul>
-<p>共同点</p>
-<ul>
-<li>禁止高级别主体更新低级别数据</li>
-<li>禁止低级别主体查询高级别数据</li>
-</ul>
-<p><u>Multilevel Relation</u>：每个数据用标签表明写入的级别（可以有相同主码）</p>
-<h5 id="审计"><a href="#审计" class="headerlink" title="审计"></a>审计</h5><p>DBA事前，审计事后</p>
-<p>审计权限在DBA之外</p>
-<h5 id="SQL注入攻击"><a href="#SQL注入攻击" class="headerlink" title="SQL注入攻击"></a>SQL注入攻击</h5><p>例1</p>
-<p>在username输入<code>&#39;;DROP TABLE USERS; --</code></p>
-<p>那么后台验证时执行 </p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">password</span> <span class="keyword">FROM</span> <span class="keyword">USERS</span> <span class="keyword">WHERE</span> username <span class="keyword">IS</span> <span class="string">''</span>;<span class="keyword">DROP</span> <span class="keyword">TABLE</span> <span class="keyword">USERS</span>; <span class="comment">--'</span></span><br></pre></td></tr></table></figure>
-<p>(<code>--</code>是SQL注释符号，保证语句正确性)</p>
-<p>例2</p>
-<p>在参数输入 <code>0 OR 1=1</code> 获得更多数据</p>
-<p>其他</p>
-<ul>
-<li>通过特殊函数，使得服务器反馈详细信息，如版本和补丁信息</li>
-<li>分析反馈错误信息，获取模式信息，例如 <code>union select top 1 name from sysobjects</code>报错将’admin’转换为int时失败</li>
-</ul>
-<p>解决方法</p>
-<ul>
-<li>动态绑定SQL语句：应用程序+后台数据，将输入作为参数接收</li>
-<li>验证所有的输入：验证输入有效性，防止注释符号等</li>
-<li>设置合理权限</li>
-</ul>
-<h3 id="实体关系模型"><a href="#实体关系模型" class="headerlink" title="实体关系模型"></a>实体关系模型</h3><p>标准Entity-Relationship图</p>
-<p>E-R图：用以交流，需要表达</p>
-<ul>
-<li>实体（方形）</li>
-<li>关系（菱形）</li>
-<li>属性（椭圆）</li>
-<li>多值属性（双椭圆）</li>
-<li>派生属性（虚椭圆）</li>
-<li>码（主码）</li>
-<li>参与（单线）/完全参与（双线）</li>
-<li>多对一/一对一（箭头）：此时不一定需要关系表</li>
-</ul>
-<p>扩展属性（<em>微妙</em>）</p>
-<ul>
-<li>存在依赖（一个实体存在依赖于另一个实体）</li>
-<li>弱实体集（实体自身的属性不足以区分自己）（双长方形，需要以双菱形标识联系）</li>
-<li>父类-子类（标记为ISA三角形）<ul>
-<li>成员资格由条件定义/用户定义</li>
-<li>子类不相交/有重叠</li>
-</ul>
-</li>
-</ul>
-<p>E-R图转换为表关系</p>
-<ul>
-<li>一般情况：属性对应多列</li>
-<li>复合属性：不支持</li>
-<li>多值属性：新的关系表</li>
-<li><p>一对一联系：</p>
-<ul>
-<li>均部分参与：定义为新的关系</li>
-<li>一方全部参与：作为一列，省略关系表</li>
-</ul>
-</li>
-<li><p>一对多：作为列</p>
-</li>
-<li>多对多：关系表</li>
-<li>弱实体：加入依赖强实体的码</li>
-<li>ISA：三表方案/两表方案</li>
-</ul>
-<p><strong>E-R模型的设计</strong></p>
-<ol>
-<li>需求分析</li>
-<li>确定局部结构范围</li>
-<li>实体定义</li>
-<li>联系定义</li>
-<li>属性分配</li>
-<li>局部E-R设计</li>
-</ol>
-<p>…之后…</p>
-<ol>
-<li>局部E-R图</li>
-<li>确定公共实体类型</li>
-<li>合并局部E-R</li>
-<li>检查并消除冲突（属性冲突、命名冲突、结构冲突）</li>
-<li>全局E-R优化</li>
-</ol>
-<p>工具：PowerDesigner</p>
-<h3 id="关系数据库设计"><a href="#关系数据库设计" class="headerlink" title="关系数据库设计"></a>关系数据库设计</h3><ol>
-<li>需求分析</li>
-<li>概要设计（E-R图）</li>
-<li>逻辑设计（DBMS模型）</li>
-<li><strong>模式细化</strong>（规范化操作/逆规范化）</li>
-<li>物理设计</li>
-<li>安全设计</li>
-</ol>
-<p>不良设计—&gt;范式—&gt;模式分解—&gt;去范式的模式设计</p>
-<h5 id="函数依赖"><a href="#函数依赖" class="headerlink" title="函数依赖"></a>函数依赖</h5><p>问题：数据冗余、插入/删除异常（限制信息表达能力）</p>
-<p>问题本质是<strong>函数依赖</strong>：对客观世界的提炼（而非根据数据得出）</p>
-<p>函数依赖分类</p>
-<ul>
-<li>平凡依赖：$Y\subset X$，$X\to Y$显然成立</li>
-<li>完全/部分依赖：是否存在X的子集$X’$，$X’\to Y$</li>
-<li>传递函数依赖：$X\to Y$，$Y\to Z$，且X不依赖于Y，$(X\cup Y)\cap Z=null$，称Z对X传递函数依赖。</li>
-</ul>
-<p><u>SQL没用提供函数依赖的支持，但是可以通过断言实现</u></p>
-<p><strong>多值依赖</strong>：</p>
-<p>关系U=(X,Y,Z)，给定(x,z)，有一组y，这组y仅仅取决于x而与z无关，此时y、z都是多值依赖于x（具有对称性），如果z是空集，则为平凡的多值依赖。函数依赖是多值依赖的特例。</p>
-<p>多值依赖的有效性与属性集范围有关（增加属性不一定成立，而减少属性一定成立）</p>
-<p>这是1NF范式的要求导致的</p>
-<p><strong>码的术语</strong>：</p>
-<ul>
-<li>属性K决定关系U，称K为<strong>超码</strong></li>
-<li>U完全依赖于K，称K为<strong>候选码</strong></li>
-<li>候选码中选一个作为<strong>主码</strong></li>
-<li>包括在任一候选码中的属性称为<strong>主属性</strong></li>
-<li>关系模式的码由整个属性组成，称为<strong>全码</strong>，（此时不存在非平凡的函数依赖）</li>
-</ul>
-<h5 id="范式"><a href="#范式" class="headerlink" title="范式"></a>范式</h5><ul>
-<li>1NF：元素不可再分（考虑查询代价）</li>
-<li>2NF：非主属性完全依赖于码（考虑数据冗余及插入/删除异常）</li>
-<li>3NF：不存在非主属性对码<em>传递依赖</em>（同上）</li>
-<li>BCNF：不存在主属性对码的依赖</li>
-<li>4NF：不存在对码的多值依赖（主要是冗余）</li>
-<li>5NF</li>
-</ul>
-<p>一般3NF/BCNF综合收益最高</p>
-<script type="math/tex; mode=display">
-BCNF\subset 3NF\subset 2NF</script><p>模式分解</p>
-<p>模式分解的要求</p>
-<ul>
-<li>无损</li>
-<li>保持依赖</li>
-<li>无冗余</li>
-</ul>
-<h5 id="Armstrong公理系统"><a href="#Armstrong公理系统" class="headerlink" title="Armstrong公理系统"></a>Armstrong公理系统</h5><p>正确的、完备的推理规则集</p>
-<p>Armstrong公理：</p>
-<ul>
-<li>自反律：$Y\subset X\Rightarrow X\to Y$</li>
-<li>增广律：$X\to Y\Rightarrow XZ\to YZ$</li>
-<li>传递性</li>
-</ul>
-<p>根据公理导出的规则</p>
-<ul>
-<li>合并律：$X\to Y,\:X\to Z\Rightarrow X\to YZ$</li>
-<li>分解律：上式反向</li>
-<li>伪传递率：$X\to Y,\: YW\to Z\Rightarrow XW\to Z$</li>
-</ul>
-<p><u>闭包的概念</u></p>
-<h5 id="候选码的计算"><a href="#候选码的计算" class="headerlink" title="候选码的计算"></a>候选码的计算</h5><p>考察属性出现在依赖F左边还是右边</p>
-<p>启发式规则</p>
-<ul>
-<li>左部属性必是主属性</li>
-<li>右部属性必是非主属性</li>
-<li>外部属性必是主属性</li>
-</ul>
-<h5 id="模式分解相关算法"><a href="#模式分解相关算法" class="headerlink" title="模式分解相关算法"></a>模式分解相关算法</h5><p><strong>正则覆盖</strong>：没有冗余依赖的等价依赖集合</p>
-<p><strong>无损连接分解定理</strong>：分解$\rho=\{R_1,R_2\}$是无损连接分解的条件是$R_1\cap R_2\to R_1-R_2$或者$R_1\cap R_2\to R_2-R_1$</p>
-<p><strong>函数依赖保持</strong>：分解之后不需要连接表也可以验证函数依赖</p>
-<p><strong>BCNF分解算法</strong></p>
-<p>如果模式$R_i$不属于BCNF，那么找到$R_i$上的非平凡函数依赖$\alpha\to\beta$使得$\alpha\to R_i$不属于$F^+$（即$\alpha$不是码），那么将$R_i$分解为$R_i-\beta$和$(\alpha,\beta)$</p>
-<p><strong>3NF分解算法</strong></p>
-<p>正则覆盖的每个依赖是一张表</p>
-<p>如果没有模式包含R的候选码，则再加一张表</p>
-<p><u>3NF分解是函数依赖保持的</u></p>
-<h3 id="事务"><a href="#事务" class="headerlink" title="事务"></a>事务</h3><p>事务是程序逻辑运行单位</p>
-<p>必须保持数据库的一致性</p>
-<p>ACID性质</p>
-<ul>
-<li>Atomicity：事务的原子性</li>
-<li>Consistency：保持数据库的一致性</li>
-<li>Isolation：每个事务不了解其他并发事务—依靠<strong>事务调度</strong>实现</li>
-<li>Durability：将更新永久化</li>
-</ul>
-<p>事务调度</p>
-<ul>
-<li><p>串行</p>
-</li>
-<li><p>并发—要求<strong>可串行化</strong>，即等价于某个串行调度</p>
-<p>两个事务的指令冲突当且仅当两者都存/取数据项Q，且至少有一个write指令</p>
-</li>
-</ul>
-<p><strong>视图可串行化</strong>是指在任意调度中，事务read到的值都是一样的。</p>
-<p><strong>冲突可串行化</strong>调度的结果相同</p>
-<p><u>视图可串行化而非冲突可串行化必有盲写（blind write，不读直接写）</u></p>
-<p>事务调度好坏的标准：可恢复性，要求撤销<em>读取了失败事务写入数据的</em>事务</p>
-<p>—&gt;<strong>无级联调度</strong>：不读没有commit的数据，一定是可恢复的</p>
-<p>冲突可串行化判定</p>
-<p>—&gt;<strong>优先图</strong>：要求不能有环，绘制方法是根据对一个数据的write有关的前后顺序判定箭头指向</p>
-<p>事务隔离性级别：</p>
-<ul>
-<li>serializable：串行（最高级别）</li>
-<li>repeatable read：可能发生幻象（没有index锁）</li>
-<li>read committed：重复读值可能改变（没有数据锁）</li>
-<li>read uncommitted：读脏数据</li>
-</ul>
-<h5 id="并发策略的实现"><a href="#并发策略的实现" class="headerlink" title="并发策略的实现"></a>并发策略的实现</h5><p>事务调度器</p>
-<p>事务协议</p>
-<ul>
-<li><p>悲观控制策略：采取等待的方式避免冲突</p>
-<p>两种锁：排他锁（X-锁）、共享锁（S-锁），这样调度器只负责锁的控制</p>
-<p>锁控制协议：两阶段锁协议，第一阶段只能获得锁，第二阶段只能释放锁，事务结束的顺序就是事务lock point的先后。</p>
-<p>改进：可能存在级联回滚，提交时释放锁</p>
-<ul>
-<li>严格（Strict）：提交时才能释放排它锁</li>
-<li>严密（Rigorous）：提交时才能释放锁</li>
-</ul>
-<p>带有锁转换的两阶段锁协议：提高并发性（并无副作用）</p>
-<p>锁的自动获得：read/write</p>
-<p>锁的自动释放：commit </p>
-<p><u>另一种方式：图协议，要求所有数据项施加偏序</u></p>
-<p><u>另一种方式：树协议，避免重复加锁，缺陷是假设了数据的树状结构</u></p>
-<p><u>另一种方式：多粒度协议—多粒度锁（IS、IX、SIX锁，其中I表示其后裔）</u></p>
-<p>共同缺陷：死锁，两种处理方法，都需要回滚</p>
-<ul>
-<li>预防：预先占据所需全部资源/资源预先排序/事务排序（wait-die非抢占式和wound-wait抢占式，都使得老事务具有对新事务的优先级）</li>
-<li>检测+恢复：基于时间戳的协议（空间代价）—&gt;Thomas写规则，会被覆盖的Write可以忽略不回滚</li>
-</ul>
-<p>多版本时间戳序列：方便回滚读取</p>
-<p>—&gt;多版本两阶段锁协议：区分只读事务和更新事务</p>
-</li>
-<li><p>乐观控制策略：采取事务回滚的方式避免冲突</p>
-</li>
-</ul>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/03/06/database/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -983,7 +767,7 @@ BCNF\subset 3NF\subset 2NF</script><p>模式分解</p>
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-03-08 18:38:37" itemprop="dateModified" datetime="2020-03-08T18:38:37+08:00">2020-03-08</time>
+                <time title="Modified: 2020-06-16 12:08:17" itemprop="dateModified" datetime="2020-06-16T12:08:17+08:00">2020-06-16</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1006,123 +790,19 @@ BCNF\subset 3NF\subset 2NF</script><p>模式分解</p>
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="国民党的改组"><a href="#国民党的改组" class="headerlink" title="国民党的改组"></a>国民党的改组</h2><p>国民党改组效仿苏共的组织制度，特别是注重发展群众。国民党基本照抄了苏共党章纪律，而中共的纪律更加严格。</p>
+          <h1 id="国民党的改组"><a href="#国民党的改组" class="headerlink" title="国民党的改组"></a>国民党的改组</h1><p>国民党改组效仿苏共的组织制度，特别是注重发展群众。国民党基本照抄了苏共党章纪律，而中共的纪律更加严格。</p>
 <p>国民党改组之后修改的党章改用通俗的白话文，虽然孙文本人对此不太认同，但是默认了以之在基层发展党员。</p>
 <p>国民党党员的组成成分在广东一地以工农为主，而纵观全国，则大多是青年知识分子，特别是中小知识分子。他们热切的想要参与政治，也有想要谋个工作的含义。吸引力远超共产党，青年视共产党为洪水猛兽。</p>
 <p>1923年前后国民党改组前党员20万，国内仅5万，群众基础薄弱。26年统计党员达到54.4万，且其中82%为国内党员，27年初党员人数应在百万以上。</p>
 <p>但是国民党组织结构松散，在四一二清党之后，蒋、胡都认识到了这一点。国民党重视上层，忽视基层，就连广州亦是如此。基层经费不足，只能任由豪绅包办，或者豪绅直接伪装加入国民党把持党部。国民党来者不拒，导致党员滥化。一些人利用党籍作为升职工具或者争夺地方权力。这远非孙文所愿。</p>
-<h2 id="国共合作"><a href="#国共合作" class="headerlink" title="国共合作"></a>国共合作</h2><p>关于“容共”，共产党明确是“合作”关系（强调自身独立性），而过国民党方面只是孙中山表明“容共”立场，认为中共是国际组织，与国民党不矛盾，打消党内顽固派的顾虑。</p>
-<p>24年8月国民党中央全会上，瞿秋白与鲍罗廷与会，会议设立国民党下属国际联络委员会，协调两党问题，导致上海中共中央震怒。25年秋冬间，瞿秋白首次提出“联共”的说法，26年3月出现在中共中央正式文件中，在此前后国民党正式承认合作关系。26年5月二中全会设立5+3人的两党联席会议，国民党承认联共，这是蒋、鲍妥协的结果。</p>
-<p>实际上，在青年中共产主义还是很有吸引力的，乃至孙中山要声称三民主义就是社会主义。</p>
-<p>中共对于两党合作的态度是居高临下的“扶持”“诱导”“掖进”。</p>
-<p>中共这时期的《向导》面向底层，但因为底层文化程度且不是免费的，实则面向了非底层。</p>
-<p>即使如此，中共保持了其独立性，而国民党反而缺失机关刊物。国民党在宣传方面自愧不如，就连北伐时期的“三大政策”“国民革命”也源自中共。除此之外，中共提出的“打倒帝国主义”“打倒军阀”也深入民心。甚至在中共的影响下，国民党青年也相信宁左勿右，以右派为耻。四一二之后，蒋介石就明令禁止使用这些中共的怪词语。</p>
-<p>虽然国共的骨干都是中小知识分子，但国民党向上层，共产党向下层。</p>
-<p>26年1月国民党二大召开前后，国共实力已经逆转，特别是共产党对国民党地方组织控制更深入。</p>
-<p>1924年5月中共中央执委会扩大会议之后，中共逐渐改变策略，开始注意在国民党内部发展组织力量，此事也引起国民党高层注意。对此陈独秀并不否认，还表示“在国民党内成立一个左派，只算是进步，不是破坏”。26年国民党二大以决议的形式限制国民党员转党。25年1月中共四大决定除了工作需要，共产党员不应当加入国民党。事实上，此前中共党员仅有950人，而在26年4月之后一年增加了4.5万。26年5月，蒋介石要求共产党提供党员名单，但中共没有提交。国共两党主客易位在两党合作末期已成为共识，这一事件的根源在孙中山想要创立列宁主义的严密政党而又能包容另一列宁主义政党时就已经注定。</p>
-<h2 id="四一二"><a href="#四一二" class="headerlink" title="四一二"></a>四一二</h2><p>四一二对国共两党都是重大打击。中共六大统计，27年4月至28年上半年清党杀害31万人，其中共产党员2万余人，中共党员从5.7万减少到1万余人。清党前国民党党员总数在100万以上，29年10月统计总数降至65万（考虑新加入的投机分子等，实际清洗、脱党可能不止35万）。</p>
-<p>关于清党到底逮捕、杀害了多少人，分歧很大，大约在10万人以上。但可以肯定的是，被捕被杀的人数远超中共党员人数。</p>
-<p>“逆淘汰”——左派青年被清洗，下层工农阶级脱党 </p>
-<p>“组织瘫痪”——国民党地方党务原多由共党包办，原共党控制的省市党部职位成为权力斗争的目标。而基层组织遭到土豪劣绅侵夺。</p>
-<p>清党之后，党务人才奇缺，地方上听任豪绅和投机分子侵夺资源，上层只能依赖武力来弥补党力虚脱。</p>
-<h2 id="执政党"><a href="#执政党" class="headerlink" title="执政党"></a>执政党</h2><p>27年国民党执掌全国政权以后，与工农民众割裂开来。28年2月撤销农、工、商、青年、妇女五部，对民众运动加以限制。</p>
-<p>原来上层国民党-中层共产党-下层民众的结构打破后，民众团体成为国民党的装饰物。比如农会，主要成分从佃农转为“有农地者”以及“习农业者”等。究其原因主要是对民众运动的恐惧、认为民众运动是共党产物。</p>
-<p>清党之后，国民党分为两派，对待民众运动的态度截然不同，分别为胡汉民为首的元老派，汪精卫陈公博为首的改组派，蒋先生立于其间。</p>
-<p>实则在孙中山的思想里，人分先知先觉和后知后觉的，他并不赞同国民党以工农为基础。改组派提出国民党应以工农为基础，蒋先生则认为所有被压迫的人都是（全民都被帝国主义压迫），但是造成了“两不讨好”的局面，比如《工厂法》在劳资双方都有意见。国民党成为执政党之后抛弃了工农联盟，却也没能赢得资本阶级的支持。</p>
-<p>事实上，国民党与资本家阶级一直存在着矛盾。1932-1933期间，由三友实业的劳资纠纷，转变为上海整个劳资两大阵营的正面冲突，上海绝大多数工会都卷入其中。这其中也有资方与国民党中央的较量，引起南京党部28年以来首次对资本家阶级大张挞伐的“卅电”，但政治强权依旧未能把资方压服。资方在法律上完全失败，1932年上海地方法院驳回上诉，1933年1月最高法院再次驳回。但资方仍旧拖延不履行判决，上海当局也显得软弱，最后1933年12月在杜月笙调停下以资方支付解雇金、工人放弃复工告终。</p>
-<p>可以看到，一则国民党的统治力比较有限，二则国民党太想讨好所有的人民了，最后反而都不能讨好。</p>
-<h2 id="党治"><a href="#党治" class="headerlink" title="党治"></a>党治</h2><p>国民党清党之后，党力实则弱化，而党统在派系斗争中 濒于破裂。法理上的“以党治国”演变为“以军治国”。</p>
-<p>在孙中山设想中，训政只维持6年，然后进入宪政。1929年6月国民党三届二中全会也如此决议。但到了1935年并未结束训政。</p>
-<p><strong>中政会：</strong>国民党自上而下设立了党政互动的双轨统治机构，党治的重点放在中央一级，孙中山1924年7月效仿俄共中央政治局设立中政会就是此意。</p>
-<p>国民党改组后的最高权力机关是中央执行委员会。鉴于40余人的中执会难以对复杂多变的局势作出反应，孙中山提出党政军分离，先后设立政治委员会、军事委员会，这两个委员会名义上式中执会的下属机构。孙中山在世时，三个组织都听命于他，实际是党魁独裁制。中政会同时受总理和中执会节制，孙去世之后，中政会地位明显提高。26年国民党推选汪精卫、胡汉民、蒋介石为中政会委员，27年3月鉴于中政会有受蒋介石挟持的嫌疑，对中政会职权进行了限制。国民党实施训政之后，28年10月决议中政会集立法、决策、人事大权于一体。</p>
-<p>后来中政会人数从十数人开始逐渐膨胀，30年代中政会有多达200余人，中政会逐渐变得没有实权。中政会衰落之后，中常会（中执会常委会）就更无足轻重。</p>
-<p><strong>兼任：</strong>除了中政会之外，另一条党治通道是中央领导人兼任政军要职来控制政府和军队。主席、委员、五院院长、各部部长都是中央委员兼任。1936年统计，13名最显赫的党政要人兼任了165个职位，蒋介石本人兼任24个。</p>
-<p>国民党中央党政军角色高度重叠，实则“法无定规，权从人转”，比如国家主席一职在林森和蒋介石出任前后的变化。国民党法理上最高的中央委员会也日趋没落。</p>
-<p>中常会中执会的衰落本质是党权被侵蚀，主要是军权。胡汉民曾试图以党权抗争军权，宁汉之争便是如此。大体上27-31是两权相争，之后则是军权扼制党权。军政党的顺序从中央贯穿到地方。</p>
-<p><strong>重军轻党：</strong>蒋介石推崇军人，以及军队的组织纪律，主张政治军事化、党务军事化，甚至社会军事化。政治上设立“行政督察专员”推进剿共，社会上推行保甲制度和新生活运动。KMT执政后，军人党员迅速膨胀（从1929年30w到1937年101万），而普通党员增长缓慢。</p>
-<p><strong>双轨制：</strong>国民党推行中央实行党治领导行政，而地方上是党政双轨，行政领导党治。只在地方实力派控制的地区才有党政高度重合的现象。蒋介石等认为地方党治干预行政是“党乱”，胡汉民指出地方党组织是<strong>辅助</strong>政府行政，沟通政府和人民的。这也导致了地方上党治权威的降低，称为地方政府的附庸。</p>
-<p><strong>党政冲突</strong>：地方党政冲突是KMT两大顽疾之一，一些地方甚至从文斗升级为武斗。党务人员薪俸较低，在30年代之后党部失势，地方党权低落，制约了KMT党治在基层的运作。</p>
-<p><strong>以党治国：</strong>孙中山主张“党义治国”而非“党员治国”，但其后国民党并没很好遵循这一点。但1926年蒋介石建立南京政府前后，就谈到以党治国是根据党的主义指定政治方案，交给政府去实行，而不是直接施政。党籍并不是入仕的必要条件，中央政府机关中国民党党员的比例在1929年为36%，1933年降至22%，1939年又升到45%<em>（此处还需考虑后加入党的？）</em>。这一比例远远称不上独裁。南京上海的政府机关公务员中党员仅占10%-17%。27年以后KMT形式上执掌政权，但并不具备高度党治的实力。29年仅27万党员，37年也不过52万。29年南京政府控制8%国土和20%人口，到37年控制25%地区和66%人口，但是政权组织职能局限于上层和城市，党治实际控制有限。</p>
-<p>政府在党外主要吸纳两部分人，一是北洋旧官僚（国民党内元老派包括蒋先生认为年轻党员“幼稚”，因而不让地方党部干预行政，当时有“南京政府，北京内阁”之说），二是专家知识分子。</p>
-<h1 id="派系"><a href="#派系" class="headerlink" title="派系"></a>派系</h1><p>北伐时期胡汉民提出“党外无党，党内无派”，这一理念使得派系政治朝两个方面发展，一是争夺党的正统，二是派系斗争隐蔽化。</p>
-<p><strong>1925~1931年继承权之争和“党统”之争</strong>：</p>
-<p>27年“四一二”之前四次分裂</p>
-<ul>
-<li>25年8月廖仲恺被刺，胡汉民和汪精卫分裂</li>
-<li>25年11月西山会议派另立中央</li>
-<li>26年3月中山舰，蒋汪分裂</li>
-<li>27年“四一二”宁汉分裂</li>
-</ul>
-<p>之后各派在“反共”问题上取得一致，但派系斗争激化。党内左右两派依然存在，蒋介石力图以武力树立正统地位，引发左右两派和地方军事集团的不满。</p>
-<p>1931年2月“汤山事件”结束了蒋胡合作的局面。</p>
-<p>右派（西山会议派）结构松散，28年之后实际失势；左派（改组派）声威虽猛，只有28-30年两年组织生命。</p>
-<p><strong>1932~1937年次生派系斗争</strong>：</p>
-<p>外部：“福建事变”和“两广事变”</p>
-<p>内部：CC系、力行系和政学系</p>
-<p>政学系是少数高层的松散组织。</p>
-<p>CC系（“Center Club”）一方面控制党机器而使党派系化，一方面又有独立组织系统。33年-49年间KMT基本由CC系掌控。二陈一直否认CC系的存在，但是1933年初二陈在蒋授意下组织过“青白团”，顶层为“青白团”，中层为“中国国民党忠实党员同盟会”，下层是众多活动集社（上海“干社”，平津“诚社”，江苏“励进社”等）和外围团体（中国文化建设协会等）。强调蒋为唯一领袖的绝对集权制。“忠实党员同盟会”主要寄附各级党组织，活动对内秘密，对外以KMT招牌进行。只有纵向关系，下层甚至不知道上层组织的存在。</p>
-<p>力行系是“派系党化”的“党中之党”，力图建立新的党组织改造KMT。32年“力行社”在蒋介石的亲自主持下成立，一度成为国家最高决策机构，32年下半年开始逐渐成为一个纯粹的决策执行组织。有三层组织，顶层为“三民主义力行社”约300人，第二层为“革命军人同志会”（人数不明）和“革命青年同志会”约3万人，第三层为“中华复兴社”约10-50万。战前力行社规模与KMT相当，两部分成员并非是重叠的。力行社也被外界误传为“蓝衣社”，常被视作一个新党。</p>
-<p>CC系和力行社都强调蒋的绝对权威，采取集权主义体质和秘密组织系统，鼓吹法西斯主义，附设有庞大的特务机关。两者均在1938年3月KMT全国代表大会后宣布取消。</p>
-<p>CC系和力行社关系日趋紧张，1934年蒋做出大致分工，CC系致力于党，力行社致力于军，但是两派之间的斗争一直持续，1938年后以党团队里的形式延续。</p>
-<p><strong>1938~1949年拥蒋派系斗争</strong>：</p>
-<p>党团之争、CC系和政学系</p>
-<h1 id="党员"><a href="#党员" class="headerlink" title="党员"></a>党员</h1><p>KMT普通党员增长缓慢</p>
-<p>党员与人口比例更低</p>
-<div class="table-container">
-<table>
-<thead>
-<tr>
-<th>政党</th>
-<th>党员/人口</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>KMT（1935）（包括61%军队）</td>
-<td>1:300</td>
-</tr>
-<tr>
-<td>苏共（1931）</td>
-<td>1:65</td>
-</tr>
-<tr>
-<td>中共（1958）</td>
-<td>1:52</td>
-</tr>
-<tr>
-<td>意大利法西斯（1934）</td>
-<td>1:25</td>
-</tr>
-</tbody>
-</table>
-</div>
-<p>1935年，KMT统治中心的江浙党员仅占16.8%，而与南京分庭抗礼的两广党员有1/3，另有1/4名义上奉KMT为正朔的省区党员。所以KMT是组织基础十分脆弱的执政党。</p>
-<p>党员增长缓慢，一是党组织涣散，二是民众疏离。</p>
-<p>农村无党，基层脆弱，战前KMT组织未能深入县以下。省党部以下组织多数不健全，地方党务有名无实，或完全停顿。</p>
-<p>边缘省区如东北省组织活动被张学良抑制，山西阎锡山借学生运动抵制党部，山东韩复榘类似。两广长期分立，自成一系。</p>
-<p>战前KMT党员除军人外，主要集中于知识界和政界。KMT执政后，青年学生人数下降，政界党员增加，农工党员比例下降。</p>
-<p>KMT党的形象在北伐后两三年间急转直下。众多支持者如胡适、蒋廷黻也在30年后逐渐转变看法。另一方面，蒋介石也公开和私下对KMT进行批评。</p>
-<p>“党部机关衙门化、党部委员官僚化、普通党员特殊化”</p>
-<h1 id="抗战"><a href="#抗战" class="headerlink" title="抗战"></a>抗战</h1><p>三民主义青年团正式成立于1938年3月底。“党外造党”试图吸引对KMT反感的青年一代，同时想统合党内各派。</p>
-<p>蒋对三青团团员以新生力量相期许，将KMT推到尴尬的境地。同时考虑CC系独掌KMT党机器，蒋属意力行社成员承担组建任务。这导致派系争斗，延续为党团之争。</p>
-<p>党团双轨制，但三青团组织关系上与KMT日趋疏远，行为和工作上和KMT日趋接近。党团势成水火之时，蒋才强调KMT对三青团的领导地位，但党团斗争持续加剧，直到1947年党团矛盾激化危及KMT时，蒋才下决心把三青团并入KMT。</p>
-<p>KMT中央党政一体化，地方上则要求党政互相监督，因而造成地方党政矛盾。战时格局没有改变，但省党部委员多由省主席兼任，省主席又由战区军事首领担任，省级实现了党政军一体化。地方上形成新式军阀，“以军统党”，“以政统党”，地方党部进一步萎缩。地方党部不得干涉地方政府，但协助和监督；地方政府往往加以抵制，党部显得软弱无能，沦为军政附庸。</p>
-<p>抗战成立国防最高委员会，蒋以KMT总裁身份兼任委员长，独揽党政军一切大权。</p>
-<p>抗战初期，KMT军事溃退，长江下游地区基层组织几乎解体，战前52万普通党员到1939年只余下28万。1939年开始，KMT采取政策大量吸收新党员，抗战胜利时达到264万，军队党员423万。三青团同期124w，中共121w。</p>
-<p>KMT的组织扩张和渗透程度也大为强化。1938年要求县设置党部，1939年“新县制”要求乡镇设区党部，保设区分布，甲设党小组，并且恢复了大革命时期的“党团”制度。45年全国至少1/3乡镇和保建立了区党部和区分部。</p>
-<p>党员分布中地域向西南转移。职业中政府机关公务员比例急剧上升，但官员不加甄别强制入党也导致旧权力成为党内官僚。党组织对党员质量不问，党员信仰不顾，党籍管理混乱，一味追求数量扩张，大多数党员游离于党组织之外。</p>
-<h1 id="战后"><a href="#战后" class="headerlink" title="战后"></a>战后</h1><p>CC系长期把持党政，引起其他派系不满。六大中，以CC系为一方，以三青团、黄埔系、朱家华系、新桂系等为另一方分化为两大阵营，两大阵营相当。新中委中CC系凭借蒋的偏袒再次获得绝对优势，站总数1/4以上。</p>
-<p>蒋空前扩增中委名额，意图缓解各派系矛盾，但不仅没能弥合纷争，反而流失党心。“六大”前后，人心涣散。</p>
-<p><strong>1944~1947”党政革新运动“</strong>：虽然没有多少具体成果，但也有重要意义。革新集团是一个跨派系的松散结合，最早由一批CC分子聚会清谈，最初矛头指向孔、翁等政学系成员。1944年KMT五届十二中全会，他们形成初步同盟，痛愤KMT无能，甚至对蒋的领导方式不满。蒋虽然也对KMT失望，但无疑接受革新分子的要求，一方面也可能是考虑到三青团造成的困扰。这条战线也有黄埔/三青团参与，因为他们都有强烈的政治诉求且在反共问题上高度一致，这里更像是代际之争。政学系主导了国共谈判，革新分子趁机攻击政学系牺牲党的利益，蒋虽对他们感到不满，但还是勉强同意了中常委任命。1946年革新派在重庆中央党部举行了公开的党政革新座谈会，在党内党外公开革新目标，革新运动扩大为一场波及全党的政治运动。</p>
-<p>在革新分子看来，KMT腐败的根源是北伐军事胜利，政治失败，失去了革命性。革新分子认为党和党员脱节、和民众疏离、政权旁落官僚等等。“国民党理论家”叶青归纳党务缺点：1、组织散漫，2、党员腐化，3、工作松懈，4、派别分歧。因而要求党内民主。</p>
-<p>革新分子对KMT猛烈批评，一致认为是成败兴亡的关头。在他们看来三民主义仍是最好的主义，KMT只要唤起革命精神就能获得新生。革新运动除了几场清议和刊物外，并无多少实际成果。1946年10月KMT中央形式上发动一次流于形式的党员总清查。但是革新运动批判北伐后的失策、攻击政学系，后遭到蒋的严厉训斥解散。</p>
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>弱势独裁党的必然命运</p>
-<p>KMT控制只到政治表层，而没有深入社会内部</p>
-<p>一党专政+三民主义导致有集权的委员会又有分权的独立机关</p>
-<p>党员对派系的忠诚超过了对党的忠诚</p>
-<p>军&gt;政&gt;党</p>
-<p>特务组织猖狂与其党机器无能有关</p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/03/05/KMT-History/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1172,7 +852,7 @@ BCNF\subset 3NF\subset 2NF</script><p>模式分解</p>
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-03-20 11:02:47" itemprop="dateModified" datetime="2020-03-20T11:02:47+08:00">2020-03-20</time>
+                <time title="Modified: 2020-06-16 12:07:12" itemprop="dateModified" datetime="2020-06-16T12:07:12+08:00">2020-06-16</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1203,56 +883,14 @@ BCNF\subset 3NF\subset 2NF</script><p>模式分解</p>
 <p><u>Cycle notation：可以证明任意变换可以写作不相交的轮换</u></p>
 <p>另一种形式是写成交换的形式。</p>
 <p>由此可以确定变换的奇偶。可以证明$sgn(\alpha)=(-1)^{n-t}$，t为轮换的个数。显然奇偶变换数量一样。</p>
-<p>定义：操作$\mu:G\times G\rightarrow G$，半群$(G,<em>)$定义为G上有结合律的操作$\</em>$。</p>
-<p>定义：群是有单位元的半群。</p>
-<p>定义：同态$f:G\to H$，$f(ab)=f(a)f(b)$。同构是双射的同态。</p>
-<p>定义：子群$S\leq G$。</p>
-<p>定义：有限群，order</p>
-<p>定义：同态$f$的kernel：$ker\:f={a|f(a)=1}$和image：$im\:f={h|h=f(a)}$</p>
-<p>定义：$S\leq G$，右（左）陪集 =St(tS)。显然右陪集不交。</p>
-<p>定义：index为右陪集数量，记为[G:S]。（Lagrange：G有限，则[G:S]=|G|/|S|）</p>
-<p>循环群$|G|=n$，那么对于每个n的因子d，存在唯一子群$|H|=d$。（因此$n=\sum_{d|n}\phi(d)$。）反之，若对每个d，至多存在一个这样的子群，则G为循环群。</p>
-<p>$|ST||S\cap T|=|S||T|$</p>
-<p>定义：正规子群$K\lhd G$，如果对任意$g\in G$，$gKg^{-1}=K$。</p>
-<p>定义：x的共轭为$for\:some\:a\:,axa^{-1}$</p>
-<p>题目：（H.B.Mann)有限群G，子集ST，|S|+|T|&gt;G，那么G=ST。（考察S^{-1}g，必和T有交集）；有限域F的任意元素可以写成平方和。（考察a^2和b-a^2）</p>
-<p>定义：$N\lhd G$，商群G/N定义为陪集的集合</p>
-<p>定义：交换子$aba^{-1}b^{-1}$，其生成的群为交换子群。交换子群G’是G的正规子群。$H\lhd G$，则$G/H$可交换$\Leftrightarrow G’\leq H$</p>
-<p>性质：(P.YFF)交换子群为“长交换子集”的子集。</p>
-<p>性质：交换子集不一定等于交换子群，一个例子就是P.J.Cassidy给出的</p>
-<script type="math/tex; mode=display">
-\pmatrix{1&f(x)&h(x,y)\\
-0&1&g(y)\\
-0&0&1}</script><p>第一同构定理：同态$f$，$G/(ker\:f)\cong im\:f$</p>
-<p>引理：G子群S、T中有一个是正规的，那么ST=TS也是子群</p>
-<p>第二同构定理：$N\lhd G$，$T\leq G$，那么$N\cap T\lhd T$且$T/(N\cap T)\cong NT/N$。</p>
-<p>第三同构定理：$K\leq H\leq G$，K、H正规，那么$(G/K)/(H/K)\cong G/H$。</p>
-<p>Correspondence Theorem：$K\leq T\leq S\leq G$，K正规，那么$T\lhd S\Leftrightarrow T^*\lhd S^*$，且此时$S/T\cong S^*/T^*$。其中$S^*=S/K$。</p>
-<p>定理：H，K正规，如果$HK=G$,$H\cap K=1$，那么$G\cong H\times K$。</p>
-<p>定理：$A\lhd H$，$B\lhd K$，那么$(H\times K)/(A\times B)\cong(H/A)\times(K/B)$</p>
-<p>定义：a的共轭的集合记为$a^G$</p>
-<p>定义：群G的中心Z(G)是所有的$\{a|ag=ga\:,\:\forall g\in G\}$</p>
-<p>定义：中心化子$C_G(a)=\{x|ax=xa\}$，显然这是个子群。</p>
-<script type="math/tex; mode=display">
-|a^G|=[G:C_G(a)]</script><p>定义：群H的共轭记为$H^g=gHg^{-1}$</p>
-<p>定义：正规化子$N_G(H)=\{a\in G:\:aHa^{-1}=H\}$，显然这是个子群，且$|H\lhd N_G(H)|$。</p>
-<p>H的共轭的个数=$[G:\:N_G(H)]$</p>
-<p>题目：$H\lhd G$且有质数index，且$C_H(x)&lt;C_G(x)$，那么x在H中共轭的数量和在G中相等。（考虑$G=C_G(x)H$）（在证明A_n单群中多次用到）</p>
-<p>引理：$\alpha,\:\beta\in S_n$，那么$\alpha\beta\alpha^{-1}$和$\beta$有相同的结构，即r-cycle数量相等。（证明：$\beta(i)=j,\:\alpha(i)=k,\:\alpha(j)=l$，那么$\alpha\beta\alpha^{-1}(k)=l$）</p>
-<p>定理：$\beta$和$\gamma$是共轭当且仅当他们有相同的结构。</p>
-<p>定理：order为12 的A4没有order为6的子群</p>
-<p>定理：$A_n,\:n\geq 5$是单群。证明如下</p>
-<ul>
-<li>$A_4$有正规子群{(), (1,2)(3,4), (1,3)(2,4), (1,4)(2,3)}</li>
-<li>$A_5$是单群（1、所有3-cycle是共轭的；2、所有不交的交换是共轭的；3、5-cycle构成两个12元的共轭集合；4、|H|=60，但是1+共轭集合都不是60的约数）</li>
-<li>如果$H\lhd A_n$，且H中有3-cycle，那么$H=A_n$（首先证明所有3-cycle共轭，然后证明An可由3-cycle生成）</li>
-<li>$A_6$是单群（考察$\{\alpha|\alpha(i)=i\}$，与$A_5$同构）</li>
-<li>$A_n$是单群（考察$\beta(i)=j$，必有3-cycle与之不交换，所以可以找到$A_6$的同构）</li>
-</ul>
-<h3 id="一些群表示论定理"><a href="#一些群表示论定理" class="headerlink" title="一些群表示论定理"></a>一些群表示论定理</h3><p>（Cayley）任何一个群G可以被嵌入为$S_G$的子群。如果|G|=n，那么G可以被嵌入$S_n$。（Left translation $L_a(x)=ax$，<strong>$a\to L_a$也被称为G的左正规表示</strong>）</p>
-<p>推论：k是一个域，有限群|G|=n，那么G可以被嵌入GL(n,k)。</p>
-<p>35</p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/02/26/group/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1302,7 +940,7 @@ BCNF\subset 3NF\subset 2NF</script><p>模式分解</p>
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-05-20 15:01:06" itemprop="dateModified" datetime="2020-05-20T15:01:06+08:00">2020-05-20</time>
+                <time title="Modified: 2020-06-18 16:25:37" itemprop="dateModified" datetime="2020-06-18T16:25:37+08:00">2020-06-18</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1329,430 +967,15 @@ BCNF\subset 3NF\subset 2NF</script><p>模式分解</p>
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="单词"><a href="#单词" class="headerlink" title="单词"></a>单词</h1><h3 id="数字"><a href="#数字" class="headerlink" title="数字"></a>数字</h3><p>１　いち</p>
-<p>２　に</p>
-<p>３　さん</p>
-<p>４　し／よん</p>
-<p>５　ご</p>
-<p>６　ろく</p>
-<p>７　しち／なな</p>
-<p>８　はち</p>
-<p>９　く／きゅう</p>
-<p>10　じゅう</p>
-<p>100　ひゃく</p>
-<p>1000 せん</p>
-<p>0.1 れいてんいち</p>
-<h3 id="亲属"><a href="#亲属" class="headerlink" title="亲属"></a>亲属</h3><p>父亲 おどうさん</p>
-<p>母亲 おかあさん</p>
-<p>爷爷 おじいさん</p>
-<p>奶奶 おばあさん</p>
-<h3 id="方位"><a href="#方位" class="headerlink" title="方位"></a>方位</h3><p>上 うえ</p>
-<p>下　した</p>
-<p>前　まえ　</p>
-<p>后　うし</p>
-<p>相邻　となり</p>
-<p>中　なか</p>
-<p>外　そと</p>
-<h3 id="时间"><a href="#时间" class="headerlink" title="时间"></a>时间</h3><h4 id="星期"><a href="#星期" class="headerlink" title="星期"></a>星期</h4><p>周日 日曜日 にちようび</p>
-<p>周一 月曜日　げつようび</p>
-<p>周二 火曜日　かようび</p>
-<p>周三 水曜日　すいようび</p>
-<p>周四 木曜日　もくようび</p>
-<p>周五 金曜日　きんようび</p>
-<p>周六 土曜日　どようび</p>
-<h4 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h4><p>…时 じ</p>
-<p>…分 ぶん</p>
-<p>前天 おととい</p>
-<p>昨天 きのう（昨日）</p>
-<p>今日 きょう（今日）</p>
-<p>明天 あした（明日）　</p>
-<p>后天 あさって　</p>
-<p>询问时间なんじ（几点）、いつ（什么时候）</p>
-<p>…开始 时间+から</p>
-<p>…结束 时间+まで</p>
-<p>ごろ在时间后面，表大概</p>
-<p>时间后面+過（す）ぎ 表示…过了</p>
-<h3 id="副词"><a href="#副词" class="headerlink" title="副词"></a>副词</h3><h4 id="程度副词"><a href="#程度副词" class="headerlink" title="程度副词"></a>程度副词</h4><p>非常 とても／たいへん</p>
-<p>一点儿　少（すこ）し／ちょっと</p>
-<p>不太 あまり～ません</p>
-<p>根本不 全然（ぜんぜん）～ません</p>
-<p>正好 ちょうど</p>
-<h4 id="频率副词"><a href="#频率副词" class="headerlink" title="频率副词"></a>频率副词</h4><p>总是 いつも</p>
-<p>经常 よく</p>
-<p>有时 時々（ときどき）</p>
-<p>偶尔 たまに（偶に）</p>
-<p>不太 あまり～ません</p>
-<p>从不 ぜんぜん～ません</p>
-<h4 id="其他副词"><a href="#其他副词" class="headerlink" title="其他副词"></a>其他副词</h4><p>好好地，也表示速度慢 ゆっくり</p>
-<h3 id="动词1"><a href="#动词1" class="headerlink" title="动词1"></a>动词1</h3><p>休息 やすみます</p>
-<p>工作 はたらきます</p>
-<p>开始 はじまります（始まります）</p>
-<p>结束 おわります（終わります）</p>
-<p>去 いきます</p>
-<p>回来　かえり ます（帰ります）</p>
-<p>学习 ならいます（習います）</p>
-<p>かきます（書きます）</p>
-<p>かきます（描きます）</p>
-<p>かります（借ります）</p>
-<p>かします（貸します）</p>
-<h3 id="动词2"><a href="#动词2" class="headerlink" title="动词2"></a>动词2</h3><p>起床  おきます</p>
-<p>睡觉 ねます（寝ます）</p>
-<p>打（电话） かけます</p>
-<h3 id="动词3"><a href="#动词3" class="headerlink" title="动词3"></a>动词3</h3><p>学习 べんきようします（勉強します）</p>
-<h3 id="形容词１"><a href="#形容词１" class="headerlink" title="形容词１"></a>形容词１</h3><p>简单的 やさしい（易しい）</p>
-<p>难的 むずかしい（難しい）</p>
-<p>无聊的 つまらない</p>
-<p>有趣的 おもしろい（面白い）</p>
-<h3 id="其他-1"><a href="#其他-1" class="headerlink" title="其他"></a>其他</h3><p>合起来   まとめて</p>
-<h1 id="短语"><a href="#短语" class="headerlink" title="短语"></a>短语</h1><h3 id="疑问句"><a href="#疑问句" class="headerlink" title="疑问句"></a>疑问句</h3><p>问人用だれ，问东西用なん，问场所用どこ，</p>
-<p>问价格用いくら，</p>
-<p>询问时间なんじ（几点）、いつ（什么时候）</p>
-<p>问怎么样用 どんな+名词　询问材料（内容）用なんの</p>
-<p>询问对方意见どうですか，询问过去的事情どうでしだか，另一种询问方式いかがですか</p>
-<p>询问原因 どうしてですか，完整的问题是どうして　～の／ん　ですか</p>
-<p>多久 どの かかります</p>
-<h3 id="词义辨析"><a href="#词义辨析" class="headerlink" title="词义辨析"></a>词义辨析</h3><p>建筑物的家用いえ，指家人用うち</p>
-<p>刚刚，离现在很近たったいま，稍前一点用さっき</p>
-<p>お湯（ゆ）指热水，水（みず）仅指凉水</p>
-<p>三种店从大到小：馆 かん 店 てん 屋 や </p>
-<p>从近到远これ、それ、あれ，修饰名词时要用この、その、あの，三个以上事物不能确定哪一个时用的疑问句どれ、どの</p>
-<p>指示场所时用ここ、そこ、あそこ表示位置关系</p>
-<p>声（こえ）是物体发出的声音，音（おと）是人/动物发出的声音。</p>
-<p>間（ま）もなく和もう　すく都表示不久的意思，但前者更加书面</p>
-<p>さらに和もっと都是更加的意思，前者更郑重</p>
-<p>长期爱好是趣味（しゅみ），兴趣是興味（きょうみ）</p>
-<h3 id="常用句子："><a href="#常用句子：" class="headerlink" title="常用句子："></a>常用句子：</h3><p>你好 こんにちは</p>
-<p>早上好 おはよう</p>
-<p>对不起 すみません</p>
-<p>请 どうそ</p>
-<p>请多关照 よろしく（おねがいします）</p>
-<p>初次见面 はじめまして</p>
-<p>是 そうです</p>
-<p>不是 ちがいます</p>
-<p>不知道 わかいますん</p>
-<p>非常 どうも</p>
-<p>感谢 （どうも）　ありがとう　ございます</p>
-<p>对不起（搭话、提出请求的时候） あのう</p>
-<p>表不确定 たしか</p>
-<p>表正在思考 ええと</p>
-<p>我先走了 お先（さき）に失礼（しつれい）します</p>
-<p>离开（还要返回该处） いってまいります／いってきます（比较随便） 回答（去吧） いってらっしゃい</p>
-<p>欢迎光临 いらっしゃいませ</p>
-<p>请给我（点餐/购物时的） ～を　ください</p>
-<p>明白了 かしこまりました</p>
-<p>那么（接过话题或者中断谈话） じやあ</p>
-<p>正合适 ちようど　いいです</p>
-<p>转换话题 ところで</p>
-<p>花费的钱或时间 かかいますか</p>
-<p>赶快（暗示其他动作等一会） とりあえず</p>
-<p>没错（口语） ちやんと</p>
-<p>大丈夫   だいじょうぶ</p>
-<p>根据…不同 ～に　よって</p>
-<p>搭话（难以启齿的事情） あのう</p>
-<p>打扰了（拜访别人） お邪魔（じゃま）します</p>
-<p>太好了 よかったです</p>
-<p>喜欢吗 気（き）に　入（い）りましたか</p>
-<p>简体会话中，常有はい说成うん，いいえ说成ううん</p>
-<p>感谢关照（分别的寒暄） お世話（せわ）に　なります。</p>
-<p>向…问好 ～に　よろしく　お伝（つた）え　ください</p>
-<p>请多保重 お元気で。</p>
-<p>一路平安 お気を　つけて</p>
-<h3 id="其他-2"><a href="#其他-2" class="headerlink" title="其他"></a>其他</h3><p>なん+量词+も+肯定形式 表示数量多</p>
-<p>だいぶ 强调程度高（变化中）</p>
-<h1 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h1><h3 id="语法-1"><a href="#语法-1" class="headerlink" title="语法"></a>语法</h3><p>と在两个名词中间，表示“和”，共同做某事的对象也用这个</p>
-<p>や和と的差异在于と列举所有项目，や只用于许多项目中的两项。や常与など呼应。</p>
-<p>か在名词之间，表示“或者”</p>
-<p>は可以表对比或者强调（此时发音略重），此时可以单独使用加在名词后面，也可以加在助词后面构成复合形式</p>
-<p>“何”根据后续音节不同，读音不同，基本读音是なに，但在助词の前面和量词前读なん，で前都可以　</p>
-<p>たり表示列举：</p>
-<ul>
-<li>动词た形改为たり</li>
-<li>一类形容词加かつたり(です)</li>
-<li>二类形容词/名词加だつたり(です)</li>
-</ul>
-<p>小句+か表示不确定</p>
-<ul>
-<li>不包含疑问的疑问句：将动词、一类形容词变为简体形+か　どうか</li>
-<li>疑问词小句+か</li>
-</ul>
-<p>（人/物+は）+小句（必须是简体形）+と+</p>
-<ul>
-<li>思（おも）います 想…</li>
-<li>言（い）います 说…</li>
-</ul>
-<p>～のです／んです 表示所讲的内容与前句有关，包括解释情况等。前者更正式。</p>
-<p>～に　ついて 关于…</p>
-<p>あまり+否定形式 表示程度不高</p>
-<h3 id="句末语气词"><a href="#句末语气词" class="headerlink" title="句末语气词"></a>句末语气词</h3><p>句末+ね 表示征求同意或者同意对方的提议</p>
-<p>句末+よね 对自己想法没有足够把握的时候的提议</p>
-<p>よ在句末用来表示提醒，读升调　</p>
-<p>+か 表示提问，也是应答时常用的说法</p>
-<p>+が 而不把话说完显得委婉含蓄</p>
-<p>二类形容词/名词+よ 一般是女性用</p>
-<p>+わ 一般是女性用</p>
-<h3 id="连词语法"><a href="#连词语法" class="headerlink" title="连词语法"></a>连词语法</h3><p>那么（中断谈话） では／じゃあ（不正式）</p>
-<p>所以 ですから／だから（不正式）</p>
-<p>表转折 でも</p>
-<p>表转折 けど</p>
-<p>表并列 そして</p>
-<p>表“正如所料”  やはり（日常可用 やっぱり）</p>
-<p>建议(口语) さあ</p>
-<p>表铺垫/转折 小句+が，小句</p>
-<h3 id="助词语法"><a href="#助词语法" class="headerlink" title="助词语法"></a>助词语法</h3><ul>
-<li>は：是…，在…</li>
-<li>で：用…方式，在…地点，动作的场所、工具、手段、原材料+で+动词</li>
-<li>が：<em>自动词</em>的宾语，或者表示<em>能力</em></li>
-<li>に：在…时间/地点，也表收付关系宾语的人</li>
-<li>を：<em>他动词</em>的宾语，名词（动作的对象）+を+动词，这里读作お，如果前面名词作话题时用は</li>
-<li>も：代替は的位子，相当于“也是”，另外，疑问词+も+动词（否定）表示全面否定</li>
-<li>から：从…，也可表示原因</li>
-<li>へ：去….</li>
-<li>より：比较的基准，空间/时间的起点</li>
-<li>かな：原本只用于自言自语，也用来表明信息不准确</li>
-<li>の：用于要求说明或确认</li>
-</ul>
-<p>表物体存在的两种用法</p>
-<ul>
-<li>（场所）には（物/人）が　あります／います</li>
-<li>（物/人）は（场所）に　あります／います</li>
-</ul>
-<p>表示动作时间的</p>
-<ul>
-<li><p>时间+に+动词</p>
-</li>
-<li><p>时间+から+时间+まで+动词（持续时间）</p>
-</li>
-<li>表示时间数量的词语和动词一起使用，中间不加に</li>
-</ul>
-<p>表示移动动词时的用法</p>
-<ul>
-<li>场所+へ/に+动词 去哪儿</li>
-<li>场所+から+动词 从哪来</li>
-<li>场所+から+场所+まで+动词 从哪到哪</li>
-<li>交通工具+で+动词 </li>
-<li>场所+へ+动词（干什么）+に+动词 去哪儿干什么，移动行为目的的动词去掉ます</li>
-<li>场所+を+动词 经过哪儿</li>
-</ul>
-<p>给予东西的表达</p>
-<ul>
-<li>名1（人）+は+名2（人）+に+名3（物）+を+あげます　表示1给2物品3</li>
-<li>名1（人）+は+名2（人）+に+名3（物）+を+もらいます　表示1得到2的物品3</li>
-</ul>
-<p>名词（主体）+は+名词（对象）+が+わかります／できます 会/不会做某事</p>
-<p>名词（主体）+は+名词（对象）+が+ほしいです 想要什么</p>
-<p>名词（主体）+は+名词（对象）+を+动词基本形+たいです 想要干什么（有时也用が）</p>
-<p>みんな＋で 表示动作主体的状态</p>
-<h3 id="动词语法"><a href="#动词语法" class="headerlink" title="动词语法"></a>动词语法</h3><p>动词+ます／ません</p>
-<p>动词+ました／ませんでした（过去时）</p>
-<p>三类动词：</p>
-<ul>
-<li>ます形去掉ます后，最后一个音位于い段的动词绝大部分属于一类；</li>
-<li>最后一个音位于え段的和少部分位于い段（初级大约15个）的属于第二类；</li>
-<li>来ます和します<em>结尾</em>的动词属于第三类。汉字/外来词+します构成新的单词。</li>
-</ul>
-<p><strong>动词て形</strong></p>
-<p>一类动词“て形”变换方式是去掉ます加て时，发音会有一些变化。</p>
-<p>き变いて或いで，ひみに变んで，ちりい变って，し变して</p>
-<p>二类和三类动词的“て形”变换方式是去掉ます直接加て。</p>
-<p>动词て形+动词 表示相继发生（也可以用 动词て形+から+动词，但から只能在一个句子里用一次）</p>
-<p>动词て形+ください 请某人做某事</p>
-<p>动词て形+います 正在进行，或者结果状态（类似于认识、有这样的动词）</p>
-<p>动词て形+も+いいます 表示许可</p>
-<p>动词て形+は+いけません 表示禁止</p>
-<p>（提问方式　～ても　いいですか）</p>
-<p>まだ+动词否定 相当于还没有</p>
-<p>动词将ます换成ましょう表示提议、也可用于回应提议</p>
-<p><strong>动词ない形</strong></p>
-<p>一类动词“ない形”变换方式是去掉ます最后一个音变相应的あ段音，然后加ない（注意い变成わ）。二、三类动词去掉ます直接加ない。</p>
-<p>动词ない形+で+ください 表示否定的命令</p>
-<p>动词ない形换成なければ　なりません表示必须（口语也可以用ないと　いけません，常省略为ないと）</p>
-<p>动词ない形换成なくても+いいです表示不做也可以</p>
-<p><strong>动词基本形</strong></p>
-<p>一类动词的基本形最后发音变为う段</p>
-<p>二、三类动词基本形为去掉ます加る（します变为する）</p>
-<p><em>动词基本形+こと起到和名词相同的作用</em></p>
-<p>名词/人+は+动词基本形+ことが　できます 询问允许或者可以吗（回答用できます／できません）</p>
-<p>名词+は+动词基本形+こと　です 谓语是一种动作时使用</p>
-<p>动词基本形+まえに、～　动作发生在另一个动作之前</p>
-<p><strong>动词た形</strong></p>
-<p>就是动词て形的て改为た，で改为だ</p>
-<p>动词た形+ことが　あります 经历过（过去式）</p>
-<p>动词た形+後（あと）で、～　动作发生在另一个动作之后</p>
-<p>动词た形+ほうが　いいです 用于两种事物选择（否定用动词ない形）</p>
-<p>动词+ましょうか　提议</p>
-<p>动词ます形去掉ます加上かた就是“~的方法”的意思。</p>
-<p>动词+たり用来列举：动词+たり 动词+たり します</p>
-<p><strong>其他动词语法</strong></p>
-<p>动词+ませんか 表面是疑问，实际是提议</p>
-<p>动词ます形去掉ます加上方（かた）是“~的方法”的意思</p>
-<p>表示某个动作进行用  ～中（ちゅう）</p>
-<h3 id="形容词语法"><a href="#形容词语法" class="headerlink" title="形容词语法"></a>形容词语法</h3><p>形容词分两类，<strong>一类是以 い结尾</strong>，做<em>谓语</em>要加です</p>
-<p>名+は+一类形容词+です</p>
-<p>他的否定形式是将词尾的い变成く，再加上ないです或者ありません</p>
-<p>过去式是将词尾的い变为かつた，再加です</p>
-<p>过去形式的否定式是将词尾的い变成く，再加上ないつたです或者ありませんした</p>
-<p>一类形容词可以直接<em>修饰名词</em></p>
-<p><strong>第二类是不以 い结尾</strong>，做<em>谓语</em>要加です，过去式是加でした</p>
-<p>否定形式是＋では　ありません</p>
-<p>过去式的否定形式+ では　ありませんでした</p>
-<p><em>修饰名词</em>时： 形容词+な+名词</p>
-<p><u>形容词修饰名词时可以用 形容词+の 指代名词</u></p>
-<p><strong>表达情感的形容词</strong>（如喜欢等）</p>
-<p>名词（主体）+ は+名词（对象）+が+形容词+です</p>
-<p><strong>比较</strong></p>
-<p>名词（主体）+ は+名词（对象）+より+形容词+です（主体比对象更XX）</p>
-<p>名词（主体）+ より+名词（对象）+の　ほうが+形容词+です（相比主体，对象更XX）</p>
-<p>名词（主体）+ は+名词（对象）+ほど+形容词否定形式（主体不如对象XX） </p>
-<p>ほうが …比较…　（ほうが　いいです表示建议）</p>
-<p>いちばん最高级</p>
-<p>提问：名词+と+名词+と+どちらが+形容词+ですか（どちら 哪个）</p>
-<p>回答：名词+の+ほうが+形容词，两者相当则用どちらも　～です</p>
-<p>问形容词时回答：形容词+ほうが+いいです</p>
-<p><strong>形容词连用</strong></p>
-<p>形容词て形+形容词 表并列（一类去掉い加くて，二类加で）</p>
-<p><strong>形容词表示变化</strong></p>
-<p>一类形容词去掉い+く+なります／します（后者是由于主观动作引起的变化）</p>
-<p>二类形容词/名词+に+なります／します</p>
-<h3 id="量词语法"><a href="#量词语法" class="headerlink" title="量词语法"></a>量词语法</h3><p>量词用在动词前面 </p>
-<p>名词+が／を+数量+量词+动词</p>
-<p>数量+量词+で+500円（1个时不加）</p>
-<p>数量的词后面+くらい／ぐらい 表示大概</p>
-<p>还有省去量词直接用３つ的</p>
-<h3 id="名词语法"><a href="#名词语法" class="headerlink" title="名词语法"></a>名词语法</h3><p>名词做谓语的时候加です，过去式是加でした</p>
-<p>否定形式是＋では　ありません</p>
-<p>过去式的否定形式+ では　ありませんでした</p>
-<p>下面两种方式等价，名词1是旧信息，名词2是新信息</p>
-<p>名词1+は+名词2+です</p>
-<p>名词2+が+名词1+です</p>
-<h3 id="礼貌用语"><a href="#礼貌用语" class="headerlink" title="礼貌用语"></a>礼貌用语</h3><p>对应该尊敬的对象或者交往不多的人，会将この人后面的人（ひと）变为方（かた）</p>
-<p>ここ、そこ、あそこ、どこ的礼貌用语こちら、そちら、あちら、どちら</p>
-<p>なかなか还不错，只能用于对下级</p>
-<p>ください（＋ませんか）表达请求</p>
-<p>…の　件（けん）　…一事，正式说法</p>
-<h3 id="敬体形和简体形"><a href="#敬体形和简体形" class="headerlink" title="敬体形和简体形"></a>敬体形和简体形</h3><p>动词～ます／～です都是敬体形，用于对长辈或不亲密的人。动词的基本形、ない形、た形都属于简体形。</p>
-<div class="table-container">
-<table>
-<thead>
-<tr>
-<th></th>
-<th></th>
-<th>敬体形</th>
-<th>简体形</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>现在将来形式</td>
-<td>肯定</td>
-<td>～ます</td>
-<td>う段和る（基本形）</td>
-</tr>
-<tr>
-<td></td>
-<td>否定</td>
-<td>～ません</td>
-<td>あ段+ない（ない形）</td>
-</tr>
-<tr>
-<td>过去形式</td>
-<td>肯定</td>
-<td>～ました</td>
-<td>て形变化+た（た形）</td>
-</tr>
-<tr>
-<td></td>
-<td>否定</td>
-<td>～ませんでした</td>
-<td>あ段+なかった（なかった形）</td>
-</tr>
-</tbody>
-</table>
-</div>
-<p>一类形容词、二类形容词和名词本身没有敬体形和简体形之分，<strong>只有作谓语的时候</strong></p>
-<p>一类形容词（い结尾）：</p>
-<div class="table-container">
-<table>
-<thead>
-<tr>
-<th></th>
-<th></th>
-<th>敬体形</th>
-<th>简体形</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>现在将来形式</td>
-<td>肯定</td>
-<td>～いです</td>
-<td>～い</td>
-</tr>
-<tr>
-<td></td>
-<td>否定</td>
-<td>～く　ないです</td>
-<td>～く　ない</td>
-</tr>
-<tr>
-<td>过去形式</td>
-<td>肯定</td>
-<td>～かったです</td>
-<td>～かった</td>
-</tr>
-<tr>
-<td></td>
-<td>否定</td>
-<td>～く　なかったです</td>
-<td>～く　なかった</td>
-</tr>
-</tbody>
-</table>
-</div>
-<p>二类形容词：</p>
-<div class="table-container">
-<table>
-<thead>
-<tr>
-<th></th>
-<th></th>
-<th>敬体形</th>
-<th>简体形</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>现在将来形式</td>
-<td>肯定</td>
-<td>～です</td>
-<td>～だ</td>
-</tr>
-<tr>
-<td></td>
-<td>否定</td>
-<td>～では　ありません</td>
-<td>～では　ない</td>
-</tr>
-<tr>
-<td>过去形式</td>
-<td>肯定</td>
-<td>～でした</td>
-<td>～だった</td>
-</tr>
-<tr>
-<td></td>
-<td>否定</td>
-<td>～では　ありませんでした</td>
-<td>～では　なかった</td>
-</tr>
-</tbody>
-</table>
-</div>
-<p>名词和二类形容词一样</p>
-<ul>
-<li>简体疑问省略敬体的ですか，读升调。</li>
-<li>かな和の这两个助词只用在简体形后面</li>
-</ul>
-
+          <h1 id="单词"><a href="#单词" class="headerlink" title="单词"></a>单词</h1>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/02/21/japanese/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1802,7 +1025,7 @@ BCNF\subset 3NF\subset 2NF</script><p>模式分解</p>
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-05-07 22:40:57" itemprop="dateModified" datetime="2020-05-07T22:40:57+08:00">2020-05-07</time>
+                <time title="Modified: 2020-06-16 12:05:21" itemprop="dateModified" datetime="2020-06-16T12:05:21+08:00">2020-06-16</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1829,7 +1052,8 @@ BCNF\subset 3NF\subset 2NF</script><p>模式分解</p>
     <div class="post-body" itemprop="articleBody">
 
       
-          <h3 id="一些应用"><a href="#一些应用" class="headerlink" title="一些应用"></a>一些应用</h3><h5 id="逼近和拟合"><a href="#逼近和拟合" class="headerlink" title="逼近和拟合"></a>逼近和拟合</h5><p>范数逼近</p>
+          <p><a href="/2020/02/14/ConvexOptimization/">上一篇：凸优化问题</a></p>
+<h3 id="一些应用"><a href="#一些应用" class="headerlink" title="一些应用"></a>一些应用</h3><h4 id="逼近和拟合"><a href="#逼近和拟合" class="headerlink" title="逼近和拟合"></a>逼近和拟合</h4><p>范数逼近</p>
 <script type="math/tex; mode=display">
 min\:||Ax-b||</script><p>罚函数逼近（$l_p$-范数的一个有用的推广）</p>
 <script type="math/tex; mode=display">
@@ -1839,1120 +1063,14 @@ subject\:to\:r=Ax-b</script><p>对<strong>野值</strong>不敏感的函数称�
 <script type="math/tex; mode=display">
 min\:||x||\\
 subject\:to\:Ax=b</script><p>这是个凸优化问题。</p>
-<p>正则化逼近：</p>
-<script type="math/tex; mode=display">
-min\:||Ax-b||+\gamma||x||</script><p><strong>Tikhonov正则化</strong>：</p>
-<script type="math/tex; mode=display">
-min\:||Ax-b||_2^2+\delta||x||_2^2</script><p>有解析解</p>
-<script type="math/tex; mode=display">
-x=(A^TA+\delta I)^{-1}A^Tb</script><p>重构、光滑、去噪声：</p>
-<script type="math/tex; mode=display">
-min\:(||x-x_{cor}||_2,\phi(x))</script><p><strong>函数拟合与插值</strong>：</p>
-<p>考虑一族函数，通过</p>
-<script type="math/tex; mode=display">
-f(u)=\sum_{i=1}^nx_nf_n(u)</script><p>将x与映射$f:R^M\to R$联系起来。</p>
-<p>另外还有插值<strong>条件约束</strong>，或者插值的不等式约束。以及对f的凸约束，比如Lipschitz约束。</p>
-<p><strong>基筛选</strong>中寻找较少数目的基函数，使得能够在card(x)很小的情况下进行拟合。称为<strong>稀疏描述</strong>。</p>
-<h5 id="统计估计"><a href="#统计估计" class="headerlink" title="统计估计"></a>统计估计</h5><p>最大似然问题可以表述如下</p>
-<script type="math/tex; mode=display">
-max\:l(x)=log(p_x(y))\\
-subject\:to\:x\in C</script><p>Chebyshev界：我们希望给$prob(X\in C)$定界，假设$f(z)\geq 1_C(z)$，那么可以求解凸优化问题</p>
-<script type="math/tex; mode=display">
-min\:x_o+\sum a_ix_i\\
-subject\:to\:f(z)=\sum x_if_i(z)\geq1\:\forall z\in C\\
-f(z)=\sum x_if_i(z)\geq0\:\forall z\notin C</script><p>Chernoff界：定义为$prob(X\geq u)\leq inf_{\lambda\geq 0}Ee^{\lambda(X-u)}$同样得到</p>
-<script type="math/tex; mode=display">
-log(prob(X\in C))\leq\mu+logEe^{\lambda^Tx}</script><p>（这里略过数章…）</p>
-<h3 id="无约束优化算法"><a href="#无约束优化算法" class="headerlink" title="无约束优化算法"></a>无约束优化算法</h3><script type="math/tex; mode=display">
-min\:f(x)</script><p>其中$f$二次可微凸函数。那么最优点应该满足一阶导数为0，我们需要通过迭代求解。首先需要一个适当的初始点$x_0$，且$f(x_0)$下水平集必须是闭集。（下水平集的形状影响收敛速度）</p>
-<p>我们假设目标函数是<strong>强凸</strong>的，即存在m&gt;0，满足$\nabla^2 f(x)\succeq mI$。（好处是梯度足够小的点都可以计算得到近似最优解。）</p>
-<p>通用下降方法：确定下降方向；选择步长；修改x。</p>
-<p>利用负梯度作为搜索方向是一种自然的选择，称为<strong>梯度下降法</strong>。</p>
-<p>我们假设强凸，因此存在$mI\preceq \nabla^2f(x)\preceq MI$，那么可以得到上界</p>
-<script type="math/tex; mode=display">
-f(t)\leq f(x)-t||\nabla f(x)||_2^2+\frac{Mt^2}{2}||\nabla f(x)||_2^2</script><p>采用<strong>精确直线搜索</strong>的话，右边的最小值为$f(x)-(1/2M)||\nabla f(x)||_2^2$，所以</p>
-<script type="math/tex; mode=display">
-f(x^+)-p^*\leq (1-m/M)(f(x)-p^*)</script><p>因此是<strong>线性收敛</strong>的。事实上，即使是<strong>回溯直线搜索</strong>，满足$0\leq t\leq 1/M$，也可以达到<strong>线性收敛</strong>。</p>
-<p><strong>最速下降方法</strong>是通过定义<strong>规范化的最速下降方向</strong>，即找到</p>
-<script type="math/tex; mode=display">
-\Delta x_{nsd}=argmin\{\nabla f(x)^Tv|||v||=1\}</script><p>上面范数取Euclid范数时即为梯度下降，采用二次范数$||·||_P$时，$\Delta x_{nsd}=-(\nabla f(x)^TP^{-1}\nabla f(x))^{-1/2}P^{-1}\nabla f(x)$。</p>
-<p><strong>Newton方法</strong>：$\Delta x_{nt}=-\nabla^2 f(x)^{-1}\nabla f(x)$，这其实等价于Hessian矩阵定义的二次范数下的最速下降方法</p>
-<p>可以表明，Newton方法的迭代过程分为两个阶段，第一阶段称为<strong>阻尼Newton阶段</strong>，步长t&lt;1，线性收敛速度，第二阶段为<strong>纯Newton阶段</strong>，步长t=1，二次收敛速度。</p>
-<p><strong>自和谐函数</strong>的Newton方法分析不依赖未知常数（强凸性常数、李普西茨常数），且具有仿射不变性。</p>
-<p>定义凸函数$f:R\to R$满足对所有x</p>
-<script type="math/tex; mode=display">
-|f'''(x)|\leq 2f''(x)^{3/2}</script><p>就是<strong>自和谐</strong>的。常数2可以被任何常数k替代。这个条件可以写成</p>
-<script type="math/tex; mode=display">
-|\frac{d}{dt}(f''(t)^{-1/2})|\leq1</script><p>由此得到$f’’(t)$的上下界</p>
-<script type="math/tex; mode=display">
-\frac{f''(0)}{(1+tf''(0)^{1/2})^2}\leq f''(t)\leq \frac{f''(0)}{(1-tf''(0)^{1/2})^2}</script><p>由此可以得到次优性的界。</p>
-<p><strong>共轭梯度法</strong>：每次下降要求梯度在共轭空间里</p>
-<p>定义$\alpha,\beta$Q-共轭为$\alpha^TQ\beta = 0$</p>
-<p>每次计算</p>
-<script type="math/tex; mode=display">
-g^{k+1}=\nabla f(x^{k+1})\\
-d^{k+1}=-g^{k+1}+\beta_kd^k=-g^{k+1}+\frac{(g^{k+1})^TQd^k}{(d^k)^TQd^k}d^k\\
-x^{k+2}=x^{k+1}+\alpha_{k+1}d^{k+1}=x^{k+1}-\frac{(g^{k+1})^Td^{k+1}}{(d^{k+1})^TQd^{k+1}}d^{k+1}</script><p>对二次式$f(x)=\frac12 x^TQx-b^Tx$进行优化时可以证明$d^i$是Q-共轭的，因而</p>
-<script type="math/tex; mode=display">
-(g^{k+1})^Td^i=0</script><p>根据这个式子，</p>
-<script type="math/tex; mode=display">
-\beta_k=\frac{(g^{k+1})^Tg^{k+1}}{(g^k)^Tg^k}</script><p>$\alpha_k$可以通过线性搜索得到。以此避免计算Hessian矩阵。</p>
-<p><strong>Quasi-Newton</strong></p>
-<p>用$H^K$来拟合$F(X^k)^{-1}$</p>
-<script type="math/tex; mode=display">
-d^k=-H_kg^k\\
-\alpha_k=\arg\min_\alpha f(x^k+\alpha d^k)\\
-x^{k+1}=x^k+\alpha_k d^k</script><p>对$H_k$的更新有三种</p>
-<ul>
-<li>Rank One Correction</li>
-<li>Davidon-Fletcher-Powell（DFP）</li>
-<li>Broyden-Fletcher-Goldfarb-Shanno（BFGS）</li>
-</ul>
-<h3 id="等式约束优化"><a href="#等式约束优化" class="headerlink" title="等式约束优化"></a>等式约束优化</h3><script type="math/tex; mode=display">
-\min f(x)\\s.t. Ax=b</script><p>考虑二阶Taylor近似</p>
-<script type="math/tex; mode=display">
-\min f(x+v)=f(x)+\nabla f(x)^Tv+(1/2)v^T\nabla^2f(x)v\\
-s.t.A(x+v)=b</script><p><strong>Newton方向</strong>$\Delta x_{nt}$由以下方程确定</p>
-<script type="math/tex; mode=display">
-\begin{pmatrix}\nabla^2f(x)&A^T\\A&0\end{pmatrix}\begin{pmatrix}\Delta x_{nt}\\w\end{pmatrix}=\begin{pmatrix}-\nabla f(x)\\0\end{pmatrix}</script><p>对于<strong>不可行初始点</strong>的newton方向，</p>
-<script type="math/tex; mode=display">
-\begin{pmatrix}\nabla^2f(x)&A^T\\A&0\end{pmatrix}\begin{pmatrix}\Delta x_{nt}\\w\end{pmatrix}=\begin{pmatrix}-\nabla f(x)\\b-Ax\end{pmatrix}</script><h3 id="线性规划问题的解法"><a href="#线性规划问题的解法" class="headerlink" title="线性规划问题的解法"></a>线性规划问题的解法</h3><p><strong>Primal单纯形法</strong></p>
-<p>对于线性规划</p>
-<script type="math/tex; mode=display">
-min\:c^Tx\\
-s.t.\:Ax=b\\
-x\geq 0</script><p>和对偶问题</p>
-<script type="math/tex; mode=display">
-max\:b^Ty\\
-s.t.\:A^Ty+s=c\\
-s\geq 0</script><p>得到KKT条件</p>
-<script type="math/tex; mode=display">
-Ax=b,x\geq 0\\
-A^Ty+s=c,s\geq 0\\
-x_is_i=0</script><p>Primal单纯形法得到</p>
-<script type="math/tex; mode=display">
-x_B=B^{-1}b\geq 0,x_N=0\\
-y=B^{-T}c_B\\
-s_B=c_B-B^Ty=0,s_N=c_N-N^Ty？？0</script><p>（B是一个基，N是自由基）然后判断$s_N$和0的大小关系，决定是否停止迭代。如果$s_j\geq 0$那么x是最优解，否则可以找到q，$s_q&lt;0$。那么就找到$p\in B$移出基。</p>
-<p>令$u=B^{-1}A_q$，那么$x_B^+=x_B-ux_q^+$。如果$u\leq 0$则原问题无界；否则找到$u_k&gt;0$，就可以找到$x_q^+$和$p$满足$ x_B^+\geq 0$和$x_p^+=0，确定</p>
-<script type="math/tex; mode=display">
-p=argmin\frac{x_B(i)}{u_i}</script><p><u>单纯形法工业级应用还需要解决很多问题，比如快速求逆、防止循环迭代等等。</u></p>
-<p><strong>对偶单纯形法</strong></p>
-<script type="math/tex; mode=display">
-x_B=B^{-1}b？？0,x_N=0\\
-y=B^{-T}c_B\\
-s_B=c_B-B^Ty=0,s_N=c_N-N^Ty\geq 0</script><p> 如果$x_B\geq 0$，则达到最优，否则找到$q\in B$使得$x_q&lt;0$退出基，选择r加入基，$s_r^+=0$。然后进行更新：</p>
-<script type="math/tex; mode=display">
-s_B^+=s_b+ae_q\\
-y^+=y+av(e_q=-B^Tv)</script><p><u>对偶单纯形法和单纯形法有时候速度差距很大。</u></p>
-<p><strong>内点法</strong></p>
-<p>$(x,y,s)$为当前估计，$(\Delta x,\Delta y,\Delta s)$是搜索方向，定义$\mu=\sum x_is_i/n$。所以要找到</p>
-<script type="math/tex; mode=display">
-A(x+\Delta x)=b\\
-A^T(y+\Delta y)+s+\Delta s=c\\
-(x_i+\Delta x_i)(s_i+\Delta s_i)=\sigma_\mu</script><p>舍弃二阶小量得到</p>
-<script type="math/tex; mode=display">
-A\Delta x=r_p:=b-Ax\\
-A^T\Delta y+\Delta s=r_d:=c-A^Ty-s\\
-x_i\Delta s_i+\Delta x_is_i=(r_c)_i:=\sigma_\mu-x_is_i</script><p>写成矩阵形式如下，令$L_x=Diag(x)$，$L_s=Diag(s)$</p>
-<script type="math/tex; mode=display">
-\begin{pmatrix}A&0&0\\
-0&A^T&I\\
-L_s&0&L_x\end{pmatrix}
-\begin{pmatrix}\Delta x\\
-\Delta y\\
-\Delta s\end{pmatrix}
-=
-\begin{pmatrix}r_p\\
-r_d\\
-r_c
-\end{pmatrix}</script><p>如果A满秩，$AL_s^{-1}L_xA^T$是对称正定的，可以解得到</p>
-<script type="math/tex; mode=display">
-\Delta y=(AL_s^{-1}L_xA^T)^{-1}(r_p+AL_s^{-1}(L_xr_d-r_c))\\
-\Delta s = r_d-A^T\Delta y\\
-\Delta x = -L_s^{-1}(L_x\Delta s-r_c)</script><p>然后进行步长搜索，保证$(x^{k+1},s^{k+1})&gt;0$。</p>
-<p><u>步长搜索用Central Path，具体定义如下：</u> $C=\{(x_\tau,y_\tau,s_\tau|\tau&gt;0\}$满足</p>
-<script type="math/tex; mode=display">
-Ax_\tau=b,x_\tau>0\\
-A^Ty_\tau+s_\tau=c,s_\tau>0\\
-(x_\tau)_i(s_\tau)_i=\tau</script><p>Central Path neighborhoods是对$\theta,\gamma\in[0,1)$：</p>
-<script type="math/tex; mode=display">
-N_2(\theta)=\{(x,y,s)|||L_xL_se-\mu e||_2\leq\theta\mu\}\\
-N_{-\infty}(\gamma)=\{(x,y,s)|x_is_i\geq\gamma\mu\}</script><p>一般而言$\theta=0.5$，$\gamma=10^{-3}$。</p>
-<p>Path-Following：设定步长$\alpha_k$为最大的满足$(x^{k+1},y^{k+1},s^{k+1})\in N_{-\infty}(\gamma)$的值。那么$|\Delta x\cdot\Delta s|\leq 2^{-3/2}(1+1/\gamma)n\mu$，更新</p>
-<script type="math/tex; mode=display">
-\mu_{k+1}\leq(1-\delta/n)\mu_k,\delta=2^{3/2}\gamma\frac{1-\gamma}{1+\gamma}\sigma(1-\sigma)</script><p>那么如果$(x^0,y^0,s^0)\in N_{-\infty}(\gamma)$，存在$K=O(nln(1/\epsilon))$使得$\mu_k\leq\epsilon\mu_0$</p>
-<p><u>内点法是很少见的多项式时间算法</u></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/18/StochasticProcess/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Hulieu">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hulieu">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/02/18/StochasticProcess/" class="post-title-link" itemprop="url">随机过程论</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2020-02-18 12:26:47" itemprop="dateCreated datePublished" datetime="2020-02-18T12:26:47+08:00">2020-02-18</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-04-08 18:29:01" itemprop="dateModified" datetime="2020-04-08T18:29:01+08:00">2020-04-08</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%8C%AB%E7%88%AA%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">猫爪记</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%8C%AB%E7%88%AA%E8%AE%B0/Mathematics/" itemprop="url" rel="index"><span itemprop="name">Mathematics</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="条件期望"><a href="#条件期望" class="headerlink" title="条件期望"></a>条件期望</h1><p>给定概率空间$(\Omega,F,P)$，随机变量X，定义随机变量$Y=E(X|F)$如果它满足</p>
-<ul>
-<li>$Y\in F$</li>
-<li>for all $A\in F$，$\int_A XdP = \int_A YdP$</li>
-</ul>
-<p>显然Y可积且唯一</p>
-<p><strong>Radon-Nikodym定理</strong>：测度$\nu &lt;&lt;\mu$，那么存在函数$f\in F$，对所有$A\in F$，</p>
-<script type="math/tex; mode=display">
-\int_A fd\mu=\nu(A)</script><p>先假设$X\geq 0$然后显然$\nu(A)=\int_A XdP$是测度，所以易证条件期望存在。</p>
-<p>几个例子（小污猫说“这几个例子很重要”）</p>
-<ul>
-<li><p>$X\in F$，那么$E(X|F)=X$</p>
-</li>
-<li><p>$X$与$F$独立，则$E(X|F)=EX$</p>
-</li>
-<li><p>$F=\sigma(\Omega_1,\Omega_2,…)$，则$E(X|F)=\frac{E(X;\Omega_i)}{P(\Omega_i)}\:on\:\Omega_i$。所以初等概率论里的条件期望是其一个特例。</p>
-</li>
-<li><p>$X$，$Y$有联合概率密度$f(x,y)$，则</p>
-<script type="math/tex; mode=display">
-E(g(X)|Y)=h(Y)=\frac{\int g(x)f(X,y)dx}{\int f(X,y)dx}</script></li>
-<li><p>$X$，$Y$独立，$E(\phi(X,Y)|X)=E(\phi(x,Y))$</p>
-</li>
-</ul>
-<p>性质：</p>
-<ul>
-<li>$E(aX+Y|F)=aE(X|F)+E(Y|F)$</li>
-<li>$X\leq Y\Rightarrow E(X|F)\leq E(Y|F)$</li>
-<li>$X_n\geq 0$，$X_n\uparrow X$，$EX&lt;\infty$，那么$E(X_n|F)\uparrow E(X|F)$（Levi单调收敛定理）</li>
-<li>$X_n\geq 0$，$E(lim_{n\to\infty}X_n|F)\leq lim_{n\to\infty}E(X_n|F)$（Fatou引理，由lim xn=lim inf xk）</li>
-<li>$|X_n|&lt;Y&lt;\infty$，$lim_{n\to\infty}X_n=X$，那么$lim_{n\to\infty}E(X_n|F)=E(X|F)$（Lebesgue控制收敛定理）</li>
-<li>如果$\phi$凸，则$\phi(E(X|F))\leq E(\phi(X)|F)$（Jensen不等式，直线显然，然后利用直线包络）</li>
-<li>$F\subset G$，且$E(X|G)\in F$，那么$E(X|F)=E(X|G)$</li>
-<li>$F\subset G$，那么$E(E(X|F)|G)=E(E(X|G)|F)=E(X|F)$（条件期望平滑性）</li>
-</ul>
-<p>如果$X\in F$且$E|X|\:,\:E|XY|&lt;\infty$，那么$E(XY|F)=XE(Y|F)$。（典型four-step的证明）</p>
-<h3 id="正则条件概率："><a href="#正则条件概率：" class="headerlink" title="正则条件概率："></a>正则条件概率：</h3><p>可测映射$X\::\:(\Omega,F)\rightarrow (S,S)$（随机变量）。for X given G，<strong>正则条件分布</strong>$\mu\::\:\Omega\times S\rightarrow [0,1]$满足</p>
-<ul>
-<li>对每个A，$\omega\rightarrow\mu(\omega,A)$是$P(X\in A|G)$的一个版本</li>
-<li>对a.e. $\omega$，$A\rightarrow\mu(\omega,A)$是一个$(S,S)$上的测度。</li>
-</ul>
-<p>如果$S=\Omega$，X是恒等映射，$\mu$是<strong>正则条件概率</strong>。（此时$\mu(A)=PX^{-1}(A)=P(X\in A)$）</p>
-<p>正则条件分布可以<strong>同时计算X的所有函数的条件期望</strong>。</p>
-<p>由$E(f(x))=\int_R f(x)dPX^{-1}$可得</p>
-<p>定理：$\mu(\omega,A)$是<strong>正则条件分布</strong>，$f:(S,S)\rightarrow (R,R)$，且$E|f(X)|&lt;\infty$，那么f关于测度$\mu(\omega,·)$的积分存在，且</p>
-<script type="math/tex; mode=display">
-E(f(x)|F)(\omega)=\int \mu(\omega,dx)f(x)\:a.s.</script><p>正则条件分布并不总是存在。但是当$(S,S)$ <strong>is nice</strong>的时候，它总是存在。(定义：<strong>好的可测空间是指标准Borel空间</strong>，即存在从$S\to R$的一一可测映射。若S是<strong>Polish空间（完备+可分）的Borel子集</strong>，S是S上Borel $\sigma$域，那么是一个好的可测空间）</p>
-<p>证明：设$\phi:S\to R$是一一可测映射。则$\phi(X):(\Omega,F)\to(R,R)$，那么，$\forall A\in S$</p>
-<script type="math/tex; mode=display">
-P(X\in A|G)=P(\phi(X)\in\phi(A)|G)\\
-=P(Y\in\phi(A)|G)=P(Y\in B|G)\\
-(B=\phi(A)\in R)</script><p>然后构造$Y=\phi(x)$关于G的正则条件分布函数$P(Y\leq y|G)$：取除掉一个零测集以外的集合$\Omega_0$使得任意$\omega\in\Omega_0$</p>
-<script type="math/tex; mode=display">
-G(q,\omega)=P(Y\leq q|G)(\omega)</script><p>然后$F(x,\omega)=inf\{G(q,\omega),q&gt;x\}$。所以$F(x,\omega)$是$P(\phi(X)\leq x|G)$的一个版本。然后得到度量$\nu(\omega,·)$</p>
-<script type="math/tex; mode=display">
-\nu(w,(-\infty,x])=F(x,\omega)</script><p>然后得到$\mu(\omega,A)=\nu(\omega,\phi(A))$</p>
-<p>定理：X，Y在<strong>nice space</strong> (S,S)中取值，$G=\sigma(Y)$，那么存在$\mu\::\:S\times S\rightarrow [0,1]$，</p>
-<ul>
-<li>对每个A，$\mu(Y(\omega),A)$是$P(X\in A|G)$</li>
-<li>对a.e. $\omega$，$A\rightarrow\mu(Y(\omega),A)$是$(S,S)$上的测度</li>
-</ul>
-<h1 id="鞅过程Martingales"><a href="#鞅过程Martingales" class="headerlink" title="鞅过程Martingales"></a>鞅过程Martingales</h1><p>$F_n$是一个递增的$\sigma$-域序列，如果序列$X_n$满足</p>
-<ul>
-<li>$E|X_n|&lt;\infty$</li>
-<li>$Xn\in F_n$</li>
-<li>$E(X_{n+1}|F_n)=x_n$</li>
-</ul>
-<p>则称$X_n$为<strong>鞅过程</strong>。</p>
-<p>如果第三个条件改为$E(X_{n+1}|F_n)\geq(\leq) X_n$，则称为<strong>下鞅（上鞅）</strong></p>
-<p>最常见的是线性鞅：$S_n=S_0+\sum_{k=1}^n e_k$，$E(e)=0$。如果$E(e)\leq(\geq)0$，则为上鞅（下鞅）。</p>
-<p>定理：鞅过程满足$E(X_n|F_m)=X_m$，$m&lt;n$</p>
-<p>定理：凸函数$\phi$，那么$\phi(X_n)$下鞅。即$E(\phi(X_{n+1})|F_n)\geq \phi(E(X_{n+1}|F_n))=\phi(X_n)$。如果$X_n$下鞅，$\phi$增也有此结论。</p>
-<p>定义$H_n$为<strong>可预测序列</strong>，即$H_n\in F_{n-1}$。定理：$X_n$上鞅，那么如果$H_n\geq 0$有界，则$(H\cdot X)_n$也是上鞅。显然对下鞅和鞅也有类似结论。</p>
-<p>定理：若N是停时，$X_n$上鞅，则$X_{N\wedge n}$也是上鞅。</p>
-<h3 id="鞅收敛定理"><a href="#鞅收敛定理" class="headerlink" title="鞅收敛定理"></a>鞅收敛定理</h3><p>$\lim_{n\to\infty}X_n(\omega)$不存在$\Leftrightarrow\lim_{n\to\infty}inf\:X_n(\omega)&lt;\lim_{n\to\infty}sup\:X_n(\omega)$，也等价于存在有理数a,b：</p>
-<script type="math/tex; mode=display">
-\lim_{n\to\infty}inf\:X_n(\omega)<a<b<\lim_{n\to\infty}sup\:X_n(\omega)</script><p>定义$N_{2k-1}$为第k次下穿a的停时，$N_{2k}$是第k次上穿b的停时。定义$U_n=\{sup\:k|N_{2k}&lt;n\}$为上穿[a,b]的次数。而</p>
-<script type="math/tex; mode=display">
-\{\lim_{n\to\infty}inf\:X_n(\omega)<a<b<\lim_{n\to\infty}sup\:X_n(\omega)\}\subset \{\lim_{n\to\infty}U_n(\omega)=+\infty\}</script><p>定义$H_m=1_{\bigcup\{N_{2k-1}\leq m\leq N_{2k}\}}$，$W_n=\sum_{m-1}^nH_m(X_m-X_{m-1})$，</p>
-<p>（<strong>下鞅上穿不等式</strong>）若$X_n$下鞅，则对a&lt;b，$(b-a)EU_n\leq E(X_n-a)^+-E(X_0-a)^+$（证明：定义$Y_n=a+(X_n-a)^+$，则也是下鞅且上穿次数与$X_n$相等。那么$W_n=\sum_{m=1}^nH_m(Y_m-Y_{m-1})$\geq (b-a)U_n$。又令$K_m=1-H_m$，$V_n=\sum_{m=1}^nK_m(Y_m-Y_{m-1})$。那么$W_n+V_n=Y_n-Y_0$，且$V_n$下鞅，$EV_N\geq EV_0=0 $。所以</p>
-<script type="math/tex; mode=display">
-E(Y_n-Y_0)=EW_n+EV_n\geq EW_n\geq(b-a)EU_n</script><p> 即得证）</p>
-<p>利用上穿不等式，得到</p>
-<p>（<strong>下鞅基本收敛定理</strong>） 如果下鞅$X_n$满足$sup\:EX_n^+&lt;\infty$，则$X_n\to X$a.s.，且$E|X|&lt;+\infty$。（证明：$(X_n-a)^+$是下鞅，根据上穿不等式$EU_n\leq E(X_n-a)^+/(b-a)$有界，而根据$U_n$单调上升必有极限$U$，因此</p>
-<script type="math/tex; mode=display">
-P(\lim_{n\to\infty}inf\:X_n<a<b<\lim_{n\to\infty}sup\:X_n)=0</script><p>所以$X_n$极限a.s.存在。又由于$EX_n\geq EX_0$，$EX_n^-=EX_n^+-EX_n\leq sup\:EX_n^+-EX_0&lt;+\infty$然后由Fatou引理易得$E|X|&lt;+\infty$。）</p>
-<p> 定理：若$X_n$非负上鞅，则$\lim X_n=X$a.s.，且$EX\leq EX_0$。（证明：$-X_n$下鞅有界，a.s.收敛到极限X。）</p>
-<p><strong>注意：L1收敛并不成立。</strong>一个简单的反例就是$S_0=1$，$P(e_i=-1)=P(e_i=1)=1/2$，N为$S_n=0$的停时，$X_n=S_{n\wedge N}$是鞅。但是由上面的定理可知$X\to 0$a.s.，与$EX_n=1$矛盾。</p>
-<h3 id="四个例子"><a href="#四个例子" class="headerlink" title="四个例子"></a>四个例子</h3><h5 id="有界增长"><a href="#有界增长" class="headerlink" title="有界增长"></a>有界增长</h5><p>$X_n$为鞅过程，且$|X_{n+1}-X_n|\leq M&lt;\infty$，那么要么$lim\:X_n$存在且有限，要么$X_n$在正负无穷之间摇摆。(停时$N=inf\{X_n\leq k\}$，那么$x_{n\wedge N}+k+M$a.s.收敛)</p>
-<p>（Doob分解）下鞅$X_n$可以写成$X_n=M_n+A_n$。其中$M_n$是鞅过程，$A_n$是可预测序列。(令$A_n-A_{n-1}=E(X_n|F_{n-1})-X_{n-1}$)</p>
-<p>（第二Borel-Cantelli引理）$A_n\in F_n$，那么</p>
-<script type="math/tex; mode=display">
-\{A_n\:i.o.\}=\{\sum_{n=1}^\infty P(A_n|F_{n-1})=\infty\}</script><p>（第二B-C引理是第一引理的推广，去掉了独立性要求）</p>
-<p>证明：由Doob分解可得$M_n=\sum_{m=1}^n 1_{A_m}-P(A_m|F_{m-1})$是有界增长的鞅过程。</p>
-<h5 id="Polya’s-Urn-Scheme"><a href="#Polya’s-Urn-Scheme" class="headerlink" title="Polya’s Urn Scheme"></a>Polya’s Urn Scheme</h5><p>坛子模型：坛子里有r个红球、g个绿球，每次取出一个并放进与之同色的c+1个球。n次抽取后绿球比例$X_n$是鞅。</p>
-<p>如果r=g=c=1，可得$P(X_n=\frac{k}{n+2})=\frac{1}{n+1}$。</p>
-<p>实际上，$X_\infty$有参数为$g/c$和$r/c$的beta分布：</p>
-<script type="math/tex; mode=display">
-\frac{\Gamma((g+r)/c)}{\Gamma(g/c)\Gamma(r/c)}x^{(g/c)-1}(1-x)^{(r/c)-1}</script><h5 id="R-N微分"><a href="#R-N微分" class="headerlink" title="R-N微分"></a>R-N微分</h5><p>有限测度$\mu$，$\nu$，上升的$\sigma-$域$F_n$，定义$\mu_n=\mu|F_n$，$\nu_n=\nu|F_n$。</p>
-<p>定理：若$\mu_n&lt;&lt;\nu_n$，定义$X_n=\frac{d\mu_n}{d\nu_n}$，令$X=\lim_{n\to\infty}sup\:X_n$，则</p>
-<script type="math/tex; mode=display">
-\mu(A)=\int_AXd\nu+\mu(A\cap\{X=+\infty\})</script><p>证明：根据定义，$A\in F_n$，则$\mu(A)=\int_AX_nd\nu$。$X_n$是非负鞅，所以$X_n\to X$a.s.。又令$\rho=(\mu+\nu)/2$，$\rho_n=\rho|F_n$，$Y_n=\frac{d\mu_n}{d\rho_n}$，$Z_n=\frac{d\nu_n}{d\rho_n}$。显然$Y_n$和%Z_n$都是非负鞅，且$Y_n+Z_n=2$a.s.。所以有$Y_n\to Y$，$Z_n\to Z$。记$Y=\frac{d\mu}{d\rho}$，$Z=\frac{d\nu}{d\rho}$。那么对$A\in F_n$，则由有界收敛</p>
-<script type="math/tex; mode=display">
-\mu(A)=\mu_n(A)=\int_AY_nd\rho\to\int_AYd\rho</script><p>$X_n=Y_n/Z_n$a.s.，而$Y+Z=2$a.s.，且$\rho(Y=0,Z=0)=0$。所以$X=Y/Z$,$\rho-$a.s.。</p>
-<p>令$W=\frac{1}{Z}1_{\{Z&gt;0\}}$所以$1=WZ+1_{\{Z=0\}}$。所以可得</p>
-<script type="math/tex; mode=display">
-\mu(A)=\int_AYd\rho=\int_AYWZd\rho+\int_AY1_{\{Z=0\}}d\rho</script><p>马上得证（第二部分由$\{Z=0\}=\{X=\infty\}$得到）。</p>
-<p>由此推出<strong>Kakutani关于无穷乘积测度的二分法</strong>：$\mu$，$\nu$都是$(R^N,R^N)$上的概率测度，$e_n$独立，令$F_n(x)=\mu(e_n\leq x)$，$G_n(x)=\nu(e_n\leq x)$。</p>
-<p>$\lambda_{F_n}&lt;&lt;\lambda_{G_n}$，令$q_n=\frac{d\lambda_{F_n}}{d\lambda_{G_n}}$。令$F_n=\sigma(e_m,m\leq n)$，$X_n=\frac{d\mu_n}{d\nu_n}=\prod q_n$。根据上面的定理，$X_n\to X$ $\nu-$a.s.，所以根据Kolmogorov 0-1律，$\nu(X=0)\in\{0,1\}$。因而$\mu&lt;&lt;\nu$或者两者正交。</p>
-<p><strong>定理：$\mu\sim\nu$或者两者正交，根据$\prod\int\sqrt{q_m}dG_m$&gt;0或=0进行判断</strong></p>
-<p>证明：先证无穷乘积是有定义的。</p>
-<p>如果$\prod\int\sqrt{q_m}dG_m=0$，那么$\int X_n^{1/2}d\nu\to 0$。而$\int X^{1/2}d\nu\leq\lim inf\:\int X_n^{1/2}d\nu =0$。所以$\nu(X=0)=1$，$\mu$和$\nu$相互独立。</p>
-<p>反之，令$Y_n=X_n^{1/2}$，则$E(X_n)=E(Y_n^2)=1$。下证$Y_n$L2-基本列：$E(Y_{n+k}-Y_n)^2=2(1-\prod_{n+1}^{n+k} \int \sqrt{q_m}dG_m\to 0$。$E|X_{n+k}-X_n|\leq 2(E(Y_{n+k}-Y_n)^2)^{1/2}\to 0$，故而$X_n$是L1-基本列，$X_n\to X$。所以对$A\in F_n$</p>
-<script type="math/tex; mode=display">
-\mu(A)=\mu_n(A)=\int_AX_nd\nu_n=\int_AX_nd\nu\to\int_AXd\nu</script><p>有$\pi-\lambda$方法，A可以扩展到$R^N$，故而$\mu&lt;&lt;\nu$。</p>
-<p>$EX=\lim EX_n=1$，所以$\nu(X=0)<1$，故而$\nu(X=0)=0$，$\nu(X>0)=1$，$\mu\sim\nu$。</p>
-<h5 id="分支过程"><a href="#分支过程" class="headerlink" title="分支过程"></a>分支过程</h5><p>$e_n$独立非负，定义$Z_n$，满足$Z_0=1$以及</p>
-<script type="math/tex; mode=display">
-Z_{n+1}=\left\{\begin{array}.e_1^{n+1}+...+e_{Z_n}^{n+1}\:if\:Z_n>0\\0\:otherwise\end{array} \right.</script><p>也叫做Galtom-Watson过程，描述繁衍过程。</p>
-<p><em>引理：令$\mu=E(e_i^n)$，则$\{Z_n/\mu^n\}$是鞅过程 。</em></p>
-<p>定理：若$\mu&lt;1$，则对所有足够大的n，$Z_n=0$。因此$Z_n/\mu^n\to^{a.s.}0$</p>
-<p>(由$E(Z_n/\mu^n)=E(Z_0)=1$得$E(Z_n)=\mu^n\to 0$可得)</p>
-<p>定理：若$\mu=1$且$P(e_i^m=1)&lt;1$，那么对所有足够大的n，$Z_n=0$。</p>
-<p>（证明从$P(Z_n=k,n\geq N)=0$入手）</p>
-<p>定理：若$\mu&gt;1$，$P(Z_n&gt;0,\forall n)&gt;0$</p>
-<p>定理：(Kesten-Stigum)</p>
-<script type="math/tex; mode=display">
-P(W=\lim \frac{Z_n}{\mu^n}>0)>0\Leftrightarrow\sum P_kkln(k)<+\infty</script><h3 id="Doob不等式-以及LP收敛"><a href="#Doob不等式-以及LP收敛" class="headerlink" title="Doob不等式(以及LP收敛)"></a>Doob不等式(以及LP收敛)</h3><p>定理：设$X_n$下鞅，N有界停时，$P(N\leq k)=1$，那么$EX_0\leq EX_N\leq EX_k$。</p>
-<p>证明：$X_n$和$X_{N\wedge n}$下鞅，$Y_n=X_n-X_{N\wedge n}$下鞅，$EY_0\leq EY_k$得到$EX_N\leq EX_k$。</p>
-<p>(反例：当N不是有界的时候，不一定成立，考虑SRW，$S_0=1$，停时N为0的首达时，此时$ES_N=0$。)</p>
-<p><strong>(Doob不等式)</strong>$X_m$下鞅，令$\bar{X_n}=\max_{0\leq m\leq n}X_m^+$，$A=\{\bar{X_n}\geq\lambda\}$，那么</p>
-<script type="math/tex; mode=display">
-\lambda P(A)\leq EX_n1_A\leq EX_n^+</script><p>证明：令$N=\inf\{m\geq 0, X_m\geq\lambda\}\wedge n$，在A上$X_N\geq\lambda$，所以$X_N1_A\geq \lambda 1_A$，$\lambda P(A)\leq EX_N1_A$，根据$A^C$上$N=n$，$EX_N1_A\leq EX_n1_A$。右边不等号显然。</p>
-<p><strong>（LP不等式）</strong>下鞅$X_n$，p&gt;1，那么</p>
-<script type="math/tex; mode=display">
-E(\bar{X_n})^p\leq(\frac{p}{p-1})^pE(X_n^+)^p</script><p>特别的，若$Y_n$是鞅过程，$Y_n^*=\max|Y_m|$，那么</p>
-<script type="math/tex; mode=display">
-E(Y_n^*)^p\leq (\frac{p}{p-1})^pE|Y_n|^p</script><p>证明：$E(X_n^+)^p=+\infty$则显然成立。下设$E(X_n+)^p&lt;+\infty$，考虑$\bar{X_n}\wedge M$，所以</p>
-<script type="math/tex; mode=display">
-E(\bar{X_n}\wedge M)^p=\int_0^\infty p\lambda^{p-1}P(\bar{X_n}\wedge M\geq\lambda)d\lambda\\
-\leq\int_0^\infty p\lambda^{p-1}(\lambda^{-1}EX_n^+1_{\{\bar{X_n}\wedge M\}\geq\lambda})d\lambda\\
-=\int X_n^+\int_0^{\bar{X_n}\wedge M}p\lambda^{p-2}d\lambda dp\\
-=\frac{p}{p-1}\int X_n^+(\bar{X_n}\wedge M)^{p-1}dp\\
-\leq\frac{p}{p-1}(E(X_n^+)^p)^{1/p}(E(\bar{X_n}\wedge M)^p)^{(p-1)/p}</script><p>移项并令$M\to+\infty$由单调收敛定理可得证。</p>
-<p><strong>（LP收敛定理）</strong>若$X_n$鞅，满足$sup\:E|X_n|^p&lt;+\infty$，$p&gt;1$，那么</p>
-<script type="math/tex; mode=display">
-X_n\to^{a.s.}X,\:X_n\to^{LP}X</script><p><strong>（鞅增量正交性）</strong>若$X_n$鞅，$EX_n^2&lt;\infty$，若$Y\in F_m$，$EY^2&lt;\infty$，那么$E(X_n-X_m)Y=0$。</p>
-<p><strong>（条件方差公式）</strong>若$X_n$鞅，$EX_n^2&lt;\infty$，则$E((X_n-X_m)^2|F_m)=E(X_n^2|F_m)-X_m^2$。</p>
-<h5 id="平方可积鞅"><a href="#平方可积鞅" class="headerlink" title="平方可积鞅"></a>平方可积鞅</h5><p>$X_n$鞅，$X_0=0$，且$EX_n^2&lt;+\infty$，$X_n^2$下鞅，因而可以Doob分解为$X_n=M_n+A_n$，$M_n$鞅，而$A_n$非降。定义$A_\infty=\lim_{n\to\infty}A_n$。</p>
-<script type="math/tex; mode=display">
-A_n=\sum_{m=1}^nE((X_m-X_{m-1})^2|F_{m-1})</script><p>定理：$E\sup_{n\geq 0}|X_n|^2\leq 4 EA_\infty$（由LP不等式和单调收敛定理即得）</p>
-<p>定理：在$\{A_\infty&lt;\infty\}上$\lim_{n\to\infty}X_n$a.s.存在有限。</p>
-<p>证明：取停时$N=\inf\{n\geq 0,\:A_{n+1}&gt;a^2\}$，所以$X_{N\wedge n}$鞅。根据LP收敛定律，$X_{N\wedge n}$极限存在有限。所以在$\{A_\infty\leq a^2\}上$N=+\infty$，然后取并可得。</p>
-<p>定理：设$f:[0,+\infty)\to [1,+\infty)$非降且$\int_0^\infty \frac{1}{f^2(t)}dt&lt;+\infty$，则在$\{A_\infty=\infty\}$上$\frac{X_n}{f(A_n)}\to^{a.s.}0$</p>
-<p>证明：$H_n=\frac{1}{f(A_m)}$可料有界，则$Y_n=\sum_{m=1}^nH_m(X_m-X_{m-1})$鞅。分解$Y_n^2=N_n+B_n$，可证$B_\infty&lt;+\infty$，$Y_n\to^{a.s.}T_\infty$有限，由Kronecker引理得证。</p>
-<p>定理（第二Borel-Cantelli定理）：$P_n=P(B_n|F_{n-1})$，那么在$\{\sum_{n=1}^\infty P_n=\infty\}$上</p>
-<script type="math/tex; mode=display">
-\frac{\sum_{m=1}^n1_{B_m}}{\sum_{m=1}^nP_m}\to^{a.s.}1</script><p>证明：定义$X_n=\sum_{m=1}^n1_{B_m}-\sum_{m=1}^nP_m$，定义$f(t)=t\vee 1$，由上可得。</p>
-<h5 id="一致可积L1收敛"><a href="#一致可积L1收敛" class="headerlink" title="一致可积L1收敛"></a>一致可积L1收敛</h5><p>一致可积$\{X_i,\:i\in I\}$满足</p>
-<script type="math/tex; mode=display">
-\lim_{M\to\infty}\sup E|X_i|1_{|X_i|>M}=0</script><p>（一致）绝对连续$\{X_i,\:i\in I\}$满足</p>
-<script type="math/tex; mode=display">
-\lim_{p(A)\to 0}\sup E|X_i|1_A=0</script><p><u>一致可积当且仅当绝对连续+L1有界</u></p>
-<p>定理：$X\in L1(\Omega,F_0,P)$，那么$\{E(X|F),\:F是子\sigma-域\}$一致可积</p>
-<p>定理：若$X_n\to^P X$则下列叙述等价</p>
-<ul>
-<li>$\{X_n\}$一致可积</li>
-<li>$X_n\to{L1}X$</li>
-<li>$E|X_n|\to E|X|&lt;+\infty$</li>
-</ul>
-<p>证明：$(1)\Rightarrow (2)$：构造辅助函数$\phi_M(x)=trunc(x, -M, M)$。$(2)\Rightarrow (3)$：显然。$(3)\Rightarrow (1)$：构造辅助函数</p>
-<script type="math/tex; mode=display">
-\phi_M(x)=\left\{\begin{align}&x,&x\in[0,M-1]\\&-(M-1)(x-M),&x\in[M-1,M]\\&0,&x\in[M,+\infty)\end{align} \right.</script><p>定理：设$p\in (0,+\infty)$，$\{X_n\}\subset LP(\Omega, F, p)$，随机变量$X_n\to^P X$那么下列叙述等价</p>
-<ul>
-<li>$\{|X_n|^p\}一致可积</li>
-<li>$X\in LP$，$X_n\to^{LP}X$</li>
-<li>$X\in LP$，$E|X_n|^p\to E|X|^p$</li>
-</ul>
-<p>定理：对下鞅$\{X_n\}$，下列叙述等价</p>
-<ul>
-<li>$\{X_n\}$一致可积</li>
-<li>$X_n\to ^{a.s.}X$，且$X_n\to^{L1}X$</li>
-<li>$X_n\to^{L1}X$</li>
-</ul>
-<p>引理：$X_n\to^{L1}X$，那么$\forall A$，$EX_n1_A\to EX1_A$</p>
-<p>引理：若鞅$\{X_n\}$满足$X_n\to^{L1}X$，那么$X_n=E(X|F_n)$</p>
-<p>定理：对鞅$\{X_n\}$，下列叙述等价</p>
-<ul>
-<li>$\{X_n\}$一致可积</li>
-<li>$X_n\to ^{a.s.}X$，且$X_n\to^{L1}X$</li>
-<li>$X_n\to^{L1}X$</li>
-<li>存在可积随机变量X，$X_n=E(X|F_n)$</li>
-</ul>
-<p>定理：若$\sigma$域流$F_n\uparrow F_\infty$，$F_\infty=\sigma(\bigcup F_n)$，随机变量X满足$E|X|&lt;+\infty$，那么$E(X|F_n)\to^{a.s.,L1} E(X|F_\infty)$。</p>
-<p>证明：定义$Y_n=E(X|F_n)$是鞅过程。通过典型方法可得$EX1_A=EY_\infty 1_A$，因而$Y_n\to Y_\infty$。</p>
-<p>定理（Levy 0-1律）：若$F_n\uparrow F_\infty$，$A\in F_\infty$，那么$E(1_A|F_n)\to^{a.s.}1_A(n\to\infty)$</p>
-<p>特例：独立随机变量$X_n$，$A\in\tau(尾\sigma 代数)$，则$E(1_A|F_n)=E1_A=P(A)$。（$\tau=\bigcap_{n\geq 1}\sigma(X_{n+1},…)$）此时即为Kolmogorov 0-1律。</p>
-<p>定理（条件期望控制收敛）：$Y_n\to^{a.s.}Y$，$|Y_n|\leq Z$，$EZ&lt;+\infty$，$F_n\uparrow F$，那么$E(Y_n|F_n)\to^{a.s.}E(Y|F_\infty)$</p>
-<p>证明：</p>
-<script type="math/tex; mode=display">
-|E(Y_n|F_n)-E(Y|F_\infty)|\leq |E(Y_n|F_n)-E(Y|F_n)|+|E(Y|F_n)-E(Y|F_\infty)|</script><p>后一部分易证。为证明前一部分，令$W_N=\sup\{|Y_n-Y_m|,n,m\geq N\}$单调收敛可证。</p>
-<h3 id="倒向鞅"><a href="#倒向鞅" class="headerlink" title="倒向鞅"></a>倒向鞅</h3><p>鞅$\{X_n:n\leq 0\}$称为倒向鞅，定义$F_{-\infty}=\bigcap F_n$</p>
-<p>定理：$X_{-\infty}=\lim_{n\to -\infty}X_n$a.s.存在且L1收敛</p>
-<p>证明：记$U_n[a,b]$为$X_{-n}$上穿$[a,b]$的次数，根据上穿不等式，$(b-a)EU_n\leq E(X_0-a)^+$，根据单调收敛定理，$U_\infty[a,b]&lt;+\infty$。所以$X_{-n}$的极限a.s.存在。 然后根据一致可积得到L1收敛。</p>
-<p>定理：$\{X_n\}$倒向鞅，则</p>
-<script type="math/tex; mode=display">
-X_{-\infty}=E(X_0|F_{-\infty})</script><p>证明：先证$X_{-\infty}\in F_{-\infty}$，然后证明条件概率。</p>
-<p>定理：若$F_n\downarrow F_{-\infty}$且$E|Y|&lt;+\infty$，那么</p>
-<script type="math/tex; mode=display">
-\lim_{n\to-\infty}E(Y|F_n)=E(Y|F_{-\infty}),a.s.,L1</script><p>令$A_n(\omega)=\omega_n$</p>
-<p>如果单+满的映射$\pi:N\to N$，使得仅对有限个i，有$\pi(i)=i$，则称$\pi$为<strong>有限置换</strong>。定义$(\pi\omega)_i=\omega_{\pi(i)}$。若对任意有限置换$\pi$，$\pi^{-1}A=A$，则称A为<strong>可置换集合</strong>。$\{A|A可置换\}$构成$\sigma-$域，即为E。</p>
-<p>例：$(S,S)=(R,R)$，$S_n(\omega)=\sum_{i=1}^nX_i(\omega)$，那么</p>
-<ul>
-<li>$\{\omega|S_n(\omega)\in B\}$是可置换的，对$\forall B$Borel</li>
-<li>任意正常数列$C_n$，$\{\omega|\bar{\lim}S_n(\omega)/C_n\geq 1\}$可置换</li>
-<li>任意$A\in \tau$可换，则$\tau\subset E$</li>
-</ul>
-<p>$E_n=\{\A|\forall 有限置换\pi s.t.\pi(n+k)=n+k有\pi^{-1}A=A}$，$E=\bigcap E_n$</p>
-<p>定理（Hewitt-Savage 0-1律）：若$X_n$独立同分布，则任意$A\in E$，$P(A)=0或1$。</p>
-<p>证明：引理：若$X_n$独立同分布，$\phi:R^k\to R$，令$A_n(\phi)=\frac{1}{A_n^k}\sum\phi(X_{i_1},…,X_{i_k})$其中$A_n^k=\frac{n!}{(n-k)!}$。若$\phi$有界可测，则$A_n(\phi)\to E\phi(X_1,…,X_k)$a.s.。</p>
-<p>引理的证明：$A_n(\phi)\in E_n$，$A_n(\phi)=E(\phi(X_1,…,X_k)|E_n)$，令$F_{<em>**</em>-m}=E_m$，所以$E(\phi(X_1,…,X_k)|E_n)\to{a.s.L1}E(\phi(X_1,…,X_k)|E)$</p>
-<p>通过引理可知$E(\phi(X_1,…,X_k)|E)=E\phi(X_1,…,X_k)$，所以E与$\sigma(X_1,…,X_k)$独立，所以E与F独立。又由$E\subset F$可证。</p>
-<p>引理：若$EX^2&lt;\infty$，$E(X|G)\in F$，X和F独立，则$E(X|G)=EX$。</p>
-<p>例：（强大数律）：$e_n$独立同分布，$E|e_1|&lt;+\infty$，令$X_{-n}=S_n/n$。$F_{-n}=\sigma(S_n,…)$，可证$\{X_{-n},F_{-n}\}$倒向鞅。因而$X_{-n}\to{a.s.L1}E(X_{-1}|F_{-\infty})$。由于$F_{-n}\subset E_n$，所以$F_{-\infty}\subset E$，由H-S 0-1律，$E(X_{-1}|F_{-\infty})=EX_{-1}$</p>
-<p>例：（选票定理）设$e_n$非负整数，$G=\{S_j&lt;j\}$，则$P(G|S_n)=(1-\frac{S_n}{n})^+$</p>
-<h3 id="停时定理"><a href="#停时定理" class="headerlink" title="停时定理"></a>停时定理</h3><p>问题：若$X_n$下鞅，任意停时$M\geq N$，什么条件下$E(X_M|F_N)\geq X_N$，$X_M\geq X_N$？</p>
-<p>定理：若$X_n$下鞅一致可积，则对停时N，则$X_{N\wedge n}$一致可积。（由下鞅基本收敛定理，$X_{n\wedge N}\to^{a.s.}X_N$，易证）</p>
-<p>定理：对独立同分布的随机变量$X_n$和非负整数N，s.t. $E|X_N|&lt;+\infty。如果$\{|X_n|1_{N&gt;n}\}$一致可积，那么$\{X_{N\wedge n\}$一致可积。若还有$X_n$下鞅，停时$N&lt;+\infty$，则$EX_0\leq X_N$。</p>
-<p>定理：若$X_n$下鞅一致可积，任意停时$N\leq +\infty$，有$EX_0\leq EX_N\leq EX_\infty$。</p>
-<p>定理：若$X_n$非负上鞅，停时$N&lt;+\infty$，则$EX_0\geq EX_N$</p>
-<p>定理：$X_n$下鞅，$E(|X_{n+1}-X_n||F_n)\leq B$，那么对任意停时$EN&lt;+\infty$，有$\{X_{N\wedge n}\}$一致可积，从而$EX_0\leq EX_N$。</p>
-<p>定理（Wald等式）：$e_n$独立同分布，停时N有限，则$ES_N=EeEN$</p>
-<p>证明：$S_n-nEe$是鞅，由上面的定理可证。</p>
-<p>定理（Doob可选停止定理）：若$L\leq M$是停时，$Y_n\in F_n$，$\{Y_{M\wedge n}\}$一致可积，下鞅，则$EY_L\leq EY_M$，$Y_L\leq E(Y_M|F_L)$。其中$F_L=\{\A\in F|A\cap \{L=n\}\in F_n}$</p>
-<p>证明：令$X_n=Y_{M\wedge n}$，则$EX_N\leq EX_\infty=EY_M$，取N=L，则$EY_L\leq EY_M$。对任意A，N在A上取L，否则取M，则N为停时，$EY_N\leq EY_M$，所以$EY_L1_A\leq EY_M1_A=E(E(Y_M1_A|F_L))$。令$A_n=\{Y_L-E(Y_M|F_L)&gt;1/n\}$，所以$1/nP(A_n)\leq 0$</p>
-<p>例：随机游动，$\mu=Ee$有限，则$S_n-n\mu$鞅。这里设$\mu=0$，$Ee^2=\sigma^2&lt;+\infty$。则$S_n^2-n\sigma^2$也是鞅。</p>
-<p>（简单对称随机游动）$P(e=1)=P(e=-1)=1/2$，$S_0=x\in(a,b)$，停时N为S首次出区间(a,b)的时间。则$P(S_N=a)=\frac{b-x}{b-a}$，$E_xN=(x-a)(b-x)$</p>
-<p>(非对称简单随机游动)$P(e=1)=p$，$P(e=-1)=q=1-p$。设$0<p<1$，$\phi(y)=(\frac{1-p}{p})^y$，则$\phi(S_n)$鞅。令$T_Z=\inf\{S_n=z\}$，$P_x(T_a<T_b)=\frac{\phi(b)-\phi(x)}{\phi(b)-\phi(a)}$。设$1/2<p<1$，$a<0$，则$P_0(\inf S_n\leq a)=P_0(T_a<+\infty)=()(1-p)/p)^{-a}。$b>0$，则$P_0(T_b&lt;+\infty)=1$，$E_0T_b=b/(2p-1)$</p>
-<h1 id="遍历定理"><a href="#遍历定理" class="headerlink" title="遍历定理"></a>遍历定理</h1><p>如果r.v.s. $X_n$使得$\{X_n\}$和$\{X_{n+k\}$同分布称为<strong>（严）平稳随机变量序列</strong>。</p>
-<p><strong>Birkhoff遍历定理</strong>：若$f:R\to R$可测，$E|f(x_n)|&lt;+\infty$，则</p>
-<script type="math/tex; mode=display">
-\lim_{n\to\infty}\frac1n\sum_{m=0}^{n-1}f(X_m)</script><p>a.s.存在。</p>
-<p>若$\{X_n\}$遍历，则极限为$f(X_0)$</p>
-<p>例子：iid序列、随机游动、马氏链</p>
-<p>这里<strong>马氏链</strong>定义为任意$B\in S$，$P(X_{n+1}\in B|F_n)=P(X_{n+1}\in B|X_n)$</p>
-<p><strong>转移概率函数</strong>$p:S\times S\to[0,1]$满足：</p>
-<ul>
-<li>任意$x\in S$，$A\to p(x,A)$是一个概率测度</li>
-<li>任意$A\in S$，$x\to p(x,A)$可测</li>
-</ul>
-<p>对马氏链$X_n$，定义$p_n(x,A)=P(X_{n+1}\in A|X_n=x)$，则$P(X_{n+1}\in A|F_n)=p_n(X_n,A)$。若正则条件分布存在，则$p_n(x,A)$是转移概率。若$p_n(x,A)$不依赖于n，则称$X_n$时齐。特别的，当S可数集时，$p_n(i,j)$构成转移概率矩阵。</p>
-<p>如果可测映射$\phi$满足对任意A，$P(\phi^{-1}A)=P(A)$，则称$\phi$<strong>保测映射</strong>。$X_n(\omega)=X(\phi^n\omega)$是平稳序列。</p>
-<p>若$Y_n$平稳序列，取值于nice space，可构造概率测度p，使得</p>
-<script type="math/tex; mode=display">
-P(\omega\in S^N,(\omega_0,\omega_1,...,\omega_n)\in B)=P(B\times\prod_{i=n+1}^\infty S)=\bar{P}((Y_0,Y_1,...,Y_n)\in B)</script><p>（Kolmogorov相容性定理）令$X_n(\omega)=\omega_n$，则$X_n$与$Y_n$同分布。（可以构造推移算子，可以证明这个算子是保测映射）</p>
-<p>保测映射$\phi$对A，满足$P(A\Delta \phi^{-1}A)=0$，称A为<strong>不变集</strong>。若$A=\phi^{-1}A$，称A为<strong>强不变集</strong>。若任意不变集有$P(A)=0$或$1$，则称$\phi$<strong>遍历（ergodic）</strong>。</p>
-<p>定义$I=\{A|\phi^{-1}A=A,a.s.\}$，称为<strong>不变$\sigma$域</strong>，则$\phi 遍历\Leftrightarrow I 平凡$</p>
-<p>时齐马氏链$X_n$状态空间S可数，平稳分布$\pi$满足对任意状态$\pi(x)&gt;0$（正常返），那么$X_n遍历\Leftrightarrow X_n不可约$。</p>
-<p>证明：必要性：反证，可约推出不遍历。充分性：任何不变集A满足，$1_A\theta_n=1_A$，P(A)为0或1，I平凡。</p>
-<p><strong>Birkhoff个别遍历定理</strong>：保测变换$\phi$，X期望有限，则</p>
-<script type="math/tex; mode=display">
-\frac1n \sum_{k=0}^{n-1}X(\phi^k\omega)\to^{a.s.L1}E(X|I)</script><p>若$\phi$遍历，则$E(X|I)=EX$。</p>
-<p>引理（极大遍历定理）：令$X_r(\omega)=X(\phi^r\omega)$，$S_k(\omega)=\sum_{r=0}^{k-1}X_r(\omega)$，$M_k(\omega)=\max(0,S_1(\omega),…,S_k(\omega))$，则</p>
-<script type="math/tex; mode=display">
-EX1_{\{M_k>0\}}\geq 0</script><p>引理的证明：$X(\omega)\geq S_{j+1}(\omega)-M_k(\phi(\omega))$ 对任意$j\leq k$。所以$X(\omega)\geq \max S_{j+1}(\omega)-M_k(\phi(\omega))$。那么$EX1_{\{M_k&gt;0\}}\geq \int_{\{M_k&gt;0\}}(M_k(\omega)-M_k(\phi(\omega)))dP=0$。</p>
-<p>遍历定理的证明：不妨设$E(X|I)=0$，只需证</p>
-<script type="math/tex; mode=display">
-\sup\lim_{n\to\infty}\frac1n S_n(\omega)\leq 0</script><p>令$D=\{\omega|\sup\lim_{n\to\infty}\frac1n S_n(\omega)&gt;\epsilon\}$。令$X^*(\omega)=(X(\omega)-\epsilon)1_D(\omega)$，如此定义$S_n^*(\omega)$和$M_n^*(\omega)$。定义$F_n=\{M_n^*&gt;0\}$，F定义为它们的并集。</p>
-<p>那么F=D。由极大遍历定理，$EX^*1_{F_n}\geq 0$，$E|X^*|\leq E|X|+\epsilon$，由控制收敛定理，$X^*1_F$存在且大于等于0，即$EX^*1_D\geq 0$，这就推出$P(D)\leq 0$。由此可以证明a.s.收敛。根据有界收敛+控制收敛可得L1收敛。</p>
-<p><u>Birkhoff遍历定理可以直接推出强大数律</u></p>
-<p>根据Birkhoff遍历定理在圆周旋转上的应用，如果$\theta\in(0,1)$是无理数，$\phi(\omega)=\omega+\theta\:mod\:1$，令$X(\omega)=1_A(\omega)$，那么</p>
-<script type="math/tex; mode=display">
-\frac1n\sum_{m=1}^{n-1}1_{(\phi^m\omega\in A)}\to|A|,a.s.</script><p>当$\omega=0$时，也称做<strong>Weyl等分布定理</strong>。由此得到以下数论结论</p>
-<p>定理：如果$A=[a,b)$，那么倒外集为空集。</p>
-<p><strong>常返</strong></p>
-<p>设$X_n$取值$R^d$的平稳序列，定义</p>
-<script type="math/tex; mode=display">
-R_n=\#\{S_1,S_2,...,S_n\}</script><p>定理：</p>
-<script type="math/tex; mode=display">
-\lim_{n\to\infty}\frac{R_n}{n}=E(1_A|I)</script><p>其中$A=\{S_k\neq 0,\forall k\geq 1\}$</p>
-<p>证明：对$l\geq m$，$S_l=S_m+S_{l-m}(\phi^m\omega)$，</p>
-<script type="math/tex; mode=display">
-R_n\geq\sum_{m=1}^n1_A(\phi^m\omega)=\#\{m|S_l\neq S_m,\forall l>m\}</script><p>由Birkhoff，</p>
-<script type="math/tex; mode=display">
-\inf\lim_{n\to\infty}\frac{R_n}n\geq\lim_{n\to\infty}\frac1n\sum_{m=1}^n1_A(\phi^m\omega)=E(1_A|I)</script><p>令$A_k=\{S_m\neq 0, m\leq k\}$</p>
-<script type="math/tex; mode=display">
-\sum_{m=1}^{n-k}1_{A_k}(\phi^m\omega)=\#\{m|S_l\neq S_m,\forall>m\}</script><p>所以$R_n\leq k+\sum_{m=1}^{n-k}1_{A_k}(\phi^m\omega)$，如此</p>
-<script type="math/tex; mode=display">
-\sup\lim\frac{R_n}n\leq E(1_{A_k}|I)</script><p>由于$A_k\downarrow A$，由控制收敛可证上界。</p>
-<p>Durrent第四章、第六章</p>
-<p>206</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/14/ConvexOptimization/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Hulieu">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hulieu">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/02/14/ConvexOptimization/" class="post-title-link" itemprop="url">凸优化问题</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2020-02-14 18:07:45" itemprop="dateCreated datePublished" datetime="2020-02-14T18:07:45+08:00">2020-02-14</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-03-20 11:02:23" itemprop="dateModified" datetime="2020-03-20T11:02:23+08:00">2020-03-20</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%8C%AB%E7%88%AA%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">猫爪记</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%8C%AB%E7%88%AA%E8%AE%B0/Mathematics/" itemprop="url" rel="index"><span itemprop="name">Mathematics</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>凸优化问题具有如下形式</p>
-<script type="math/tex; mode=display">
-min\:f_0(x)</script><script type="math/tex; mode=display">
-subject\:to\:f_i(x)\leq b_i\:, \:i=1,...,m</script><p>其中 $f_i$ 是凸函数</p>
-<h3 id="凸集"><a href="#凸集" class="headerlink" title="凸集"></a>凸集</h3><p>C的<strong>仿射包</strong>为C中的点的所有仿射组合，即为<strong>affC</strong></p>
-<p>定义集合C的<strong>仿射维数</strong>为其<strong>仿射包</strong>的维数。</p>
-<p>定义集合C的<strong>相对内部</strong>为<strong>affC</strong>里C的内部，记为<strong>relintC</strong></p>
-<script type="math/tex; mode=display">
-relint\:C=\{x\in C|B(x, r)\cap aff\: C\subseteq C \: for \:some\: r \}</script><p><strong>凸集</strong>定义为对$x_1\:,\:x_2\in C\:,\:0\leq\theta\leq 1$</p>
-<script type="math/tex; mode=display">
-\theta x_1+(1-\theta)x_2\in C</script><p><strong>锥</strong>定义为<strong>非负齐次</strong>集合，对$x_1\:,\:x_2\in C\:,\:0\leq\theta_1\:,\:theta_2$</p>
-<script type="math/tex; mode=display">
-\theta_1 x_1+\theta_2 x_2\in C</script><p>集合C的<strong>锥包</strong>是C中元素的所有锥组合，也是包含C的<strong>最小凸锥</strong>。</p>
-<p>凸集的例子</p>
-<ul>
-<li><p>空集、单点、直线、全空间</p>
-</li>
-<li><p>任意子空间都是<strong>凸锥</strong></p>
-</li>
-<li><p>超平面定义的半空间</p>
-</li>
-<li><p>Euclid球和椭球</p>
-</li>
-<li><p>范数球和范数锥</p>
-</li>
-<li><p>多面体和单纯形</p>
-<p><u>如何表示多面体：凸包描述和不等式解集，n很大时两种描述规模相差极大。</u></p>
-</li>
-<li><p>半正定锥（半正定矩阵的元素在n(n+1)/2的向量空间里）</p>
-</li>
-</ul>
-<p>保凸运算</p>
-<ul>
-<li><p>交集</p>
-</li>
-<li><p><strong>仿射</strong>函数</p>
-</li>
-<li><p>透视函数：$P:R^{n+1}\to R^n\:,\: P(z,t)=z/t \:,\: t&gt;0$</p>
-</li>
-<li><p>线性分式：</p>
-<script type="math/tex; mode=display">
-f(x)=(Ax+b)/(c^T x+d)\:,\:dom\: f = \{x|c^T x+d>0\}</script><p><u>凸集在透视函数或线性分式下的原相也是凸的。</u></p>
-</li>
-</ul>
-<p><strong>正常锥</strong>K是满足下列条件的锥</p>
-<ul>
-<li>凸集</li>
-<li>闭集</li>
-<li><strong>实</strong>的：有非空内部</li>
-<li><strong>尖</strong>的：不包含直线的</li>
-</ul>
-<p><strong>正常锥</strong>K可以用来定义<strong>广义不等式</strong> ，即偏序关系</p>
-<script type="math/tex; mode=display">
-x\preceq_K \: y \Leftrightarrow y - x \in K</script><p>（$K=R^+$时这个偏序关系就是通常意义上的不等式）</p>
-<p>广义不等式定义的偏序关系$\preceq_K$具有加法保序性、传递性、自反性、反对称性等等。</p>
-<p>但是它不具有<strong>线性序</strong>，即并非任意两点都可比。如果对每个$y\in S$，都有$x\preceq_K \: y$，那么我们称x为S的<strong>最小元</strong>，类似可定义<strong>最大元</strong>。最小元符号定义为</p>
-<script type="math/tex; mode=display">
-S \subseteq x +K</script><p>如果$y\in S$，而且$y\preceq_K \: x$可以推得$y=x$，那么我们称x为S的<strong>极小元</strong>，类似可定义<strong>极大元</strong>。极小（极大）元不一定唯一。极小元符号定义为 </p>
-<script type="math/tex; mode=display">
-(x-K)\cap S=\{x\}</script><p><strong>超平面分离定理</strong>：两个不相交的凸集C、D可以用一个超平面分离，即存在a，b</p>
-<script type="math/tex; mode=display">
-a^Tx+b\leq 0 \:for \:x\in C</script><script type="math/tex; mode=display">
-a^Tx+b\geq 0 \:for \:x\in D</script><p><strong>严格分离</strong>是更强的条件（上式为严格不等号时），不相交的凸集也不一定能被严格分离。</p>
-<p>超平面分离定理逆定理<strong>不成立</strong>，但是加上条件的如下结论：任何两个凸集C、D，如果其中至少有一个是<strong>开集</strong>，那么当且仅当存在分离超平面时，它们不相交。</p>
-<p><strong>支撑超平面</strong>是指对C<strong>边界(bd C)</strong>上一点$x_0$，如果对</p>
-<script type="math/tex; mode=display">
-a\neq0\:,\:\forall x\in C\:,\:a^Tx\leq a^Tx_0</script><p>那么称$\{x|a^Tx=a^Tx_0\}$为C在$x_0$处的支撑超平面。一个基本结论<strong>支撑超平面定理</strong>：对任意凸集C和任意$x_0\in bd\:C$，存在支撑超平面。一个<strong>不完全的逆定理</strong>：具有非空内部的闭集，若其边界每个点都存在支撑超平面，那么他是凸的。（证明大概是从内点出发找到不满足凸集要求的点？</p>
-<p>对一个锥K，集合</p>
-<script type="math/tex; mode=display">
-K^*=\{y|x^Ty\geq 0\:,\forall x\in K\}</script><p>称为K的<strong>对偶锥</strong>。几何上看，$y\in K^*$当且仅当-y是K在原点的一个支撑超平面的法线。</p>
-<p>对偶锥的例子：</p>
-<ul>
-<li>子空间的对偶锥是其正交补</li>
-<li>非负象限、半正定锥自对偶</li>
-<li>范数锥的对偶由<strong>对偶范数</strong>定义</li>
-</ul>
-<p>一些性质：</p>
-<ul>
-<li>$K^*$总是闭+凸的</li>
-<li>K有非空内部，则$K^*$是尖的</li>
-<li>K的闭包是尖的，则$K^*$有非空内部</li>
-<li>$K^{**}$是K的凸包的闭包</li>
-<li>由上述性质可知当K是正常锥时$K^{**}=K$</li>
-</ul>
-<p><strong>广义不等式的对偶的性质</strong>：$x\preceq_K\:y$ 当且仅当对任意$\lambda\succeq_{K^<em>}0$有$\lambda^Tx\leq \lambda^Ty$。由于$K^{*</em>}=K$，显然对K的对偶也成立。</p>
-<p><strong>线性严格广义不等式的择一定理</strong>：考虑严格广义不等式</p>
-<script type="math/tex; mode=display">
-Ax\prec_K\:b</script><p>，假设它不可行，即仿射集合$\{b-Ax\}$和int K不相交，那么存在一个分离超平面，因此存在$\lambda$和$\mu$使得对任意x，$\lambda^T(b-Ax)\leq\mu$，以及对任意$y\in K$，$\lambda^Ty\geq\mu$。第一个条件表明$A^T\lambda=0$以及$\lambda^Tb\leq\mu$；第二个条件表明$\lambda\in K^{*}$以及$\mu\leq 0$。所以，即存在$\lambda$，</p>
-<script type="math/tex; mode=display">
-\lambda\succeq_{K^*}0\:,\:A^T\lambda=0\:,\:\lambda^Tb\leq0</script><p>由此两个不等式构成一对择一，仅有一个可行。</p>
-<p><strong>最小元的充要条件</strong>：对所有$\lambda\succ_{K^*}0$，x是极小化$\lambda^Tz$的唯一最优解。</p>
-<p><strong>极小元的充要条件</strong>：如果有$\lambda\succ_{K^*}0$，x是极小化$\lambda^Tz$。（如果S不是凸集，则必要性不一定成立）</p>
-<h3 id="凸函数"><a href="#凸函数" class="headerlink" title="凸函数"></a>凸函数</h3><p>定义f为<strong>凸函数</strong>如果dom f是凸集且对任意$x,y\in dom\: f$和任意$0\leq\theta\leq 1$有</p>
-<script type="math/tex; mode=display">
-f(\theta x+(1-\theta)y)\leq\theta f(x)+(1-\theta)f(y)</script><p><strong>严格凸</strong>即上式在$x\neq y$且$0&lt;\theta &lt;1$时严格成立。<strong>凹函数</strong>类似定义。</p>
-<p><strong>扩展值延伸</strong>：可以通过定义凸函数在定义域外的值为$\infty$来将这个凸函数延伸到全空间。</p>
-<p>假设f<strong>可微</strong>，则f是凸函数的充要条件是dom f是凸集且对于任意$x,y\in dom\:f$，</p>
-<script type="math/tex; mode=display">
-f(y)\geq f(x)+\nabla f(x)^T(y-x)</script><p>假设f<strong>二阶可微</strong>，则f是凸函数的充要条件是dom f是凸集且对于任意$x\in dom\:f$，</p>
-<script type="math/tex; mode=display">
-\nabla^2f(x)\succeq 0</script><p>凸函数的例子：</p>
-<ul>
-<li>线性函数、仿射函数</li>
-<li>指数、幂函数、对数、负熵</li>
-<li>范数、最大值</li>
-<li>指数和的对数</li>
-</ul>
-<p>凹函数的例子</p>
-<ul>
-<li>线性函数、仿射函数</li>
-<li>几何平均、对数-行列式</li>
-</ul>
-<p><strong>$\alpha$-下水平集</strong>定义为</p>
-<script type="math/tex; mode=display">
-C_\alpha=\{x\in dom\:f\:|\:f(x)\leq \alpha\}</script><p>显然凸函数的下水平集仍然是凸集，反之不然。</p>
-<p><strong>上境图</strong>定义为</p>
-<script type="math/tex; mode=display">
-epi\:f=\{(x,t)|x\in dom\:f\:,\:f(x)\leq t\}</script><p>一个函数是凸函数当且仅当它的上境图是凸集。一个函数是凹函数当且仅当它的<strong>亚图</strong>是凸集。</p>
-<p><strong>Jensen不等式</strong>：如果f是凸函数，则</p>
-<script type="math/tex; mode=display">
-f(\theta x+(1-\theta)y)\leq\theta f(x)+(1-\theta)f(y)</script><p>可以推广到多点、无穷项和、积分、期望等。</p>
-<p><strong>保凸运算</strong>是保持函数凸性的运算</p>
-<ul>
-<li>非负加权求和</li>
-<li>复合仿射映射</li>
-<li>逐点最大（或上确界）：本质上是上境图的交集</li>
-<li>一族仿射函数的逐点上确界</li>
-</ul>
-<p><strong>复合函数</strong>$f(x)=h(g(X))$的一些性质</p>
-<ul>
-<li>标量复合：h凸（凹）且单调，g凸或凹，则f是凸（凹），如果不再假设h、g可微，或者$dom\:g=R^n$，则要求h的扩展值延伸$\tilde{h}$单调。</li>
-<li>矢量复合：和标量复合相似，但要求h的每个维度分量上单调</li>
-</ul>
-<p>特殊形式的<strong>最小化</strong>也可以得到凸函数，假设$f(x,y)$是凸函数，集合C是非空凸集，则</p>
-<script type="math/tex; mode=display">
-g(x)=inf_{y\in C}f(x,y)</script><p>若$g(x)&gt;-\infty$，则g关于x是凸函数。</p>
-<p>定义f的<strong>透视函数</strong>$g(x,t)=tf(x/t)$，透视运算是保凸运算。</p>
-<p>f的<strong>共轭函数</strong>定义为</p>
-<script type="math/tex; mode=display">
-f^*(y)=sup_{x\in dom\:f}(y^Tx-f(x))</script><p>显然$f^*$是凸函数。</p>
-<p>共轭函数的例子：</p>
-<ul>
-<li>仿射函数$f(x)=ax+b$，$f^*$定义域为单点集{a}，值为-b。</li>
-<li>负对数函数$f(x)=-log(x)$，$f^*(y)=-log(-y)-1$定义域为{y|y&lt;0}</li>
-<li>指数函数$f(x)=e^x$，$f^*(y)=y\cdot log(y)-y$定义域为{y|y&gt;0}</li>
-<li>严格凸的二次函数$f(x)=\frac12 x^TQx$，$f^*(y)=\frac12 y^TQ^{-1}y$</li>
-<li>对数-行列式$f(X)=log(det(X^{-1}))$，$f*(Y)=log(det(-Y^{-1}))-n$</li>
-<li>示性函数的共轭函数$f^*(y)=sup_{x\in S}y^Tx$，是集合S的支撑函数</li>
-</ul>
-<p><strong>Fenchel不等式</strong>：有定义可知$f(x)+f*(y)\geq x^Ty$</p>
-<p>共轭的共轭：如果f是凸函数且是闭的，$f^{**}=f$</p>
-<p><strong>可微</strong>函数f的共轭函数也称为函数f的<strong>Legendre变换</strong>。此时$y=\nabla f(x^*)$</p>
-<p>复合仿射的共轭函数：f(Ax+b)的共轭函数为$f*(A^{-T}y)-b^TA^{-T}y$</p>
-<p><strong>拟凸函数</strong>定义为满足<strong>定义域和所有下水平集都是凸集</strong>的函数。<strong>拟凹函数</strong>函数类似定义，如果一个函数拟凸且拟凹，则称为<strong>拟线性函数</strong>。</p>
-<p>一些例子</p>
-<ul>
-<li>对数函数、上取整函数（都是拟线性函数）</li>
-<li>线性分式函数（也是拟线性）</li>
-</ul>
-<p>拟凸函数的Jensen不等式：</p>
-<script type="math/tex; mode=display">
-f(\theta x+(1-\theta)y)\leq max\{f(x),f(y)\}</script><p>在R上函数f拟凸当且仅当一下条件至少一个成立：</p>
-<ul>
-<li>f单调</li>
-<li>存在一点c，在其左边f非增，在其右边f非减</li>
-</ul>
-<p>可微拟凸函数的充要条件：</p>
-<ul>
-<li>一阶条件：$f(y)\leq f(x) \Rightarrow \nabla f(x)^T(y-x)\leq 0$</li>
-<li>二阶条件：$y^T\nabla f(x)=0\Rightarrow y^T\nabla^2 f(x)y \geq 0$</li>
-</ul>
-<p>保拟凸运算</p>
-<ul>
-<li>非负加权最大（可以扩展到逐点上确界）</li>
-<li>拟凸函数和一个非减函数、仿射函数或线性分式函数复合</li>
-<li>最小化也是保拟凸的</li>
-</ul>
-<p>拟凸函数可以通过<strong>一族凸函数</strong>进行表示。这些凸函数满足</p>
-<script type="math/tex; mode=display">
-f(x)\leq t \Leftrightarrow\phi_t(x)\leq0</script><p><strong>对数-凹函数</strong>和<strong>对数-凸函数</strong>定义为log(f)为凸函数和凹函数。非负凸（凹）函数是对数-凸（凹）函数；对数-凸（凹）函数是拟凸（凹）函数。</p>
-<p><strong>二次可微</strong>函数f是对数-凸函数当且仅当</p>
-<script type="math/tex; mode=display">
-f(x)\nabla^2f(x)\succeq\nabla f(x)\nabla f(x)^T</script><p>对数-凸（凹）性对加法、乘法、积分、<strong>卷积</strong>封闭。</p>
-<p>非负函数p的Laplace变换$P(z)=\int p(x)e^{-z^T x}dx$，是对数-凸函数。$M(z)=P(-z)$是矩生成函数，$log(M(z))$是累积量生成函数。</p>
-<p><strong>广义不等式的单调性</strong>：$x\preceq_K y\Rightarrow f(x)\leq f(y)$，称函数<strong>K-非减</strong>。当上式严格成立时，称函数<strong>K-增</strong>。类似定义<strong>K-非增</strong>和<strong>K-减</strong>。</p>
-<p>可微函数f，定义域是凸集，它是<strong>K-非减</strong>的，当且仅当$\nabla f(x)\succeq_{K*}0$。严格情形下反过来不一定正确。</p>
-<p><strong>广义不等式的凸性</strong>：f是<strong>K-凸</strong>的，如果对于任意x，y，以及$0\leq\theta\leq 1，</p>
-<script type="math/tex; mode=display">
-f(\theta x+(1-\theta)y)\preceq_K \theta f(x)+(1-\theta)f(y)</script><p>当$x\neq y$和$0&lt;\theta&lt;1$时上式严格成立，则称其为<strong>严格K-凸</strong>的。</p>
-<p>一些例子</p>
-<ul>
-<li>当K为$R^N_+$时，即在每个分量上凸</li>
-<li>当K为正定矩阵时，称为<strong>矩阵凸性</strong>。等价定义就是对任意z，$z^Tf(x)z$凸。例如$f(X)=XX^T$</li>
-</ul>
-<p>对偶刻画：f是K-凸的当且仅当对任意$w\succeq_{K^*}0$，$w^Tf$是凸的。</p>
-<p><strong>可微的K-凸函数</strong>：充要条件</p>
-<script type="math/tex; mode=display">
-f(y)\succeq_K f(x)+Df(x)(y-x)</script><p>函数复合保留凸性的结论都可以推广到K-凸的情形。</p>
-<h3 id="凸优化问题"><a href="#凸优化问题" class="headerlink" title="凸优化问题"></a>凸优化问题</h3><p>一般<strong>标准形式问题</strong></p>
-<script type="math/tex; mode=display">
-min\:f_0(x)</script><script type="math/tex; mode=display">
-subject\:to\:f_i(x)\leq 0\:,\:i=1,...,m \\
-h_i(x)=0\:,\:i=1,...,p</script><p><strong>最优值</strong>$p^*=inf\:f_0(x)$。如果$x^*$可行且$f_0(x^*)=p^*$，称$x^*$为<strong>最优点</strong>。最优点的集合称为<strong>最优集</strong>。最优集是空集，则称最优值<strong>不可得（不可达）</strong>。满足$f_0(x)\leq p^* + \epsilon$的可行解x称为<strong>$\epsilon-$次优</strong>。所有$\epsilon-$次优的集合称为<strong>$\epsilon-$次优集</strong>。</p>
-<p>称可行解x为<strong>局部最优</strong>，如果存在$R&gt;0$，使得在$||z-x||_2\leq R$的条件下x是最优解。</p>
-<p>等价问题：</p>
-<ul>
-<li>数乘</li>
-<li>一一映射的变量代换</li>
-<li>目标（约束）函数的单调变换</li>
-<li>松弛变量替换不等式约束</li>
-<li>显式/隐式约束替换</li>
-<li>优化独立的部分变量</li>
-<li>上境图形式</li>
-</ul>
-<p><strong>凸优化问题</strong>是形如</p>
-<script type="math/tex; mode=display">
-min\:f_0(x)\\
-subject\:to\:f_i(x)\leq 0\:,\:i=1,...,m \\
-a_i^Tx=b_i\:,\:i=1,...,p</script><p>相比一般标准形式，要求目标函数和约束函数是<strong>凸函数</strong>，等式约束必须是<strong>仿射</strong>的。显然它的<strong>可行集</strong>和<strong>最优集</strong>是凸的。所以，<strong>局部最优解就是全局最优解</strong>。($f_0$是拟凸函数的时候，称为<strong>拟凸优化</strong>)</p>
-<p>可微函数$f_0$的最优性准则：$\forall y\:,\:\nabla f_0(x)^T(y-x)\geq 0$，相当于定义了可行集的一个支撑超平面。（拟凸问题中，这是个充分不必要条件）</p>
-<p><strong>解决拟凸优化的一般方法</strong>是把$f_0$表示成一族凸函数，然后解决可行性问题。</p>
-<p><strong>线性规划（LP）</strong>问题是</p>
-<script type="math/tex; mode=display">
-min\:c^Tx+d\\
-subject\:to\:Gx\preceq h\\
-Ax=b</script><p><strong>标准形式线性规划</strong>是</p>
-<script type="math/tex; mode=display">
-min\:c^Tx+d\\
-subject\:to\:Ax=b\\
-x\succeq0</script><p>可以通过引入松弛变量、把$x$分解为$x^+$和$x^-$把线性规划转换为标准形式。</p>
-<p><strong>线性分式规划</strong>问题是</p>
-<script type="math/tex; mode=display">
-min\:f_0(x)=\frac{c^Tx+d}{e^Tx+f}\:,\:dom\:f_0=\{x|e^Tx+f>0\}\\
-subject\:to\:Gx\preceq h\\
-Ax=b</script><p>作变量替换$y=\frac{x}{e^Tx+f}$和$z=\frac{1}{e^Tx+f}$，可以转换为等价的线性规划。</p>
-<p>线性分式规划的一个推广是<strong>广义线性分式规划</strong>，目标函数是r个线性分式的最大值，这是个拟凸优化。</p>
-<p><strong>二次优化问题（QP）</strong>是</p>
-<script type="math/tex; mode=display">
-min\:(1/2)x^TPx+q^Tx+R\\
-subject\:to\:Gx\preceq h\\
-Ax=b</script><p>如果约束也是二次的，称为<strong>二次约束二次规划（QCQP）</strong>。</p>
-<p><strong>二阶锥规划（SOCP）</strong>是</p>
-<script type="math/tex; mode=display">
-min\:f^Tx\\
-subject\:to\:||A_ix+b_i||_2\leq c^T_ix+di\:,\:i=1,...,m\\
-Fx=g</script><p>当$c_i=0$时，SOCP退化为QCQP。</p>
-<p><strong>鲁棒线性规划</strong>：约束条件的系数为一个给定的椭球。</p>
-<p><strong>随机约束下的线性规划</strong>：要求约束成立的概率</p>
-<p><strong>几何规划（GP）</strong>是</p>
-<script type="math/tex; mode=display">
-min\:f_0(x)\\
-subject\:to\:f_i(x)\leq 1\:,\:i=1,...,m \\
-h_i(x)=1\:,\:i=1,...,p</script><p>其中$f_i$是<strong>正项式</strong>，$h_i$是<strong>单项式</strong>。通过$y_i=log(x_i)$的换元可以简单的转换为凸优化问题。</p>
-<p><strong>广义不等式意义下的凸优化问题</strong>：</p>
-<script type="math/tex; mode=display">
-min\:f_0(x)\\
-subject\:to\:f_i(x)\preceq_{K_i} 0\:,\:i=1,...,m \\
-a_i^Tx=b_i\:,\:i=1,...,p</script><p>其中$f_i$是$K_i-$凸的。可行集和最优集也是凸的，任何局部最优都是全局最优。</p>
-<p>广义不等式凸优化问题中，最简单的是<strong>锥规划</strong>：</p>
-<script type="math/tex; mode=display">
-min\:c^Tx\\
-subject\:to\:Fx+g\preceq_K 0\\
-Ax=b</script><p>当K为半正定矩阵锥时，相应锥问题称为<strong>半定规划（SDP）</strong>，这时不等式是<strong>线性矩阵不等式（LMI）</strong>。</p>
-<script type="math/tex; mode=display">
-\sum x_iF_i+G\preceq 0</script><p><strong>标准形式的SDP</strong>：</p>
-<script type="math/tex; mode=display">
-min\:tr(CX)\\
-subject\:to\:tr(A_iX)=b_i\\
-X\succeq0</script><p>注意tr(CX)是S上一般实值线性函数的形式。</p>
-<p><strong>广义向量优化问题</strong>记为</p>
-<script type="math/tex; mode=display">
-min（关于K）\:f_0(x)\\
-subject\:to\:f_i(x)\leq 1\:,\:i=1,...,m \\
-h_i(x)=1\:,\:i=1,...,p</script><p>如果$f_0$是$K-$凸的，称为<strong>凸向量优化问题</strong>。</p>
-<p>点$x^*$是<strong>最优</strong>的当且仅当<strong>可达目标值集合</strong>$O\subseteq f_0(x^*)+K$</p>
-<p>点$x^*$是<strong>Pareto最优</strong>当且仅当$O\cap (f_0(x^*)-K)=\{f_0(x^*)\}$，可以证明Pareto最优值集合$P\subseteq O\cap bd\:O$。</p>
-<p><strong>标量化</strong>是寻找Pareto最优的标准技术。选择任意$\lambda\succ_{K^*}0$，最优化$\lambda^Tf_0(x)$的最优解是Pareto最优的。</p>
-<p><strong>多准则优化</strong>：当向量优化函数关于锥$K=R^q_+$时，称为多准则优化。多准则问题的Pareto最优值集合称为<strong>最优权衡曲面</strong>。我们通过加权来标量化多准则问题。</p>
-<h3 id="对偶"><a href="#对偶" class="headerlink" title="对偶"></a>对偶</h3><p>考察标准形式优化问题</p>
-<script type="math/tex; mode=display">
-min\:f_0(x)\\
-subject\:to\:f_i(x)\leq 0\\
-h_i(x)=0</script><p><strong>Lagrange函数</strong>定义为</p>
-<script type="math/tex; mode=display">
-L(x,\lambda,\nu)=f_0(x)+\sum\lambda_if_i(x)+\sum\nu_ih_i(x)</script><p><strong>Lagrange对偶函数</strong>定义为Lagrange函数关于x取得的最小值</p>
-<script type="math/tex; mode=display">
-g(\lambda,\nu)=inf_xL(x,\lambda,\nu)</script><p>这是原问题$f_0(x)$的下界，即$\forall\lambda\succeq 0\:,\:g(\lambda,\nu)\leq p^*$。</p>
-<p><strong>Lagrange对偶函数和共轭函数紧密相关：</strong>比如下面的优化问题</p>
-<script type="math/tex; mode=display">
-min\:f_0(x)\:subject\:to\:Ax\preceq b\:,\:Cx=d</script><script type="math/tex; mode=display">
-g(\lambda,\nu)=-b^T\lambda-d^T\nu-f_0^*(-A^T\lambda-C^T\nu)</script><p><strong>Lagrange对偶问题</strong>表述为</p>
-<script type="math/tex; mode=display">
-max\:g(\lambda,\nu)\\
-subject\:to\:\lambda\succeq 0</script><p>对偶问题的差值称之为<strong>最优对偶间隙</strong>=$p^*-d^*$。</p>
-<p>如果$d^*=p^*$成立，那么<strong>强对偶性</strong>成立。一般情况下，强对偶性不成立，<strong>凸优化问题</strong>中强对偶性成立的条件称为<strong>约束准则</strong>。</p>
-<p>一个简单的约束准则是<strong>Slater条件</strong>：存在一点$x\in relint\:D$，<strong>严格可行</strong>，即</p>
-<script type="math/tex; mode=display">
-f_i(x)<0\:,\:i=1,...,m,\:Ax=b</script><p>这个条件可以进一步改进为<strong>仿射条件不需要严格成立，其他条件严格成立</strong>。因而对于线性规划问题，根据Slater条件弱化形式，只要原问题可行，强对偶性都成立。</p>
-<p>由此推论：<strong>矩阵对策的混合策略</strong>满足强对偶条件，所以知道对方策略并不影响博弈的策略。</p>
-<h5 id="对偶问题的几何解释"><a href="#对偶问题的几何解释" class="headerlink" title="对偶问题的几何解释"></a>对偶问题的几何解释</h5><p>定义集合</p>
-<script type="math/tex; mode=display">
-G=\{(f_1(x),...,f_m(x),h_1(x),...,h_p(x),f_0(x)\}</script><p>很容易定义优化问题最优解</p>
-<script type="math/tex; mode=display">
-p^*=inf\{t|(u,v,t)\in G,u\preceq 0,v=0\}</script><p>对偶函数</p>
-<script type="math/tex; mode=display">
-g(\lambda,\nu)=inf\{(\lambda,\nu,1)^T(u,v,t)|(u,v,t)\in G\}</script><p>如果下确界有限，则不等式</p>
-<script type="math/tex; mode=display">
-(\lambda,\nu,1)^T(u,v,t)\geq g(\lambda,\nu)</script><p>定义了集合G的一个支撑超平面。假设有$\lambda\succeq 0$，那么$p^*\geq g(\lambda,\nu)$，即弱对偶性成立。</p>
-<p>如果以G的上境图A来描述</p>
-<script type="math/tex; mode=display">
-A=\{(u,v,t)|\exists x\in D,f_i(x)\leq u_i,h_i(x)=v_i,f_0(x)\leq t\}</script><p>那么最优值</p>
-<script type="math/tex; mode=display">
-p^*=inf\{t|(0,0,t)\in A\}</script><p>同上也是定义了A的支撑超平面。特别的，因为$(0,0,p^*)\in bd\:A$，若对偶性成立。</p>
-<p>在几何意义下，<strong>Slater条件意味着分离超平面必非竖直</strong>，强对偶成立。证明如下：先如上定义集合A，另一个凸集</p>
-<script type="math/tex; mode=display">
-B=\{(0,0,s)|s<p^*\}</script><p>可以找到超平面分离AB，因而$g(\lambda,\nu)\geq p^*$，然后通过说明对偶问题能达到最优，说明强对偶成立。</p>
-<h5 id="鞍点解释"><a href="#鞍点解释" class="headerlink" title="鞍点解释"></a>鞍点解释</h5><p>弱对偶性可以描述为</p>
-<script type="math/tex; mode=display">
-sup_{\lambda\succeq 0}inf_x L(x,\lambda)\leq inf_x sup_{\lambda\succeq 0}L(x,\lambda)</script><p>强对偶性即为上式取等。</p>
-<p>我们称一对$\hat{w}$，$\hat{z}$是<strong>鞍点</strong>如果</p>
-<script type="math/tex; mode=display">
-f(\hat{w},z)\leq f(\hat{w},\hat{z})\leq f(w,\hat{z})</script><p>上式意味着<strong>极大极小性质</strong>成立。</p>
-<h5 id="最优性条件"><a href="#最优性条件" class="headerlink" title="最优性条件"></a>最优性条件</h5><p>如果找到对偶可行解$(\lambda,\nu)$那么就对原问题的最优值建立了一个下界。定义差值</p>
-<script type="math/tex; mode=display">
-f_0(x)-g(\lambda,\nu)</script><p>是<strong>对偶间隙</strong>。这可以用在优化算法中给出<strong>非启发式停止准则</strong>。</p>
-<p>如果强对偶性成立，且$x^*,\lambda^*,\nu^*$取到最优，那么</p>
-<script type="math/tex; mode=display">
-\lambda_i^*f_i(x^*)=0</script><p>称为<strong>互补松弛性</strong>。</p>
-<p>非凸问题的<strong>KKT条件</strong>：</p>
-<script type="math/tex; mode=display">
-\nabla f_0(x^*)+\sum \lambda_i^*\nabla f_i(x^*)+\sum v_i^* \nabla h_i(x^*)=0\\
-f_i(x^*)\leq 0\\
-h_i(x^*)=0\\
-\lambda_i^*\geq 0\\
-\lambda_i^* f_i(x^*)=0</script><p>KKT条件是任何一对原问题最优解和对偶问题最优解必须满足的条件。当原问题是<strong>凸优化问题</strong>时，满足KKT条件的点也是原、对偶问题的最优解。</p>
-<h5 id="扰动问题"><a href="#扰动问题" class="headerlink" title="扰动问题"></a>扰动问题</h5><script type="math/tex; mode=display">
-min\:f_0(x)\\
-subject\:to\:f_i(x)\leq u_i\\
-h_i(x)=v_i</script><p>定义最优解为$p^*(u,v)$。假设原问题强对偶性成立并且最优值可以达到，那么</p>
-<script type="math/tex; mode=display">
-p^*(u,v)\geq p^*(0,0)-\lambda^{*T}u-\nu^{*T}v</script><h5 id="择一定理"><a href="#择一定理" class="headerlink" title="择一定理"></a>择一定理</h5><p>严格不等式系统的可行性</p>
-<script type="math/tex; mode=display">
-f_i(x)<0,\:h_i(x)=0</script><p>和</p>
-<script type="math/tex; mode=display">
-\lambda\succeq 0,\:g(\lambda,\nu)\geq0</script><p>是<strong>弱择一</strong>的。当原不等式系统是凸的，那么则是<strong>强择一</strong>的。</p>
-<p>推导Farkas引理：考虑线性规划</p>
-<script type="math/tex; mode=display">
-min\:c^Tx\\
-subject\:to\:Ax\preceq 0</script><p>和对偶问题</p>
-<script type="math/tex; mode=display">
-max\:0\\
-subject\:to\:A^Ty+c=0,\:y\succeq 0</script><p>显然强对偶成立。可以证明<strong>Farkas引理</strong>：</p>
-<script type="math/tex; mode=display">
-Ax\preceq 0,\:c^Tx<0</script><p>和</p>
-<script type="math/tex; mode=display">
-A^Ty+c=0,\:y\succeq0</script><p>是一对强择一系统。</p>
-<p><u>Lagrange对偶对广义不等式同样成立，对偶条件和KKT条件中$\lambda$的约束从$\geq 0$改为$\succeq_{K^*}0$。</u></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/14/csapp10/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Hulieu">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hulieu">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/02/14/csapp10/" class="post-title-link" itemprop="url">从四开始的汇编</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2020-02-14 16:22:35" itemprop="dateCreated datePublished" datetime="2020-02-14T16:22:35+08:00">2020-02-14</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-03-20 11:00:41" itemprop="dateModified" datetime="2020-03-20T11:00:41+08:00">2020-03-20</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%8C%AB%E7%88%AA%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">猫爪记</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%8C%AB%E7%88%AA%E8%AE%B0/Computer-Science/" itemprop="url" rel="index"><span itemprop="name">Computer-Science</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="系统I-O"><a href="#系统I-O" class="headerlink" title="系统I/O"></a>系统I/O</h3><p>打开关闭文件/改变文件位置/读写文件</p>
-<p>RIO包（Robust I/O)提供两类函数</p>
-<ul>
-<li>无缓冲的输入输出：直接在存储器和文件间传送数据</li>
-<li>带缓冲的输入：rio_readlineb 他是线程安全的</li>
-</ul>
-<p>读取文件元数据：stat/fstat</p>
-<p>内核用三个数据结构表示打开的文件：</p>
-<ul>
-<li>描述符表：每个进程有独立的描述符表，每个描述符表指向文件表的一个表项</li>
-<li>文件表：文件表的表项包括当前的文件位置、引用计数和指向v-node的指针，所有进程共享</li>
-<li>v-node表：包含stat大多数信息，所有进程共享</li>
-</ul>
-<p><em>共享文件即多个文件表指向一个v-node表</em></p>
-<p>I/O重定向（&gt;）：拷贝旧的描述符表项到新的描述符表项</p>
-<p>标准I/O：libc的fopen/fclose、fread/fwrite、fgets/fputs、scanf/printf</p>
-<p>三个流stdin、stdout、stderr</p>
-<p><img src="io.png" alt=""></p>
-<p>一般使用标准I/O，但是网络输入输出等情况需要用低级Unix I/O（或者RIO）</p>
-<p><u>这是因为Unix对网络的抽象为<em>套接字</em>类型文件，对流的限制和对套接字的限制会有冲突。标准I/O是在同一个流输入输出的，而套接字需要打开两个流一个读一个写。</u></p>
-<h3 id="网络编程"><a href="#网络编程" class="headerlink" title="网络编程"></a>网络编程</h3><p>网络是个I/O设备</p>
-<p>最低层的是局域网LAN，流行的局域网技术是以太网Ethernet，每个以太网适配器有一个全球唯一的48位地址。使用网桥bridge可以将多个以太网段连接成桥接以太网bridged ethernet。</p>
-<p>多个不兼容的局域网可以通过路由器router连接，组成互联网络internet。每台路由器对它连接的每个网络都有一个适配器（端口）。路由器也能连接高速点到点通话，这就是广域网WAN。</p>
-<p>网络协议消除不同网络之间的差异，他需要两种基本能力：</p>
-<ul>
-<li>命名机制：一致的主机格式</li>
-<li>传送机制：把数据捆扎成不连续片（称为包）</li>
-</ul>
-<h3 id="全球IP因特网Internet"><a href="#全球IP因特网Internet" class="headerlink" title="全球IP因特网Internet"></a>全球IP因特网Internet</h3><p>最成功的的互联网络的实现。</p>
-<p>每台主机都实现TCP/IP协议，这实际上是个协议族。</p>
-<p>IP协议提供基本的命名方法和传送机制；UDP扩展了IP协议，包可以在进程间传递；TCP则是一个复杂协议，提供进程间双向连接。</p>
-<ul>
-<li><p>主机集合被映射为一组32位的IP地址</p>
-<p><em>用机构存放IP地址这一标量是套接字接口早期实现的不幸产物。</em></p>
-<p>总是以大端法存放在包头，常以点分十进制表示。</p>
-</li>
-<li><p>这组IP地址被映射为一组被称为因特网域名的标识符</p>
-<p>一级域名由ICANN定义，常见的有com、edu、gov、org、net</p>
-<p>二级域名由ICANN各个授权代理分配</p>
-<p>本机回传地址总是为localhost 127.0.0.1</p>
-<p>一般域名和IP地址是一一映射，也有多个域名映射到多个IP地址的</p>
-</li>
-<li><p>主机上的进程能和其他任何主机上的进程通信</p>
-<p>一个套接字是连接的一个端口，每个套接字都有相应的地址，是一个因特网地址和16位整数端口组成。客户端端口是内核自动分配的，称为临时端口；然而服务器端口通常是知名端口，如Web常用80，电子邮件使用25。连接由两端的套接字地址唯一确定。</p>
-<p><img src="connect.png" alt=""></p>
-</li>
-</ul>
-<h3 id="套接字端口"><a href="#套接字端口" class="headerlink" title="套接字端口"></a>套接字端口</h3><p>套接字接口（socket interface）是一组函数。</p>
-<p><img src="socket.png" alt=""></p>
-<p>套接字地址结构</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* Generic socket address structure (for connet bind and accept)*/</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">sockaddr</span> &#123;</span></span><br><span class="line">    <span class="keyword">unsigned</span> short sa_family; <span class="comment">/*protocol family*/</span></span><br><span class="line">    <span class="keyword">char</span>           sa_data[<span class="number">14</span>]; <span class="comment">/*address data*/</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* Internet-syle socket address structure*/</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">sockaddr_in</span> &#123;</span></span><br><span class="line">    <span class="keyword">unsigned</span> short sin_family; <span class="comment">/*address family (always AF_INET)*/</span></span><br><span class="line">    <span class="keyword">unsigned</span> short sin_port;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">in_addr</span> <span class="title">sin_addr</span>;</span> <span class="comment">/*IP address in network*/</span></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">char</span>  sin_zero[<span class="number">8</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>客户端和服务器用socket函数创建一个套接字描述符。</p>
-<p>客户端调用connect函数建立连接，得到的连接是套接字对(x:y, serv.sin_addr:serv.sin_port)刻画的。x是客户端IP地址，y是临时端口。</p>
-<p>open_clientfd包装socket和connect函数。</p>
-<p>open_listenfd包装socket、bind和listen函数。</p>
-<p>accept等待客户端的连接请求。</p>
-<h3 id="Web服务器"><a href="#Web服务器" class="headerlink" title="Web服务器"></a>Web服务器</h3><p>基于文本的应用级协议HTTP。Web内容可以用HTML来编写。</p>
-<p>Web内容是与MIME（多用途国际邮件扩充协议，multipurpose Internet mail extensions)相关的字节序列。</p>
-<p>URL可以用“？”分割文件名和参数，参数用“&amp;”隔开。</p>
-<p>HTTP支持不同的方法包括GET、POST、OPTIONS、HEAD、PUT、DELETE、TRACE</p>
-<p>HTTP请求由一个请求行和零个或更多请求报头，加上一个空行组成。请求行的形式是<code>&lt;method&gt;&lt;uri&gt;&lt;version&gt;</code>，请求报头的形式为<code>&lt;header name&gt;: &lt;header data&gt;</code>。</p>
-<p>HTTP响应由一个响应行和零个或多个响应报头，加上响应主体组成。响应行格式为<code>&lt;version&gt;&lt;status code&gt;&lt;status message&gt;</code>。响应报头中最重要的是Content-Type告知类型和Content-Length指示大小。</p>
-<p>CGI（通用网关接口Common Gateway Interface）提供标准解决服务动态内容的问题。服务器接收请求后，fork创建子进程，并调用execve在子进程上下文执行程序（CGI程序）。</p>
-<h3 id="并发编程"><a href="#并发编程" class="headerlink" title="并发编程"></a>并发编程</h3><h5 id="基于进程的并发："><a href="#基于进程的并发：" class="headerlink" title="基于进程的并发："></a>基于进程的并发：</h5><p>fork、exec、waitpid</p>
-<p>服务器并发的注意问题</p>
-<ul>
-<li>必须要SIGCHLD处理程序处理僵死子进程</li>
-<li>父子进程必须关闭connfd的拷贝</li>
-</ul>
-<p>进程共享状态信息困难，为了共享信息，必须使用显式的IPC机制</p>
-<h5 id="基于I-O多路复用的并发"><a href="#基于I-O多路复用的并发" class="headerlink" title="基于I/O多路复用的并发"></a>基于I/O多路复用的并发</h5><p>使用select函数，要求内核挂起进程，只有I/O事件发生才将控制返回。</p>
-<p>优点是给了程序员更多的对程序行为的控制，流之间共享数据变得容易</p>
-<p>缺点是编码复杂</p>
-<h5 id="基于线程的并发"><a href="#基于线程的并发" class="headerlink" title="基于线程的并发"></a>基于线程的并发</h5><p>线程就是运行在进程上下文中的逻辑流。线程由内核自动调度，每个线程有自己的线程上下文。</p>
-<p>线程上下文比进程上下文小得多，因而切换更快。线程没有严格的层次，而能对等的读写相同数据。</p>
-<p>Posix线程是个标准接口。</p>
-<p>线程存储器模型：根据存储类型映射到VM</p>
-<ul>
-<li>全局变量/静态变量：VM只包含它的一个实例</li>
-<li>本地自动变量：每个线程的栈包含他自己所有本地自动变量的实例</li>
-</ul>
-<p>利用信号量实现互斥、共享资源</p>
-<p>四个线程不安全函数</p>
-<ul>
-<li>不保护共享变量的函数</li>
-<li>跨越多个调用的状态（比如随机数）</li>
-<li>返回静态变量指针</li>
-<li>调用线程不安全函数的函数</li>
-</ul>
-<p>竞争：一个线程要在另一个线程到达y点前到达x点，会发生竞争（race）。为了消除竞争，我们可以动态地为y分配一个独立的块并传递给线程例程一个指向这个块的指针。</p>
-<p>信号量会导致一种错误叫死锁（deadlock），就是一组线程被阻塞，等待永远不真的条件。</p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/02/21/ConvexOptimization2/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -2970,7 +1088,7 @@ A^Ty+c=0,\:y\succeq0</script><p>是一对强择一系统。</p>
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -3038,14 +1156,14 @@ A^Ty+c=0,\:y\succeq0</script><p>是一对强择一系统。</p>
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">19</span>
+          <span class="site-state-item-count">22</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -3134,6 +1252,8 @@ A^Ty+c=0,\:y\succeq0</script><p>是一对强择一系统。</p>
 
   
   <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
 
@@ -3153,6 +1273,10 @@ A^Ty+c=0,\:y\succeq0</script><p>是一对强择一系统。</p>
   
 
 
+
+
+  
+<script src="/js/local-search.js"></script>
 
 
 

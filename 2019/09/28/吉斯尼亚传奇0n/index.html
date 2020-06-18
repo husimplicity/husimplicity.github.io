@@ -14,21 +14,22 @@
 
 
 <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="​    经过漫漫长夜的飞行，飞机缓缓地降落在跑道上。地面上星星点点的小房子渐渐明晰起来，地上还在闪耀着的跑道灯，在晨曦中显得暗淡无力，罗一成恍惚间意识到，他终于来到了吉斯尼娅，这个古老而年轻的国度，这个陌生而熟悉的城市了。 ​    飞机在跑道上开始减速，随着一抹晨光从飞机的后弦方向斜斜地照射过来，整个飞机仿佛也开始苏醒了。乘客们的交谈声渐渐响了起来，打破了延续十七个小时的安静；机舱里再次活跃了">
+  <meta name="description" content="​    经过漫漫长夜的飞行，飞机缓缓地降落在跑道上。地面上星星点点的小房子渐渐明晰起来，地上还在闪耀着的跑道灯，在晨曦中显得暗淡无力，罗一成恍惚间意识到，他终于来到了吉斯尼娅，这个古老而年轻的国度，这个陌生而熟悉的城市了。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="吉斯尼亚传奇N">
 <meta property="og:url" content="http://yoursite.com/2019/09/28/%E5%90%89%E6%96%AF%E5%B0%BC%E4%BA%9A%E4%BC%A0%E5%A5%870n/index.html">
 <meta property="og:site_name" content="Hulieu">
-<meta property="og:description" content="​    经过漫漫长夜的飞行，飞机缓缓地降落在跑道上。地面上星星点点的小房子渐渐明晰起来，地上还在闪耀着的跑道灯，在晨曦中显得暗淡无力，罗一成恍惚间意识到，他终于来到了吉斯尼娅，这个古老而年轻的国度，这个陌生而熟悉的城市了。 ​    飞机在跑道上开始减速，随着一抹晨光从飞机的后弦方向斜斜地照射过来，整个飞机仿佛也开始苏醒了。乘客们的交谈声渐渐响了起来，打破了延续十七个小时的安静；机舱里再次活跃了">
+<meta property="og:description" content="​    经过漫漫长夜的飞行，飞机缓缓地降落在跑道上。地面上星星点点的小房子渐渐明晰起来，地上还在闪耀着的跑道灯，在晨曦中显得暗淡无力，罗一成恍惚间意识到，他终于来到了吉斯尼娅，这个古老而年轻的国度，这个陌生而熟悉的城市了。">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2019-09-28T07:28:01.000Z">
-<meta property="article:modified_time" content="2020-01-11T14:12:26.394Z">
+<meta property="article:modified_time" content="2020-06-16T04:13:29.729Z">
 <meta property="article:author" content="Hulieu">
 <meta property="article:tag" content="琉璃猫">
 <meta name="twitter:card" content="summary">
@@ -104,6 +105,7 @@
 
   <div class="site-nav-right">
     <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -138,11 +140,38 @@
     <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
 
   </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
   </ul>
 </nav>
 
 
 
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
 
 </div>
     </header>
@@ -196,7 +225,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-01-11 22:12:26" itemprop="dateModified" datetime="2020-01-11T22:12:26+08:00">2020-01-11</time>
+                <time title="Modified: 2020-06-16 12:13:29" itemprop="dateModified" datetime="2020-06-16T12:13:29+08:00">2020-06-16</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -227,6 +256,7 @@
 
       
         <p>​    经过漫漫长夜的飞行，飞机缓缓地降落在跑道上。地面上星星点点的小房子渐渐明晰起来，地上还在闪耀着的跑道灯，在晨曦中显得暗淡无力，罗一成恍惚间意识到，他终于来到了吉斯尼娅，这个古老而年轻的国度，这个陌生而熟悉的城市了。</p>
+<a id="more"></a>
 <p>​    飞机在跑道上开始减速，随着一抹晨光从飞机的后弦方向斜斜地照射过来，整个飞机仿佛也开始苏醒了。乘客们的交谈声渐渐响了起来，打破了延续十七个小时的安静；机舱里再次活跃了起来，有些乘客已经开始急急忙忙地收拾自己的行李了。</p>
 <p>​    不过，这些都似乎与罗一成毫无关系。</p>
 <p>​    罗一成也开始清醒过来，十七个小时的飞行中，他完完全全地沉浸在自己的迷梦里，这是一个旖旎多姿的梦，如果他的梦有颜色的话，那一定是金色的：从小罗一成就听闻吉斯尼娅的种种传奇，带着对吉斯尼娅美好的想象，只不过他从没想过，他会如今天一般真正来到吉斯尼娅，至少，不会来得那么快。</p>
@@ -329,14 +359,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">19</span>
+          <span class="site-state-item-count">22</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -425,6 +455,8 @@
 
   
   <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
 
@@ -444,6 +476,10 @@
   
 
 
+
+
+  
+<script src="/js/local-search.js"></script>
 
 
 

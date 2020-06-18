@@ -14,10 +14,11 @@
 
 
 <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta property="og:type" content="website">
@@ -99,6 +100,7 @@
 
   <div class="site-nav-right">
     <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -133,11 +135,38 @@
     <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
 
   </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
   </ul>
 </nav>
 
 
 
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
 
 </div>
     </header>
@@ -156,6 +185,299 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/18/StochasticProcess/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Hulieu">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hulieu">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/02/18/StochasticProcess/" class="post-title-link" itemprop="url">随机过程论</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-02-18 12:26:47" itemprop="dateCreated datePublished" datetime="2020-02-18T12:26:47+08:00">2020-02-18</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-06-16 12:09:18" itemprop="dateModified" datetime="2020-06-16T12:09:18+08:00">2020-06-16</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%8C%AB%E7%88%AA%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">猫爪记</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%8C%AB%E7%88%AA%E8%AE%B0/Mathematics/" itemprop="url" rel="index"><span itemprop="name">Mathematics</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="条件期望"><a href="#条件期望" class="headerlink" title="条件期望"></a>条件期望</h1><p>给定概率空间$(\Omega,F,P)$，随机变量X，定义随机变量$Y=E(X|F)$如果它满足</p>
+<ul>
+<li>$Y\in F$</li>
+<li>for all $A\in F$，$\int_A XdP = \int_A YdP$</li>
+</ul>
+<p>显然Y可积且唯一</p>
+<p><strong>Radon-Nikodym定理</strong>：测度$\nu &lt;&lt;\mu$，那么存在函数$f\in F$，对所有$A\in F$，</p>
+<script type="math/tex; mode=display">
+\int_A fd\mu=\nu(A)</script><p>先假设$X\geq 0$然后显然$\nu(A)=\int_A XdP$是测度，所以易证条件期望存在。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/02/18/StochasticProcess/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/14/ConvexOptimization/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Hulieu">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hulieu">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/02/14/ConvexOptimization/" class="post-title-link" itemprop="url">凸优化问题</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-02-14 18:07:45" itemprop="dateCreated datePublished" datetime="2020-02-14T18:07:45+08:00">2020-02-14</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-06-16 12:05:09" itemprop="dateModified" datetime="2020-06-16T12:05:09+08:00">2020-06-16</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%8C%AB%E7%88%AA%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">猫爪记</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%8C%AB%E7%88%AA%E8%AE%B0/Mathematics/" itemprop="url" rel="index"><span itemprop="name">Mathematics</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>凸优化问题具有如下形式</p>
+<script type="math/tex; mode=display">
+min\:f_0(x)</script><script type="math/tex; mode=display">
+subject\:to\:f_i(x)\leq b_i\:, \:i=1,...,m</script><p>其中 $f_i$ 是凸函数</p>
+<h3 id="凸集"><a href="#凸集" class="headerlink" title="凸集"></a>凸集</h3><p>C的<strong>仿射包</strong>为C中的点的所有仿射组合，即为<strong>affC</strong></p>
+<p>定义集合C的<strong>仿射维数</strong>为其<strong>仿射包</strong>的维数。</p>
+<p>定义集合C的<strong>相对内部</strong>为<strong>affC</strong>里C的内部，记为<strong>relintC</strong></p>
+<script type="math/tex; mode=display">
+relint\:C=\{x\in C|B(x, r)\cap aff\: C\subseteq C \: for \:some\: r \}</script><p><strong>凸集</strong>定义为对$x_1\:,\:x_2\in C\:,\:0\leq\theta\leq 1$</p>
+<script type="math/tex; mode=display">
+\theta x_1+(1-\theta)x_2\in C</script>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/02/14/ConvexOptimization/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/14/csapp10/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Hulieu">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hulieu">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/02/14/csapp10/" class="post-title-link" itemprop="url">从四开始的汇编</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-02-14 16:22:35" itemprop="dateCreated datePublished" datetime="2020-02-14T16:22:35+08:00">2020-02-14</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-06-16 12:06:38" itemprop="dateModified" datetime="2020-06-16T12:06:38+08:00">2020-06-16</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%8C%AB%E7%88%AA%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">猫爪记</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%8C%AB%E7%88%AA%E8%AE%B0/Computer-Science/" itemprop="url" rel="index"><span itemprop="name">Computer-Science</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><a href="/2020/02/08/csapp7/">上一篇：从三开始的汇编</a></p>
+<h3 id="系统I-O"><a href="#系统I-O" class="headerlink" title="系统I/O"></a>系统I/O</h3><p>打开关闭文件/改变文件位置/读写文件</p>
+<p>RIO包（Robust I/O)提供两类函数</p>
+<ul>
+<li>无缓冲的输入输出：直接在存储器和文件间传送数据</li>
+<li>带缓冲的输入：rio_readlineb 他是线程安全的</li>
+</ul>
+<p>读取文件元数据：stat/fstat</p>
+<p>内核用三个数据结构表示打开的文件：</p>
+<ul>
+<li>描述符表：每个进程有独立的描述符表，每个描述符表指向文件表的一个表项</li>
+<li>文件表：文件表的表项包括当前的文件位置、引用计数和指向v-node的指针，所有进程共享</li>
+<li>v-node表：包含stat大多数信息，所有进程共享</li>
+</ul>
+<p><em>共享文件即多个文件表指向一个v-node表</em></p>
+<p>I/O重定向（&gt;）：拷贝旧的描述符表项到新的描述符表项</p>
+<p>标准I/O：libc的fopen/fclose、fread/fwrite、fgets/fputs、scanf/printf</p>
+<p>三个流stdin、stdout、stderr</p>
+<p><img src="io.png" alt=""></p>
+<p>一般使用标准I/O，但是网络输入输出等情况需要用低级Unix I/O（或者RIO）</p>
+<p><u>这是因为Unix对网络的抽象为<em>套接字</em>类型文件，对流的限制和对套接字的限制会有冲突。标准I/O是在同一个流输入输出的，而套接字需要打开两个流一个读一个写。</u></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/02/14/csapp10/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -191,7 +513,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-03-20 11:00:35" itemprop="dateModified" datetime="2020-03-20T11:00:35+08:00">2020-03-20</time>
+                <time title="Modified: 2020-06-16 12:06:30" itemprop="dateModified" datetime="2020-06-16T12:06:30+08:00">2020-06-16</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -218,7 +540,8 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h3 id="编译"><a href="#编译" class="headerlink" title="编译"></a>编译</h3><p>C预处理器cpp 将 .c 翻译成 .i</p>
+          <p><a href="/2020/01/29/csapp5/">上一篇：从二开始的汇编</a></p>
+<h3 id="编译"><a href="#编译" class="headerlink" title="编译"></a>编译</h3><p>C预处理器cpp 将 .c 翻译成 .i</p>
 <p>C编译器cc1 将.i 翻译成汇编 .s</p>
 <p>汇编器as 将 .s 翻译成可重定向目标文件 .o</p>
 <p>连接器程序 ld 将 .o 结合起来创建可执行文件</p>
@@ -234,166 +557,14 @@
 <li>共享目标文件</li>
 </ul>
 <p>最早的Unix使用.out，现代Unix使用ELF，Windows NT使用COFF的变种PE。</p>
-<h3 id="ELF"><a href="#ELF" class="headerlink" title="ELF"></a>ELF</h3><p>一个典型的ELF可重定位目标文件格式。</p>
-<p><img src="elf.png" alt=""></p>
-<ul>
-<li>ELF头以16字节序列描述生成该文件的系统的字的大小和字节顺序，然后是语法分析和解释（包括ELF头大小、目标文件类型、机器类型、节头部表的文件偏移等。</li>
-<li>.text：已编译的代码</li>
-<li>.rodata：只读数据</li>
-<li>.data：初始化的全局变量</li>
-<li>.bss：未初始化的全局变量</li>
-<li>.symtab：符号表，存放程序中定义和引用的函数和全局变量</li>
-<li>.rel.text：.text中位置的列表</li>
-<li>.rel.data：全局变量的重定位信息</li>
-<li>.debug：调试符号表 -g才会得到</li>
-<li>.line ：行号 -g才会得到</li>
-<li>.strtab：字符串表，包括.symtab和.debug和节头部的名字</li>
-</ul>
-<p><u>static变量是在符号表定义</u>。</p>
-<p><u>重载函数类名为原始名字前加上名字中字符数，比如Foo被编码成3Foo；方法被编码为原始方法加上类名加上每个参数的单字母编码，比如Foo::bar(int, long)被编码为bar__3Fooil。</u></p>
-<p><u>多重定义：会选择强定义（初始化的定义），不同类型可能导致错误。</u></p>
-<h3 id="重定位"><a href="#重定位" class="headerlink" title="重定位"></a>重定位</h3><p>代码的重定位条目放在.rel.text</p>
-<p>已初始化数据的重定位条目放在.rel.data</p>
-<p>重定位条目格式如下</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> &#123;</span></span><br><span class="line">    <span class="keyword">int</span> offset; <span class="comment">/* offset of the refence to relocate*/</span></span><br><span class="line">    <span class="keyword">int</span> symbol:<span class="number">24</span>, <span class="comment">/*symbol the reference should point to*/</span></span><br><span class="line">    	type:<span class="number">8</span>; <span class="comment">/*Relocation type 有11中不同类型*/</span></span><br><span class="line">&#125; Elf32_Rel</span><br></pre></td></tr></table></figure>
-<p>重定位符号引用</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">refptr = s + r.offset;</span><br><span class="line"><span class="comment">/* 相对引用 */</span></span><br><span class="line"><span class="keyword">if</span> (r.type == R_386_PC32) &#123;</span><br><span class="line">    refaddr = ADDR(s) + r.offset;</span><br><span class="line">    *refptr = (<span class="keyword">unsigned</span>)(ADD(r.symbol) + *refptr - refaddr);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/* 绝对引用 */</span></span><br><span class="line"><span class="keyword">if</span> (r.type == R_386_32) &#123;</span><br><span class="line">    *refptr = (<span class="keyword">unsigned</span>)(ADD(r.symbol) + *refptr)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="可执行文件"><a href="#可执行文件" class="headerlink" title="可执行文件"></a>可执行文件</h3><p>下图是个典型的ELF可执行文件</p>
-<p><img src="elfexe.png" alt=""></p>
-<p>ELF头部包含程序的入口（entry point)，.init定义了初始化函数，不再需要.rel。</p>
-<h3 id="静态库"><a href="#静态库" class="headerlink" title="静态库"></a>静态库</h3><p>静态库（.o）是所有相关的目标打包称为独立的文件。</p>
-<p>优点：不需要重复定义、只拷贝被引用的模块、只需要较少的库文件名</p>
-<p><em>AR工具创建库</em></p>
-<h3 id="动态链接共享库"><a href="#动态链接共享库" class="headerlink" title="动态链接共享库"></a>动态链接共享库</h3><p>.so（Unix）或者.dll（Windows）</p>
-<p>解决静态库需要显式链接、浪费资源的问题</p>
-<p><em>gcc -shared -fPIC 创建库</em> </p>
-<blockquote>
-<p>PIC是位置无关代码 position-independent code，通过全局偏移量表实现，但是有性能缺陷。</p>
-<p>因而ELF有延迟绑定lazy binding技术，通过GOT和PLT。</p>
-<p>GOT[1] 是连接器标识信息，GOT[2] 是连接器入口点</p>
-<p>调用时控制传递到PLT中，然后通过GOT做间接跳转。第一次调用时，GOT跳转回PLT下一条指令，通过将标识信息压入栈中并跳转动态链接器，覆盖GOT跳转地址。以后调用时，只是间接引用而没有额外开销。</p>
-</blockquote>
-<p><u>应用程序还可能在运行时要求链接共享库而无需在编译时链接。（dlopen、dlsym、dlclose）</u></p>
-<h3 id="异常控制流（Exception-Control-Flow）"><a href="#异常控制流（Exception-Control-Flow）" class="headerlink" title="异常控制流（Exception Control Flow）"></a>异常控制流（Exception Control Flow）</h3><p>异常处理是在内核模式（kernel mode）</p>
-<p>每个异常有一个异常号。异常可分为四类</p>
-<ul>
-<li>中断 interrupt：来自I/O设备，异步</li>
-<li>陷阱 trap：有意的异常，提供系统调用接口，比如system call</li>
-<li>故障 fault</li>
-<li>终止 abort</li>
-</ul>
-<h3 id="进程"><a href="#进程" class="headerlink" title="进程"></a>进程</h3><p>一个执行中的程序的实例</p>
-<ul>
-<li>独立的逻辑控制流</li>
-<li>私有的地址空间</li>
-</ul>
-<p>内核为每个进程维持一个上下文context，内核通过上下文切换context switch来实现多任务。在进程执行的某些时刻，内核可以通过调度器进行调度schedule，选择一个新的进程运行。</p>
-<p>获取ID getpid（进程PID） getppid（父进程PID）</p>
-<p><u>fork在新的子进程中运行相同程序，而execve函数在当前进程上下文加载并运行新程序，会覆盖当前进程的地址，仍然有相同的PID。Unix和Web服务器大量使用fork和execve。</u></p>
-<h3 id="回收子进程"><a href="#回收子进程" class="headerlink" title="回收子进程"></a>回收子进程</h3><p>终止而未被回收的称为僵死进程zombie，它们仍然消耗系统资源。</p>
-<ul>
-<li>判定等待集合成员 pid</li>
-<li>修改默认行为 WNOHANG 和 WUNTRACED</li>
-<li>waitpid函数</li>
-<li>检查已回收子进程的退出状态 WIFEXITED等 见wait.h</li>
-<li>错误条件：没有子进程 waitpid=-1 ECHILD/被信号中断 返回-1 EINTR</li>
-</ul>
-<h3 id="信号"><a href="#信号" class="headerlink" title="信号"></a>信号</h3><p>Unix信号允许进程中断其他进程。</p>
-<p>一个发送而没被接受的信号为待处理信号pending signal。一个类型至多只有一个待处理信号，多余的会简单丢弃。一个待处理信号只能被接受一次。</p>
-<p>发送信号的机制基于进程组。一个负的PID会导致信号被发送到进程组PID中的每个进程。</p>
-<p>可以通过signal函数修改接收到信号的默认行为。</p>
-<p>几个信号处理中的问题</p>
-<ul>
-<li>信号会阻塞和不会排队等待：改成while尽可能多的接收信号</li>
-<li>系统调用被中断的可能性：while手动重启</li>
-</ul>
-<p>Signal是sigaction的一个包装函数，提供了可移植的信号处理。</p>
-<p>sigprocmask显式改变阻塞信号集合。</p>
-<p><u>同步流以避免并发问题。这个问题称之为竞争race，通过阻塞信号来就解决。暴露竞争的问题的方法就是随机决定父进程和子进程执行的顺序。</u></p>
-<h3 id="非本地跳转"><a href="#非本地跳转" class="headerlink" title="非本地跳转"></a>非本地跳转</h3><p>用户级异常控制流，直接从一个函数跳转另一个函数。</p>
-<p>setjmp和longjump（catch相当于setjmp，throw相当于longjump</p>
-<h3 id="虚拟存储器VM"><a href="#虚拟存储器VM" class="headerlink" title="虚拟存储器VM"></a>虚拟存储器VM</h3><p>虚拟寻址时，CPU生成虚拟地址来访问主存。</p>
-<p><img src="pte.png" alt=""></p>
-<p>这里DRAM缓存是全相连的。</p>
-<p><u>页面调度</u></p>
-<p>虚拟存储器作为存储器管理工具</p>
-<ul>
-<li>简化链接</li>
-<li>简化加载</li>
-<li>简化共享</li>
-<li>简化存储器分配</li>
-</ul>
-<p>同时能通过读写权限控制保护存储器。</p>
-<h3 id="地址翻译"><a href="#地址翻译" class="headerlink" title="地址翻译"></a>地址翻译</h3><p>符号定义</p>
-<ul>
-<li>N 虚拟空间地址数 M 物理空间地址数 P 页大小</li>
-<li>VPO 虚拟页面偏移 VPN 虚拟页号 </li>
-<li>TLBI TLB索引 TLBT TLB标记</li>
-<li>PPO 物理页面偏移 PPN 物理页号</li>
-<li>CO 缓冲块偏移</li>
-<li>CI 高速缓存索引 CT 高速缓存标记</li>
-</ul>
-<p>地址翻译：虚拟地址空间VAS到物理地址空间PAS的映射</p>
-<p><img src="translate.png" alt=""></p>
-<p>MMU利用VPN选择适当的PTE，得到PPN，PPO和VPO是相同的。</p>
-<p><u>利用TLB加速地址翻译：TLB是个小的虚拟寻址的缓存，每行保存一个PTE块。VPN的t个低位组成TLB索引，其余n-p-t位是TLB标记。</u></p>
-<p><u>每次MMU从TLB取出相应PTE，如果TLB不命中，则从L1缓存取出PTE并存放在TLB。</u></p>
-<p><img src="tlb.png" alt=""></p>
-<p><u>多级页表：减小主存压力，地址翻译也并不比单级页表慢很多。</u></p>
-<p>Core i7地址翻译概况如下</p>
-<p><img src="corei7translate.png" alt=""></p>
-<p><u>优化地址翻译：CPU翻译时，发送VPN到MMU，发送VPO到L1，同时进行。</u></p>
-<h3 id="存储器映射"><a href="#存储器映射" class="headerlink" title="存储器映射"></a>存储器映射</h3><p>存储器映射是将虚拟存储器区域和一个磁盘上的对象关联起来。这个对象可以是普通文件，也可以是匿名文件。一旦一个虚拟页面被初始化了，就在一个专门的交换文件（也叫做交换空间或交换区域）之间转换。</p>
-<p><u>一个对象可以被映射到虚拟存储器的一个区域，要么作为共享对象，要么作为私有对象。共享对象即使被映射到了多个共享区域，也只需存放它的一个拷贝。私有对象使用写时拷贝copy-on-write的技术充分使用了稀有的物理存储器。</u></p>
-<h3 id="动态存储器分配"><a href="#动态存储器分配" class="headerlink" title="动态存储器分配"></a>动态存储器分配</h3><p>低级的mmap和munmap可以创建和删除虚拟存储器的区域。</p>
-<p>动态存储器分配dynamic memory allocater更方便且更好移植。它维护一个进程的虚拟存储器区域，称为堆heap。每个进程维护一个brk，指向堆的顶部。</p>
-<ul>
-<li><p>显式分配</p>
-<p>malloc和free（C++里的new和delete）</p>
-<p>想要已初始化的动态存储calloc，改变已分配块大小realloc</p>
-<p>sbrk通过移动brk指针来改变堆</p>
-</li>
-<li><p>隐式分配</p>
-<p>也叫垃圾收集器，自动释放未使用的已分配块，见JAVA等高级语言。</p>
-</li>
-</ul>
-<p>分配器的目标</p>
-<ul>
-<li><p>最大化吞吐率</p>
-</li>
-<li><p>最大化利用率</p>
-<p>利用率低是因为碎片fragmentation</p>
-<ul>
-<li>内部碎片：已分配块比有效载荷大（对齐约束）</li>
-<li>外部碎片：组织/放置/分割/合并 空闲块（空闲链表）</li>
-</ul>
-</li>
-</ul>
-<h3 id="隐式空闲链表"><a href="#隐式空闲链表" class="headerlink" title="隐式空闲链表"></a>隐式空闲链表</h3><p>因为双字的对齐约束，块大小总是8的倍数，块大小最低三位总是0，所以只需存储块大小的29个高位，剩余3位编码其他信息。1表示已分配，0表示空闲。</p>
-<p><img src="list.png" alt=""></p>
-<p>优点是简单，缺点是开销与块总数呈线性关系。</p>
-<p>放置策略：首次适配、下次适配（对首次适配的改进）、最佳适配</p>
-<p>合并策略：立即合并（会产生抖动？）、推迟合并</p>
-<p><u>Knuth提出边界标记（boundary tag），通过在块结尾处添加脚部（头部的副本），允许常数时间内对前面块进行合并。</u></p>
-<h5 id="显式空闲链表"><a href="#显式空闲链表" class="headerlink" title="显式空闲链表"></a>显式空闲链表</h5><p>加入pred和succ的指针，使得开销与<strong>空闲块</strong>总数呈线性关系</p>
-<p>缺点是空闲块必须足够大，潜在提高了内部碎片程度</p>
-<h5 id="分离的空闲链表"><a href="#分离的空闲链表" class="headerlink" title="分离的空闲链表"></a>分离的空闲链表</h5><p>维护多个空闲链表，每个表中块大小大致相等</p>
-<ul>
-<li>简单分离存储：快速但是容易造成碎片</li>
-<li>分离适配：GNU malloc就是这种方法</li>
-<li>伙伴系统：特殊的分离适配，都是2的幂次；块地址和伙伴地址只有一位不同、主要缺点是要求块大小为2的幂次，导致显著的内部碎片。</li>
-</ul>
-<h5 id="垃圾收集"><a href="#垃圾收集" class="headerlink" title="垃圾收集"></a>垃圾收集</h5><p>C和C++保守的垃圾收集器：每个可达的都被正确标记了，但一些不可达的也被错误标记为可达了（因为int或float可以伪装成指针，而收集器无法判断）</p>
-<p>Mark&amp;Sweep：由于C的保守，需要维护一个已分配块的平衡二叉树</p>
-<h3 id="常见存储器错误"><a href="#常见存储器错误" class="headerlink" title="常见存储器错误"></a>常见存储器错误</h3><ul>
-<li>间接引用坏指针：错误的把int或float当做指针</li>
-<li>读未初始化的存储器：<strong>堆存储器</strong>不总是初始化为零，正确方法是用calloc代替malloc或者显式初始化</li>
-<li>缓冲区溢出</li>
-<li>假设指针和对象相同大小</li>
-<li>引用不存在的变量/空闲堆栈</li>
-<li>存储器泄露（不释放空间）</li>
-</ul>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/02/08/csapp7/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -443,7 +614,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-03-20 11:00:29" itemprop="dateModified" datetime="2020-03-20T11:00:29+08:00">2020-03-20</time>
+                <time title="Modified: 2020-06-16 12:06:23" itemprop="dateModified" datetime="2020-06-16T12:06:23+08:00">2020-06-16</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -470,7 +641,8 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h3 id="编写高效程序"><a href="#编写高效程序" class="headerlink" title="编写高效程序"></a>编写高效程序</h3><ul>
+          <p><a href="/2020/01/10/csapp4/">上一篇：从一开始的汇编</a></p>
+<h3 id="编写高效程序"><a href="#编写高效程序" class="headerlink" title="编写高效程序"></a>编写高效程序</h3><ul>
 <li>合适的算法和数据结构</li>
 <li>高效执行的源代码</li>
 </ul>
@@ -496,148 +668,14 @@
 <li>延迟：完成运算总时间</li>
 <li>发射：连续运算需要的时钟周期数，发射时间为1即为完全流水线化的</li>
 </ul>
-<h3 id="循环里的优化"><a href="#循环里的优化" class="headerlink" title="循环里的优化"></a>循环里的优化</h3><ul>
-<li>代码移动：将strlen或vec_length的计算移出循环（特别是strlen，因为它是O(n)的）</li>
-<li>减少过程调用</li>
-<li>减少不必要的存储调用：在临时变量里存放结果代替直接访问</li>
-<li>-02 的优化：会最后将结果写到目标位置，而不是重复读写</li>
-<li><u>循环展开：通过增加每次迭代计算的元素数量，减少循环迭代次数。比如在求数组累加和的时候，每次计算两个元素。因为减少了循环分支以及减少了关键路径操作数量，可以提升延迟界限。但是并不能提升浮点数计算的CPE。</u></li>
-<li><u>并行计算：将一组合并运算分割成两个或更多的部分，最后合并结果以提高性能。但是需要注意浮点乘法和加法由于四舍五入或溢出的不可结合性，可能会改变最终结果。</u></li>
-<li><u>重新结合变换：在循环中改变元素合并顺序，减少关键路径操作。同上，可能改变最终结果。</u></li>
-</ul>
-<p>高级设计、编码原则、低级优化</p>
-<h3 id="SIMD"><a href="#SIMD" class="headerlink" title="SIMD"></a>SIMD</h3><p>SSE=Streaming SIMD Extensions</p>
-<p>SIMD是单指令多数据Single-Instruction, Multiple-Data</p>
-<p>16字节的XMM可以存放多个值，因此指令会读取多个值并行计算</p>
-<p>-msse4</p>
-<h3 id="一些限制"><a href="#一些限制" class="headerlink" title="一些限制"></a>一些限制</h3><ul>
-<li>寄存器溢出</li>
-<li>分支预测和预测错误处罚<ul>
-<li>可预测的分支不太影响</li>
-<li>使用功能式风格的代码（用条件操作计算值），而非命令式（用条件语句来选择更新）</li>
-</ul>
-</li>
-<li>加载/存储性能</li>
-</ul>
-<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><ul>
-<li><p>程序剖析 GCC -pg </p>
-</li>
-<li><p>Amdahl定律 </p>
-<p>加速比S，其中\alpha是加速部分所占时间比例，k是加速到的倍数。</p>
-<script type="math/tex; mode=display">
-S=\frac{1}{1-\alpha+\alpha/k}</script></li>
-</ul>
-<h3 id="存储器"><a href="#存储器" class="headerlink" title="存储器"></a>存储器</h3><ul>
-<li>高速缓存存储器</li>
-<li>主存储器</li>
-<li>磁盘</li>
-</ul>
-<p><img src="memory.png" alt=""></p>
-<p>随机访问存储器（RAM），SRAM更快更贵，作为高速存储，一般不超过几MB，而DRAM有可以有几GB</p>
-<ul>
-<li><p>静态RAM（SRAM）</p>
-<p>存储在双稳态单元，用六晶体管来实现，可以无限保持在两个不同状态，其他状态都是不稳定的，即使有干扰，也能在干扰消除时恢复稳态。</p>
-</li>
-<li><p>动态RAM（DRAM）</p>
-<p>存储为对一个电容充电，因此对干扰敏感。</p>
-</li>
-<li><p>传统DRAM</p>
-<p>DRAM芯片中的单元被分成d个超单元(supercell)，每个超单元有w个DRAM单元，信息通过引脚(pin)流入流出。</p>
-</li>
-<li><p>存储器模块</p>
-<p>DRAM芯片包装在存储器模块里，常见的168引脚的双列直插存储器模块DIMM，以64位为块，也有72个引脚的单列直插存储器模块SIMM，以32位为块。存储器将地址A转换为超单元地址，然后广播到每个DRAM，每个DRAM输出超单元地址处的8位内容，然后将他们合并为64位双字。</p>
-</li>
-<li><p>增强的DRAM</p>
-<ul>
-<li>快页模式 FPM DRAM 允许对同一行连续地址从缓存区访问</li>
-<li>扩展数据输出 EDO DRAM 允许单独CAS信号时间上更紧密</li>
-<li>同步 SDRAM 用外部时钟信号上升代替控制信号，输出更快</li>
-<li>双倍速率同步DRAM（DDR SDRAM）通过两个时钟作为控制，不同DDR是根据预取缓存区大小来划分的 DDR（2位）DDR2（4位） DDR3（8位）</li>
-<li>Rambus DRAM 最大带宽更高</li>
-<li>视频RAM（Video RAM） 对内部缓存区整个内容移位</li>
-</ul>
-</li>
-<li><p>非易失性存储器</p>
-<p>即使断电也能保存，ROM、PROM、EPROM、EEPROM、闪存</p>
-</li>
-<li><p>读取主存</p>
-<p>I/O通过主线(bus)</p>
-</li>
-</ul>
-<h3 id="磁盘"><a href="#磁盘" class="headerlink" title="磁盘"></a>磁盘</h3><p>磁盘存储，比DRAM慢10万倍，比SRAM慢100万倍。</p>
-<p>磁盘由多个盘片（platter）构成，盘片有表面（surface）和主轴（spindle），有固定的旋转速率（54k-150k RPM）。每个表面是一组同心圆（磁道track）组成，每个磁道划分为一组扇区（sector）用以储存等长的数据，扇区之间有间隙（gap）。</p>
-<p>磁盘操作时，通过传动臂（actuator arm）连接到读写头，通过寻道（seek）定位到磁道上，然后进行读写。读写时间=寻道时间+旋转时间+传送时间，其中寻道时间和旋转延迟大致相等。</p>
-<p>磁盘还有逻辑磁盘块，维护逻辑块好和磁盘扇区的映射关系。</p>
-<p>连接到I/O设备：通用串行总线（USB）、图形卡、主机总线适配器（将磁盘连接到I/O总线，包括SCSI和SATA）</p>
-<p><img src="IObus.png" alt=""></p>
-<p>磁盘控制器收到CPU读命令后，将逻辑块号翻译成扇区地址，然后将这些内容直接传送到主存，不需要CPU干涉，称为直接存储器访问（DMA）。</p>
-<p>固态硬盘 SSD：基于闪存技术，更快能耗也更低。</p>
-<p>趋势：降低成本（增加密度）比降低访问时间更容易。</p>
-<h3 id="局部性"><a href="#局部性" class="headerlink" title="局部性"></a>局部性</h3><p>DRAM和磁盘的性能滞后于CPU的性能。现代计算机频繁使用基于SRAM的高速缓存试图弥补这一差距（利用局部性）。</p>
-<p>一个编写良好的程序具有良好的局部性（倾向于引用最近引用数据的邻近数据或其本身）。</p>
-<p>步长为k的引用模式：stride-k reference pattern，一个连续向量中，每隔k个元素进行访问，随着步长的增加，空间局部性下降。步长为1的引用模式有良好的空间局部性。</p>
-<p>取指令的局部性：循环具有好的时间局部性。</p>
-<h3 id="存储器层次结构"><a href="#存储器层次结构" class="headerlink" title="存储器层次结构"></a>存储器层次结构</h3><p>离CPU越远的存储器缓存越大，延迟越高，传送的块越大。</p>
-<p>核心思想是k层的存储设备作为k+1层的存储设备的缓存</p>
-<ul>
-<li>缓存命中</li>
-<li>缓存不命中<ul>
-<li>冷缓存（强制性不命中）：缓存是空的</li>
-<li>冲突不命中</li>
-<li>容量不命中</li>
-</ul>
-</li>
-</ul>
-<p>高速缓存（S，E，B，m）的通用组织：S个高速缓存组数组，每个组含有E个高速缓存行，每个行有B字节的数据块，1个有效位和t个标记位。m个地址划分为t个标记位，s个组索引位和b个块偏移位。</p>
-<p><img src="cache.png" alt=""></p>
-<p><u>抖动冲突不命中问题：即使有良好的空间局部性，引用还是会导致冲突不命中，因为这些块被映射到了同一个高速缓存组，一个简单的方法就是在数组结尾放B子节的填充。</u></p>
-<p><u>用中间位做索引，使得连续存储器映射到不同的高速缓存块。</u></p>
-<p>写的问题：</p>
-<ul>
-<li>直写 write-through</li>
-<li>写回 write-back 块要被驱逐时才更新存储器，能显著减少总线流量，但是需要维护额外的修改位</li>
-<li>写分配 write-allocate（加载之后写）/ 非写分配 not-write-allocate</li>
-</ul>
-<p><u>越往下层传送时间更差，因此越可能使用写回。</u></p>
-<p>举例：矩阵乘法 C=AB</p>
-<div class="table-container">
-<table>
-<thead>
-<tr>
-<th>乘法版本</th>
-<th>存储次数</th>
-<th>A不命中次数</th>
-<th>B不命中次数</th>
-<th>C不命中次数</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>ijk&amp;jik</td>
-<td>0</td>
-<td>0.25</td>
-<td>1</td>
-<td>0</td>
-</tr>
-<tr>
-<td>jki&amp;kji</td>
-<td>1</td>
-<td>1</td>
-<td>0</td>
-<td>1</td>
-</tr>
-<tr>
-<td>kij&amp;ikj</td>
-<td>1</td>
-<td>0</td>
-<td>0.25</td>
-<td>0.25</td>
-</tr>
-</tbody>
-</table>
-</div>
-<p>kij和ikj性能最好。</p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/01/29/csapp5/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -687,7 +725,7 @@ S=\frac{1}{1-\alpha+\alpha/k}</script></li>
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-02-13 19:15:17" itemprop="dateModified" datetime="2020-02-13T19:15:17+08:00">2020-02-13</time>
+                <time title="Modified: 2020-06-16 12:03:55" itemprop="dateModified" datetime="2020-06-16T12:03:55+08:00">2020-06-16</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -722,53 +760,14 @@ S=\frac{1}{1-\alpha+\alpha/k}</script></li>
 <p>在片中，为了展现出全面的自由主义的胜利，本笃表示”听不到上帝的声音了“，因而要退位；而那个不时出现打断剧情的提醒他步行的医疗仪器也似乎为了反衬他的保守。但是，我们可以看到，片中着重讲述了方济各的过去，但是对本笃的过去却没有多少笔墨。影片关注了方济各指出的教会内部腐败的问题、经济问题、贫民问题，但也没能回答本笃关注的同性恋、宗教意义的问题。我们很难说对于一个教宗而言，哪一个问题更加重要。</p>
 <p>当然，作为一部电影而言，无疑是成功的。两位教皇用拉丁语/西班牙语/英语轮番探讨宗教的意义显得很decent。看到两位爷爷一起吃披萨、看足球，甚至一起跳探戈、讨论beatles，就是一件很有趣的事情了。（虽然说我是不信的……但方济各一直以来的形象确实能支撑起这样的剧情。</p>
 <p>最后我还是觉得方济各就是宗教界的戈尔巴乔夫。</p>
-<h3 id="囧妈-6-0-10"><a href="#囧妈-6-0-10" class="headerlink" title="囧妈 6.0/10"></a>囧妈 6.0/10</h3><p>囧妈大火无疑是占了大年初一抖音免费观看的热度。（虽然我觉得确实是很有意义的一种尝试，但还是要说，徐峥聪明在于商人而非导演</p>
-<p>囧妈的剧本完成度比较差（就算是小成本电影），相比于它的几部前作也大大不如。影片分两线，一条是主角和母亲的感情线，另一条是主角和妻子的感情/商业竞争线。前一条线是主线，后一条线就显得无关紧要，感觉有强行附会的嫌疑。</p>
-<p>在妻子感情线里，把主角母亲想控制主角的心情等同于主角想控制主角妻子的心情，这是完全不同的感情啊，毕竟主角和妻子从没有表现出“爱情”，而看得出主角母亲溢出屏幕的母爱。影片塑造了一个近乎完美的妻子：性格独立、工作能力强、孝敬主角母亲，而主角一直不肯离婚，乃至在妻子的事业不断制造麻烦的唯一理由就是一句轻描淡写的”还爱着“，这是何等的扭曲啊。</p>
-<p>主线里母亲为了圆梦莫斯科大剧院表演，坐火车去莫斯科（这里我就不吐槽身为负责人怎么这么随便了），主角由于意外决定陪母亲去。明显由于母子这个主题没有很好的素材，影片成了很多段与主题无关的独立故事的合集。俄罗斯娜塔莎突然出现，和主角一路缠绵，然后飘然下车；母亲下车后遭遇熊出没，得到猎人解救（典型的机械降神）；赶不上火车，然后乘着热气球感到剧院……整个故事充满着机械降神的情节，而缺乏整体的连贯性。</p>
-<p>最后说一下这部影片的优点，第一肯定是特殊时期娱乐大众，第二是母亲这个主题表现得有点做作，不过可以接受，第三是贾冰这个列车员可以（他在春晚的小品也可以）。</p>
-<h3 id="1917-8-0-10"><a href="#1917-8-0-10" class="headerlink" title="1917 8.0/10"></a>1917 8.0/10</h3><p>传闻中的一镜到底（虽然是伪一镜，但都是长镜头的组合</p>
-<p>整体的故事性偏弱，情节没有太突出的地方</p>
-<blockquote>
-<p>1917年，第一次世界大战进入最激烈之际，两个年仅16岁的英国士兵接到的命令，需立即赶往死亡前线，向那里的将军传达一个“立刻停止进攻”讯息。 时间只有八小时，武器弹药有限，无人知晓前方敌况：死亡寂静之地、布满尸体的铁丝网、突入其来的敌军、随时毙命的危险境况…… </p>
-</blockquote>
-<p>一镜到底确实有很好的代入感，看得出导演和演员在拍摄中应该付出了比寻常多几倍的努力。抛开外在形式上的创新，这部电影也有感人之处。</p>
-<p>下士Schofield片头到片尾都是靠在树下休息，但可以想到，经历了这么多他的心境一定不一样了；将军说的一段话（今天撤退，明天又要进攻，反反复复的命令更加折磨）虽然不深刻，但是直击人心。另外教堂那一段的光影效果值得关注一下。</p>
-<h3 id="利刃出鞘-8-5-10"><a href="#利刃出鞘-8-5-10" class="headerlink" title="利刃出鞘  8.5/10"></a>利刃出鞘  8.5/10</h3><p>原以为是一部本格推理，但是和我想的不太一样。整个推理没什么大的漏洞，硬要说就是警察太菜了，不仅第一时间的证据找不到，还让人炸了证据中心……</p>
-<p>电影开头对每个人有一段问询，每个人都说了一些假话，侦探007（丹尼尔·克雷格）轻易地推理出了每个人隐瞒了什么秘密。然后….影片直接告诉了我们整个作案过程，之后就是最后的大反转。<strong>这是一部悬疑喜剧，而非烧脑的推理剧。</strong></p>
-<p>值得一提的是，片中藏了很多小彩蛋，还有政治隐喻。比如</p>
-<blockquote>
-<p>贵为美国白人的众卿家内讧一无所获，仰望着从巴基斯坦人手里买来的生父老宅； 身为巴西移民的本宫站在老宅阳台，端起“My House My Rules My Coffee”杯具轻呷，俯视着一切。 哈哈哈哈……吐！</p>
-</blockquote>
-<p>就是<em>粉刺</em>川普大帝的移民政策。还有那个用装饰画挡住的窗，也暗指了偷渡。</p>
-<h3 id="别告诉她-7-5-10"><a href="#别告诉她-7-5-10" class="headerlink" title="别告诉她 7.5/10"></a>别告诉她 7.5/10</h3><p>偶然看见的电影，故事并不复杂</p>
-<blockquote>
-<p>影片讲述一个华人家庭的奶奶被诊断罹癌，但家人选择隐瞒奶奶，假借一场婚礼的名义让所有家人回家见奶奶最后一面，但在纽约长大的碧莉（奥卡菲娜饰演）认为知道自己病况是奶奶的人权，因此在华人家庭中上演一场中西文化冲突，一部寻根家庭喜剧。</p>
-</blockquote>
-<p>整体上探讨了中西文化，但是影片却意外地西方。相比之下，我猜导演更了解西方（或者为了面向西方社会），所以对于西方的个人主义和bili所主张的知情权有较为深刻的认识，而对中国的人情只有一句“生命是集体的”来概括。整体比较轻松，观影体验还行。</p>
-<h3 id="哪吒之魔童降世7-5-10"><a href="#哪吒之魔童降世7-5-10" class="headerlink" title="哪吒之魔童降世7.5/10"></a>哪吒之魔童降世7.5/10</h3><p>去年以来名声很大的一部动画电影</p>
-<blockquote>
-<p>天地灵气孕育出一颗能量巨大的混元珠，元始天尊将混元珠提炼成灵珠和魔丸，灵珠投胎为人，助周伐纣时可堪大用；而魔丸则会诞出魔王，为祸人间。元始天尊启动了天劫咒语，3年后天雷将会降临，摧毁魔丸。太乙受命将灵珠托生于陈塘关李靖家的儿子哪吒身上。然而阴差阳错，灵珠和魔丸竟然被掉包。本应是灵珠英雄的哪吒却成了混世大魔王。调皮捣蛋顽劣不堪的哪吒却徒有一颗做英雄的心。然而面对众人对魔丸的误解和即将来临的天雷的降临，哪吒是否命中注定会立地成魔？他将何去何从？</p>
-</blockquote>
-<p>动画效果感觉比不上玄机娘娘（反正都是“国产动漫最高水平“啦）</p>
-<p>细细看完，却发现设定上有问题。哪吒生性顽劣因为魔丸附身（考虑到哪吒对关心爱护他的父母师父也这么残暴），那么灵丸附身的小龙就不会因为龙族水淹陈塘关了。</p>
-<p>更重要的是，仔细一想这部电影三观并不是那么正。哪吒魔丸附身，被村民视为妖怪，之后再李靖等人的感化之下，想要反抗命运。但是那句高燃台词“我命由我不由天”却是对小龙喊出的；而在天尊引天雷的时候，哪吒却束手就擒。细想之下，是魔丸还是灵丸本是天尊所定，那些村民不过是无知的愚民罢了，而真正应该反抗的命运应该是天尊（或者其化身天雷）。影片消解了这层对天的反抗，就退化成了纨绔子弟哪吒作威作福多年终于良心发现的故事了。</p>
-<h3 id="爱尔兰人-9-5-10"><a href="#爱尔兰人-9-5-10" class="headerlink" title="爱尔兰人 9.5/10"></a>爱尔兰人 9.5/10</h3><p>爱尔兰人没能得奥斯卡奖很可惜（虽然因为《教父》在前，这也是必然的</p>
-<blockquote>
-<p>　　《爱尔兰人》为马丁·斯科塞斯执导的传奇巨制，罗伯特·德尼罗、阿尔·帕西诺和乔·佩西主演。通过二战老兵弗兰克·希兰的视角，讲述了战后美国有组织犯罪的故事。弗兰克·希兰是一名骗子和杀手，曾经在 20 世纪最恶名昭彰的人物身边工作。该电影跨越数十年，记录了美国历史上最大的悬案之一，即传奇工会领袖吉米·霍法失踪案，以宏大的故事之旅，展现有组织犯罪的隐秘通道：其内部运作、仇敌以及与主流政治的瓜葛。</p>
-</blockquote>
-<p>电影属于半纪实的性质，讲述了黑帮的往事。电影中的很多事情都是历史上的悬案，很难说黑帮的这些人物到底在里面参与了多少。整部电影很明显带着《教父》的风格（从整体的布景、到人物的谈吐甚至是四个小时的片长），讲述故事的方式也有《阿甘正传》的味道（意外参与了当时的重大事件的感觉），以主角黑帮杀手Frank Sheeran的视角展开意识流的叙事。</p>
-<p>整部片中没有什么伟光正的人物，气氛都比较压抑。三个老戏骨扮演着三个黑道的重要人物，互相飙戏确实精彩（虽然都不是什么好人</p>
-<p>Frank作为黑帮杀手，冷酷无情而且计划周密，是个心狠手辣的人物。他因为工会的起诉搭上了黑帮的船，而后一步步成长为令人闻风丧胆的“爱尔兰人”。影片从Frank的自传改编，选取了一些看起来比较可信的片段（虽然也很大一部分不可考证，依旧被认为悬案）。Frank对于生死的思考是超越常人的（当然不是说这种理解是正确的），他对黑帮的一切都感到坦然，因而保持着绝对的冷静，到最后一刻问及Hoffa的死时第一反应还是找律师。可以说，电影塑造的Frank的形象，诠释了一个近乎完美的黑帮杀手。</p>
-<p>Russell是黑帮大佬，提携Frank的恩人。地位很高，但是身形很小，说话很轻柔。片中表现的性格还是比较单一的（当然演技没的说</p>
-<p>Jimmy Hoffa是历史上的传奇人物，创立了美国分布最广的工会，鼎盛时有两百三十万会员，而最后又神秘失踪，称为一桩悬案。剧里的Hoffa也表现出了对工会的热爱和重视，他在重新夺回工会的时候揭露黑帮和工会的内幕交易也并非只是为了竞选，相比之下他可能不是那么“黑帮”，所以最后Hoffa一定会和黑帮分道扬镳。</p>
-<p>最后Frank杀Hoffa这段是全剧的高潮，整个刺杀行动策划的看着随意，实则周密。比如对一切一无所知的大侄子运送Frank和Hoffa，降低了Hoffa的警惕心；Frank必须亲手杀了Hoffa，一方面为了让Hoffa彻底放心，另一方面也为了表明立场。刺杀过程中也有死鱼的暗喻这样的表现手法，Frank一瞬间的犹豫……在Hoffa被刺杀之后的四十分钟倒显得比较平淡，这些辉煌一时的黑帮大佬也都渐渐老去（情节虽然缓和，镜头也放的很慢，但就是有一种深深的悲凉？</p>
-<p>最后片中两句著名的黑话（看了影评才懂…当时就这么划过去了</p>
-<blockquote>
-<p>Jimmy Hoffa：”I heard you paint houses“</p>
-<p>Frank Sheeran：”I do my own carpentry work, too.” </p>
-</blockquote>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/01/29/2020%E5%B9%B4%E5%88%9D%E7%9A%84%E5%87%A0%E9%83%A8%E7%94%B5%E5%BD%B1/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -810,10 +809,16 @@ S=\frac{1}{1-\alpha+\alpha/k}</script></li>
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2020-01-12 19:59:31 / Modified: 13:16:31" itemprop="dateCreated datePublished" datetime="2020-01-12T19:59:31+08:00">2020-01-12</time>
+              <time title="Created: 2020-01-12 19:59:31" itemprop="dateCreated datePublished" datetime="2020-01-12T19:59:31+08:00">2020-01-12</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-06-16 12:13:37" itemprop="dateModified" datetime="2020-06-16T12:13:37+08:00">2020-06-16</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -835,8 +840,15 @@ S=\frac{1}{1-\alpha+\alpha/k}</script></li>
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="序章：初雪"><a href="#序章：初雪" class="headerlink" title="序章：初雪"></a>序章：初雪</h2><p>​        今年的冬天虽然来得晚了些，但是来得够快。十二月初的时候，京城还像是延续刚刚过去的夏天一样，温暖的仿佛阳春三月。然而人们根本没有想到，寒气来的迅猛，就连北面大兴安岭绵延的山脉，也只能略微延缓寒气南下的步伐。短短几天里，凛冬真的来了，京城冷的像另一个世界。永定河结起了薄冰，西山上萧瑟地立着满山枯木，庭院里只有几枝梅花迎风傲立，人们都已经不愿意出门了，街上仅存的行人也都把自己裹得严严实实。<br>​        罗一成清早就出门了，带着他的行李箱，迎着略有些刺骨的微风，登上了前往机场的列车。由于才刚刚过七点，车上还很空，罗一成随意地坐下了。他看向窗外，只见清冷的早晨，整个城市都昏昏沉沉；加上这是个没有生气的季节，平日里喜爱热闹的鸟儿，也消踪匿迹了，一切都显得灰蒙蒙的。<br>​        列车跑的很快，罗一成的思绪没有飘多远，就发现自己已经出了城。城外的这一站，平日就没什么人，罗一成心想，他往车里挪了挪，以躲避车外的冷风。一声提示音响起来，车厢的门整齐地打开了，猛地一阵风吹过，罗一成缩了缩脖子，那一瞬间他仿佛看见车外一只橘猫跑过，但仔细看去却没了踪迹。罗一成转头看去，却发现隔壁车厢不知何时上来了个三十岁左右的年轻人。</p>
-
+          <h2 id="序章：初雪"><a href="#序章：初雪" class="headerlink" title="序章：初雪"></a>序章：初雪</h2><p>​        今年的冬天虽然来得晚了些，但是来得够快。十二月初的时候，京城还像是延续刚刚过去的夏天一样，温暖的仿佛阳春三月。然而人们根本没有想到，寒气来的迅猛，就连北面大兴安岭绵延的山脉，也只能略微延缓寒气南下的步伐。短短几天里，凛冬真的来了，京城冷的像另一个世界。永定河结起了薄冰，西山上萧瑟地立着满山枯木，庭院里只有几枝梅花迎风傲立，人们都已经不愿意出门了，街上仅存的行人也都把自己裹得严严实实。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/01/12/%E5%90%89%E6%96%AF%E5%B0%BC%E4%BA%9A%E4%BC%A0%E5%A5%8701/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -886,7 +898,7 @@ S=\frac{1}{1-\alpha+\alpha/k}</script></li>
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-03-20 11:00:21" itemprop="dateModified" datetime="2020-03-20T11:00:21+08:00">2020-03-20</time>
+                <time title="Modified: 2020-06-16 12:06:14" itemprop="dateModified" datetime="2020-06-16T12:06:14+08:00">2020-06-16</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -913,7 +925,8 @@ S=\frac{1}{1-\alpha+\alpha/k}</script></li>
     <div class="post-body" itemprop="articleBody">
 
       
-          <h3 id="Y86-一个玩具"><a href="#Y86-一个玩具" class="headerlink" title="Y86(一个玩具)"></a>Y86(一个玩具)</h3><p>定义Y86指令集只处理四字节的数据</p>
+          <p><a href="/2020/01/02/csapp3/">上一篇：从零开始的汇编</a></p>
+<h3 id="Y86-一个玩具"><a href="#Y86-一个玩具" class="headerlink" title="Y86(一个玩具)"></a>Y86(一个玩具)</h3><p>定义Y86指令集只处理四字节的数据</p>
 <p><img src="y86.png" alt=""></p>
 <ul>
 <li>将movl拆分成四个指令，显示指定源和目的。i表示立即数，r表示寄存器，m表示存储器。</li>
@@ -925,201 +938,14 @@ S=\frac{1}{1-\alpha+\alpha/k}</script></li>
 <li>halt相当于X86里的hlt，会直接导致处理器暂停</li>
 </ul>
 <p>指令集模拟器YIS</p>
-<h3 id="HCL"><a href="#HCL" class="headerlink" title="HCL"></a>HCL</h3><p>位级电路-&gt;字级电路</p>
-<p>多路复用电路</p>
-<p>ALU（算术单元）：根据输入做一次算术运算</p>
-<h3 id="寄存器"><a href="#寄存器" class="headerlink" title="寄存器"></a>寄存器</h3><p>寄存器操作时，输出会一直保存在当前寄存器状态上，直到时钟信号上升。</p>
-<p><img src="register.png" alt=""></p>
-<p>这是一个典型的寄存器文件，这样一个多端口随机访问存储器允许同时进行多个读写操作。向寄存器文件写入字是由时钟信号控制的。</p>
-<p><img src="register2.png" alt=""></p>
-<p>数据存储器只有一个输入输出。</p>
-<p><em>现实中更为复杂</em></p>
-<h3 id="顺序实现"><a href="#顺序实现" class="headerlink" title="顺序实现"></a>顺序实现</h3><p>一个指令的各个阶段</p>
-<ul>
-<li>取指 fetch</li>
-<li>解码 decode</li>
-<li>执行 execute（包括计算和设置条件码）</li>
-<li>访存 memory</li>
-<li>写回 write back</li>
-<li>更新PC PC update，将PC设置成下一条指令的地址</li>
-</ul>
-<p>大多数指令比较简单，最难实现的应该是pushl和popl（举例如下）</p>
-<div class="table-container">
-<table>
-<thead>
-<tr>
-<th>阶段</th>
-<th>call Dest</th>
-<th>ret</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>fetch</td>
-<td>icode: ifun &lt;-M[PC]<br>valC&lt;-M[PC+1]<br>valP&lt;-PC+5</td>
-<td>icode: ifun &lt;-M[PC]<br>valP&lt;-PC+1</td>
-</tr>
-<tr>
-<td>decode</td>
-<td>valB&lt;-R[%esp]</td>
-<td>valA&lt;-R[%esp]<br>valB&lt;-R[%esp]</td>
-</tr>
-<tr>
-<td>execute</td>
-<td>valE&lt;-valB-4</td>
-<td>valE&lt;-valB+4</td>
-</tr>
-<tr>
-<td>memory</td>
-<td>M[valE]&lt;-valP</td>
-<td>valM&lt;-M[valA]</td>
-</tr>
-<tr>
-<td>write back</td>
-<td>R[%esp]&lt;-valE</td>
-<td>R[%esp]&lt;-valE</td>
-</tr>
-<tr>
-<td>PC update</td>
-<td>PC&lt;-valC</td>
-<td>PC&lt;-valM</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="table-container">
-<table>
-<thead>
-<tr>
-<th>阶段</th>
-<th>pushl rA</th>
-<th>popl rA</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>fetch</td>
-<td>icode: ifun &lt;-M[PC]<br> rA:rB&lt;-M[PC+1]</td>
-<td>icode: ifun &lt;-M[PC]<br/> rA:rB&lt;-M[PC+1]</td>
-</tr>
-<tr>
-<td>decode</td>
-<td>valP&lt;-PC+2</td>
-<td>valP&lt;-PC+2</td>
-</tr>
-<tr>
-<td>execute</td>
-<td>valA&lt;-R[rA] <br/>valB&lt;-R[%esp]</td>
-<td>valA&lt;-R[%esp]<br/> valB&lt;-R[%esp]</td>
-</tr>
-<tr>
-<td>memory</td>
-<td>valE&lt;-valB+(-4)</td>
-<td>valE&lt;-valB+4</td>
-</tr>
-<tr>
-<td>write back</td>
-<td>M[valE]&lt;-valA <br/>R[%esp]&lt;-valE</td>
-<td>valM&lt;-M[valA]<br/> R[%esp]&lt;-valE <br/>R[rA]&lt;-valM</td>
-</tr>
-<tr>
-<td>PC update</td>
-<td>PC&lt;-valP</td>
-<td>PC&lt;-valP</td>
-</tr>
-</tbody>
-</table>
-</div>
-<p>一种顺序实现如下</p>
-<p><img src="seq.png" alt=""></p>
-<h3 id="SEQ实现"><a href="#SEQ实现" class="headerlink" title="SEQ实现"></a>SEQ实现</h3><p>所使用的常数如下（除了指令之外还包括了状态码）</p>
-<p><img src="seqconstant.png" alt=""></p>
-<h5 id="取指阶段"><a href="#取指阶段" class="headerlink" title="取指阶段"></a>取指阶段</h5><ul>
-<li>instr_valid：合法指令</li>
-<li>need_regids：包括寄存器指示符</li>
-<li>need_valC：包含常数</li>
-</ul>
-<p><img src="seqfetch.png" alt=""></p>
-<p>增加器产生值p+1+need_rigids+4*need_valC</p>
-<h5 id="译码和写回阶段"><a href="#译码和写回阶段" class="headerlink" title="译码和写回阶段"></a>译码和写回阶段</h5><p><img src="seqfetch.png" alt=""></p>
-<h5 id="执行阶段"><a href="#执行阶段" class="headerlink" title="执行阶段"></a>执行阶段</h5><p><img src="seqexecute.png" alt=""></p>
-<h5 id="访存阶段"><a href="#访存阶段" class="headerlink" title="访存阶段"></a>访存阶段</h5><p><img src="seqmemory.png" alt=""></p>
-<h5 id="更新PC阶段"><a href="#更新PC阶段" class="headerlink" title="更新PC阶段"></a>更新PC阶段</h5><p>HCL描述如下</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">int new_pc &#x3D; [</span><br><span class="line">	icode &#x3D;&#x3D; ICALL: valC; # 调用</span><br><span class="line">	icode &#x3D;&#x3D; IJXX &amp;&amp; Cnd: valC; # 跳转</span><br><span class="line">	icode &#x3D;&#x3D; IRET: valM; # 返回</span><br><span class="line">	1: valP; # 默认</span><br><span class="line">];</span><br></pre></td></tr></table></figure>
-<h3 id="流水线"><a href="#流水线" class="headerlink" title="流水线"></a>流水线</h3><p>SEQ的问题在于每个单元只在整个时钟周期的一部分时间里被使用</p>
-<p>理想流水线：划分成n个相互独立的周期，每个阶段需要的时间是原来的1/n，其他因素：</p>
-<ul>
-<li>不一致的划分</li>
-<li>流水线过深，反而降低收益（寄存器的延迟）</li>
-</ul>
-<p>现代处理器采用15或更深的流水线，因而需要划分指令的执行减小延迟、设计更好的流水线寄存器、设计时钟传播网络</p>
-<p><u>带反馈的流水线：处理有数据相关的相邻指令</u></p>
-<h3 id="Y86流水线的实现"><a href="#Y86流水线的实现" class="headerlink" title="Y86流水线的实现"></a>Y86流水线的实现</h3><h5 id="SEQ-：重新安排计算阶段"><a href="#SEQ-：重新安排计算阶段" class="headerlink" title="SEQ+：重新安排计算阶段"></a>SEQ+：重新安排计算阶段</h5><p>PC计算移到了时钟周期开始</p>
-<p><img src="seq+.png" alt=""></p>
-<h5 id="插入流水线寄存器"><a href="#插入流水线寄存器" class="headerlink" title="插入流水线寄存器"></a>插入流水线寄存器</h5><p><img src="pipe.png" alt=""></p>
-<p>寄存器按以下方式标号</p>
-<ul>
-<li>F 保存计数器的预测值</li>
-<li>D 保存指令信息</li>
-<li>E 保存指令和寄存器文件读出的值</li>
-<li>M 保存执行指令的结果</li>
-<li>W 提供计算出来的值，提供返回地址</li>
-</ul>
-<h5 id="预测下一个PC"><a href="#预测下一个PC" class="headerlink" title="预测下一个PC"></a>预测下一个PC</h5><p>除了条件转移指令和ret之外，我们能够根据取指信息确定下一条指令地址。</p>
-<p>这里分支预测总是预测选择了条件分支，预测PC为valC。 <u>这种预测成功率约为60%。其他还有根据分支地址高低进行预测（分支地址低则预测选择分支），成功率约为65%，这种改进源自循环是由后向分支结束这一事实。</u></p>
-<p>ret只是简单地暂停处理新指令。<u>大多数程序可以利用栈顶的值作为预测的返回值。</u></p>
-<h5 id="数据冒险"><a href="#数据冒险" class="headerlink" title="数据冒险"></a>数据冒险</h5><p>加入暂停（nop）自动产生的nop指令为气泡（bubble）</p>
-<p><img src="bubble.png" alt=""></p>
-<p>但这会导致流水线暂停过长，降低整体吞吐量。</p>
-<p>解决方法是将要写的值传到流水线寄存器E作为源操作数。在译码阶段发现有写回阶段对寄存器未进行的写，则用这个值作为源操作数。</p>
-<p>这样就有5个转发源e_valE,m_valM,M_valE,W_valM,W_valE</p>
-<p>有两个不同的转发目的valA, valB</p>
-<p>在结构中就是加入Sel+Fwd A和Fwd B的模块更新valA和valB</p>
-<p><u>加载互锁和转发技术结合起来处理所有可能的数据冒险</u></p>
-<h5 id="异常处理"><a href="#异常处理" class="headerlink" title="异常处理"></a>异常处理</h5><p>没有实际的异常指令</p>
-<p>异常处理的几个细节</p>
-<ul>
-<li>多条指令引起异常</li>
-<li>分支预测错误取消了异常指令</li>
-<li>异常指令之后的指令改变了部分状态</li>
-</ul>
-<p><u>当处于访存或写回阶段中的指令导致异常时，流线控制逻辑必须禁止更新条件码或数据存储器。</u></p>
-<h5 id="PIPE各阶段"><a href="#PIPE各阶段" class="headerlink" title="PIPE各阶段"></a>PIPE各阶段</h5><ul>
-<li><p>取指：增加了f_pred</p>
-</li>
-<li><p>译码和写回：使用sel+fwd A和fwd B </p>
-<p>五个转发源的顺序很重要，应该是e_dstE, m_valM, M_valE, W_valM, W_valE</p>
-</li>
-<li><p>执行阶段</p>
-</li>
-<li><p>访存阶段</p>
-</li>
-</ul>
-<h5 id="控制逻辑"><a href="#控制逻辑" class="headerlink" title="控制逻辑"></a>控制逻辑</h5><p>处理4种控制</p>
-<ul>
-<li><p>ret</p>
-<p>ret后加入三个bubble</p>
-<p>但是取指阶段没有办法插入bubble，实际处理中ret后加入三个rrmovl+bubble效果等价</p>
-</li>
-<li><p>加载/使用冒险</p>
-<p>气泡+转发</p>
-</li>
-<li><p>预测错误的分支</p>
-<p>在下一个周期译码和执行阶段加入bubble 指令排除预测错误的指令</p>
-</li>
-<li><p>异常</p>
-</li>
-</ul>
-<p>我们可以由此产生各个流水线控制信号的HCL描述</p>
-<p><u>遇到加载/使用冒险和ret指令组合时，寄存器D不应该插入气泡。</u></p>
-<h5 id="性能分析"><a href="#性能分析" class="headerlink" title="性能分析"></a>性能分析</h5><script type="math/tex; mode=display">
-CPI（每指令周期数）=1+C_b/C_i 
-=1+\sum 指令频率*条件频率*气泡数</script><p>其中C_b是气泡数，C_i是指令数，分加载/使用、预测错误、ret三种情况考虑。</p>
-<h5 id="未完成工作"><a href="#未完成工作" class="headerlink" title="未完成工作"></a>未完成工作</h5><ul>
-<li>多周期指令：计算单元做不同运算所需时间不同</li>
-<li>存储系统的接口</li>
-</ul>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/01/10/csapp4/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1169,7 +995,7 @@ CPI（每指令周期数）=1+C_b/C_i
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-03-20 11:00:15" itemprop="dateModified" datetime="2020-03-20T11:00:15+08:00">2020-03-20</time>
+                <time title="Modified: 2020-06-16 12:06:05" itemprop="dateModified" datetime="2020-06-16T12:06:05+08:00">2020-06-16</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1244,351 +1070,14 @@ CPI（每指令周期数）=1+C_b/C_i
 <h3 id="数据传送指令"><a href="#数据传送指令" class="headerlink" title="数据传送指令"></a>数据传送指令</h3><p>mov<br>movb/movw/movl 传送字节/字/双字<br>movs 符号扩展<br>movsbw/movsbl/movswl<br>movz 零扩展<br>movzbw/movzbl/movzwl</p>
 <p>pushl 双字压栈<br>popl 双字出栈</p>
 <p>leal S D 加载有效地址 &amp;S-&gt;D<br>和movl的区别在于leal赋值的是地址，movl赋值的是值</p>
-<h3 id="整数算术操作"><a href="#整数算术操作" class="headerlink" title="整数算术操作"></a>整数算术操作</h3><div class="table-container">
-<table>
-<thead>
-<tr>
-<th>操作</th>
-<th>含义</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>INC D</td>
-<td>加一</td>
-</tr>
-<tr>
-<td>DEC D</td>
-<td>减一</td>
-</tr>
-<tr>
-<td>NEG D</td>
-<td>取负</td>
-</tr>
-<tr>
-<td>NOT D</td>
-<td>取补</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>ADD S, D</td>
-<td>相加</td>
-</tr>
-<tr>
-<td>SUB S, D</td>
-<td>相减 D-S</td>
-</tr>
-<tr>
-<td>IMUL S, D</td>
-<td>相乘</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>XOR S, D</td>
-<td>异或</td>
-</tr>
-<tr>
-<td>OR S, D</td>
-<td></td>
-</tr>
-<tr>
-<td>AND S, D</td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>SAL k, D</td>
-<td>左移 D&lt;&lt;k</td>
-</tr>
-<tr>
-<td>SHL k, D</td>
-<td>同上</td>
-</tr>
-<tr>
-<td>SAR k, D</td>
-<td>算术右移 D&gt;&gt;k （填上符号位），特别的，SAR D为SAR $1, D的简写</td>
-</tr>
-<tr>
-<td>SHR k, D</td>
-<td>逻辑右移 D&gt;&gt;k  （填上0）</td>
-</tr>
-</tbody>
-</table>
-</div>
-<h3 id="特殊算术操作"><a href="#特殊算术操作" class="headerlink" title="特殊算术操作"></a>特殊算术操作</h3><p>imull S 有符号全64位乘法 S*R[%eax]-&gt;R[%edx]:R[%eax]<br>mull S 无符号全64位乘法 S*R[%eax]-&gt;R[%edx]:R[%eax]<br>cltd 转为四字 R[%eax]-&gt;R[%edx]:R[%eax]<br>idivl S 有符号除法 R[%edx]:R[%eax] mod S -&gt; R[%edx]<br>                             R[%edx]:R[%eax] / S -&gt; R[%eax]<br>divl S 无符号除法 同上</p>
-<h3 id="条件码"><a href="#条件码" class="headerlink" title="条件码"></a>条件码</h3><p>CF 进位 ZF 零 SF 负数 OF 补码溢出</p>
-<p>只设置条件码而不改变目的寄存器的值</p>
-<ul>
-<li>CMP S2, S1 基于S1-S2</li>
-<li>TEST S2, S1 基于S1&amp;S2</li>
-</ul>
-<p>SET系列指令 操作条件码存储一个字节的存储器位置</p>
-<h3 id="跳转指令"><a href="#跳转指令" class="headerlink" title="跳转指令"></a>跳转指令</h3><p>无条件跳转 jmp</p>
-<ul>
-<li>jmp .L1 直接跳转</li>
-<li>jmp *%eax 间接跳转</li>
-</ul>
-<p>条件跳转(只能是直接跳转）</p>
-<div class="table-container">
-<table>
-<thead>
-<tr>
-<th>指令</th>
-<th>跳转条件</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>je/jz</td>
-<td>ZF</td>
-<td>相等或零</td>
-</tr>
-<tr>
-<td>jne/jnz</td>
-<td>~ZF</td>
-<td></td>
-</tr>
-<tr>
-<td>js</td>
-<td>SF</td>
-<td>负数</td>
-</tr>
-<tr>
-<td>jns</td>
-<td>~SF</td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>jg/jnle</td>
-<td>~(SF^OF)&amp;~ZF</td>
-<td>大于（有符号）</td>
-</tr>
-<tr>
-<td>jge/jnl</td>
-<td>~(SF^OF)</td>
-<td>大于等于（有符号）</td>
-</tr>
-<tr>
-<td>jl/jnge</td>
-<td>SF^OF</td>
-<td>小于（有符号）</td>
-</tr>
-<tr>
-<td>jle/jng</td>
-<td>(SF^OF)&#124;ZF</td>
-<td>小于等于（有符号）</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>ja/jnbe</td>
-<td>~CF&amp;~ZF</td>
-<td>大于（无符号）</td>
-</tr>
-<tr>
-<td>jae/jnb</td>
-<td>~CF</td>
-<td>大于等于（无符号）</td>
-</tr>
-<tr>
-<td>jb/jnae</td>
-<td>CF</td>
-<td>小于（无符号）</td>
-</tr>
-<tr>
-<td>jbe/jna</td>
-<td>CF&#124;ZF</td>
-<td>小于等于（无符号）</td>
-</tr>
-</tbody>
-</table>
-</div>
-<h3 id="条件赋值"><a href="#条件赋值" class="headerlink" title="条件赋值"></a>条件赋值</h3><p>cmovl S, R 如果&lt;，用S代替R<br>cmov系列指令和上面j系列相似<br><strong>不是所有的条件表达式可以用条件传送来编译</strong>，因为代码会对then-expr和else-expr求值，如果有一个值不存在或者操作了全局变量，即使测试为假，也会导致错误</p>
-<h3 id="switch方法"><a href="#switch方法" class="headerlink" title="switch方法"></a>switch方法</h3><p>在.rodata(Read-Only Data)里声明switch情况分配地址<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">.L7:</span><br><span class="line">  .long .L3</span><br><span class="line">  .long .L2</span><br><span class="line">  .long .L4</span><br><span class="line">  ... ...</span><br></pre></td></tr></table></figure><br>然后使用间接跳转<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jmp *.L7(, %eax, 4) # Goto *jt[index]</span><br></pre></td></tr></table></figure><br>值得注意的是，<strong>当switch的case值不连续且跨度足够大的时候，会编译成multi-if的形式</strong></p>
-<p><em>有传闻显示，编译器还有二分区间这样的骚操作</em></p>
-<h3 id="程序栈"><a href="#程序栈" class="headerlink" title="程序栈"></a>程序栈</h3><p>单个过程分配的那部分栈称为栈帧，最顶端以两个指针界定<br>%ebp为帧指针，%esp为栈指针，程序执行时，栈指针可以移动，一般相对于帧指针进行访问<br><img src="stackframe.png" alt=""></p>
-<p>转移控制指令</p>
-<ul>
-<li>call Label 过程调用</li>
-<li>call *Operand 过程调用</li>
-<li>leave 为返回准备栈</li>
-<li>ret 从过程调用中返回<br>call指令将控制转移到一个函数开始，ret指令返回到call指令之后的那条指令<br>leave指令将%esp移到%ebp然后弹出%ebp。如果函数要返回整数或指针的话，寄存器%eax可以用来返回值。</li>
-</ul>
-<p>一个典型的过程调用示例</p>
-<p><img src="stackframeExample.png" alt=""></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">caller:</span><br><span class="line">  pushl %ebp</span><br><span class="line">  movl %esp, %ebp</span><br><span class="line">  subl $24, %esp</span><br><span class="line">  ... # 赋值</span><br><span class="line">  call swap_add</span><br><span class="line">swap_add:</span><br><span class="line">  pushl %ebp # Save old %ebp</span><br><span class="line">  movl %esp, %ebp</span><br><span class="line">  pushl %ebx</span><br><span class="line">  ... # 主体代码</span><br><span class="line">  popl %ebx</span><br><span class="line">  popl %ebp</span><br><span class="line">  ret # 返回值在%eax</span><br><span class="line">caller: # 之后的代码</span><br><span class="line">  ... </span><br><span class="line">  imull %edx, %eax</span><br><span class="line">  leave</span><br><span class="line">  ret</span><br></pre></td></tr></table></figure>
-<p><em>leave效果上等价于几个popl</em>，但效率上更高</p>
-<h3 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h3><p>声明方式：T A[N]</p>
-<p>假设整型数组E存在%edx，整数索引i存在%ecx</p>
-<div class="table-container">
-<table>
-<thead>
-<tr>
-<th>表达式</th>
-<th>类型</th>
-<th>值</th>
-<th>汇编代码</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>E</td>
-<td>int*</td>
-<td>x_E</td>
-<td>movl %edx, %eax</td>
-</tr>
-<tr>
-<td>E[i]</td>
-<td>int</td>
-<td>M[x_E+4i]</td>
-<td>movl (%edx,%ecx,4), %eax</td>
-</tr>
-<tr>
-<td>&amp;E[i]</td>
-<td>int*</td>
-<td>x_E+4i</td>
-<td>leal (%edx, %ecx, 4), %eax</td>
-</tr>
-</tbody>
-</table>
-</div>
-<h3 id="异质数据结构"><a href="#异质数据结构" class="headerlink" title="异质数据结构"></a>异质数据结构</h3><p>struct声明数据结构类型</p>
-<p>union允许以多种类型引用一个对象-&gt;一般需要创建一个标签字段</p>
-<p><u>数据对齐：要求short地址必须为2的倍数，int等地址必须为4的倍数</u></p>
-<h3 id="GDB"><a href="#GDB" class="headerlink" title="GDB"></a>GDB</h3><ul>
-<li>开始和停止：<ul>
-<li>quit</li>
-<li>run</li>
-<li>kill</li>
-</ul>
-</li>
-<li>断点：<ul>
-<li>break sum</li>
-<li>break *0x00000000</li>
-<li>delete 1</li>
-</ul>
-</li>
-<li>执行：<ul>
-<li>stepi n 执行n条指令，默认1条</li>
-<li>nexti 以程序为单位执行</li>
-<li>continue</li>
-<li>finish</li>
-</ul>
-</li>
-<li>检查代码（反汇编）：<ul>
-<li>disas</li>
-<li>disas sum</li>
-<li>disas 0x00000000 反汇编地址附近的函数</li>
-<li>disas 0x00000000 0x000000ff</li>
-</ul>
-</li>
-<li>检查数值 <ul>
-<li>print $eax（十进制）</li>
-<li>print /x $eax(十六进制)</li>
-<li>print <em>(int </em>)($ebp+8) 输出%ebp+8处的整数</li>
-</ul>
-</li>
-<li>有用的信息<ul>
-<li>info frame 当前栈帧</li>
-<li>info registers 所有寄存器</li>
-</ul>
-</li>
-</ul>
-<h3 id="保护机制"><a href="#保护机制" class="headerlink" title="保护机制"></a>保护机制</h3><ul>
-<li>栈随机化</li>
-<li>栈保护</li>
-<li>限制存储可执行代码的存储器</li>
-</ul>
-<h3 id="64位"><a href="#64位" class="headerlink" title="64位"></a>64位</h3><p>指针和声明为长整型的变量都是64位，用movq和addq代替movl和addl</p>
-<p>相应的运算和控制也要加上q</p>
-<p>返回值放在寄存器%rax中</p>
-<p>许多函数没有生成栈帧，通过寄存器传递参数，参数传递见下表</p>
-<div class="table-container">
-<table>
-<thead>
-<tr>
-<th>操作数大小</th>
-<th>1</th>
-<th>2</th>
-<th>3</th>
-<th>4</th>
-<th>5</th>
-<th>6</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>64</td>
-<td>%rdi</td>
-<td>%rsi</td>
-<td>%rdx</td>
-<td>%rcx</td>
-<td>%r8</td>
-<td>%r9</td>
-</tr>
-<tr>
-<td>32</td>
-<td>%edi</td>
-<td>%esi</td>
-<td>%edx</td>
-<td>%ecx</td>
-<td>%r8d</td>
-<td>%r9d</td>
-</tr>
-<tr>
-<td>16</td>
-<td>%di</td>
-<td>%si</td>
-<td>%dx</td>
-<td>%cx</td>
-<td>%r8w</td>
-<td>%r9w</td>
-</tr>
-<tr>
-<td>8</td>
-<td>%dil</td>
-<td>%sil</td>
-<td>%dl</td>
-<td>%cl</td>
-<td>%r8b</td>
-<td>%r9b</td>
-</tr>
-</tbody>
-</table>
-</div>
-<p>需要帧栈的情况如下</p>
-<ul>
-<li>局部变量太多</li>
-<li>局部变量是数组或结构</li>
-<li>用&amp;计算局部变量地址</li>
-<li>需要传递栈上的参数</li>
-<li>需要保存它的状态</li>
-</ul>
-<p>此时x86-64一般会在过程开始后固定栈指针%rsp，并通过栈指针访问</p>
-<p><strong>相比之下，x86-64的代码比IA32更简洁且需要较少存储器访问</strong></p>
-<p><img src="cpu64.png" alt=""></p>
-<p>16个通用目的寄存器中，6个用来传递参数（%rdi,%rsi,%rdx,%rcx,%r8,%r9），6个被调用者保存的临时寄存器（%rbx,%rbp,%r12~%r15)，1个保存返回值(%rax)，1个栈指针(%rsp)，剩下的是调用者保存的寄存器（%r10,%r11）</p>
-<p>由于没有帧指针寄存器，可以用寄存器%rbp作为通用寄存器</p>
-<p><em>跳转到ret前会加rep作为空操作（使处理器适当预测ret目的以加速）</em></p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/01/02/csapp3/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1638,7 +1127,7 @@ CPI（每指令周期数）=1+C_b/C_i
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-01-11 22:12:26" itemprop="dateModified" datetime="2020-01-11T22:12:26+08:00">2020-01-11</time>
+                <time title="Modified: 2020-06-16 12:13:29" itemprop="dateModified" datetime="2020-06-16T12:13:29+08:00">2020-06-16</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1662,201 +1151,14 @@ CPI（每指令周期数）=1+C_b/C_i
 
       
           <p>​    经过漫漫长夜的飞行，飞机缓缓地降落在跑道上。地面上星星点点的小房子渐渐明晰起来，地上还在闪耀着的跑道灯，在晨曦中显得暗淡无力，罗一成恍惚间意识到，他终于来到了吉斯尼娅，这个古老而年轻的国度，这个陌生而熟悉的城市了。</p>
-<p>​    飞机在跑道上开始减速，随着一抹晨光从飞机的后弦方向斜斜地照射过来，整个飞机仿佛也开始苏醒了。乘客们的交谈声渐渐响了起来，打破了延续十七个小时的安静；机舱里再次活跃了起来，有些乘客已经开始急急忙忙地收拾自己的行李了。</p>
-<p>​    不过，这些都似乎与罗一成毫无关系。</p>
-<p>​    罗一成也开始清醒过来，十七个小时的飞行中，他完完全全地沉浸在自己的迷梦里，这是一个旖旎多姿的梦，如果他的梦有颜色的话，那一定是金色的：从小罗一成就听闻吉斯尼娅的种种传奇，带着对吉斯尼娅美好的想象，只不过他从没想过，他会如今天一般真正来到吉斯尼娅，至少，不会来得那么快。</p>
-<p>​    在他的印象里，或者说，在大多数人眼里，吉斯尼娅是危险而神秘的，而罗一成似乎对这样捉摸不定的东西尤其有好感；那些有关吉斯尼娅的美丽传说就仿佛五光十色的肥皂泡，越是缥缈、越是虚幻、越是引人入迷。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/09/claudius/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Hulieu">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hulieu">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/04/09/claudius/" class="post-title-link" itemprop="url">A review of Hamlet</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-04-09 17:48:15" itemprop="dateCreated datePublished" datetime="2019-04-09T17:48:15+08:00">2019-04-09</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-02-19 14:29:21" itemprop="dateModified" datetime="2020-02-19T14:29:21+08:00">2020-02-19</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%96%B5%E5%90%8E%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">喵后记</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p><strong>Claudius</strong> - The villain of the play, a calculating, ambitious politician, driven by his sexual appetites and his lust for power, but he occasionally shows signs of guilt and human feeling—his love for Gertrude, for instance, seems sincere. </p>
-<p><strong>Hamlet</strong> - melancholy, bitter, and cynical, full of hatred for his uncle’s scheming and his mother’s frailty. </p>
-<p><strong>Gertrude</strong> - Danish queen, the prince’s own mother. Pharaoh died she remarried Claudius. </p>
-<p><strong>Ophelia</strong> - Polonius’s daughter, a beautiful young lady with whom Hamlet has been in love. Ophelia is a sweet and innocent young girl, who obeys her father and her brother, Laertes. </p>
-<p><strong>The Ghost</strong> - The spectre of Hamlet’s recently deceased father. The ghost, who claims to have been murdered by Claudius, calls upon Hamlet to avenge him. </p>
-<p><strong>Laertes</strong> - Polonius’s son. For his father and his sister’s death with swords killed Hamlet. He also died in the poison of the sword, though Hamlet didn’t realize sword is poisoned.</p>
-<p><strong>Hamlet’s Madness is Feigned</strong></p>
-<p>Some hold that Shakespeare never intended to represent Hamlet as mad but expressly a feigner of madness, and even created the real madness of Ophelia, to contrast it with feigned madness. In every single instance in which Hamlet’s madness is manifested, he has good reason for assuming that madness: while, on the other hand, whenever there was no need to hoodwink anyone, his thought, language and action, bear no resemblance to unsoundness of intellect.” In Act I, Scene V, Hamlet tells Horatio and others that from now on he shall behave like a mad. His feigned madness provides him a great opportunity to find out the reality.:</p>
-<p><strong><em>Here, as before, never, so help you mercy,\</em></strong><br> <strong><em>How strange or odd so e’er I bear myself,\</em></strong><br> <strong><em>As I perchance hereafter shall think meet,\</em></strong><br> <strong><em>To put an antic disposition on……..\</em></strong></p>
-<p>Hamlet’s madness is feigned on the ground that, on various occasions, he is seen in a good temper. His usage of phrases and ideas are not like that of an insane man. He rarely talks in a manner that compels us to say that Hamlet’s madness is real. In the Closet Scene, Hamlet tells his mother:</p>
-<p><strong><em>That I essentially am not in madness\</em></strong><br> <strong><em>But mad in craft.\</em></strong></p>
-<p>To prove the words of the ghost, Hamlet is going to stage a mock-play. No mad person can handle such things. Moreover, Hamlet also directs the actors about the play they are going to enact before the King. Hamlet also tells his friend, Horatio, to keep an eye on the King to catch his conscience, which no one can manage but a man of sense and intellect. Even Guildenstern and Rosencrantz do not think that Hamlet is mad. They describe his behaviour as a “crafty madness.” </p>
-<p>In the Closet Scene, Hamlet convinces her mother in such a manner that she is compelled to accept her guilt.</p>
-<blockquote>
-<p> She says:</p>
-<p><strong><em>O Hamlet, speak no more:\</em></strong><br> <strong><em>Thou turn’st mine eyes into my very soul;\</em></strong><br> <strong><em>And there I see such black and grained spots\</em></strong><br> <strong><em>As will not leave their tinct.\</em></strong></p>
-<p>Hamlet’s comments on the art of acting are so effective and precise that such kinds of statements could not have come from the lips of an insane man. He advises the actors in the following manner:</p>
-<p><strong><em>Speak the speech, I pray you, as I pronounced it to\</em></strong><br> <strong><em>you, trippingly on the tongue: but if you mouth it,\</em></strong><br> <strong><em>as many of your players do, I had as lief the\</em></strong><br> <strong><em>town-crier spoke my lines. Nor do not saw t***</em></strong>he air*<strong><br> *</strong>too much with your hand, thus, but use all gently;*<strong><br> *</strong>for in the very torrent, tempest, and, as I may say,*<strong><br> *</strong>the whirlwind of passion, you must acquire and beget*<strong><br> *</strong>a temperance that may give it smoothness..…….***</p>
-</blockquote>
-<p>Polonius is so much impressed with the replies of Hamlet that he remarks:</p>
-<p>“ How pregnant sometimes his replies are! a happiness that often madness his on, which reason and sanity could not so prosperously be delivered of.”</p>
-<p><strong>Hamlet’s Madness is Real</strong></p>
-<p>Many critics are of the opinion that Hamlet’s madness is real on the basis of some grounds. Though, in the beginning of the play, he tells his friends that he is going to pretend as mad, yet due to the circumstances, his melancholic nature and grief over hasty marriage of his mother bring about drastic changes in his mental behaviour. Look at the following lines taken from Act II, Scene I, wherein Ophelia gives an account of the strange behaviour of Hamlet:</p>
-<p><strong><em>My lord, as I was sewing in my closet,\</em></strong><br> <strong><em>Lord Hamlet, with his doublet all unbraced;\</em></strong><br> <strong><em>No hat upon his head; his stockings foul’d,\</em></strong><br> <strong><em>Ungarter’d, and down-gyved to his ancle;\</em></strong><br> <strong><em>Pale as his shirt; his knees knocking each other;\</em></strong><br> <strong><em>And with a look so piteous in purport\</em></strong><br> <strong><em>As if he had been loosed out of hell\</em></strong><br> <strong><em>To speak of horrors,—he comes before me.\</em></strong></p>
-<p>She also tells her father that he took her by hand and took such a sigh, which was “so piteous and profound as it did seem to shatter all his bulk.” Polonius, when hears her statement about the strange behaviour of Hamlet, concludes that the strange behaviour of Hamlet is due to disappointment in love. Polonius calls his strange behaviour as “the very ecstasy of love.” </p>
-<p>And in the nunnery scene, Hamlet insults Ophelia in the same manner as he insulted her earlier in the play. He advises her not to marry but to go to nunnery.</p>
-<p>(“If thou dost marry, I’ll give thee this plague for thy dowry. Be thou as chaste as ice, as pure as snow, thou shalt not escape calumny. Get thee to a nunnery, go. Farewell. Or, if thou wilt needs marry, marry a fool, for wise men know well enough what monsters you make of them. To a nunnery, go, and quickly too. Farewell.”)</p>
-<p>This strange behaviour of Hamlet convinces Ophelia that he has really gone mad. She expresses her grief over the mental ailment of Hamlet in the following words:</p>
-<p><strong><em>Oh, what a noble mind is here o’erthrown!—\</em></strong><br> <strong>*The courtier’s, soldier’s, scholar’s, eye, to</strong>ngue, sword,……*<strong><br> *</strong>Oh, woe is me,*<strong><br> *</strong>T’ have seen what I have seen, see what I see!***</p>
-<p>On the “vile king” Claudius.</p>
-<p>Actually both Claudius and Hamlet ultimately sacrifice humanity and humaneness in the acquisition of their goals. But what makes Claudius a villain is that he is wrong to kill people merely to fulfill his own thirst for power and sex, and Hamlet is right for the vengeance on the vile king with a flag of integrity; Claudius is a sneak who murdered and lied. Hamlet commits his murders in the open and suffers the pangs of his own conscience. Claudius subverts his conscience and refuses to ask for divine forgiveness; Hamlet seeks contrition and absolves himself of guilt before he dies; Claudius receives no absolution and seeks none. Hamlet will spend eternity in Heaven; Claudius will burn in Hell.</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/01/12/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Hulieu">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hulieu">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/01/12/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-01-12 00:00:00" itemprop="dateCreated datePublished" datetime="2019-01-12T00:00:00+08:00">2019-01-12</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-01-12 10:14:58" itemprop="dateModified" datetime="2020-01-12T10:14:58+08:00">2020-01-12</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="Hexo-official-start"><a href="#Hexo-official-start" class="headerlink" title="Hexo official start"></a>Hexo official start</h1><p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-<h1 id="Quick-Start-of-This-Blog"><a href="#Quick-Start-of-This-Blog" class="headerlink" title="Quick Start of This Blog"></a>Quick Start of This Blog</h1><p>First you need to clone from git.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone ***.git</span><br></pre></td></tr></table></figure>
-<p>then checkout branch hexo</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout hexo</span><br></pre></td></tr></table></figure>
-<p>you can add a post by</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo new post_name</span><br></pre></td></tr></table></figure>
-<p>or modify a post by directly modifying the .md in source/_post</p>
-<p>then you can preview the modified blog by running on local server</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo s --debug</span><br><span class="line"># on localhost:4000</span><br></pre></td></tr></table></figure>
-<p>If you want to deploy</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo clean # if delete something</span><br><span class="line">hexo d -g</span><br></pre></td></tr></table></figure>
-<p>then don’t forget to update branch hexo </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git add *</span><br><span class="line">git commit -m &quot;why you update&quot;</span><br><span class="line">git push</span><br></pre></td></tr></table></figure>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/09/28/%E5%90%89%E6%96%AF%E5%B0%BC%E4%BA%9A%E4%BC%A0%E5%A5%870n/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1874,7 +1176,7 @@ CPI（每指令周期数）=1+C_b/C_i
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -1942,14 +1244,14 @@ CPI（每指令周期数）=1+C_b/C_i
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">19</span>
+          <span class="site-state-item-count">22</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -2038,6 +1340,8 @@ CPI（每指令周期数）=1+C_b/C_i
 
   
   <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
 
@@ -2057,6 +1361,10 @@ CPI（每指令周期数）=1+C_b/C_i
   
 
 
+
+
+  
+<script src="/js/local-search.js"></script>
 
 
 

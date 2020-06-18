@@ -14,10 +14,11 @@
 
 
 <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="凸优化问题具有如下形式  min\:f_0(x) subject\:to\:f_i(x)\leq b_i\:, \:i&#x3D;1,...,m其中 $f_i$ 是凸函数 凸集C的仿射包为C中的点的所有仿射组合，即为affC 定义集合C的仿射维数为其仿射包的维数。 定义集合C的相对内部为affC里C的内部，记为relintC  relint\:C&#x3D;\{x\in C|B(x, r)\cap aff\: C\s">
@@ -28,7 +29,7 @@
 <meta property="og:description" content="凸优化问题具有如下形式  min\:f_0(x) subject\:to\:f_i(x)\leq b_i\:, \:i&#x3D;1,...,m其中 $f_i$ 是凸函数 凸集C的仿射包为C中的点的所有仿射组合，即为affC 定义集合C的仿射维数为其仿射包的维数。 定义集合C的相对内部为affC里C的内部，记为relintC  relint\:C&#x3D;\{x\in C|B(x, r)\cap aff\: C\s">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-02-14T10:07:45.000Z">
-<meta property="article:modified_time" content="2020-03-20T03:02:23.012Z">
+<meta property="article:modified_time" content="2020-06-16T04:05:09.529Z">
 <meta property="article:author" content="Hulieu">
 <meta property="article:tag" content="琉璃猫">
 <meta name="twitter:card" content="summary">
@@ -104,6 +105,7 @@
 
   <div class="site-nav-right">
     <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -138,11 +140,38 @@
     <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
 
   </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
   </ul>
 </nav>
 
 
 
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
 
 </div>
     </header>
@@ -196,7 +225,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-03-20 11:02:23" itemprop="dateModified" datetime="2020-03-20T11:02:23+08:00">2020-03-20</time>
+                <time title="Modified: 2020-06-16 12:05:09" itemprop="dateModified" datetime="2020-06-16T12:05:09+08:00">2020-06-16</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -240,7 +269,8 @@ subject\:to\:f_i(x)\leq b_i\:, \:i=1,...,m</script><p>其中 $f_i$ 是凸函数<
 <script type="math/tex; mode=display">
 relint\:C=\{x\in C|B(x, r)\cap aff\: C\subseteq C \: for \:some\: r \}</script><p><strong>凸集</strong>定义为对$x_1\:,\:x_2\in C\:,\:0\leq\theta\leq 1$</p>
 <script type="math/tex; mode=display">
-\theta x_1+(1-\theta)x_2\in C</script><p><strong>锥</strong>定义为<strong>非负齐次</strong>集合，对$x_1\:,\:x_2\in C\:,\:0\leq\theta_1\:,\:theta_2$</p>
+\theta x_1+(1-\theta)x_2\in C</script><a id="more"></a>
+<p><strong>锥</strong>定义为<strong>非负齐次</strong>集合，对$x_1\:,\:x_2\in C\:,\:0\leq\theta_1\:,\:theta_2$</p>
 <script type="math/tex; mode=display">
 \theta_1 x_1+\theta_2 x_2\in C</script><p>集合C的<strong>锥包</strong>是C中元素的所有锥组合，也是包含C的<strong>最小凸锥</strong>。</p>
 <p>凸集的例子</p>
@@ -529,7 +559,7 @@ subject\:to\:\lambda\succeq 0</script><p>对偶问题的差值称之为<strong>�
 <script type="math/tex; mode=display">
 f_i(x)<0\:,\:i=1,...,m,\:Ax=b</script><p>这个条件可以进一步改进为<strong>仿射条件不需要严格成立，其他条件严格成立</strong>。因而对于线性规划问题，根据Slater条件弱化形式，只要原问题可行，强对偶性都成立。</p>
 <p>由此推论：<strong>矩阵对策的混合策略</strong>满足强对偶条件，所以知道对方策略并不影响博弈的策略。</p>
-<h5 id="对偶问题的几何解释"><a href="#对偶问题的几何解释" class="headerlink" title="对偶问题的几何解释"></a>对偶问题的几何解释</h5><p>定义集合</p>
+<h4 id="对偶问题的几何解释"><a href="#对偶问题的几何解释" class="headerlink" title="对偶问题的几何解释"></a>对偶问题的几何解释</h4><p>定义集合</p>
 <script type="math/tex; mode=display">
 G=\{(f_1(x),...,f_m(x),h_1(x),...,h_p(x),f_0(x)\}</script><p>很容易定义优化问题最优解</p>
 <script type="math/tex; mode=display">
@@ -546,13 +576,13 @@ p^*=inf\{t|(0,0,t)\in A\}</script><p>同上也是定义了A的支撑超平面。
 <p>在几何意义下，<strong>Slater条件意味着分离超平面必非竖直</strong>，强对偶成立。证明如下：先如上定义集合A，另一个凸集</p>
 <script type="math/tex; mode=display">
 B=\{(0,0,s)|s<p^*\}</script><p>可以找到超平面分离AB，因而$g(\lambda,\nu)\geq p^*$，然后通过说明对偶问题能达到最优，说明强对偶成立。</p>
-<h5 id="鞍点解释"><a href="#鞍点解释" class="headerlink" title="鞍点解释"></a>鞍点解释</h5><p>弱对偶性可以描述为</p>
+<h4 id="鞍点解释"><a href="#鞍点解释" class="headerlink" title="鞍点解释"></a>鞍点解释</h4><p>弱对偶性可以描述为</p>
 <script type="math/tex; mode=display">
 sup_{\lambda\succeq 0}inf_x L(x,\lambda)\leq inf_x sup_{\lambda\succeq 0}L(x,\lambda)</script><p>强对偶性即为上式取等。</p>
 <p>我们称一对$\hat{w}$，$\hat{z}$是<strong>鞍点</strong>如果</p>
 <script type="math/tex; mode=display">
 f(\hat{w},z)\leq f(\hat{w},\hat{z})\leq f(w,\hat{z})</script><p>上式意味着<strong>极大极小性质</strong>成立。</p>
-<h5 id="最优性条件"><a href="#最优性条件" class="headerlink" title="最优性条件"></a>最优性条件</h5><p>如果找到对偶可行解$(\lambda,\nu)$那么就对原问题的最优值建立了一个下界。定义差值</p>
+<h4 id="最优性条件"><a href="#最优性条件" class="headerlink" title="最优性条件"></a>最优性条件</h4><p>如果找到对偶可行解$(\lambda,\nu)$那么就对原问题的最优值建立了一个下界。定义差值</p>
 <script type="math/tex; mode=display">
 f_0(x)-g(\lambda,\nu)</script><p>是<strong>对偶间隙</strong>。这可以用在优化算法中给出<strong>非启发式停止准则</strong>。</p>
 <p>如果强对偶性成立，且$x^*,\lambda^*,\nu^*$取到最优，那么</p>
@@ -565,12 +595,12 @@ f_i(x^*)\leq 0\\
 h_i(x^*)=0\\
 \lambda_i^*\geq 0\\
 \lambda_i^* f_i(x^*)=0</script><p>KKT条件是任何一对原问题最优解和对偶问题最优解必须满足的条件。当原问题是<strong>凸优化问题</strong>时，满足KKT条件的点也是原、对偶问题的最优解。</p>
-<h5 id="扰动问题"><a href="#扰动问题" class="headerlink" title="扰动问题"></a>扰动问题</h5><script type="math/tex; mode=display">
+<h4 id="扰动问题"><a href="#扰动问题" class="headerlink" title="扰动问题"></a>扰动问题</h4><script type="math/tex; mode=display">
 min\:f_0(x)\\
 subject\:to\:f_i(x)\leq u_i\\
 h_i(x)=v_i</script><p>定义最优解为$p^*(u,v)$。假设原问题强对偶性成立并且最优值可以达到，那么</p>
 <script type="math/tex; mode=display">
-p^*(u,v)\geq p^*(0,0)-\lambda^{*T}u-\nu^{*T}v</script><h5 id="择一定理"><a href="#择一定理" class="headerlink" title="择一定理"></a>择一定理</h5><p>严格不等式系统的可行性</p>
+p^*(u,v)\geq p^*(0,0)-\lambda^{*T}u-\nu^{*T}v</script><h4 id="择一定理"><a href="#择一定理" class="headerlink" title="择一定理"></a>择一定理</h4><p>严格不等式系统的可行性</p>
 <script type="math/tex; mode=display">
 f_i(x)<0,\:h_i(x)=0</script><p>和</p>
 <script type="math/tex; mode=display">
@@ -587,6 +617,7 @@ Ax\preceq 0,\:c^Tx<0</script><p>和</p>
 <script type="math/tex; mode=display">
 A^Ty+c=0,\:y\succeq0</script><p>是一对强择一系统。</p>
 <p><u>Lagrange对偶对广义不等式同样成立，对偶条件和KKT条件中$\lambda$的约束从$\geq 0$改为$\succeq_{K^*}0$。</u></p>
+<p><a href="/2020/02/21/ConvexOptimization2/">下一篇：凸优化问题（算法与应用）</a></p>
 
     </div>
 
@@ -670,7 +701,7 @@ A^Ty+c=0,\:y\succeq0</script><p>是一对强择一系统。</p>
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#凸集"><span class="nav-number">1.</span> <span class="nav-text">凸集</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#凸函数"><span class="nav-number">2.</span> <span class="nav-text">凸函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#凸优化问题"><span class="nav-number">3.</span> <span class="nav-text">凸优化问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#对偶"><span class="nav-number">4.</span> <span class="nav-text">对偶</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#对偶问题的几何解释"><span class="nav-number">4.0.1.</span> <span class="nav-text">对偶问题的几何解释</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#鞍点解释"><span class="nav-number">4.0.2.</span> <span class="nav-text">鞍点解释</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#最优性条件"><span class="nav-number">4.0.3.</span> <span class="nav-text">最优性条件</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#扰动问题"><span class="nav-number">4.0.4.</span> <span class="nav-text">扰动问题</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#择一定理"><span class="nav-number">4.0.5.</span> <span class="nav-text">择一定理</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#凸集"><span class="nav-number">1.</span> <span class="nav-text">凸集</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#凸函数"><span class="nav-number">2.</span> <span class="nav-text">凸函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#凸优化问题"><span class="nav-number">3.</span> <span class="nav-text">凸优化问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#对偶"><span class="nav-number">4.</span> <span class="nav-text">对偶</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#对偶问题的几何解释"><span class="nav-number">4.1.</span> <span class="nav-text">对偶问题的几何解释</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#鞍点解释"><span class="nav-number">4.2.</span> <span class="nav-text">鞍点解释</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#最优性条件"><span class="nav-number">4.3.</span> <span class="nav-text">最优性条件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#扰动问题"><span class="nav-number">4.4.</span> <span class="nav-text">扰动问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#择一定理"><span class="nav-number">4.5.</span> <span class="nav-text">择一定理</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -686,14 +717,14 @@ A^Ty+c=0,\:y\succeq0</script><p>是一对强择一系统。</p>
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">19</span>
+          <span class="site-state-item-count">22</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -782,6 +813,8 @@ A^Ty+c=0,\:y\succeq0</script><p>是一对强择一系统。</p>
 
   
   <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
 
@@ -801,6 +834,10 @@ A^Ty+c=0,\:y\succeq0</script><p>是一对强择一系统。</p>
   
 
 
+
+
+  
+<script src="/js/local-search.js"></script>
 
 
 
