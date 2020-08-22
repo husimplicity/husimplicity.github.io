@@ -43,7 +43,7 @@ $|ST||S\cap T|=|S||T|$
 
 定义：正规子群$K\lhd G$，如果对任意$g\in G$，$gKg^{-1}=K$。
 
-定义：x的共轭为$for\:some\:a\:,axa^{-1}$
+定义：x的共轭为$\{x^\*|\exists a\:,x^\*=axa^{-1}\}$
 
 题目：（H.B.Mann)有限群G，子集ST，|S|+|T|>G，那么G=ST。（考察S^{-1}g，必和T有交集）；有限域F的任意元素可以写成平方和。（考察a^2和b-a^2）
 
@@ -109,6 +109,163 @@ H的共轭的个数=$[G:\:N_G(H)]$
 
 推论：k是一个域，有限群|G|=n，那么G可以被嵌入GL(n,k)。
 
+定理：如果$H\leq G$且$[G:H]=n$，那么有同态$\rho:G\to S_n$，满足$\ker\rho\leq H$。（这样的同态$\rho$称为**G在H陪集上的表示**）
+
+推论：若定理中的G为单群，那么G可以被嵌入到$S_n$。（这也是Cayley定理的一个推广）
+
+定理：$H\leq G$，定义$X$是H在G中的共轭。那么有同态$\phi:G\to S_X$，满足$\ker\phi\leq N_G(H)$。（这样的同态$\phi$称为**G在H共轭上的表示**）
+
+### G-set
+
+集合X，群G，定义X是G-set如果存在$\alpha:G\times X\to X$使得
+
+1. 对$\forall x\in X$，1x=x
+2. g(hx)=(gh)x
+
+也称为G作用在X上。
+
+可以看到存在G到$S_x$的同态。同时，群G到$S_X$的同态也能定义一个X上的群作用G。
+
+定义：轨道G-orbit为
+$$
+O(x)=\{gx:g\in G\}\subset X
+$$
+定义：x的stabilizer
+$$
+G_x=\{g\in G:gx=x\}\leq G
+$$
+定理：如果X是G-set，$x\in X$
+$$
+|O(x)|=[G:G_x]
+$$
+推论：如果G是有限群，$x\in G$，那么x的共轭个数为$[G:C_G(x)]$
+
+推论：如果G是有限群，$H\leq G$，那么H的共轭个数是$[G:N_G(H)]$
+
+定义：X是transitive如果它只有一条轨道
+
+定义：如果X和G都是有限的，称G-set X是有限的
+
+定理（Burnside 引理）：有限的G-set X，轨道数量N
+$$
+N=(1/|G|)\sum_{\tau\in G}F(\tau)
+$$
+其中$F(\tau)$是被$\tau$所固定的x。
+
+定义：$G\leq S_X$，其中$X=\{1,2,...,n\}$，如果C是colors的集合，那么$C^n$是一个G-set，如果我们定义$\tau(c_1,...,c_n)=(c_{\tau 1},...,c_{\tau n})$。如果$|C|=q$，那么一个$C^n$的轨道称为(q-G)-coloring of X。
+
+引理：C是q个颜色的集合，$G\leq S_X$，如果$\tau\in G$，那么$F(\tau)=q^{t(\tau)}$，其中$t(\tau)$是$\tau$的完全分解的cycle个数。
+
+定义：如果$\tau$的完全分解有$e_r(\tau)\geq 0$个r-cycle，那么定义index
+$$
+ind(\tau)=x_1^{e_1(\tau)}...x_n^{e_n(\tau)}
+$$
+如果$G\leq S_n$，那么G的cycle index就是多项式
+$$
+P_G(x_1,...,x_n)=(1/|G|)\sum_{\tau\in G}ind(\tau)\in Q[x_1,...,x_n]
+$$
+推论：如果|X|=n，且$G\leq S_n$，那么(q,G)-coloring的数量是$P_G(q,...,q)$。
+
+定理（Polya，1937）：$G\leq S_X$，其中$|X|=n$，$|C|=q$，定义
+$$
+\sigma^i=c_1^i+...+c_1^i
+$$
+那么(q,G)-cloring of X且有$f_r$个元素是$c_r$的个数是$P_G(\sigma_1,...,\sigma_n)$中$c_1^{f_1}...c_q^{f_q}$的系数。
+
+### Geometry
+
+定义：motion是保距变换T满足$||Tx-Ty||=||x-y||$。
+
+定义：线性变换S是正交的，如果$||Sx||=||x||$。
+
+定理：集合$O(n,R)$（实正交群）是$GL(n,R)$的子群。motion的集合$M(n,R)$是一个群。
+
+定义：矩阵$A\in GL(n,R)$是正交的，如果$AA^T=I$
+
+定义：如果|T|=1（orietation-preserving），称为旋转。旋转群$SO(n,R)\leq O(n,R)$，显然$[O(n,R):SO(n,R)]=2$
+
+定理：任何沿着过原点的超平面H的反射都不是旋转。
+
+定义：二维平面上的图像$\Delta$的对称群
+$$
+\Phi(\Delta)=\{S\in O(2,R):S(\Delta)=\Delta\}
+$$
+定理：如果$\Delta$是一个正n边形，那么$\Phi(\Delta)$是由n阶元素S（旋转）和2阶元素T（反射）生成的。
+
+定义：二面体群$D_{2n}$是2n阶群，由两个元素s,t生成，满足
+$$
+s^n=1,\:t^2=1,\:tst=s^{-1}
+$$
+定理：如果G是有限群，如果$a,b\in G$阶都是2，那么存在n，$<a,b>\cong D_{2n}$。（只需取s=ab,t=a即可）
+
+定义：三维平面上的图像$\Omega$
+$$
+\Phi(\Omega)=\{S\in O(3,R):S(\Omega)=\Omega\}
+$$
+如果$\Omega$是正n面体，每个面有k个边，那么这个群是nk阶的。
+
+定义：函数$\phi:R^2\to R^2$是仿射映射如果有线性变换$\lambda$和向量z
+$$
+\phi(v)=\lambda(v)+z
+$$
+用Aff(2,R)记所有仿射映射的群。
+
+### Sylow Theorems
+
+定义：素数p，p-群是每个元素的阶都是p的幂次。
+
+引理：如果G是个有限阿贝尔群且阶可被素数p整数，那个G有阶为p的元素。
+
+定理（Cauchy，1845）：如果有限G的阶被素数p整除，则G有阶为p的元素。
+
+根据群分类定理：
+$$
+|G|=|Z(G)|+\sum_i[G:C_G(x_i)]
+$$
+可得$p|C_G(x_i)$或者$p||Z(G)|$。前者递归可证，后者是阿贝尔群。
+
+另一种证明由J.H.McKay给出，定义$X=\{(a_1,a_2,...,a_p)|a_1a_2...a_p=1\}$，显然$|X|=|G|^{p-1}$，考虑X的每个元素都有p个轮换，除了满足$\forall i,a_i=a,\:a^p=1$。如果没有阶为1的元素，则只有a=1，那么
+$$
+|X|=|G|^{p-1}=1+kp
+$$
+与p||G|矛盾。
+
+推论：有限群G是p群当且仅当|G|是p的幂次。
+
+定理：如果$G\neq 1$是有限p群，那么它的中心$Z(G)\neq 1$。
+
+推论：素数p，每个阶为$p^2$的群G都是阿贝尔群。（考察G/Z(G)易知）
+
+定理：G是有限p群，如果H是G的真子群，那么$H<N_G(H)$。
+
+定理：G是有限p群，每个G的最大子群都是正规的，且序为p。（由上可知$N_G(H)=G$）
+
+引理：如果有限p群G有$r_1$个阶为p的子群，那么$r_1=1\mod p$（证明：p阶元素central的mod p=-1，not central是p的幂次。$r_1(p-1)\cong -1\mod p$）
+
+定理：有限p群G有$r_s$个阶为$p^s$的子群，那么$r_s\cong 1\mod p$
+
+证明：H是阶为$p^s$的子群，K是阶为$p^{s+1}$的子群且包含H。那么由上定理可知N是K的正规子群，又由上述引理，这样的K个数a mod p = 1。又可以证明，K是阶为$p^{s+1}$的子群，K的$p^s$子群个数b mod p = 1。因此
+$$
+\sum_{i=1}^{r_s}a_i=\sum_{j=1}^{r_{s+1}}b_j
+$$
+由此递归得证。
+
+引理（Laudau，1903）：给定n>0，有理数q，那么只有有限个n元正整数对满足$q=\sum_{j=1}^n(1/i_j)$
+
+定理：给定n，只有有限多个有限群恰好有n个共轭类。（根据引理和共轭类分类定理可得）
+
+定义：素数p，G的sylow p-子群是一个最大p-子群。
+
+引理：P是有限群G的一个sylow p-子群。那么
+
++ $|N_G(P)/P|$和p互素
++ 如果a是p的幂次阶元素，且$aPa^{-1}=P$，那么$a\in P$
+
+定理（Sylow，1872）：（sylow第二定理）如果P是有限群G的一个sylow p-子群，那么G的所有sylow p-子群和P共轭；（sylow第三定理）如果有r个sylow p-子群，那么r||G|，$r\cong 1\mod p$。
+
+推论：有限群G只有一个sylow p-子群当且仅当它是正规子群。
 
 
-35
+
+51
+
