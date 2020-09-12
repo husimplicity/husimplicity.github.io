@@ -1,0 +1,1523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="优化算法四种基本方法  Taylor展开 考虑对偶 split（拆分问题，比如换元法） 交替极小（BCD）  凸优化强对偶&#x2F;KKT条件 单纯形法 内点法 压缩感知稀疏表示问题：  min\:||x||\\ s.t.\:Ax&#x3D;bL0范数是NP难问题，L1范数可以等价为线性规划 稀疏表示&#x3D;好的压缩感知 第一个基础结论：（感知稀疏信号） x是s-稀疏的（s个非零元），通过m个随机感知，$b_k&#x3D;,\:k">
+<meta property="og:type" content="article">
+<meta property="og:title" content="大数据分析中的算法">
+<meta property="og:url" content="http://yoursite.com/2020/03/12/algorithms-for-big-data-analysis/index.html">
+<meta property="og:site_name" content="Hulieu">
+<meta property="og:description" content="优化算法四种基本方法  Taylor展开 考虑对偶 split（拆分问题，比如换元法） 交替极小（BCD）  凸优化强对偶&#x2F;KKT条件 单纯形法 内点法 压缩感知稀疏表示问题：  min\:||x||\\ s.t.\:Ax&#x3D;bL0范数是NP难问题，L1范数可以等价为线性规划 稀疏表示&#x3D;好的压缩感知 第一个基础结论：（感知稀疏信号） x是s-稀疏的（s个非零元），通过m个随机感知，$b_k&#x3D;,\:k">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://yoursite.com/2020/03/12/algorithms-for-big-data-analysis/RLtaxonomy.png">
+<meta property="article:published_time" content="2020-03-12T02:59:23.000Z">
+<meta property="article:modified_time" content="2020-06-16T04:16:58.022Z">
+<meta property="article:author" content="Hulieu">
+<meta property="article:tag" content="琉璃猫">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2020/03/12/algorithms-for-big-data-analysis/RLtaxonomy.png">
+
+<link rel="canonical" href="http://yoursite.com/2020/03/12/algorithms-for-big-data-analysis/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>大数据分析中的算法 | Hulieu</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Hulieu</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/12/algorithms-for-big-data-analysis/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Hulieu">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hulieu">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          大数据分析中的算法
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-03-12 10:59:23" itemprop="dateCreated datePublished" datetime="2020-03-12T10:59:23+08:00">2020-03-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-06-16 12:16:58" itemprop="dateModified" datetime="2020-06-16T12:16:58+08:00">2020-06-16</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%8C%AB%E7%88%AA%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">猫爪记</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%8C%AB%E7%88%AA%E8%AE%B0/Mathematics/" itemprop="url" rel="index"><span itemprop="name">Mathematics</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>优化算法四种基本方法</p>
+<ul>
+<li>Taylor展开</li>
+<li>考虑对偶</li>
+<li>split（拆分问题，比如换元法）</li>
+<li>交替极小（BCD）</li>
+</ul>
+<h1 id="凸优化"><a href="#凸优化" class="headerlink" title="凸优化"></a>凸优化</h1><p>强对偶/KKT条件</p>
+<p>单纯形法</p>
+<p>内点法</p>
+<h1 id="压缩感知"><a href="#压缩感知" class="headerlink" title="压缩感知"></a>压缩感知</h1><p>稀疏表示问题：</p>
+<script type="math/tex; mode=display">
+min\:||x||\\
+s.t.\:Ax=b</script><p><u>L0范数是NP难问题，L1范数可以等价为线性规划</u></p>
+<p>稀疏表示=好的压缩感知</p>
+<p><strong>第一个基础结论：（感知稀疏信号）</strong></p>
+<p><strong>x是s-稀疏的</strong>（s个非零元），通过m个随机感知，$b_k=<a_k, x>,\:k=1,2,…,m$，通过L1最小化重建</p>
+<p>如果$m\geq slog(n)$就可以精确重建</p>
+<p><strong>第二个基础结论：（非适应性感知可压缩的信号）</strong></p>
+<p>$m\geq slog(n)$甚至$m\geq slog(n/s)$，就可以达到</p>
+<script type="math/tex; mode=display">
+||\hat{x}-x||_2\leq ||x-x_s||_2</script><p>其中$x_s$是s个最大的系数。</p>
+<p><strong>第三个基础结论：（对比Lasso或Dantzig）</strong></p>
+<p>令$\bar{s}=m/log(n/m)$</p>
+<script type="math/tex; mode=display">
+||\hat{x}-x||_2^2\leq\inf_{1\leq s\leq\bar{s}}||x-x_s||_2^2+log(n\frac{s\delta^2}{m})</script><a id="more"></a>
+<p><strong>SPARK</strong></p>
+<p>spark(A)定义为A最小的线性相关列个数，一般情况下，$spark(A)\neq rank(A)+1$</p>
+<p>定理（Gorodnitsky&amp;Rao 1997）：如果$Ax=b$有一个解x满足$||X||_0\leq spark(A)/2$，那么x是最稀疏的解。（证明思路：$||x||_0+||y||_0\geq ||x-y||_0\geq spark(A)$）</p>
+<p><strong>Coherence</strong></p>
+<p>Coherence定义为A列向量间最大的正则内积（夹角大小）：$\mu(A)=max\frac{|a_k^Ta_j|}{||a_k||_2||a_j||_2}$</p>
+<p>定理（Donoho&amp;Elad 2003）：$spark(A)\geq 1+\mu^{-1}(A)$</p>
+<p>证明：$A$列正则化为$\bar{A}$，令$p=spark(A)$，$B=\bar{A}^T\bar{A}$的$p\times p$的主子式。所以B对角线为1，且$\sum_{j\neq i}|B_{ij}|\leq(p-1)\mu(A)$。如果$p<1+\mu^{-1}(A)$，那么$|B_{ii}|>\sum_{j\neq i}|B_{ij}|$，所以$B\succ 0$（Gershgorin circle theorem），$spark(A)&gt;p$矛盾。</p>
+<p>推论：如果$Ax=b$有一个解x满足$||X||_0\leq (1+\mu^{-1}(A))/2$，那么x是<strong>唯一</strong>最稀疏的解。</p>
+<p><strong>定理（Donoho&amp;Elad 2003）</strong>：如果A有正则化的列且$Ax=b$有一个解x满足$||X||_0\leq (1+\mu^{-1}(A))/2$，那么x是唯一最稀疏的解，<strong>在L0和L1条件下</strong>。</p>
+<p>证明：由前面定理可知$x$是L0唯一解，设$S$为x张成的空间，设$y$为L1的解，令$h=y-x$，所以$Ah=0$且$||h||_1&lt;2||h_S||_1$（因为$||h_{S^C}||_1&lt;||h_S||_1$）。根据$A^TAh=0$和$||h||_1=\sum_{k\neq j}|h_k|+|h_j|$，得到</p>
+<script type="math/tex; mode=display">
+|h_j|\leq(1+\mu(A))^{-1}\mu(A)||h||_1</script><p>综合两式得到$|h_j|&lt;1$矛盾。</p>
+<p><strong>null space相关性质</strong></p>
+<p>引理：$0 &lt; p\leq 1$，如果$||(y-x)_{S^C}||_p>||(y-x)_S||_P$，那么$||x||_P&lt;||y||_p$。</p>
+<p>定义：null space property（$NSP(k,\gamma)$），每个非零$h\in N(A)$满足$||h_S||_1&lt;\gamma||h_{S^C}||_1$对所有$|S|\leq k$。</p>
+<p>定理（Donoho&amp;Huo 2001）L1范数问题可以唯一恢复k-sparse向量x从$b=Ax$当且仅当A满足 $NSP(k,1)$（证明：充分性S为x张成空间即可，必要性考虑等号成立条件$sgn(x_S)=-sgn(h_S)$。）</p>
+<p>引理（Zhang 2008）：$||x||_1 &lt; ||y||_1$的一个充分条件是$||x||_0 &lt; \frac{1}{4}(\frac{||h||_1}{||h||_2})^2$</p>
+<p>（证明：$||h_S||_1\leq\sqrt{|S|}||h_S||_2\leq\sqrt{||x||_0}||h||_2$，因而上不等式意味着$||h_{S^C}||_1 &gt; ||h_S||_1$。）</p>
+<p>定理（Zhang 2008）L1范数问题可以唯一恢复x如果</p>
+<script type="math/tex; mode=display">
+||x||_0<min\{\frac{1}{4}(\frac{||h||_1}{||h||_2})^2,h\in N(A)\backslash\{0\}\}</script><p><strong>RIP(Restriceted Isometry constants)</strong></p>
+<p>定义：对k，$\delta_k$是最小的标量对所有k-sparse的x满足</p>
+<script type="math/tex; mode=display">
+(1-\delta_k)||x||_2^2\leq ||Ax||_2^2\leq(1+\delta_k)||x||_2^2</script><p>想法：稀疏恢复=远离零空间，如果A有2s线性相关列则不能恢复</p>
+<p>$\delta_{2k}$是是最小的标量对所有k-sparse的$x_1,x_2$满足</p>
+<script type="math/tex; mode=display">
+(1-\delta_{2k})||x_1-x_2||_2^2\leq ||Ax_1-Ax_2||_2^2\leq(1+\delta_{2k})||x_1-x_2||_2^2</script><p>那么如果有s-sparse的解x满足Ax=b</p>
+<ul>
+<li>如果$\delta_{2s}&lt;1$则L0最优解唯一</li>
+<li>如果$\delta_{2s}&lt;0.414$，那么LP relaxtion的解唯一且相等</li>
+<li>(Cai-Wang-Wu)$\delta_{2s}&lt;0.307$是充分的</li>
+<li>(Cai-Zhang)$\delta_{2s}&lt;1/3$是L1重建的充要条件。</li>
+</ul>
+<p><strong>L1解的特征</strong></p>
+<p>x是解等价于$||x+h||_1\geq ||x||_1$对任意属于A零空间的h</p>
+<p>L1重建的充要条件为对所有属于零空间的h，</p>
+<script type="math/tex; mode=display">
+\sum_{i\in T}sgn(x_i)h_i\leq\sum_{i\in T^C}|h_i|</script><p><strong>KKT条件的性质</strong></p>
+<script type="math/tex; mode=display">
+L(x,\lambda)=f(x)+<\lambda,b-Ax></script><p>x是解当且仅当x可行，存在$\lambda$</p>
+<script type="math/tex; mode=display">
+\nabla f(x)-A^*\lambda=0</script><p>即$\nabla f(x)\perp null(A)$。当$f(x)$不可微时，可用<strong>次梯度</strong>同样成立。</p>
+<p>推论：那么L1解x是最优的当且仅当存在$u=A^*\lambda$，满足</p>
+<script type="math/tex; mode=display">
+u_i=sgn(x_i),x_i\neq 0(i\in T)\\
+|u_i|\leq 1,x_i=0(i\in T^C)</script><p>如果$|u_i|<1$且$A^T$列满秩则x唯一。（只需证零空间的h，$||x+h||_1 > ||x||_1$）</p>
+<p>T=supp(x)且$A_T$列满秩，定义valid dual certificate u（作用是证明可以达到）</p>
+<script type="math/tex; mode=display">
+u:=A^*A_T(A_T^*A_T)^{-1}sgn(x_T)</script><p>则y是$A^*\lambda$的形式，且$u_i=sgn(x_i)$（$i\in T$）。对$i\in T^C$，$|u_i|&lt;1$的证明如下</p>
+<p>定义常数$\theta_{S,S’}$满足对所有不相交的集合$T,T’$，$|T|\leq S$，$|T’|\leq S’$，满足</p>
+<script type="math/tex; mode=display">
+<A_{T}c,A_{T'}c'>\leq \theta_{S,S'}||c||||c'||</script><p>如果$S\geq 1$且$\delta_S+\theta_{S,S’}+\theta_{S,2S}&lt;1$，那么如果$|supp(x)|\leq S$，x唯一。</p>
+<p>引理：令$S\geq 1$满足$\delta_S+\theta_{S,2S}&lt;1$，那么存在$\lambda$满足对所有$j\in T$，$\lambda^*A_j=sgn(x_j)$，且对所有$j\in T^C$</p>
+<script type="math/tex; mode=display">
+|u_j|=|\lambda^*A_j|\leq\frac{\theta_{S,S'}}{(1-\delta_S-\theta_{S,2S})\sqrt{S}}||sgn(x)||\leq 1</script><h1 id="压缩感知（算法）"><a href="#压缩感知（算法）" class="headerlink" title="压缩感知（算法）"></a>压缩感知（算法）</h1><p>L1正则的最小二乘问题</p>
+<script type="math/tex; mode=display">
+min\:\mu||x||_1+\frac{1}{2}||Ax-b||_2^2</script><h2 id="Proximal-Gradient-Method-ISTA-FPC"><a href="#Proximal-Gradient-Method-ISTA-FPC" class="headerlink" title="Proximal Gradient Method/ISTA/FPC"></a>Proximal Gradient Method/ISTA/FPC</h2><p><strong>Proximal Gradient Method</strong></p>
+<script type="math/tex; mode=display">
+x^{k+1}:=\arg\min\mu||x||_1+(\nabla f(x^k))^T(x-x^k)+\frac{1}{2r}||x-x^k||_2^2\\
+=\arg\min\mu||x||_1+\frac{1}{2r}||x-(x^k-r\nabla f(x^k))||_2^2\\
+=shrink(x^k-r\nabla f(x^k),\mu r)</script><p>定义$shrink(y,v)=sgn(y)max(|y|-v,0)$</p>
+<p><strong>Proximal Gradient Method for General Problems</strong></p>
+<script type="math/tex; mode=display">
+\min F(x):=f(x)+r(x)</script><p>其中r(x)可以是不可微凸函数（甚至可以是离散的如L0范数），同样可以得到</p>
+<script type="math/tex; mode=display">
+x^{k+1}:=prox_{\gamma r}(x^k-r\nabla f(x^k))</script><p>其中代理算子</p>
+<script type="math/tex; mode=display">
+prox_r(y):=argmin\:r(x)+\frac{1}{2}||x-y||_2^2</script><p><u>Proximal Gradient也叫投影梯度法。</u></p>
+<p>代理算子的性质：</p>
+<script type="math/tex; mode=display">
+x=prox_r(y)\Leftrightarrow y-x\in\partial r(x)</script><p>然后由Cauchy-Schwarz不等式得到</p>
+<script type="math/tex; mode=display">
+||prox_r(y)-prox_r(x)||_2\leq ||x-y||_2</script><p><strong>收敛性问题</strong></p>
+<p>在一定假设下，$h(x)=x-\gamma\nabla f(x)$满足</p>
+<script type="math/tex; mode=display">
+||h(x)-h(x')||\leq||x-x'||</script><p><strong>线性搜索</strong></p>
+<script type="math/tex; mode=display">
+x^k(r^k)=shrink(x^k-r^k\nabla f^k,\mu r^k)</script><p>那么设定</p>
+<script type="math/tex; mode=display">
+x^{k+1}=x^k+\alpha^k(x^k(r^k)-x^k)=x^k+\alpha^k d^k</script><p>$r^k$的选择：Barzilai-Borwein法（$\min||rs-y||^2$）</p>
+<script type="math/tex; mode=display">
+s^{k-1}=x^k-x^{k-1},y^{k-1}=\nabla f^k-\nabla f^{k-1}\\
+r^k=\frac{(s^{k-1})^Ts^{k-1}}{(s^{k-1})^Ty^{k-1}}or\frac{(s^{k-1})^Ty^{k-1}}{(y^{k-1})^Ty^{k-1}}</script><p>$r^k$需要通过truncation限制大小</p>
+<p>$\alpha^k$的选择：Armijo-like线性搜索（能够达到超线性收敛速度）</p>
+<p>（Armijo-Goldstein：$C^k=F(x^k)$）</p>
+<script type="math/tex; mode=display">
+F(x^k+\alpha^k d^k)\leq C^k+\sigma a^k\Delta^k</script><ul>
+<li>FPC：$\Delta^k=(\nabla f^k)^Td^k</li>
+<li>FPC_AS：$\Delta^k=(\nabla f^k)^Td^k+\mu||x^k(r^k)||_1-\mu||x^k||_1</li>
+<li>non-monotone line search(Zhang and Hagar)：$C^k=(\eta Q^{k-1}C^{k-1}+F(x^k))/Q^k$，$Q^k=\eta Q^{k-1}+1$，$C^0=F(x^0)$，$Q^0=1$</li>
+</ul>
+<p><strong>三种名称</strong></p>
+<ul>
+<li>proximal gradient method</li>
+<li>ISTA: iterative shrinkage thresholding algorithm</li>
+<li>FPC: fixed-point continuation method</li>
+</ul>
+<p>如果$f(x)$满足Lipschitz连续条件$||\nabla f(x)-\nabla f(y)||_2\leq L||x-y||_2$，那么可以得到</p>
+<script type="math/tex; mode=display">
+p_L(y)=prox_{r, 1/L}(y-\frac{1}{L}\nabla f(y))</script><p><strong>复杂性分析</strong></p>
+<script type="math/tex; mode=display">
+F(x^k)-F(x^*)\leq \frac{L||x_0-x^*||_2^2}{2k}</script><p>(证明：引理$F(x)-F(pl(y))\geq \frac{L}{2}(||pl(y)-x||_2^2-||x-y||_2^2)$)</p>
+<p><strong>FISTA: accelerated proximal gradient(APG)</strong></p>
+<p><u>FISTA/APG的理论收敛性质较好，但实际中不如B-B算法</u></p>
+<p>令$y^1=x_0$，$t^1=1$</p>
+<script type="math/tex; mode=display">
+x^k=pL(y^k)\\
+t^{k+1}=\frac{1+\sqrt{1+4(t^{k})^2}}{2}\\
+y^{k+1}=x^k+\frac{t^k-1}{t^{k+1}}(x^k-x^{k-1})</script><p>复杂性结果</p>
+<script type="math/tex; mode=display">
+F(x^k)-F(x^*)\leq \frac{2L||x_0-x^*||_2^2}{(k+1)^2}</script><p>证明：令$v_k=F(x^k)-F(x^*)$，$u_k=t^kx^k-(t^k-1)x^{k-1}-x^*$，那么</p>
+<script type="math/tex; mode=display">
+\frac{2}{L}(t_k^2v_k-t_{k+1}^2v_{k+1})\geq ||u_{k+1}||_2^2-||u_k||_2^2</script><p><strong>APG的几个变体</strong></p>
+<p>Variant 1</p>
+<p>$x_{-1}=x_0$，$\theta_{-1}=\theta_0=1$</p>
+<script type="math/tex; mode=display">
+y_k=x_k+\theta_k(\theta_{k-1}^{-1}-1)(x_k-x_{k-1})\\
+x_{k+1}=\arg\min l(x,y_k)+\frac{L}{2}||x-y_k||_2^2\\
+\theta_{k+1}=\frac{\sqrt{\theta_k^4+4\theta_k^2}-\theta_k^2}{2}</script><p>($\theta_k$其实相当于$t_k$的倒数)</p>
+<p>Variant 2</p>
+<p>用Bregman distance $D(x,y_k)$来代替$\frac 12||x-y_k||_2^2$，并且令$x_0=z_0=\theta_0=1$</p>
+<script type="math/tex; mode=display">
+y_k=(1-\theta_k)x_k+\theta_kz_k\\
+z_{k+1}=\arg\min l(x,y_k)+\theta_kL D(x,z_k)\\
+x_{k+1}=(1-\theta_k)x_k+\theta_kz_{k+1}\\
+\theta_{k+1}=\frac{\sqrt{\theta_k^4+4\theta_k^2}-\theta_k^2}{2}</script><p>Variant 3</p>
+<p>$x_0=z_0=\arg\min h(x)$，$\theta_0=1$</p>
+<script type="math/tex; mode=display">
+y_k=(1-\theta_k)x_k+\theta_kz_k\\
+z_{k+1}=\arg\min \sum_{i=0}^k\frac{l(x,y_i)}{\theta_i}+Lh(x)\\
+x_{k+1}=(1-\theta_k)x_k+\theta_kz_{k+1}\\
+\theta_{k+1}=\frac{\sqrt{\theta_k^4+4\theta_k^2}-\theta_k^2}{2}</script><p>三个变体收敛性都是$\sim \frac{1}{k^2}LD(….)$</p>
+<h2 id="增广拉格朗日框架"><a href="#增广拉格朗日框架" class="headerlink" title="增广拉格朗日框架"></a>增广拉格朗日框架</h2><script type="math/tex; mode=display">
+\min||x||_1,s.t.Ax=b</script><p>对偶问题</p>
+<script type="math/tex; mode=display">
+\max b^T\lambda,s.t.||A^T\lambda||_\infty\leq 1</script><p>等价于</p>
+<script type="math/tex; mode=display">
+\max b^T\lambda,s.t.A^T\lambda=s,||s||_\infty\leq 1</script><p>Augmented Lagrangian (Bregman) function</p>
+<script type="math/tex; mode=display">
+L(\lambda,s,x)=-b^T\lambda+x^T(A^T\lambda-s)+\frac{1}{2\mu}||A^T\lambda-s||^2</script><p>算法框架</p>
+<ol>
+<li><p>第k次迭代计算$\lambda^{k+1},s^{k+1}$</p>
+<script type="math/tex; mode=display">
+\min_{\lambda,s}L(\lambda,s,x^k),s.t.||s||_\infty\leq 1</script></li>
+<li><p>更新(计算导数易得)</p>
+<script type="math/tex; mode=display">
+x^{k+1}=x^k+(A^T\lambda^{k+1}-s^{k+1})/\mu</script></li>
+</ol>
+<p><u>缺点是求min太慢</u></p>
+<p> ADMM（An alternating direction minimization scheme）</p>
+<script type="math/tex; mode=display">
+\lambda^{k+1}=\arg\min_\lambda L(\lambda,s^k,x^k)\\
+s^{k+1}=\arg\min_s L(\lambda^{k+1},s,x^k),s.t.||s||_\infty\leq 1\\
+x^{k+1}=x^k+(A^T\lambda^{k+1}-s^{k+1})/\mu</script><p><u>在x更新步乘以步长1.618性能提升30%左右</u></p>
+<p>Bregman method（实际与Augmented Lagrangian等价，但是计算更复杂）</p>
+<script type="math/tex; mode=display">
+D_J^{p^k}(x,x^k)=||x||_1-||x^k||_1-<p^k,x-x^k>\\
+x^{k+1}=\arg\min_x\mu D_j^{p^k}(x,x^k)+\frac12 ||Ax-b||_2^2\\
+p^{k+1}=p^k+\frac1\mu A^T(b-Ax^{k+1})</script><p><strong>Linearized ADMM</strong></p>
+<p>Review of Bregman method</p>
+<script type="math/tex; mode=display">
+\min ||x||_1,s.t.Ax=b</script><p>Bregman method:</p>
+<script type="math/tex; mode=display">
+D_J^{n^k}(x,x^k)=||x||_1-||x^k||_1-<p^k,x-x^k>\\x^{k+1}=\arg\min_x\mu D_J^{n^k}(x,x^k)+\frac12||Ax-b||_2^2\\p^{k+1}=p^k+\frac1\mu A^T(b-Ax^{k+1})</script><p>（等价于</p>
+<script type="math/tex; mode=display">
+\min\mu\{||x||_1-<p^k,x-x^k>\}+\frac12||Ax-b||_2^2\\0\in\mu \partial||x||_1-\mu p^k+A^T(Ax^{k+1}-b)\\p^{k+1}=p^k+\frac1\mu A^T(b-Ax^{k+1})</script><p>Linearized Bregman method</p>
+<script type="math/tex; mode=display">
+x^{k+1}=\arg\min\mu D_L^{p^k}(x,x^k)+(A^T(Ax^k-b))^T(x-x^k)+
+frac1{2\delta}||x-x^k||_2^2\\
+p^{k+1}=p^k-\frac1{\mu\delta}(x^{k+1}-x^k)-\frac1\mu A^T(Ax^k-b)</script><p>实际上$x^k$逼近</p>
+<script type="math/tex; mode=display">
+\arg \min\mu||x||_1+\frac1{2\delta}||x||_2^2,s.t.Ax=b</script><h1 id="矩阵恢复"><a href="#矩阵恢复" class="headerlink" title="矩阵恢复"></a>矩阵恢复</h1><p>常见于推荐系统</p>
+<p>起源：Netflix电影推荐竞赛</p>
+<h2 id="Collaborative-Filtering（协同过滤）"><a href="#Collaborative-Filtering（协同过滤）" class="headerlink" title="Collaborative Filtering（协同过滤）"></a>Collaborative Filtering（协同过滤）</h2><script type="math/tex; mode=display">
+\hat{r}_{si}=b_{si}+\sum_{j\in N(i:x)}w_{ij}(r_{xj}-b_{xj})</script><p>权重的确定：</p>
+<script type="math/tex; mode=display">
+\min_{w_{ij}}F(w):=\sum_x([b_{xi}+\sum_jw_{ij}(r_{xj}-b_{xj})]-r_{xi})^2</script><p>求导可得</p>
+<script type="math/tex; mode=display">
+\nabla_{w_{ij}}F(w)=2\sum_x([b_{xi}+\sum_jw_{ij}(r_{xj}-b_{xj})]-r_{xi})(r_{xj}-b_{xj})=0</script><p>梯度下降求解：GD、SGD</p>
+<h2 id="Latent-factor-models"><a href="#Latent-factor-models" class="headerlink" title="Latent factor models"></a>Latent factor models</h2><p>“SVD” on Netflix data: </p>
+<script type="math/tex; mode=display">
+R\approx Q\cdot P^T</script><p>预测</p>
+<script type="math/tex; mode=display">
+\hat{r}_{si}=q_i\cdot p_s^T</script><p>考虑到下式有显式解（奇异值分解）</p>
+<script type="math/tex; mode=display">
+\min_{Q,P}||R-QP^T||_F^2</script><p>所以将原问题</p>
+<script type="math/tex; mode=display">
+\min\sum_{(i,j)\in\Omega}(R_{ij}-(QP^T)_{ij})^2</script><p>等价于</p>
+<script type="math/tex; mode=display">
+\min ||P_\Omega(R-QP^T)||_F^2,P_\Omega为投影算子</script><p>进行求解。</p>
+<p>梯度下降方法：异步迭代QP（矩阵导数）</p>
+<p>另外还有加上bias的latent factor model。</p>
+<h2 id="General-Matrix-Completion"><a href="#General-Matrix-Completion" class="headerlink" title="General Matrix Completion"></a>General Matrix Completion</h2><script type="math/tex; mode=display">
+\min rank(X)\\
+s.t. X_{ij}=M_{ij},(i.j)\in\Omega</script><p><u>这是个NP-hard问题</u></p>
+<p>引入奇异值分解</p>
+<script type="math/tex; mode=display">
+X=\sum\sigma_ku_kv_k^*</script><p>(Eckart&amp;Young 1936) if k&lt;rank(A):</p>
+<script type="math/tex; mode=display">
+\min_{rank(B)=k}||A-B||_2=||A-\sum_{i=1}^k\sigma_iu_iv_i^*||_2</script><h2 id="Positive-semidefinite-unknown"><a href="#Positive-semidefinite-unknown" class="headerlink" title="Positive semidefinite unknown"></a>Positive semidefinite unknown</h2><p>假设X半正定，那么可以转换为半定规划</p>
+<script type="math/tex; mode=display">
+\min trace(X)\\
+s.t.X_{ij}=M_{ij},(i,j)\in\Omega\\
+X\succeq 0</script><p>Nuclear norm和spectral norms是对偶的</p>
+<script type="math/tex; mode=display">
+||X||=\sigma_1(X),||X||_*=\sum\sigma_i(X)</script><p>核范数最小化</p>
+<script type="math/tex; mode=display">
+\left.\begin{align}\min||X||_*\\
+s.t.A(X)=b\end{align}\right.
+\Leftrightarrow
+\left.\begin{aligned}
+\max b^Ty\\
+s.t.||A^T(y)||\leq 1
+\end{aligned}\right.</script><p>SDP reformulation</p>
+<script type="math/tex; mode=display">
+\left.\begin{align}
+\min\frac12(trace(W_1)+trace(W_2))\\
+s.t.A(X)=b\\
+\begin{pmatrix}W_1&X\\X^T&W_2\end{pmatrix}\succeq 0
+\end{align}\right.
+\Leftrightarrow
+\left.\begin{aligned}
+\max b^Ty\\
+s.t.\begin{pmatrix}I&A^*(y)\\(A^*(y))^T&I\end{pmatrix}\succeq 0
+\end{aligned}\right.</script><h2 id="Matrix-Shrink-Operator"><a href="#Matrix-Shrink-Operator" class="headerlink" title="Matrix Shrink Operator"></a>Matrix Shrink Operator</h2><script type="math/tex; mode=display">
+\min v||X||_*+\frac12||X-Y||_F^2</script><p>Optimal solution</p>
+<script type="math/tex; mode=display">
+X=S_v(Y)=UDiag(s_v(\sigma))V^T</script><p>其中</p>
+<script type="math/tex; mode=display">
+Y=UDiag(\sigma)V^T\\
+s_v(x)=\max(x_i-v,0)</script><p>可以证明这是non-expansive的。</p>
+<p>计算量在SVD上。—&gt;LANSVD、LMSVD、Randomized SVD等方法</p>
+<p><strong>low-rank factorization model</strong></p>
+<script type="math/tex; mode=display">
+\min_{X,Y,Z}\frac12||XY-Z||_F^2,s.t.Z_{ij}=M_{ij},\forall(i,j)\in\Omega</script><p>优点：不需要SVD</p>
+<p>Nonlinear Gauss-Seidel scheme</p>
+<script type="math/tex; mode=display">
+X_+\leftarrow ZY^+\\
+Y_+\leftarrow (X_+)^+Z\\
+Z_+\leftarrow X_+Y_++P_\Omega(M-X_+Y_+)</script><p>这个算法需要计算广义逆，注意到</p>
+<script type="math/tex; mode=display">
+X_+Y_+=P_{X_+}Z=P_{ZY^T}Z</script><p>由此推出第二个版本：</p>
+<script type="math/tex; mode=display">
+X_+\leftarrow ZY^T\\
+Y_+\leftarrow (X_+)^+Z\\
+Z_+\leftarrow X_+Y_++P_\Omega(M-X_+Y_+)</script><p>这里还是有广义逆，又有$V=orth(ZY^T)$，因而</p>
+<script type="math/tex; mode=display">
+X_+\leftarrow V\\
+Y_+\leftarrow V^TZ\\
+Z_+\leftarrow X_+Y_++P_\Omega(M-X_+Y_+)</script><h2 id="矩阵分离"><a href="#矩阵分离" class="headerlink" title="矩阵分离"></a>矩阵分离</h2><p>M=W+E，其中W为低秩矩阵，E为系数矩阵</p>
+<script type="math/tex; mode=display">
+\min_{W,E}||W||_*+\mu||E||_1,s.t.W+E=M</script><p>Robust PCA</p>
+<p>（应用：监控录像分离人和背景）</p>
+<p>增广拉格朗日函数</p>
+<script type="math/tex; mode=display">
+L(W,E,A)=||W||_*+\mu||E||_1+<A,W+E-M>+\frac1{2\beta}||W+E-M||_F^2</script><p>ADMM:</p>
+<script type="math/tex; mode=display">
+W^{i+1}=\arg\min_WL(W,E^i,A^i)\\
+E^{i+1}=\arg\min_EL(W^{i+1},E,A^i)\\
+A^{i+1}=A^i+\frac\gamma\beta(W^{i+1}+E^{i+1}-M)</script><p>W-子问题：</p>
+<script type="math/tex; mode=display">
+W^{i+1}=S_\beta(M-E^j-\beta A^i)</script><p>其中$S_\beta$是将SVD的特征值shrink，见上文”Matrix Shrink Operator”</p>
+<p>E-子问题：</p>
+<script type="math/tex; mode=display">
+E^{i+1}=S_{\beta\mu}(M-W^{i+1}-\beta A^i)</script><p>其中$S_{\beta\mu}$是L1 shrink，见上文“Proximal Gradient Method”</p>
+<p><strong>low-rank factorization model for matrix seperation</strong></p>
+<p>考虑模型</p>
+<script type="math/tex; mode=display">
+\min_{Z,S}||S||_1,s.t.Z+S=D,rank(Z)\leq k</script><p>对Z进行低秩分解</p>
+<script type="math/tex; mode=display">
+\min_{U,V,Z}||P_\Omega(Z-D)||_1,s.t.UV-Z=0</script><p>这里的增广拉格朗日函数为</p>
+<script type="math/tex; mode=display">
+L_\beta(U,V,Z,A)=||P_\Omega(Z-D)||_1+<A,UV-Z>+\frac\beta2||UV-Z||_F^2</script><p>ADMM依次优化U、V、Z、A。</p>
+<p><strong>非负矩阵低秩分解</strong></p>
+<p>基本相似，更加复杂</p>
+<p>ADMM</p>
+<h1 id="运输优化"><a href="#运输优化" class="headerlink" title="运输优化"></a>运输优化</h1><p>Application：image color adaption、shape interpolation、word mover’s distance</p>
+<h2 id="Kantorovitch’s-Formulation"><a href="#Kantorovitch’s-Formulation" class="headerlink" title="Kantorovitch’s Formulation"></a>Kantorovitch’s Formulation</h2><p>输入两个离散概率度量</p>
+<script type="math/tex; mode=display">
+\alpha=\sum_{i=1}^ma_i\delta_{x_i},\:\beta=\sum_{j=1}^nb_j\delta_{y_j}</script><p>其中$X=\{x_i\}_i,\:Y=\{y_j\}_j$是给定的<strong>点云</strong>，$x_i,y_j$是向量。</p>
+<p>$a_i,\:b_j$是<strong>正权重</strong>，满足$\sum_{i=1}^ma_i=\sum_{j=1}^nb_j=1$</p>
+<p>$C_{ij}$是<strong>花费</strong>，$C_{ij}=c(x_i,y_j)\geq 0$</p>
+<p>定义<strong>Couplings</strong></p>
+<script type="math/tex; mode=display">
+U(a,b)=\{\Pi\in R_+^{m\times n}|\Pi 1_n=a,\Pi^T1_m=b\}</script><p>Transportation 问题</p>
+<script type="math/tex; mode=display">
+\min \sum P_{ij}C_{ij}\\
+s.t. P\in U(a,b)</script><p>推广：<strong>Radon 度量</strong>$(\alpha,\beta)$ on $(X,Y)$</p>
+<p>Transfer of measure by $T:X\to Y$</p>
+<p>定义Y上的度量</p>
+<script type="math/tex; mode=display">
+T_\#\alpha(Y)=\alpha(T^{-1}(Y))\:\forall Y\:measurable</script><p>离散情形下</p>
+<script type="math/tex; mode=display">
+T_\#\alpha=\sum_i\alpha_i\delta_{T(x_i)}</script><p>连续情形下</p>
+<script type="math/tex; mode=display">
+d\alpha=\rho(x)dx,\:d\beta=e(x)dx\\
+T_\#\alpha=\beta\Leftrightarrow \rho(T(x))|det(\partial T(x))|=e(x)</script><h2 id="Monge-Problem"><a href="#Monge-Problem" class="headerlink" title="Monge Problem"></a>Monge Problem</h2><p>找到这样的T，使得</p>
+<script type="math/tex; mode=display">
+b_j=\sum_{i:\:T(x_i)=y_j}a_i</script><p>离散情形下</p>
+<script type="math/tex; mode=display">
+\min_T\sum_ic(x_i,T(x_i))\:s.t.T_\#\alpha=\beta</script><p>连续情形下</p>
+<script type="math/tex; mode=display">
+\min_T\int_Xc(x,T(x))d\alpha(x)\:s.t.T_\#\alpha=\beta</script><h2 id="Wasserstein-Distance"><a href="#Wasserstein-Distance" class="headerlink" title="Wasserstein Distance"></a>Wasserstein Distance</h2><p>Kantorovitch Problem for General Measures</p>
+<script type="math/tex; mode=display">
+L(\alpha,\beta,c)=\min_{\pi\in U(\alpha,\beta)}\int_{X\times Y}c(x,y)d\pi(x,y)</script><p>花费满足$c(x,y)=d(x,y)^p$，定义W-distance</p>
+<script type="math/tex; mode=display">
+W_p(\alpha,\beta)=L(\alpha,\beta,d^p)^{1/p}</script><p>可以证明这是个距离，且</p>
+<script type="math/tex; mode=display">
+W_p(\alpha_n,\alpha)\to 0\Leftrightarrow \alpha_n\to^{weak}\alpha</script><p><strong>Wasserstein barycenter</strong></p>
+<p>定义$C=M_{XY}$，那么W-距离等于</p>
+<script type="math/tex; mode=display">
+L(a,b,C)=\min\{\sum C_{ij}\Pi_{ij}|\Pi\in U(a,b)\}</script><p>给定Y，b，找到X，a使得</p>
+<script type="math/tex; mode=display">
+\min_{X,a}\frac1N\sum_{i=1}^NL(a,b^{k},M_{XY})</script><h2 id="Dual-form"><a href="#Dual-form" class="headerlink" title="Dual form"></a>Dual form</h2><script type="math/tex; mode=display">
+\max f^Ta+g^Tb\\
+s.t. f_i+g_j\leq C_{ij}</script><h2 id="Entropy-regularization"><a href="#Entropy-regularization" class="headerlink" title="Entropy regularization"></a>Entropy regularization</h2><p>定义</p>
+<script type="math/tex; mode=display">
+H(P)=-\sum_{i,j}P_{i,j}(log(P_{i,j})-1)</script><p>定义Lullback-Leibler divergence</p>
+<script type="math/tex; mode=display">
+KL(u||v)=-\sum_{i=1}^nu_ilog(v_i/u_i)</script><p>定义Entropy regularization问题</p>
+<script type="math/tex; mode=display">
+L^e(a,b,C)=\min_{P\in U(a,b)}(P,C)-eH(P)</script><p>可以证明这个问题当$e&gt;0$时解唯一。 </p>
+<p>解法：考虑Lagrangian对偶，令关于P导数为0</p>
+<script type="math/tex; mode=display">
+P_{ij}=exp(-\frac{C_{ij}+a_i+\beta_j}{e})</script><p>因此可以解得</p>
+<script type="math/tex; mode=display">
+P_e=diag(e^{-\alpha/2})e^{-C/2}diag(e^{-\beta/2})</script><p>根据KKT条件，令$u=e^{-\alpha/2}$，$v=e^{-\beta/2}$，$K=e^{-C/2}$，那么</p>
+<script type="math/tex; mode=display">
+P_e=diag(u)Kdiag(v)\\
+a=diag(u)Kv\\
+b=diag(v)K^Tu</script><p>Sinkhorn算法就是交替优化uv</p>
+<script type="math/tex; mode=display">
+u^{k+1}=diag(Kv^k)^{-1}a\\
+v^{k+1}=diag(K^Tu^{k+1})^{-1}b</script><p> Sinkhorn-Newton 法：令</p>
+<script type="math/tex; mode=display">
+F(\alpha,\beta)=\begin{pmatrix}diag(e^{-\alpha/e})Ke^{-\beta/2}-a\\
+diag(e^{-\beta/e})Ke^{-\alpha/2}-b\end{pmatrix}</script><p>即找到$F(\alpha,\beta)=0$的解。由此Newton Iteration为</p>
+<script type="math/tex; mode=display">
+\begin{pmatrix}\alpha^{k+1}\\\beta^{k+1}\end{pmatrix}=
+\begin{pmatrix}\alpha^k\\\beta^k\end{pmatrix}-J_F^{-1}(\alpha^k,\beta^k)F(\alpha^k,\beta^k)</script><p><u>Sinkhorn算法是忽略非对角元素的近似Sinkhorn-Newton算法</u></p>
+<p>定义</p>
+<script type="math/tex; mode=display">
+U_\alpha(a,b)=\{P\in U(a,b)|KL(P||ab^T)\leq\alpha\}</script><p>定义<strong>Sinkhorn Distance</strong>如下</p>
+<script type="math/tex; mode=display">
+d_{C,\alpha}(a,b)=\min_{P\in U_\alpha(a,b)}(C,P)</script><p>这是一个距离。</p>
+<h2 id="Shielding-Neighborhood-Method"><a href="#Shielding-Neighborhood-Method" class="headerlink" title="Shielding Neighborhood Method"></a>Shielding Neighborhood Method</h2><p>Proposed by Bernhard Schmitzer in 2016</p>
+<p>把主问题分解为多个稀疏子问题</p>
+<p>对$N\subset X\times Y$，（称N为Neighborhood），</p>
+<p>如果</p>
+<script type="math/tex; mode=display">
+c(x_1,y_n)\geq c(x_1,y_2)+\sum_{i=2}^{n-1}(c(x_i,y_{i+1})-c(x_i,y_i))</script><p>则称为<strong>short-cut</strong></p>
+<p>定义：<strong>shielding condition</strong>是指这样的$(x_s,y_s)$使得</p>
+<script type="math/tex; mode=display">
+c(x,y)+c(x_s,y_s)>c(x,y_s)+c(x_s,y)</script><p>定义：<strong>shielding neighborhood</strong>是指对给定的$\pi$，满足下列条件的N：任意$(x,y)\notin N$，存在$(x_s,y_s)\in\pi$，$x_s,y_s$ shield x,y。</p>
+<p>定义：<strong>multiscale scheme</strong>是把集合X分为层级结构，$X_0=\{\{x\}|x\in X\}$，之后每层是从前一层合并而来。</p>
+<p>我们假设有两个子算法：</p>
+<ul>
+<li>solveLocal</li>
+<li>shield</li>
+</ul>
+<p>主算法(从粗网格到细网格)</p>
+<ol>
+<li>$\pi=solveDense(k)$</li>
+<li>while k&gt;0 do</li>
+<li>​    k-=1</li>
+<li>​    N={}</li>
+<li>​    对 $(x,y)\in\pi$，$N=N\cup(children(x)\times children(y))$</li>
+<li>​    $\pi=solveSparse(k, N)$</li>
+<li>return </li>
+</ol>
+<p>SolveSparse算法：利用当前等级k和可行邻居N来计算$\pi$</p>
+<ol>
+<li>i=1</li>
+<li>while i=1 or $C(\pi_i)\neq C(\pi_{i-1})$ do</li>
+<li>​    $\pi_{i+1}=solveLocal(N)$</li>
+<li>​    $N_{i+1}=shield(\pi_{i+1},k)$</li>
+<li>​    i+=1</li>
+<li>return</li>
+</ol>
+<h1 id="Large-scale-ML"><a href="#Large-scale-ML" class="headerlink" title="Large-scale ML"></a>Large-scale ML</h1><script type="math/tex; mode=display">
+(x,y)\sim P</script><p>给定一个数据集$D=\{(x,y)\},\:(x,y)\sim P$，找到</p>
+<script type="math/tex; mode=display">
+\min R[h_s]:=E[l(h_s(x),y)]</script><p>Empirical Risk Minimizor(ERM) —— Expected Risk Minimizor</p>
+<p>对任意小的$\epsilon,\delta$，当n足够大的时候，有</p>
+<script type="math/tex; mode=display">
+P(|R[h_n]-R[h]|\geq\epsilon)<\delta</script><p>Hoeffding不等式：$X_i$是i.i.d.随机变量，且$E(X_i)=\mu$且$P(a\leq X_i\leq b)=1$，那么对任意$\epsilon&gt;0$</p>
+<script type="math/tex; mode=display">
+P(|\frac1n\sum_{i=1}^nX_i-\mu|\geq\epsilon)\leq2exp(-\frac{2n\epsilon^2}{(b-a)^2})</script><p>假设对于固定的h，根据Hoeffding不等式</p>
+<script type="math/tex; mode=display">
+P(|R_n[h]-R[h]|\geq\epsilon)\leq2e^{-2n\epsilon^2}</script><p>得到上界</p>
+<script type="math/tex; mode=display">
+P(\cup_{h\in H}\{|R_n[h]-R[h]|\geq\epsilon\})\leq2|H|e^{-2n\epsilon^2}</script><p>因此需要样本数量</p>
+<script type="math/tex; mode=display">
+n\geq\frac1{2\epsilon^2}log(2|H|/\delta)</script><h2 id="VC-dimension"><a href="#VC-dimension" class="headerlink" title="VC dimension"></a>VC dimension</h2><p>VC dimension是集合的集合</p>
+<script type="math/tex; mode=display">
+H\cap C:=\{h\cap C|h\in H\}</script><p>定义C被H <strong>shattered</strong>，如果$H\cap C=2^C$</p>
+<p>H的VC dimension定义为最大的整数D，使得存在|C|=D被H shattered。</p>
+<p>一个模型$f$的VC dimension定义为最大的点数可以被$f$ shattered。</p>
+<p>根据VC dimension，可以控制泛化误差</p>
+<script type="math/tex; mode=display">
+\sup_{h\in H}|R_n[h]-R[h]|\leq O(\sqrt{\frac{VC[H]log(n/VC[H])+log(1/\delta)}{n}})</script><h2 id="次梯度方法"><a href="#次梯度方法" class="headerlink" title="次梯度方法"></a>次梯度方法</h2><p><strong>次梯度方法</strong></p>
+<script type="math/tex; mode=display">
+x_{k+1}=x_k-\alpha_kg_k,g_k\in \partial f(x_k)</script><p>定理1（次梯度的收敛性）：假设存在最小点，且次梯度有界M。那么</p>
+<script type="math/tex; mode=display">
+\sum_{k=1}^K\alpha_k[f(x_k)-f(x^*)]\leq \frac12||x_1-x^*||_2^2+\frac12\sum_{k=1}^K\alpha_k^2M^2</script><p>推论：令$A=\sum_{i=1}^k\alpha_i$，$\bar{x_K}=\frac{1}{A_K}\sum_{k=1}^K\alpha_kx_k$，那么</p>
+<script type="math/tex; mode=display">
+f(\bar{x_K})-f(x^*)\leq\frac{||x_1-x^*||_2^2+\sum \alpha_k^2M^2}{2\sum\alpha_k}</script><p><strong>投影次梯度方法</strong></p>
+<script type="math/tex; mode=display">
+x_{k+1}=\pi_C(x_k-\alpha_kg_k),g_k\in \partial f(x_k)</script><p>定理2（投影次梯度的收敛性）：假设$||x-x^*||_2\leq R&lt;\infty$，且次梯度有界M，那么</p>
+<script type="math/tex; mode=display">
+\sum_{k=1}^K\alpha_k[f(x_k)-f(x^*)]\leq \frac12||x_1-x^*||_2^2+\frac12\sum_{k=1}^K\alpha_k^2M^2</script><p><strong>随机次梯度方法</strong></p>
+<p>问题</p>
+<script type="math/tex; mode=display">
+\min_{x\in C}f(x):=E_P[F(x;S)]</script><p>S是random space。</p>
+<script type="math/tex; mode=display">
+x_{k+1}=\pi_C(x_k-\alpha_kg_k),E[g_k|x_k]\in\partial f(x_k)</script><p>定理3（随机次梯度法的收敛性）：假设$||x-x^*||_2\leq R&lt;\infty$，且$E||g(x,S)||_2^2\leq M^2\leq\infty$，那么</p>
+<script type="math/tex; mode=display">
+\sum_{k=1}^K\alpha_kE[f(x_k)-f(x^*)]\leq \frac12E||x_1-x^*||_2^2+\frac12\sum_{k=1}^K\alpha_k^2M^2</script><p>推论：令$A=\sum_{i=1}^k\alpha_i$，$\bar{x_K}=\frac{1}{A_K}\sum_{k=1}^K\alpha_kx_k$，那么</p>
+<script type="math/tex; mode=display">
+E[f(\bar{X_K})-f(x^*)]\leq\frac{R^2+\sum \alpha_k^2M^2}{2\sum\alpha_k}</script><p>定理5（随机次梯度法的收敛性2）：$\alpha_k$不增，且定义$\bar{x_K}=\frac1K\sum x_k$，那么</p>
+<script type="math/tex; mode=display">
+E[f(\bar{X_K})-f(x^*)]\leq\frac{R^2}{2K\alpha_K}+\frac1{2K}\sum \alpha_k^2M^2</script><p>推论：令$\alpha_k=R/M\sqrt{k}$，那么</p>
+<script type="math/tex; mode=display">
+E[f(\bar{x_K})-f(x^*)]\leq \frac{3RM}{2\sqrt{K}}</script><p>定理6（随机次梯度法的收敛性3—依概率收敛）：在定理5的条件下，假定$||g||_2\leq M$，那么</p>
+<script type="math/tex; mode=display">
+E[f(\bar{X_K})-f(x^*)]\leq\frac{R^2}{2K\alpha_K}+\frac1{2K}\sum \alpha_k^2M^2+\frac{RM}{\sqrt{K}}\epsilon</script><p>至少以概率$1-e^{-\epsilon^2/2}$的概率成立。</p>
+<p>（证明需要用到Azume-Hoeffding不等式）</p>
+<p><strong>Adaptive stepsize</strong>—Variable metric methods</p>
+<script type="math/tex; mode=display">
+x_{k+1}=\arg\min_{x\in C}\{<g_k,x>+\frac12<x-x_k,H_k(x-x_k)>\}</script><ul>
+<li>投影法：$H_k=\alpha_kI$ </li>
+<li>Newton法：$H_k=\nabla^2f(x_k)$</li>
+<li>AdaGrad：$H_k=\frac1\alpha diag(\sum g_{i.} g_i)^{1/2}$</li>
+</ul>
+<p>定理9（Variable metric method的收敛性）：$H_k&gt;0$为正定矩阵，$E[g_k|x_k]\in\partial f(x_k)$那么</p>
+<script type="math/tex; mode=display">
+E[\sum_{k=1}^K(f(x_k)-f(x^*))]\leq\frac12E[\sum_{k=2}^K(||x_k-x^*||_{H_k}^2-||x_k-x^*||_{H_{k-1}}^2)]+\frac12E[||x_1-x^*||_{H_1}^2+\sum_{k=1}^K||g_k||_{H_k^{-1}}^2]</script><p>(证明根据$||x_{k+1}-x^*||_{H_k}^2\leq||x_k-H_k^{-1}g_k-x^*||_{H_k}^2$)</p>
+<p>推论（AdaGrad的收敛性）：在定理9的条件下，定义$R_\infty=\sup_{x\in C}||x-x^*||_\infty$，那么</p>
+<script type="math/tex; mode=display">
+E[\sum_{k=1}^K(f(x_k)-f(x^*))]\leq\frac1{2\alpha}R_\infty^2E[tr(M_K)]+\alpha E[tr(M_K)]</script><p>(证明利用$\sum_{k=1}^K\frac{a_k^2}{\sqrt{\sum^k a_i^2}}\leq 2\sqrt{\sum^K a_i^2}$)</p>
+<p><u>总结：合适的步长策略可以提升收敛性。</u></p>
+<h2 id="随机梯度下降"><a href="#随机梯度下降" class="headerlink" title="随机梯度下降"></a>随机梯度下降</h2><p>收敛性：假设f是L-光滑且$\mu$-强凸的</p>
+<p>引理：</p>
+<script type="math/tex; mode=display">
+<\nabla f(x)-\nabla f(y),x-y>\geq \frac{L\mu}{L+\mu}||x-y||^2+\frac1{L+\mu}||\nabla f(x)-\nabla f(y)||^2</script><p>定理：梯度下降收敛速度：定义$\alpha_k=\frac2{L+\mu}$，$k=L/\mu$，$\Delta_k=||x_k-x^*||$，那么</p>
+<script type="math/tex; mode=display">
+f(x_{T+1})-f(x^*)\leq \frac{L\Delta_1^2}2exp(-\frac{4T}{k+1})</script><p>定理：随机梯度下降收敛速度：对于固定的步长$\alpha_k=\alpha&lt;\frac1{2\mu}$</p>
+<script type="math/tex; mode=display">
+E[f(x_{T+1})-f(x^*)]\leq\frac L2E[\Delta_{T+1}^2]\leq\frac L2[(1-2\alpha\mu)^T\Delta_1^2+\frac{\alpha M^2}{2\mu}]</script><p>定理：随机梯度下降收敛速度：对于$\alpha_k=\frac{\beta}{k+\gamma}$</p>
+<script type="math/tex; mode=display">
+E[f(x_T)-f(x^*)]\leq\frac L2E[\Delta_T^2]\leq\frac L2\frac{v}{\gamma+T}</script><h2 id="Variance-Reduction"><a href="#Variance-Reduction" class="headerlink" title="Variance Reduction"></a>Variance Reduction</h2><p>f(x)是L-光滑和$\mu$-强凸的</p>
+<p>GD：</p>
+<script type="math/tex; mode=display">
+\Delta_{k+1}^2\leq(1-2\alpha\mu+\alpha^2L^2)\Delta_k^2</script><p>SGD:</p>
+<script type="math/tex; mode=display">
+E\Delta_{k+1}^2\leq (1-2\alpha\mu)E\Delta_k^2+\alpha^2E||\nabla f_{x_k}(x_k)||_2^2\\
+\leq (1-2\alpha\mu+2\alpha^2L^2)E\Delta_k^2+2\alpha^2E||\nabla f_{x_k}(x_k)-\nabla f(x_k)||_2^2</script><p>GD和SGD相差在最后一项，因而要控制方差就要控制这一项</p>
+<p><strong>SAG method</strong>（Le Roux，Schmidt， Bach，2012）</p>
+<script type="math/tex; mode=display">
+x_{k+1}=x_k-\frac{\alpha_k}n\sum_{k=1}^ng_k^i=x_k-\alpha_k(\frac1n(\nabla f_{s_k}(x_k)-g_{k-1}^{s_k})+\frac1n\sum_{i=1}^ng_{k-1}^i)</script><p>其中$g_k^i=\nabla f_i(x_k)$如果$i=s_k$，否则$g_k^i=\nabla g_{k-1}^i$。$s_k$是1~n的随机分布。</p>
+<p><strong>SAGA method</strong>（Defazio，Bach， Julien，2014）：SAG的无偏改进</p>
+<script type="math/tex; mode=display">
+x_{k+1}=x_k-\alpha_k(\nabla f_{s_k}(x_k)-g_{k-1}^{s_k}+\frac1n\sum_{i=1}^ng_{k-1}^i)</script><p><strong>SVRG</strong>（Johnson，zhang，2013）</p>
+<script type="math/tex; mode=display">
+v_k=\nabla f_{s_k}(x_k)-\nabla f_{s_k}(y)+\nabla f(y)\\
+x_{k+1}=x_k-\alpha_kv_k</script><p>相比SAG，隔断了$g_k$</p>
+<p>定义condition number $k=L/\mu$</p>
+<ul>
+<li>SVRG：$E\sim log(1/e)$，复杂度$O((n+k)log(1/e))$</li>
+<li>GD：$T\sim klog(1/e)$</li>
+<li>SGD：$T\sim k/e$</li>
+</ul>
+<h2 id="DL-中的随机算法"><a href="#DL-中的随机算法" class="headerlink" title="DL 中的随机算法"></a>DL 中的随机算法</h2><script type="math/tex; mode=display">
+\min_x\frac1n\sum_{i=1}^nf_i(x)</script><p>GD、SGD、SGD with momentum</p>
+<p>Nesterov加速算法（外推算法）</p>
+<p>Adagrad、Adadelta</p>
+<h1 id="Randomized-Numerical-Linear-Algebra"><a href="#Randomized-Numerical-Linear-Algebra" class="headerlink" title="Randomized Numerical Linear Algebra"></a>Randomized Numerical Linear Algebra</h1><p>provably accurate algorithms for problems that are <strong>massive or computationally expensive</strong></p>
+<h2 id="矩阵乘法近似"><a href="#矩阵乘法近似" class="headerlink" title="矩阵乘法近似"></a>矩阵乘法近似</h2><script type="math/tex; mode=display">
+AB\approx CR</script><p>SVD分解取前k个特征值</p>
+<p>CX分解：最小化A-CX，显然$X=C^-A$ </p>
+<h2 id="sampling-rows-columns"><a href="#sampling-rows-columns" class="headerlink" title="sampling rows/columns"></a>sampling rows/columns</h2><script type="math/tex; mode=display">
+AB=\sum_{i=1}^nA_iB_i</script><p>设定一系列概率$p_i$，$i=1,2,…,n$，总和为1。然后选取c列（下式左边需要正则化）</p>
+<script type="math/tex; mode=display">
+AB\approx\frac1c\sum_{j=1}^c\frac1{p_{i_j}}A_{i_j}B_{i_j}</script><p>有/无放回：i.i.d.更容易分析</p>
+<p>概率选取</p>
+<script type="math/tex; mode=display">
+p_i=\frac{||A_i||_2||B_i||_2}{\sum_{j=1}^n||A_j||_2||B_j||_2}</script><p>include $A_j/(cp_j)^{1/2}$ as a column and $B_j/(cp_j)^{1/2}$ as a row，此时CR也可以表示为</p>
+<script type="math/tex; mode=display">
+CR=(AS)(S^TB)</script><p>如此得到F-范数的界限</p>
+<script type="math/tex; mode=display">
+E||AB-CR||_F\leq\frac1c||A||_F||B||_F</script><p>证明：</p>
+<script type="math/tex; mode=display">
+E[CR]=AB,\:Var[(CR)_{ij}]=\frac1c\sum_{k=1}^n\frac{A_{ik}^2B_{kj}^2}{p_k}-\frac1c(AB)_{ij}^2</script><p>因此</p>
+<script type="math/tex; mode=display">
+E||AB-CR||_F^2=\sum_{k=1}^n\frac{|A_k|^2|B_k|^2}{cp_k}-\frac1c||AB||_F^2\\
+\leq\frac1c(\sum_{k=1}^n|A_k||B_k|)^2-\frac1c||AB||_F^2\\
+\leq\frac1c||A||_F^2||B||_F^2</script><p>在$B=A^T$时，根据Chernoff/Bernstein不等式，当</p>
+<script type="math/tex; mode=display">
+c=\Omega(\frac{||A||_F^2}{e^2}ln(\frac{||A||_F^2}{e^2\sqrt{\delta}}))</script><p>此时下式成立的概率至少为$1-\delta$</p>
+<script type="math/tex; mode=display">
+E||AA^T-CC^T||_F\leq e</script><p><strong>Using a dense S</strong></p>
+<ul>
+<li>Reminiscent of random projections and the Johnson-Lindenstrauss transform</li>
+<li>Bounds for the Frobenius norm are similar</li>
+<li>need a sufficiently large value c</li>
+</ul>
+<h2 id="Approximate-SVD"><a href="#Approximate-SVD" class="headerlink" title="Approximate SVD"></a>Approximate SVD</h2><p>Linear Time SVD algorithm:</p>
+<ol>
+<li>input matrix A</li>
+<li>for t = 1 to c，根据概率选择i，设定$C_t=A_i/\sqrt{cp_i}$</li>
+<li>计算$C^TC$和它的SVD：$C^TC=\sum \sigma_t(C)^2y_ty_t^T$</li>
+<li>计算$h_t=Cy_t/\sigma_t(C)$</li>
+</ol>
+<p><u>C的左特征向量很大概率近似A的左特征向量</u></p>
+<p>之后可以得到近似的k-dominant SVD</p>
+<p><strong>主要结论</strong></p>
+<script type="math/tex; mode=display">
+E[||A-H_kH_k^TA||_F^2]\leq||A-A_k||_F^2+\epsilon||A||_F^2</script><p>矩阵扰动定理（后者为Hoffman-Wielandt不等式）</p>
+<script type="math/tex; mode=display">
+max|\sigma_t(A+E)-\sigma_t(A)|\leq||E||_2\\
+\sum_{k=1}^n(\sigma_k(A+E)-\sigma_k(A))^2\leq||E||_F^2</script><p>引理：</p>
+<script type="math/tex; mode=display">
+||A-H_kH_k^TA||_F^2\leq||A-A_k||_F^2+2\sqrt{k}||AA^T-CC^T||_F\\
+||A-H_kH_k^TA||_2^2\leq||A-A_k||_2^2+2||AA^T-CC^T||_2</script><p>第一个引理由$||X||_F^2=Tr(X^TX)$和Cauchy-Schwartz不等式和Hoffman-Wielandt不等式得到。</p>
+<p>根据引理和F-范数的界限得到主要结论</p>
+<p><u>CX分解也有相应的方法/结论</u></p>
+<p><u>Fewer sampling</u></p>
+<h2 id="Random-Sampling-for-SVD"><a href="#Random-Sampling-for-SVD" class="headerlink" title="Random Sampling for SVD"></a>Random Sampling for SVD</h2><p>Range finding problem：找到Q，$A\approx QQ^TA$</p>
+<p>input A，draw a random matrix X，Y=AX，</p>
+<p>对Y做QR分解，Y=QR</p>
+<p>对$Q^TAQ$做SVD分解得到$T^TDT$，那么QT是U的估计。</p>
+<h2 id="Single-View-Algorithm-for-Matrix-Approximation"><a href="#Single-View-Algorithm-for-Matrix-Approximation" class="headerlink" title="Single View Algorithm for Matrix Approximation"></a>Single View Algorithm for Matrix Approximation</h2><p>低秩矩阵重建：</p>
+<p>given A，given random matrices k列的$\Omega$, l行的$\Phi$，compute</p>
+<script type="math/tex; mode=display">
+Y=A\Omega,W=\Phi A</script><p>Y=QR，$X=(\Phi Q)^-W$，近似</p>
+<script type="math/tex; mode=display">
+\hat{A}=QX</script><p>如果k=2r+1,l=4r+2，那么</p>
+<script type="math/tex; mode=display">
+E||A-\hat{A}||_F\leq2\min_{rank(Z)\leq r}||A-Z||_F</script><p><u>应用到一些问题上避免了对原矩阵A的revisit</u></p>
+<p>应用：低秩投影</p>
+<p>投影到凸集C上：</p>
+<script type="math/tex; mode=display">
+\Pi_C(M)=\arg\min_{X\in C}||X-M||_F^2</script><p>Conjugate Symmetric Approximation：凸集$C=H^n=\{X=X^*\}$。此时$\Pi_{H^n}(M)=\frac12(M+M^*)$，所以对A=QX，$[Q,X^*]=U[T_1,T_2]$，那么得到投影</p>
+<script type="math/tex; mode=display">
+\hat{A_{sym}}=U(\frac12(T_1T_2^*+T_2T_1^*))U^*\triangleq USU^*</script><p>PSD近似：对于半正定矩阵A，特征值分解$S=VDV^*$，计算$\hat{A}_{sym}=(UV)D(UV)^*$，构造</p>
+<script type="math/tex; mode=display">
+\hat{A_+}=\Pi_{H_+^n}(\hat{A})=(UV)D_+(UV)^*</script><h1 id="相位恢复"><a href="#相位恢复" class="headerlink" title="相位恢复"></a>相位恢复</h1><script type="math/tex; mode=display">
+|Ax|=b\in C^m</script><p>即为多元二次方程求根：NP难问题，非凸优化最值问题</p>
+<p>应用：物理问题如Xray/天文观察，一般不能观测到辅角</p>
+<h2 id="classical-phase-retrieval"><a href="#classical-phase-retrieval" class="headerlink" title="classical phase retrieval"></a>classical phase retrieval</h2><script type="math/tex; mode=display">
+find\:x\in S\cap M\\
+M:=\{x(r)||\hat{x}(\omega)|=b(\omega)\},\:\hat{x}(\omega)=Fourier(x(r))\\
+S:=\{x(r)|x(r)=0\:for\:x\notin D\}</script><p><strong>Error Reduction</strong>：交替投影法</p>
+<script type="math/tex; mode=display">
+x^{k+1}=P_SP_M(x^k)</script><p>之后有五种变体</p>
+<ul>
+<li>Basic input-output (BIO)：$x^{k+1}=(P_SP_M+I-P_M)(x^k)$</li>
+<li>Hybrid input-output (HIO)：$x^{k+1}=((1+\beta)P_SP_M+I-P_S-\beta P_M)(x^k)$</li>
+<li>Hybrid projection reflection (HPR)：$x^{k+1}=((1+\beta)P_{S_+}P_M+I-P_{S_+}-\beta P_M)(x^k)$</li>
+<li>Relaxed average alternating reflection (RAAR)：$x^{k+1}=(2\beta P_{S_+}P_M+\beta I-\beta P_{S_+}-(1-2\beta) P_M)(x^k)$</li>
+<li>Difference Map(DF)：$x^{k+1}=(I+\beta(P_S((1-\gamma_2)P_M-\gamma_2 I)+P_M((1-\gamma_1)P_S-\gamma_1 I)))(x^k)$</li>
+</ul>
+<p><u>收敛性难以保证</u></p>
+<p><strong>ADMM</strong></p>
+<script type="math/tex; mode=display">
+find\:x,y\:s.t.x=y,x\in X\:and\:y\in Y</script><p>增广拉格朗日函数</p>
+<script type="math/tex; mode=display">
+L(x,y,\lambda)=\lambda^T(x-y)+\frac12||x-y||^2</script><p>ADMM与HIO/HPR在一些假设下等价</p>
+<h2 id="Discrete-model"><a href="#Discrete-model" class="headerlink" title="Discrete model"></a>Discrete model</h2><script type="math/tex; mode=display">
+find\: x\\
+s.t.\:|<a_k,x_0>|^2=b_k</script><p>一般情况下NP难</p>
+<p><strong>PhaseLift</strong></p>
+<p>令$X=xx^*$，那么$b_k=<a_ka_k^\*,X>$，</p>
+<script type="math/tex; mode=display">
+find\:X\\
+s.t.A(X)=b,X\succeq0</script><p>（这里去掉了约束rank(X)=1）</p>
+<p>如此回到半定规划问题</p>
+<p>Theorem（C and Li 2012，C Strohmer and Voronisnski 2011）</p>
+<p>如果$a_k$独立均匀地分布在单位圆上，且个数m&gt;n，那么至少概率为$1-O(e^{-\gamma m})$唯一可行解即是原来的x（即<em>精确恢复</em>）。</p>
+<p><strong>PhaseCut</strong></p>
+<p>变形为</p>
+<script type="math/tex; mode=display">
+\min_{x,u}\frac12||Ax-diag(b)u||_2^2=\min_u u^*(diag(b)(I-AA^*)diag(b))u</script><p>是MAXCUT问题</p>
+<script type="math/tex; mode=display">
+\min_U Tr(UM)</script><h2 id="Phase-retrieval-by-non-convex-optimization"><a href="#Phase-retrieval-by-non-convex-optimization" class="headerlink" title="Phase retrieval by non-convex optimization"></a>Phase retrieval by non-convex optimization</h2><script type="math/tex; mode=display">
+\min_z f(z)=\frac1{4m}\sum_{k=1}^m(y_k-|<a_k,z>|^2)^2</script><p>复数求梯度：根据Wirtinger 梯度即$\frac{\partial}{\partial z}=\frac12(\frac{\partial}{\partial x}-i\frac{\partial}{\partial y})$</p>
+<script type="math/tex; mode=display">
+\nabla f(z)=\frac1m\sum_{k=1}^m(|<a_k,z>|^2-y_k)(a_ka_k^*)z</script><p><u>梯度下降法线性收敛速度要求强凸</u></p>
+<p>定义距离</p>
+<script type="math/tex; mode=display">
+dist(z,x)=\min_\phi||z-e^{i\phi}x||</script><p>Convergence for Gaussian model：</p>
+<p>假设sample $m&gt;nlog(n)$，step size $\mu&lt;c/n$</p>
+<p>那么以至少$1-10e^{-\gamma n}-8/n^2-me^{-1.5n}$的概率$dist(z_0,x)\leq \frac18||x||$，在$\tau$步迭代之后</p>
+<script type="math/tex; mode=display">
+dist(z_\tau,x)\leq\frac18(1-\mu/4)^{\tau/2}||x||</script><p>引理1：假设f满足$RC((\alpha,\beta,\epsilon))$ for all $z\in E(\epsilon)$。进一步假设$z_0\in E(\epsilon)$，$0&lt;\mu\leq 2/\beta$，考虑更新</p>
+<script type="math/tex; mode=display">
+z_{\tau+1}=z_\tau-\mu\nabla f(z_\tau)</script><p>那么所有$z_\tau\in E(\epsilon)$，且</p>
+<script type="math/tex; mode=display">
+dist^2(z_\tau,x)\leq(1-\frac{2\mu}{\alpha})^\tau dist^2(z_0,x)</script><p>上面f的正则条件$RC((\alpha,\beta,\epsilon))$是说对任意$z\in E(\epsilon)$</p>
+<script type="math/tex; mode=display">
+Re(<\nabla f(z),z-xe^{i\phi(z)}>)\geq \frac1\alpha dist^2(z,x)+\frac1\beta||\nabla f(z)||^2</script><p>引理2：假设$||x||=1$，又假设$m\geq c(\delta)nlog(n)$ in Gaussian model 或 $L\geq c(\delta)log^3(n)$ in CD model</p>
+<script type="math/tex; mode=display">
+||\nabla^2f(x)-E\nabla^2f(x)||\leq \delta</script><p>以至少$1-10e^{-\gamma n}-8/n^2$或$1-(2L+1)/n^3$的概率成立。</p>
+<p>（需要Local Curvature Condition或者Local smoothness condition）</p>
+<p>原式的证明：</p>
+<p>根据引理2：</p>
+<script type="math/tex; mode=display">
+||Y-(xx^*+||x||^2I)||\leq\epsilon=0.001</script><p>设Y的最大的特征值为$\lambda_0$</p>
+<script type="math/tex; mode=display">
+|\lambda_0-(|\bar{z_0}x|^2+1)|=|\bar{z_0}^*(Y-(xx^*+I))\bar{z_0}|\leq\epsilon</script><p>因此</p>
+<script type="math/tex; mode=display">
+|\bar{z_0}^*x|^2\geq\lambda_0-1-\epsilon</script><p>同时有</p>
+<script type="math/tex; mode=display">
+\lambda_0\geq x^*Yx=x^*(Y-(I+x^*x))x+2\geq2-\epsilon</script><p>所以</p>
+<script type="math/tex; mode=display">
+|\bar{z_0}^*x|^2\geq 1-2\epsilon\Rightarrow dist^2(\bar{z_0},x)\leq2-2\sqrt{1-2\epsilon}</script><h2 id="Gauss-Newton-Method"><a href="#Gauss-Newton-Method" class="headerlink" title="Gauss-Newton Method"></a>Gauss-Newton Method</h2><p>Nonlinear least square problem</p>
+<script type="math/tex; mode=display">
+\min_z f(z)=\frac1{4m}\sum_{k=1}^m(y_k-|<a_k,z>|^2)^2</script><p>根据Wirtinger导数</p>
+<script type="math/tex; mode=display">
+z:=\begin{pmatrix}z\\\bar{z}\end{pmatrix}\\
+g(z):=\nabla_cf(z)=\frac1m\sum_{r=1}^m(|a_r^Tz|^2-y_r)\begin{pmatrix}(a_ra_r^T)z\\(\bar{a_r}a_r^T)\bar{z}\end{pmatrix}\\
+J(z):=\frac1{\sqrt{m}}\begin{pmatrix}|a_1^*z|a_1&|a_2^*z|a_2&...&|a_m^*z|a_m\\|a_1^*z|\bar{a_1}&|a_2^*z|\bar{a_2}&...&|a_m^*z|\bar{a_m}\end{pmatrix}^T\\
+\Phi(z):=J(z)^TJ(z)</script><p>modified LM method for Phase Retrieval：Levenberg-Marquardt Iteration</p>
+<script type="math/tex; mode=display">
+z_{k+1}=z_k-(\Phi(z_k)+\mu_kI)^{-1}g(z_k)</script><p>Convergence of the Gaussian Model：</p>
+<p>假设$m\geq cnlog(n)$，如果$f(z_k)\geq\frac{||z_k||^2}{900n}$，$\mu_k=70000n\sqrt{nf(z_k)}$，否则$\mu_k=\sqrt{f(z_k)}$，那么很高的概率</p>
+<script type="math/tex; mode=display">
+dist(z_{k+1},x)\leq c_1dist(z_k,x)</script><p>当$f(z_s)&lt;\frac{||z_s||^2}{900n}$时</p>
+<script type="math/tex; mode=display">
+dist(z_{k+1},x)<c_2dist(z_k,x)^2</script><h2 id="Cryo-Electron-Microscopy"><a href="#Cryo-Electron-Microscopy" class="headerlink" title="Cryo-Electron Microscopy"></a>Cryo-Electron Microscopy</h2><p>冷冻光镜问题</p>
+<p>傅里叶切片定理</p>
+<p>Detection of Common Line of Two photos </p>
+<p>—— Weighted Least Square Approach</p>
+<script type="math/tex; mode=display">
+\min_{R_1,R_2,...,R_K}\sum_{i\neq j}w_{ij}||R_i(c_{ij},0)^T-R_j(c_{ji},o)^T||^2\\
+=\max_{R_1,R_2,...,R_K}\sum_{i\neq j}w_{ij}<R_i(c_{ij},0)^T,R_j(c_{ji},0)^T></script><p>半定规划（SDR）</p>
+<script type="math/tex; mode=display">
+\max trace((W\cdot S)G\\
+G=R^TR,\:S_{ij}=c_{ji}^Tc_{ij},\:W_{ij}=w_{ij}\begin{pmatrix}1&1\\1&1\end{pmatrix}</script><p>即要求</p>
+<script type="math/tex; mode=display">
+G_{ii}=I_2,G\succeq 0</script><h1 id="数据降维"><a href="#数据降维" class="headerlink" title="数据降维"></a>数据降维</h1><p>SVD</p>
+<script type="math/tex; mode=display">
+A\approx U\Sigma V^T=\sum_i\sigma_iu_iv_i^T</script><p>Theorem </p>
+<script type="math/tex; mode=display">
+\min_{rank(B)=k}||A-B||_2=||A-A_k||_2=\sigma_{k+1}</script><p>复杂度：O(nm^2)或者O(n^2m)</p>
+<p>但是如果我们只想要特征值/只想要k个特征向量/矩阵系数都可以减少计算量</p>
+<p><strong>PCA（主成分分析）</strong></p>
+<p>从X到Y，$y=z^Tx$，使得var(y)是最大的</p>
+<script type="math/tex; mode=display">
+\max z^Tcov(X)z,s.t.||z||_2=1</script><p>即找到cov(X)最大的特征值</p>
+<p>如果是多个特征</p>
+<script type="math/tex; mode=display">
+\max Tr(M^Tcov(X)M),s.t.M^TM=I</script><p>令</p>
+<script type="math/tex; mode=display">
+\bar{X}=X-\frac1n11^TX=U\Sigma V^T</script><p>那么</p>
+<script type="math/tex; mode=display">
+cov(X)=V\Sigma^2V^T/(n-1)</script><p><strong>MDS（多维尺度分析）</strong></p>
+<p>定义距离矩阵</p>
+<script type="math/tex; mode=display">
+D_2(X)=(d_{ij}^2(X))_{ij}</script><p>MDS就是找到Y</p>
+<script type="math/tex; mode=display">
+\min_Y ||HD_2(X)H-HD_2(Y)H||_F^2</script><p>Lemma：$H=I_n-\frac1n 11^T$，$\bar{X}=X-\frac1n11^TX$，那么</p>
+<script type="math/tex; mode=display">
+B=-\frac12HD_2(X)H=\bar{X}\bar{X}^T</script><p>引理的证明：</p>
+<script type="math/tex; mode=display">
+D_2(X)_{ij}=x_ix_i^T+x_jx_j^T-2x_ix_j^T</script><p>令$K=XX^T$，$w=diag(K)$，那么</p>
+<script type="math/tex; mode=display">
+D_2(X)=w1^T+1w^T-2K</script><p>根据引理可以看出：PCA和MDS是等价的，如下。</p>
+<script type="math/tex; mode=display">
+\min_Y||B-YY^T||_F^2</script><p>Extension of MDS：不同的距离度量，此时$K_{ij}=k(x_i,x_j)$</p>
+<p><strong>MVU</strong></p>
+<p>图G=(V,E)</p>
+<script type="math/tex; mode=display">
+\max\sum_{i,j}||y_i-y_j||^2\\
+s.t.\sum_iy_i=0,||y_i-y_j||^2=||x_i-x_j||^2,\forall(i,j)\in E</script><p>这个问题非凸</p>
+<p>定义$K=YY^T$，那么可以做半定规划松弛</p>
+<script type="math/tex; mode=display">
+\max Tr(K)\\
+s.t.K\succeq 0,1^TK1=0\\
+K_{ii}-2K_{ij}+K_{jj}=D_{ij},\forall(i,j)\in E</script><p><strong>Graph Realization and Sensor Network Localization Problems</strong></p>
+<p>蛋白质折叠问题？</p>
+<p>输入m个已知点$a_i$，n个未知点$x_j$，以及一些点对的距离，据此估计每个点的位置</p>
+<p>定义$Y=X^TX$，半定规划松弛</p>
+<script type="math/tex; mode=display">
+(e_i-e_j)^TY(e_i-e_j)=d_{ij}^2\\
+(a_k;-e_j)^T\begin{pmatrix}I&X\\X^T&Y\end{pmatrix}(a_k;-e_j)=d_{kj}^2</script><h1 id="网络流问题"><a href="#网络流问题" class="headerlink" title="网络流问题"></a>网络流问题</h1><p>Path、Directed Path、Cycle、Directed Cycle</p>
+<p>（这四个No node is repeated）</p>
+<p>Walks：Paths that can repeat nodes and arcs</p>
+<p><strong>最短路径</strong></p>
+<script type="math/tex; mode=display">
+\min \sum c_{ij}x_{ij}\\
+s.t.\sum_jx_{sj}=1,\sum_ix_{it}=1,\\
+\sum_jx_{ij}=\sum_jx_{ji},\forall i\neq s,t\\
+x_{ij}\geq 0</script><p>其对偶形式</p>
+<script type="math/tex; mode=display">
+\max d(t)-d(s)\\
+s.t.d(j)-d(i)\leq c_{ij}</script><p><strong>最大流</strong></p>
+<script type="math/tex; mode=display">
+\max v\\
+s.t.\sum x_{sj}=v,\sum x_{jt}=v,\\
+\sum_jx_{ij}=\sum_jx_{ji},\forall i\neq s,t\\
+x_{ij}\leq c_{ij}</script><p><strong>Max-Weight Bipartite Matching</strong></p>
+<p>find a set of edges covering each node at most once</p>
+<script type="math/tex; mode=display">
+\max\sum w_{ij}x_{ij}\\
+s.t.\sum_jx_{ij}\leq 1,i\in L\\
+\sum_ix_{ij}\leq1,j\in R\\
+x_{ij}\in[0,1]</script><p>LP relaxtion：最后一个条件放宽为$x_{ij}\geq 0$</p>
+<p>对偶问题：顶点覆盖，找到最小集合S，使得每条边至少一端在S里</p>
+<script type="math/tex; mode=display">
+\min\sum_iy_i\\
+s.t.y_i+y_j\geq w_{ij},\:(i,j)\in A\\
+y_i\geq 0</script><p>定义：矩阵A Totally Unimodular如果每个正方形子矩阵特征值为0,1或-1</p>
+<p>定理：A totoal unimodular，b是整数向量，Ax=b的解为整数</p>
+<p>Claim: The constraint matrix of the bipartite matching LP is totally unimodular.</p>
+<p><strong>Modularity Maximization for Coummunity Detection</strong></p>
+<p>define partition matrix X，$X_{ij}=1$，如果i和j在同一个社群，否则为0</p>
+<p>modularity (MEJ Newman, M Girvan, 2004) defined by</p>
+<script type="math/tex; mode=display">
+Q=<A-\frac{1}{2\lambda}dd^T,X>,\lambda=|E|</script><p>SDP 松弛后</p>
+<script type="math/tex; mode=display">
+\max<A-\frac1{2\lambda}dd^T,X>\\
+s.t.X\succ0,0\leq X_{ij}\leq 1,X_{ii}=1</script><p>为了进一步简化，进行非凸松弛</p>
+<script type="math/tex; mode=display">
+\min<-A+\frac1{2\lambda}dd^T,UU^T>\\
+s.t.||u_i||^2=1,||u_i||_0\leq p,U\geq0</script><p>算法：固定U其他行，最小化第i行</p>
+<script type="math/tex; mode=display">
+u_i=\arg\min f(u_1,u_2,...,x,...,u_n)+\frac\sigma2||x-\bar{u_i}||^2</script><h1 id="次模优化"><a href="#次模优化" class="headerlink" title="次模优化"></a>次模优化</h1><p>推荐系统：Relevance and Diversity</p>
+<p>简单的抽象模型：用户集W，广告集V，对每个广告i，有用户集合$S_i$，定义</p>
+<script type="math/tex; mode=display">
+F(A)=|\bigcup_{i\in A}S_i|</script><p>优化问题选在k篇来最大化用户覆盖</p>
+<script type="math/tex; mode=display">
+\max_{|A|<k}F(A)</script><p>这是NP-hard问题</p>
+<p><strong>定义</strong></p>
+<p>模函数F，如果对任意A，B</p>
+<script type="math/tex; mode=display">
+F(A)+F(B)=F(A\cap B)+F(A\cup B)</script><p>模函数可以写成</p>
+<script type="math/tex; mode=display">
+F(A)=F(\emptyset)+\sum_{a\in A}(F(\{a\})-F(\emptyset))</script><p>显然模函数单调、非负</p>
+<p>次模函数F，如果对任意A，B</p>
+<script type="math/tex; mode=display">
+F(A)+F(B)\geq F(A\cap B)+F(A\cup B)</script><p>（次模函数的另一种定义，边际效益递减）对任意$A\subseteq B$，$s\notin B$</p>
+<script type="math/tex; mode=display">
+F(B\cup\{s\})-F(B)\leq F(A\cup\{s\})-F(A)</script><p>性质：$F(A)=\sum_i\lambda_i F_i(A)$也是次模函数</p>
+<p>性质：次模函数F限制在集合W上也是次模函数</p>
+<p>性质：凹函数复合模函数是次模函数</p>
+<p>定义 coverage function $cover_d(c)=p(d\:covers\:c)$，集合coverage function</p>
+<script type="math/tex; mode=display">
+cover_A(c)=1-\prod_{d\in A}(1-cover_d(c))</script><p>原式化作</p>
+<script type="math/tex; mode=display">
+\max_{|A|\leq k}F(A)=\sum_cw_ccover_A(c)</script><p><strong>回到原问题</strong></p>
+<p>这是个次模最大值问题</p>
+<p>定理：在一般条件下，贪心法的解</p>
+<script type="math/tex; mode=display">
+F(A)\geq(1-1/e)*optimal-value\approx63\%</script><p>引理：F单调+次模，那么$F_A(S)=F(A\cup S)-F(A)$是单调+次模</p>
+<p>引理：如果F正则+次模，那么存在$j\in A$，$F(\{j\})\geq \frac{1}{|A|}F(A)$</p>
+<p>证明：k词迭代之后，$F(A^*)-F(A_{k})$ shrink to $(1-1/k)^k&lt;(1-1/e)$</p>
+<p>贪心法的改进：“Lazy” Greedy，保持ordered list，只重新计算top的更新</p>
+<p><strong>次模最小化</strong></p>
+<script type="math/tex; mode=display">
+\min F(S)\\
+s.t.S\subseteq X</script><p>多项式时间算法</p>
+<p>Choquet integral - Lovasz Extention：将$\{0,1\}$上定义的函数拓展为$[0,1]$上的函数</p>
+<p>Given any set-function F and w such that $w_{j_1}\geq …\geq w_{j_n}$</p>
+<script type="math/tex; mode=display">
+f(w)=\sum_{k=1}^{n}w_{j_k}[F(\{j_1,...,j_k\})-F(\{j_1,...,f_{k-1}\})]\\
+=\sum_{k=1}^{n-1}(w_{j_k}-w_{j_{k+1}})F(\{j_1,...,j_k\})+w_{j_n}F(\{j_1,...,j_n\})</script><p>实际上</p>
+<script type="math/tex; mode=display">
+f(w)=\max_{s\in B(F)}w^ts</script><p>Theorem(Lovasz, 1982) F是次模函数当且仅当f是凸的</p>
+<p>Theorem(Lovasz, 1982)</p>
+<script type="math/tex; mode=display">
+\min F(A)=\min_{w\in\{0,1\}^n} f(w)=\min_{w\in[0,1]^n}f(w)</script><p>第一个等号显然成立，第二个显然大于等于成立。</p>
+<p>any $w\in [0,1]^n$可以被分解为$w=\sum_{i=1}^n\lambda_i1_{B_i}$，其中$B_1\subseteq B_2\subseteq … \subseteq B_n$，其中$\lambda\geq 0$，且$\lambda(V)\leq 1$</p>
+<script type="math/tex; mode=display">
+f(w)=\sum_{i=1}^n\lambda_iF(B_i)\geq\sum_{i=1}^n\lambda_i\min F(A)\geq \min F(A)</script><p>因而得证。</p>
+<p>迭代过程：</p>
+<script type="math/tex; mode=display">
+w_t=\Pi_{[0,1]^n}(w_{t-1}-\frac C{\sqrt{t}}s_t)</script><p>可以证明</p>
+<script type="math/tex; mode=display">
+f(w_t)-\min f(w)\leq \frac C{\sqrt{t}}</script><h1 id="强化学习"><a href="#强化学习" class="headerlink" title="强化学习"></a>强化学习</h1><p>MRP（Markov Reward Process）</p>
+<script type="math/tex; mode=display">
+E[\sum_{t=1}^T\gamma^{t-1}r_t|s_t]</script><p><strong>Value Functions</strong></p>
+<p>On-Policy Value Function</p>
+<script type="math/tex; mode=display">
+V^\pi(s)=\lim_{T\to\infty}E[\sum_{t=1}^T\gamma^{t-1}r_t|s_1=s]</script><p>On-Policy Action-Value Function</p>
+<script type="math/tex; mode=display">
+Q^\pi(s,a)=\lim_{T\to\infty}E[\sum_{t=1}^T\gamma^{t-1}r_t|s_1=s,a_1=a]</script><p>Optimal Value Function</p>
+<script type="math/tex; mode=display">
+V^*(s)=\max_\pi V^\pi(s)</script><p>Optimal Action-Value Fucntion</p>
+<script type="math/tex; mode=display">
+Q^*(s,a)=\max_\pi Q^\pi(s,a)</script><p><strong>Bellman Equations</strong></p>
+<script type="math/tex; mode=display">
+V^\pi(s)=E[R(s,a,s')+\gamma V^\pi(s')]\\
+Q^\pi(s,a)=E[R(s,a,s')+\gamma E_{a'\sim\pi}[Q^\pi(s',a')]]</script><p>for optimal value functions：</p>
+<script type="math/tex; mode=display">
+V^*(s)=\max_{a}E[R(s,a)+\gamma V^*(s')]\\
+Q^*(s,a)=E[R(s,a)+\gamma \max_{a'} E_{a'\sim\pi}[Q^*(s',a')]]</script><p><strong>Bellman方程的不动点</strong></p>
+<p>可以通过LP来找到</p>
+<script type="math/tex; mode=display">
+\min_v \sum_s w_sv_s\\
+s.t.\:v_s\geq R(s,a)+\gamma P(s,a)^Tv</script><p>其中的约束等价于</p>
+<script type="math/tex; mode=display">
+(I-\gamma P^{\pi^*})v\geq R^{\pi^*}</script><p>因此</p>
+<script type="math/tex; mode=display">
+v\geq (I-\gamma P^{\pi^*})^{-1}R^{\pi^*}=V^*</script><p>这就证明了这个问题与Bellman方程等价。</p>
+<p><strong>Bellman算子</strong></p>
+<script type="math/tex; mode=display">
+LV(s)=\max_{a}R(s,a)+\gamma \sum_{s'}P(s,a,s')V(s')\\
+L^\pi V(s)=E_\pi[R(s,a)+\gamma \sum_{s'}P(s,a,s') V(s')]</script><p>所以对任意policy</p>
+<script type="math/tex; mode=display">
+V^*=LV^*,\:V^\pi=L^\pi V^\pi</script><p>这两个算子都是压缩映射，这证明了收敛性和唯一性。</p>
+<p>可以证明</p>
+<script type="math/tex; mode=display">
+||v_k-v^*||\leq \frac{\gamma^k}{1-\gamma}||v_0-v^*||</script><p><strong>Q-value iteration</strong></p>
+<script type="math/tex; mode=display">
+Q^*(s,a)=R(s,a)+\gamma\sum_{s'}P(s,a,s')(\max_{a'}Q^*(s',a'))</script><p>迭代方法</p>
+<script type="math/tex; mode=display">
+Q^k(s,a)=R(s,a)+\gamma E_{s'}[\max_{a'}Q^{k-1}(s',a')|s,a]</script><p><strong>Policy Iteration</strong></p>
+<p>k-th iteration has two steps</p>
+<ol>
+<li>Policy evaluation: find $v^k$ by solving $v^k=L^{\pi^k}v^k$</li>
+</ol>
+<script type="math/tex; mode=display">
+v^k(s)=E[R(s,a,s')+\gamma\sum_{s'}P(s,a,s')v^k(s')]</script><ol>
+<li>Policy improvement: find $\pi^{k+1}$ such that $L^{\pi^{k+1}}v^k=Lv^k$</li>
+</ol>
+<script type="math/tex; mode=display">
+\pi^{k+1}(s)=\arg\max_aR(s,a)+\gamma E_{s'}[v^k(s')|s,a]</script><p>这是个Greedy算法</p>
+<p><strong>Platform</strong></p>
+<ul>
+<li>Gym: support Atari and Mujoco</li>
+<li>Universe</li>
+<li>Deepmind Lab</li>
+<li>ViZDoom</li>
+</ul>
+<p>Packages: Rllab/Baselines/Github</p>
+<p><strong>Taxonomy</strong></p>
+<p><img src="RLtaxonomy.png" alt="RLtaxonomy"></p>
+<p><strong>Temporal Difference</strong></p>
+<script type="math/tex; mode=display">
+v(s_t)\leftarrow (1-\alpha_t)v(s_t)+\alpha_tG_t</script><p>TD:</p>
+<script type="math/tex; mode=display">
+G_t=r_t+\gamma v(s_{t+1})</script><p>TD(n)：</p>
+<script type="math/tex; mode=display">
+G_t^{(n)}=r_{t}+\gamma R_{t+1}+...+\gamma ^{n-1}r_{t+n-1}+\gamma ^{n}v(s_{t+n})</script><p>TD( $\lambda$ )： </p>
+<script type="math/tex; mode=display">
+G_t^{\lambda}=(1-\lambda) \sum_{n=0}^{\infty}\lambda^{n-1}G_t^{(n)}</script><p> TD(0)即TD, TD(1)接近MC</p>
+<h2 id="Q-learning"><a href="#Q-learning" class="headerlink" title="Q-learning"></a>Q-learning</h2><p><strong>Q-learning</strong></p>
+<script type="math/tex; mode=display">
+Q_{k+1}(s_t,a_t)=(1-\alpha)Q_k(s_t,a_t)+\alpha(r_t+\gamma\max_{a'}Q_k(s_{t+1},a'))</script><p><strong>Deep Q-learning</strong></p>
+<p>以e的概率选择随机action，否则选择最大化Q的action $a_t$，然后得到$s_{t+1}$，$\phi_{t+1}=\phi(s_{t+1})$，然后将$(\phi_t,a_t,r_t,\phi_{t+1})$存储在D里</p>
+<p>构造$y_j=r_j+\gamma\max_{a’} Q(\phi,a’;\theta)$，然后perform GD on $(y_j-Q(\phi_j,a_j;\theta))^2$</p>
+<p><strong>DDPG</strong>：连续学习Q-function</p>
+<script type="math/tex; mode=display">
+\max_a Q(s,a)\approx Q(s,\mu(s))</script><p>选择action $a=clip(\mu_\theta(s)+e,low,high),\:e\sim N$。在Buffer D中存储(s,a,r,s’,done)</p>
+<p>每次构造targets </p>
+<script type="math/tex; mode=display">
+y(r.s',d)=r+\gamma(1-d)Q_{\phi targ}(s',\mu_{\theta targ}(s'))</script><p>update Q-function by GD</p>
+<script type="math/tex; mode=display">
+(Q_\phi(s,a)-y(r,s',a'))^2</script><p>update policy $\theta$ by GD</p>
+<script type="math/tex; mode=display">
+Q_\phi(s,\mu_\theta(s))</script><p>然后按比例更新</p>
+<p><strong>Twin Delayed DDPG</strong></p>
+<p>三个trick：</p>
+<p>1、learn two Q-function</p>
+<script type="math/tex; mode=display">
+y(r.s',d)=r+\gamma(1-d)\min_{1,2}Q_{\phi targ}(s',\mu_{\theta targ}(s'))</script><p>2、延迟更新policy（两次更新Q再更新policy）</p>
+<p>3、对噪声e做截断</p>
+<p><strong>Approximate dynamic programming</strong></p>
+<p>update $\theta$ instead of value function</p>
+<script type="math/tex; mode=display">
+V_\theta(s)=\theta_0f_0(s)+\theta_1f_1(s)+...+\theta_nf_n(s)</script><p>TD(0) approximation: </p>
+<script type="math/tex; mode=display">
+\min\delta_t=r_t+\gamma V_\theta(s_{t+1})-V_\theta(s_t)</script><p>Fitted value-iteration:</p>
+<p>update $\theta$ by finding $\theta$ to fit data</p>
+<script type="math/tex; mode=display">
+(V_\theta(s),LV_{\theta^{k-1}}(s))</script><p>问题：不一定能收敛</p>
+<p>定义approximation operator $M_A$</p>
+<script type="math/tex; mode=display">
+v^i=(L\odot M_A)v^{i-1}</script><p>要求这个算子Non-expansive</p>
+<h2 id="Policy-Gradient-On-Policy"><a href="#Policy-Gradient-On-Policy" class="headerlink" title="Policy Gradient (On-Policy)"></a>Policy Gradient (On-Policy)</h2><script type="math/tex; mode=display">
+\max_\theta \rho(\pi_\theta)</script><p><u>Policy Gradient通常会震荡剧烈，甚至可能出现明显下降</u></p>
+<p><strong>Finite horizon MDP</strong></p>
+<script type="math/tex; mode=display">
+\rho(\pi)=E[\sum_{t=1}^H\gamma^{t-1}r_t|\pi,s_t]</script><p>令$D^{\pi}(\tau)$为轨迹$\tau=(s_1,a_1,…,s_H)$的概率。</p>
+<p>定理（log-trick）</p>
+<script type="math/tex; mode=display">
+\nabla_\theta\rho(\pi_\theta)=E_{\tau\sim D^{\pi_\theta}}[R(\tau)\nabla_\theta log(D^{\pi_\theta}(\tau))]=E_\tau[R(\tau)\sum_{t=1}^{H-1}\nabla_\theta log(\pi_\theta(s_t,a))]</script><p><u>一个很大的问题是采样必须有整条轨迹，否则一些情况下无法计算reward</u></p>
+<p>方差减少的技术：加入Baseline b，这是无偏估计</p>
+<script type="math/tex; mode=display">
+g=\frac1m\sum_{i=1}^m\sum_{r=1}^{H-1}(R(\tau^i)-b)\nabla_\theta log(\pi_\theta(s_t^i,s_t^i))</script><p><strong>Long term average reward</strong></p>
+<script type="math/tex; mode=display">
+\rho(\pi,s_1)=\lim_{T\to\infty}E[\sum_{t=1}^T\gamma^{t-1}r_t|\pi]=\sum_sd^\pi(s)\sum_a\pi(s,a)R(s,a)</script><p>利用下面的V和Q</p>
+<script type="math/tex; mode=display">
+V^\pi(s)=\sum_a\pi(s_1,a)Q^\pi(s_1,a)</script><p>定义</p>
+<script type="math/tex; mode=display">
+Q^\pi(s,a)=R(s,a)+\gamma\sum_{s'}P(s,a,s')V^\pi(s')</script><p>当$\gamma=1$时，定义Q的时候要减去$\rho(\pi)$（Advantage）。</p>
+<p>定理</p>
+<script type="math/tex; mode=display">
+\nabla_\theta\rho(\pi_\theta,s_1)=\sum d^{\pi_\theta}(s)\sum Q^{\pi_\theta}(s,a)\nabla_\theta\pi_\theta(s,a)\\
+=\sum_sd^{\pi_\theta}(s)(E_{a\sim\pi(s)}[Q^{\pi_\theta}(s,a)\nabla_\theta log(\pi_\theta(s,a))])</script><p>Estimation using samples：根据policy $\pi$得到一系列轨迹，然后再每个step定义$Q_t$，那么这是一个$Q(s_t,a_t)$的无偏估计。 </p>
+<p><u>上面为Actor-only methods，又称vanilla policy gradient。</u></p>
+<p><strong>Actor-Critic methods</strong></p>
+<p>定义函数</p>
+<script type="math/tex; mode=display">
+\nabla_wf_w(s,a)=\frac1{\pi_\theta(s,a)}\nabla_\theta\pi_\theta(s,a)=\nabla_\theta log(\pi_\theta(s,a))</script><p>对任意baseline b，参数w是下式的解</p>
+<script type="math/tex; mode=display">
+\min_w E_{s,a}[(Q^{\pi_\theta}(s,a)-b(s;\theta)-f_w(s,a))^2]</script><p>那么可以得到</p>
+<script type="math/tex; mode=display">
+\nabla_\theta\rho(\pi_\theta)=E_sE_af_w(s,a)\nabla_\theta log(\pi_\theta(s,a))</script><p>分为两步</p>
+<p>1、Policy Evaluation：find w</p>
+<p>2、Policy Improvement：update $\pi$</p>
+<p><strong>Trust Region Policy Optimization（TRPO）</strong></p>
+<p>定义 total expected discounted reward</p>
+<script type="math/tex; mode=display">
+\eta(\pi)=E_\pi[\sum_{t=0}^\infty \gamma^t r(s_t)]</script><p>maximizie the approximator</p>
+<script type="math/tex; mode=display">
+L_\pi(\hat{\pi})=\eta(\pi)+\sum_sd_\pi(s)\sum_a\hat{\pi}(a|s)A_\pi(s,a)</script><p>一个足够小的$\pi$的增量improve L的同时也improve $\eta$。有下界</p>
+<script type="math/tex; mode=display">
+\eta(\pi_{new})\geq L_\pi(\pi_{new})-\frac{2\epsilon\gamma}{(1-\gamma)^2}\alpha^2</script><p>其中的$\alpha$是TV divergence，这个可以由KL divergence控制。</p>
+<script type="math/tex; mode=display">
+\max L\\
+s.t.KL(\theta||\theta_k)\leq\delta</script><p>但这个问题仍然是高度非线性的</p>
+<p>TRPO将这个问题近似为</p>
+<script type="math/tex; mode=display">
+L_{\theta_k}(\theta)\approx g^T(\theta-\theta_k)\\
+D_{KL}(\theta_k||\theta)=\frac12(\theta-\theta_k)^TH(\theta-\theta_k)</script><p>这个问题是有显式解的，</p>
+<script type="math/tex; mode=display">
+\theta=\theta_k+\sqrt{\frac{2\delta}{g^TH^{-1}g}}H^{-1}g</script><p>但是效果并不好。</p>
+<p><strong>Proximal Policy Optimization（PPO）</strong></p>
+<p>PPO-clip updates polices</p>
+<script type="math/tex; mode=display">
+\theta_{k+1}=\arg\max_\theta E_{s,a}[L(s,a,\theta_k,\theta)]</script><p>其中</p>
+<script type="math/tex; mode=display">
+L(s,a,\theta_k,\theta)=\min(\frac{\pi_\theta(a|s)}{\pi_{\theta_k}(a|s)}A^{\pi_{\theta_k}}(s,a),clip(\frac{\pi_\theta(a|s)}{\pi_{\theta_k}(a|s)},1-\epsilon,1+\epsilon)A^{\pi_{\theta_k}}(s,a))</script><p><strong>Monte-Carlo Tree Search(MCTS)</strong></p>
+<p>Alpha-Go</p>
+<p>Selection, Expansion, Simulation, Backpropagation</p>
+<p>每个节点j的选取是要最大化</p>
+<script type="math/tex; mode=display">
+UCT=X_j+2C_p\sqrt{2ln(n)/n_j}</script><p>其中n是当前节点访问次数，$n_j$是j的访问次数，$C_p$是常数，$X_j$是节点平均价值</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E7%90%89%E7%92%83%E7%8C%AB/" rel="tag"># 琉璃猫</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/03/06/database/" rel="prev" title="数据库概论">
+      <i class="fa fa-chevron-left"></i> 数据库概论
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/03/17/design-pattern/" rel="next" title="设计模式">
+      设计模式 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#凸优化"><span class="nav-number">1.</span> <span class="nav-text">凸优化</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#压缩感知"><span class="nav-number">2.</span> <span class="nav-text">压缩感知</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#压缩感知（算法）"><span class="nav-number">3.</span> <span class="nav-text">压缩感知（算法）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Proximal-Gradient-Method-ISTA-FPC"><span class="nav-number">3.1.</span> <span class="nav-text">Proximal Gradient Method&#x2F;ISTA&#x2F;FPC</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#增广拉格朗日框架"><span class="nav-number">3.2.</span> <span class="nav-text">增广拉格朗日框架</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#矩阵恢复"><span class="nav-number">4.</span> <span class="nav-text">矩阵恢复</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Collaborative-Filtering（协同过滤）"><span class="nav-number">4.1.</span> <span class="nav-text">Collaborative Filtering（协同过滤）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Latent-factor-models"><span class="nav-number">4.2.</span> <span class="nav-text">Latent factor models</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#General-Matrix-Completion"><span class="nav-number">4.3.</span> <span class="nav-text">General Matrix Completion</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Positive-semidefinite-unknown"><span class="nav-number">4.4.</span> <span class="nav-text">Positive semidefinite unknown</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Matrix-Shrink-Operator"><span class="nav-number">4.5.</span> <span class="nav-text">Matrix Shrink Operator</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#矩阵分离"><span class="nav-number">4.6.</span> <span class="nav-text">矩阵分离</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#运输优化"><span class="nav-number">5.</span> <span class="nav-text">运输优化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Kantorovitch’s-Formulation"><span class="nav-number">5.1.</span> <span class="nav-text">Kantorovitch’s Formulation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Monge-Problem"><span class="nav-number">5.2.</span> <span class="nav-text">Monge Problem</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Wasserstein-Distance"><span class="nav-number">5.3.</span> <span class="nav-text">Wasserstein Distance</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Dual-form"><span class="nav-number">5.4.</span> <span class="nav-text">Dual form</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Entropy-regularization"><span class="nav-number">5.5.</span> <span class="nav-text">Entropy regularization</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Shielding-Neighborhood-Method"><span class="nav-number">5.6.</span> <span class="nav-text">Shielding Neighborhood Method</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Large-scale-ML"><span class="nav-number">6.</span> <span class="nav-text">Large-scale ML</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#VC-dimension"><span class="nav-number">6.1.</span> <span class="nav-text">VC dimension</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#次梯度方法"><span class="nav-number">6.2.</span> <span class="nav-text">次梯度方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#随机梯度下降"><span class="nav-number">6.3.</span> <span class="nav-text">随机梯度下降</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Variance-Reduction"><span class="nav-number">6.4.</span> <span class="nav-text">Variance Reduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DL-中的随机算法"><span class="nav-number">6.5.</span> <span class="nav-text">DL 中的随机算法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Randomized-Numerical-Linear-Algebra"><span class="nav-number">7.</span> <span class="nav-text">Randomized Numerical Linear Algebra</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#矩阵乘法近似"><span class="nav-number">7.1.</span> <span class="nav-text">矩阵乘法近似</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sampling-rows-columns"><span class="nav-number">7.2.</span> <span class="nav-text">sampling rows&#x2F;columns</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Approximate-SVD"><span class="nav-number">7.3.</span> <span class="nav-text">Approximate SVD</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Random-Sampling-for-SVD"><span class="nav-number">7.4.</span> <span class="nav-text">Random Sampling for SVD</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Single-View-Algorithm-for-Matrix-Approximation"><span class="nav-number">7.5.</span> <span class="nav-text">Single View Algorithm for Matrix Approximation</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#相位恢复"><span class="nav-number">8.</span> <span class="nav-text">相位恢复</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#classical-phase-retrieval"><span class="nav-number">8.1.</span> <span class="nav-text">classical phase retrieval</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Discrete-model"><span class="nav-number">8.2.</span> <span class="nav-text">Discrete model</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Phase-retrieval-by-non-convex-optimization"><span class="nav-number">8.3.</span> <span class="nav-text">Phase retrieval by non-convex optimization</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Gauss-Newton-Method"><span class="nav-number">8.4.</span> <span class="nav-text">Gauss-Newton Method</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Cryo-Electron-Microscopy"><span class="nav-number">8.5.</span> <span class="nav-text">Cryo-Electron Microscopy</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数据降维"><span class="nav-number">9.</span> <span class="nav-text">数据降维</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#网络流问题"><span class="nav-number">10.</span> <span class="nav-text">网络流问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#次模优化"><span class="nav-number">11.</span> <span class="nav-text">次模优化</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#强化学习"><span class="nav-number">12.</span> <span class="nav-text">强化学习</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Q-learning"><span class="nav-number">12.1.</span> <span class="nav-text">Q-learning</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Policy-Gradient-On-Policy"><span class="nav-number">12.2.</span> <span class="nav-text">Policy Gradient (On-Policy)</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Hulieu"
+      src="/images/avatar.gif">
+  <p class="site-author-name" itemprop="name">Hulieu</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">22</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/husimplicity/husimplicity.github.io" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;husimplicity&#x2F;husimplicity.github.io" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:tulongzikun@126.com" title="E-Mail → mailto:tulongzikun@126.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+      <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=1364161141&auto=1&height=66"></iframe>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Hulieu</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>
