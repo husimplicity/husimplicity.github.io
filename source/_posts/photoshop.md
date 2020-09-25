@@ -86,4 +86,6 @@ HSL工具
 
 接片：至少25%重叠，photomerge+ctrl T变形+内容识别填充+压缩代替剪切
 
+lightroom：专业工具，配置复杂
+
 ctrl+alt+shift+e 盖印

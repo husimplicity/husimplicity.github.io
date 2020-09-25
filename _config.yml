@@ -4,12 +4,12 @@
 
 # Site
 title: Hulieu
-subtitle: ''
+subtitle: 似曾相识焰归来，小圆香径独徘徊
 description: ''
 keywords:
-author: Hulieu
-language: en
-timezone: ''
+author: 雨游璃风猫
+language: zh-CN
+timezone: Asia/Shanghai
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
@@ -47,7 +47,7 @@ future: true
 highlight:
   enable: true
   line_number: true
-  auto_detect: false
+  auto_detect: true
   tab_replace: ''
   wrap: true
   hljs: false
