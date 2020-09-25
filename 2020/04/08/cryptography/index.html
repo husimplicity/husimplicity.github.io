@@ -1,0 +1,1059 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="古典密码学几种古典密码移位密码（K&#x3D;3即为凯撒密码）  e_k(x)&#x3D;(x+K)\:mod\:26\\ d_k(y)&#x3D;(x-K)\:mod\:26代换密码  e_\pi(x)&#x3D;\pi(x)\\ d_\pi(x)&#x3D;\pi^{-1}(x)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="密码学">
+<meta property="og:url" content="http://yoursite.com/2020/04/08/cryptography/index.html">
+<meta property="og:site_name" content="Hulieu">
+<meta property="og:description" content="古典密码学几种古典密码移位密码（K&#x3D;3即为凯撒密码）  e_k(x)&#x3D;(x+K)\:mod\:26\\ d_k(y)&#x3D;(x-K)\:mod\:26代换密码  e_\pi(x)&#x3D;\pi(x)\\ d_\pi(x)&#x3D;\pi^{-1}(x)">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://yoursite.com/2020/04/08/cryptography/sha1.png">
+<meta property="article:published_time" content="2020-04-08T15:03:48.000Z">
+<meta property="article:modified_time" content="2020-09-12T14:12:02.609Z">
+<meta property="article:author" content="雨游璃风猫">
+<meta property="article:tag" content="琉璃猫">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2020/04/08/cryptography/sha1.png">
+
+<link rel="canonical" href="http://yoursite.com/2020/04/08/cryptography/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>密码学 | Hulieu</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Hulieu</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">似曾相识焰归来，小圆香径独徘徊</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>优雅的首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>本站的历程</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>随意的标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>严谨的分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>最终的归档</a>
+
+  </li>
+        <li class="menu-item menu-item-friends">
+
+    <a href="/friends/" rel="section"><i class="fa fa-heartbeat fa-fw"></i>永远的朋友</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>朴素的搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/08/cryptography/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="雨游璃风猫">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hulieu">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          密码学
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-04-08 23:03:48" itemprop="dateCreated datePublished" datetime="2020-04-08T23:03:48+08:00">2020-04-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-09-12 22:12:02" itemprop="dateModified" datetime="2020-09-12T22:12:02+08:00">2020-09-12</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%8C%AB%E7%88%AA%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">猫爪记</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%8C%AB%E7%88%AA%E8%AE%B0/Mathematics/" itemprop="url" rel="index"><span itemprop="name">Mathematics</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="古典密码学"><a href="#古典密码学" class="headerlink" title="古典密码学"></a>古典密码学</h1><h2 id="几种古典密码"><a href="#几种古典密码" class="headerlink" title="几种古典密码"></a>几种古典密码</h2><p>移位密码（K=3即为凯撒密码）</p>
+<script type="math/tex; mode=display">
+e_k(x)=(x+K)\:mod\:26\\
+d_k(y)=(x-K)\:mod\:26</script><p>代换密码</p>
+<script type="math/tex; mode=display">
+e_\pi(x)=\pi(x)\\
+d_\pi(x)=\pi^{-1}(x)</script><a id="more"></a>
+<p>仿射密码</p>
+<script type="math/tex; mode=display">
+e(x)=(ax+b)\:mod\:26\\
+d(y)=a^{-1}(y-b)\:mod\:26\\
+gcd(a,26)=1\:(保证a^{-1}唯一)</script><p>维吉尼亚密码</p>
+<script type="math/tex; mode=display">
+e(x_1,x_2,...,x_m)=(x_1+k_1,x_2+k_2,...,x_m+k_m)\\
+d(y_1,y_2,...,y_m)=(y_1-k_1,y_2-k_2,...,y_m-k_m)</script><p>希尔密码</p>
+<script type="math/tex; mode=display">
+e(x)=xK\\
+d(x)=yK^{-1}\\
+K为Z_{26}上的m\times m可逆矩阵</script><p>置换密码</p>
+<script type="math/tex; mode=display">
+e_\pi(x_1,x_2,...,x_m)=(x_{\pi(1)},x_{\pi(2)},...,x_{\pi(m)})\\
+d_\pi(y_1,y_2,...,y_m)=(y_{\pi^{-1}(1)},y_{\pi^{-1}(2)},...,y_{\pi^{-1}(m)})</script><p>流密码</p>
+<p>自动秘钥密码</p>
+<script type="math/tex; mode=display">
+e_z(x)=(x+z)\:mod\:26\\
+d_z(y)=(y-z)\:mod\:26\\
+z_i=x_{i-1}，x_1=K</script><h2 id="密码分析"><a href="#密码分析" class="headerlink" title="密码分析"></a>密码分析</h2><p>常见攻击类型：</p>
+<ul>
+<li>唯密文攻击</li>
+<li>已知明文攻击</li>
+<li>选择明文攻击：有加密机访问权限</li>
+<li>选择密文攻击：有解密机访问权限</li>
+</ul>
+<p>统计分析：</p>
+<p>根据字母出现的频率（或者结合二元组出现频率）</p>
+<p>维吉尼亚密码的分析：</p>
+<p>Kasiski测试法，搜索长度至少为3的相同密文段，记录这些密文段到起始点之间的距离，猜测m为这些距离的最大公因子的因子</p>
+<p>重合指数法，随机两个字母相等的概率（称为重合指数）为0.038，如果相隔为m，这个概率提高到0.065</p>
+<p>希尔密码的分析：</p>
+<p>需要至少m个不同的明-密文对</p>
+<h1 id="Shannon理论"><a href="#Shannon理论" class="headerlink" title="Shannon理论"></a>Shannon理论</h1><p>1949年Claude Shannon发表的”Communication Theory of Secrecy Systems”</p>
+<ul>
+<li>计算安全性：度量破解所做的计算</li>
+<li>可证明安全性：归入数学难题</li>
+<li>无条件安全性</li>
+</ul>
+<p><strong>完善保密性</strong>定义为对任意明文x，密文y，有$P(x|y)=P(x)$</p>
+<p>定义：密文空间C、明文空间P、密钥空间K</p>
+<p>定理：如果密码体制满足|K|=|C|=|P|。那么这个密码体制是完善保密的，当且仅当每个密钥被使用的概率为1/|K|，且对$x\in P$，$y\in C$，存在唯一的密钥K，$e_K(x)=y$。</p>
+<p>一个著名的完善保密的密码体制是”一次一密“，$P=C=K=(Z_2)^n$，加密和解密都是取异或。但是这个体制要求用n比特的密钥加密n比特的明文，且对已知明文攻击是脆弱的。</p>
+<p>由于以概率$2^{-n}$发生的事件可以编码为长度为n的比特串，因此定义随机变量X的熵为</p>
+<script type="math/tex; mode=display">
+H(X)=-\sum P(x)log(x)</script><p><strong>Huffman算法</strong>找到了使得加权平均编码长度最小的<strong>单射</strong>编码l，他是无前缀的，并且</p>
+<script type="math/tex; mode=display">
+H(X)\leq l(f)<H(X)+1</script><p>熵的性质</p>
+<ul>
+<li>$H(X)\leq log(n)$</li>
+<li>$H(X,Y)\leq H(X)+H(Y)$，(X、Y独立时取等号)</li>
+<li>$H(X,Y)=H(Y)+H(X|Y)$</li>
+<li>$H(X|Y)\leq H(X)$</li>
+</ul>
+<p>定义条件熵H(K|C)为密钥含糊度。那么</p>
+<script type="math/tex; mode=display">
+H(K|C)=H(K)+H(P)-H(C)</script><p>($H(K|C)=H(K,C)-H(C)=H(K,P,C)-H(C)=H(K,P)-H(C)=H(K)+H(P)-H(C)$)</p>
+<p>自然语言L的熵定义为</p>
+<script type="math/tex; mode=display">
+H_L=\lim_{n\to\infty}\frac{H(P^n)}{n}</script><p>语言L的冗余度定义为</p>
+<script type="math/tex; mode=display">
+R_L=1-\frac{H_L}{log_2|P|}</script><p>英语中$H(P)=4.19$，$H(P^2)/2=3.90$，$1.0\leq H_L\leq 1.5$</p>
+<p>定理：|C|=|P|且密钥是等概率选取的，那么给定长为n的密文串，伪密钥的期望数满足</p>
+<script type="math/tex; mode=display">
+\bar{s_n}\geq \frac{|K|}{|P|^{nR_L}}-1</script><p>($\bar{s_n}=\sum P(y)|K(y)|-1$，而$H(K|C)=H(K)+H(P^n)-H(C^n)\geq H(K)-nR_Llog_2|P|$)</p>
+<p>定义<strong>唯一解距离</strong>为使得伪密钥期望等于0的n，记为$n_0$。这是给定足够时间下，分析者能唯一计算出密钥所需密文的平均量。</p>
+<script type="math/tex; mode=display">
+n\approx \frac{log_2|K|}{R_Llog_2|P|}</script><p><strong>乘积密码体制</strong>密钥$K=(K_1,K_2)$，定义加密解密如下</p>
+<script type="math/tex; mode=display">
+e_{(K_1,K_2)}(x)=e_{K_2}(e_{K_1}(x))\\
+d_{(K_1,K_2)}(y)=d_{K_1}(d_{K_2}(y))</script><p>如果密码体制不是幂等的，那么多次迭代有可能提高安全性。</p>
+<h1 id="分组密码和高级加密标准"><a href="#分组密码和高级加密标准" class="headerlink" title="分组密码和高级加密标准"></a>分组密码和高级加密标准</h1><p>大多数分组密码都是乘积密码：用K来生成$N_r$个<strong>轮密钥</strong>（也叫子密钥），轮密钥的列表就是<strong>密钥编排方案</strong>。通过这些轮密钥依次进行加密。</p>
+<h2 id="代换-置换网络（SPN）"><a href="#代换-置换网络（SPN）" class="headerlink" title="代换-置换网络（SPN）"></a>代换-置换网络（SPN）</h2><script type="math/tex; mode=display">
+\pi_s:\{0,1\}^l\to\{0,1\}^l\\
+\pi_p:\{1,...,lm\}\to\{1,...,lm\}</script><p>均为置换，设$P=C=\{0,1\}^{lm}$，$K\subset(\{0,1\}^{lm})^{N_r+1}$是由K生成的密钥编排方案的集合。</p>
+<p>每轮加密先用异或操作混入该轮密钥，再用$\pi_s$进行m次代换，再用$\pi_p$进行一次置换。（最后一轮只做异或操作）</p>
+<h2 id="线性密码分析"><a href="#线性密码分析" class="headerlink" title="线性密码分析"></a>线性密码分析</h2><p>取值01的随机变量$P(X_i=1)=p_i$，定义<strong>偏差</strong>$e_i=p_i-1$</p>
+<p>堆积引理：独立随机变量$X_i$，那么随机变量$X_1\oplus X_2\oplus … \oplus X_n$的偏差满足</p>
+<script type="math/tex; mode=display">
+e=2^{k-1}\prod_{j=1}^ke_k</script><p>对于一个置换$\pi_s:\{0,1\}^4\to\{0,1\}^4$，把每个相关的随机变量表示成如下形式</p>
+<script type="math/tex; mode=display">
+(\oplus_{i=1}^4a_iX_i)\oplus(\oplus_{i=1}^4b_iY_i)</script><p>设$N_L(a,b)$表示满足如下条件的8元组对(a,b),(x,y)的个数</p>
+<script type="math/tex; mode=display">
+(y_1,y_2,y_3,y_4)=\pi_S(x_1,x_2,x_3,x_4)\\
+(\oplus_{i=1}^4a_iX_i)\oplus(\oplus_{i=1}^4b_iY_i)=0</script><p>该随机变量的偏差$e(a,b)=(N_L(a,b)-8)/16$</p>
+<p>一个基于偏差为$e$的线性逼近的线性攻击想要成功所需要的的明-密文对数$T\approx ce^{-2}$</p>
+<h2 id="差分分析"><a href="#差分分析" class="headerlink" title="差分分析"></a>差分分析</h2><p>定义$\Delta(x’)=\{(x,x^*|x\oplus x^*=x’\}$，则显然这个集合大小为$2^m$</p>
+<p>定义</p>
+<script type="math/tex; mode=display">
+N_D(x',y')=|\{(x,x^*)\in \Delta(x'):\pi_s(x)\oplus\pi_s(x^*)=y'\}|</script><p>由此定义对应于差分$(a’,b’)$的扩散率</p>
+<script type="math/tex; mode=display">
+R_p(a',b')=\frac{N_D(a',b')}{2^m}(=P(b'|a'))</script><p>一个基于扩散率为e的差分攻击，需要4重组$(x,x^*,y,y^*)$的数量$T\approx ce^{-1}$</p>
+<h2 id="数据加密标准"><a href="#数据加密标准" class="headerlink" title="数据加密标准"></a>数据加密标准</h2><p>DES是一种特殊的迭代密码，叫做<strong>Feistel型密码</strong>，每个状态$u^i$被分成长度相同的两部分$L^i$和$R^i$，轮函数g有如下形式</p>
+<script type="math/tex; mode=display">
+g(L^{i-1},R^{i-1},K^i)=(L^i,R^i)\\
+L^i=R^{i-1},R^i=L^{i-1}\oplus f(R^{i-1},K^i)</script><p>显然Feistel型轮函数是可逆的，所以f不需要满足单射条件。</p>
+<p>DES是16轮Feistel型密码，分组长度为64，密钥空间为$2^56$。</p>
+<p>1998年56小时找到了DES密钥</p>
+<h2 id="高级加密标准"><a href="#高级加密标准" class="headerlink" title="高级加密标准"></a>高级加密标准</h2><p>AES要求具有分组长度128，支持128、192、256的密钥长度，轮数依赖于密钥长度</p>
+<p>最终<strong>Rijndael</strong>当选</p>
+<p>前N-1轮，用S盒进行一次代换SubBytes，对State做一置换ShiftRows，再对State做一次操作MixColumns，然后进行AddRoundKey。最后一轮不用MixColumns。</p>
+<p>目前来看，AES是安全的，不存在快于穷尽密钥搜索的攻击。</p>
+<h2 id="工作模式"><a href="#工作模式" class="headerlink" title="工作模式"></a>工作模式</h2><p>四种模式</p>
+<ul>
+<li>密码本（ECB）</li>
+<li>密码反馈（CFB）：$z_i=e_K(y_{i-1}),\:y_i=x_i\oplus z_i$</li>
+<li>密码分组连接（CBC）：$y_i=e_K(y_{i-1}\oplus x_i)$</li>
+<li>输出反馈（OFB）：$z_i=e_K(z_{i-1}),\:y_i=x_i\oplus z_i$</li>
+</ul>
+<p>ECB和OFB中，改变一个明文分组不影响其他密文分组，常用于信道不安全的通信，OFB常用于卫星通信。</p>
+<p>CBC和CFB模式对于认证是有用的，能产生消息认证码MAC。</p>
+<h1 id="Hash函数"><a href="#Hash函数" class="headerlink" title="Hash函数"></a>Hash函数</h1><p>Hash函数安全性从三个问题来评估（这三个问题都是难解的才是稳固的）</p>
+<ul>
+<li>原像</li>
+<li>第二原像</li>
+<li>碰撞</li>
+</ul>
+<p>随机预言模型：理想的Hash函数，这个模型对x，随机选择Hash函数h，h(x)是完全随机的。</p>
+<p>取q个点寻找原像的平均成功率$e=1-(1-1/M)^q$。（也是寻找第二原像的成功率）</p>
+<p>取q个点寻找碰撞的成功率为$e=1-P_M^q/M^q$</p>
+<p>可以估计$q\approx\sqrt{2Mln(1/(1-e))}$，（这就说明大约$\sqrt{M}$个随机元素计算有50%概率出现碰撞）</p>
+<p>解决碰撞问题比原像问题和第二原像问题容易。碰撞问题可以很容易地转变为第二原像问题。任何能解决原像问题且概率为1的算法也能解决碰撞问题。</p>
+<h2 id="迭代Hash函数"><a href="#迭代Hash函数" class="headerlink" title="迭代Hash函数"></a>迭代Hash函数</h2><p>输入一个比特串x，用公开算法构造串y，使得</p>
+<script type="math/tex; mode=display">
+|y|=0\:mod\:t</script><p>处理阶段必须保证x到y是单射（常见的是一个变换+padding）</p>
+<p>然后以长度为m的公开初始值作为$z_0$，然后</p>
+<script type="math/tex; mode=display">
+z_i=compress(z_{i-1}||y_i)</script><h3 id="Merkle-DamgArd结构"><a href="#Merkle-DamgArd结构" class="headerlink" title="Merkle-DamgArd结构"></a>Merkle-DamgArd结构</h3><p>如果有抗碰撞的compress函数，则这样的迭代Hash函数也是抗碰撞的。先将x分成长为k-1的部分，得到y</p>
+<script type="math/tex; mode=display">
+z_1=0^{m+1}||y_1,g_1=compress(z_1)\\
+for\:i\:in\:1\:to\:k\:do\:
+z_{i+1}=g_i||1||y_{i+1},g_{i+1}=compress(z_{i+1})</script><p>以$g_{k+1}$为密文。</p>
+<p>定理4.6：找到h的碰撞，则能找到compress函数的碰撞。（证明考察x长度mod t-1）</p>
+<h3 id="安全Hash算法（SHA-1）"><a href="#安全Hash算法（SHA-1）" class="headerlink" title="安全Hash算法（SHA-1）"></a>安全Hash算法（SHA-1）</h3><p>要求$|x|\leq 2^{64} - 1$，则$l=|x|$长度最多为64比特</p>
+<p>PADDING算法：</p>
+<script type="math/tex; mode=display">
+y=x||1||0^d||l</script><p>其中 |l|=64，padding的d = 447-|x| mod 512。把y分成512比特的分组</p>
+<script type="math/tex; mode=display">
+y=M_1||M_2||...||M_n</script><p><img src="sha1.png" alt=""></p>
+<p>其中$f_i$是分组定义的函数，输入是三个字，输出是一个字，$K_i$是分组定义的常数。</p>
+<p>之后还有新的Hash函数（SHA-256，SHA-384，SHA-512…）</p>
+<h2 id="消息认证码"><a href="#消息认证码" class="headerlink" title="消息认证码"></a>消息认证码</h2><p>一个消息的MAC计算为</p>
+<script type="math/tex; mode=display">
+h_k(x||x')=compress(h_K(x)||x')</script><p>对于攻击者来说，即使K是保密的，计算上式的值也是简单的事情。</p>
+<h3 id="嵌套MAC和HMAC"><a href="#嵌套MAC和HMAC" class="headerlink" title="嵌套MAC和HMAC"></a>嵌套MAC和HMAC</h3><p>嵌套MAC是指合成两个带密钥的Hash组建立MAC算法。假定(X,Y,K,G)和(Y,Z,L,H)是Hash族，复合成Hash族$(X,Z,M,G\cdot H)$，其中$M=K\times L$。对所有的x</p>
+<script type="math/tex; mode=display">
+(g\cdot h )_{(K,L)}(x)=h_L(g_K(x))</script><p>这个结构中$|Y|\geq |Z|$是有限集，$|X|&gt;|Y|$或者为无限集。如果满足以下两个条件，嵌套MAC是安全的</p>
+<ul>
+<li>给定固定的密钥，作为MAC，(Y,Z,L,H)是安全的</li>
+<li>给定固定的密钥，(X,Y,K,G)是碰撞稳定的</li>
+</ul>
+<p>直观上讲是通过安全的“小MAC”和碰撞固定的Hash族复合成安全的“大MAC”。考虑三种攻击</p>
+<ul>
+<li>对嵌套MAC的假冒</li>
+<li>对小MAC的假冒</li>
+<li>对Hash族的碰撞-探测</li>
+</ul>
+<p>HMAC是一个被提议作为FIPS标准的嵌套MAC算法。密钥记为K，ipad和opad是常数。定义</p>
+<script type="math/tex; mode=display">
+HMAC_K(x)=SHA-1(K\oplus opad||SHA-1((K\oplus ipad)||x))</script><h3 id="CBC-MAC"><a href="#CBC-MAC" class="headerlink" title="CBC-MAC"></a>CBC-MAC</h3><p>构造MAC的常用方式是基于固定的（公开的）初始化向量的CBC模式。每个密文分组在被K加密之前与下一组明文分组一起异或。</p>
+<script type="math/tex; mode=display">
+y_i=e_K(y_{i-1}\oplus x_i)</script><p>对CBC-MAC最好的通用攻击是碰撞攻击。</p>
+<p>攻击细节如下：选择q个独立的、长度为t的比特串，记为$x_1^1,…,x_1^q$，随机选择$x_2^i$，/定义$x_3,…,x_n$是固定比特串，定义</p>
+<script type="math/tex; mode=display">
+x^i=x_1^i||x_2^i||...||x_n^i</script><p>那么如果$h_K(x_i)=h_K(x_j)$，则</p>
+<script type="math/tex; mode=display">
+y_1^i\oplus x_2^i=y_1^j\oplus x_2^j</script><p>那么攻击者定义</p>
+<script type="math/tex; mode=display">
+v=x_1^i||(x_2^i\oplus x_\delta)||...\\
+w=x_2^j||(x_2^j\oplus x_\delta)||...</script><p>并请求v的MAC，这也就是w的MAC。</p>
+<h3 id="无条件安全信息认证码"><a href="#无条件安全信息认证码" class="headerlink" title="无条件安全信息认证码"></a>无条件安全信息认证码</h3><p>假定一个密钥只产生一个认证表情，即攻击者至多只能进行一次查询</p>
+<p>定义</p>
+<script type="math/tex; mode=display">
+payoff(x,y)=Pr[y=h_{K_0}(x)]=|\{k\in K|h_K(x)=y\}|/|K|</script><p>那么</p>
+<script type="math/tex; mode=display">
+pd_0=\max\{payoff(x,y)\}\\
+pd_1=\max\{payoff(x',y';x,y):x\neq x',(x,y)至少在一个密钥下有效\}</script><p>定义<strong>强泛Hash函数族</strong>，如果对任意$x\neq x’$</p>
+<script type="math/tex; mode=display">
+|\{K|h_K(x)=y,h_K(x')=y'\}|=|K|/|Y|^2</script><p>定理：强泛(N,M)-Hash函数族的认证码的$pd_0=pd_1=1/M$。</p>
+<p>显然，(N,M)-Hash函数族(X,Y,K,H)对任意指定x，存在y，使得</p>
+<script type="math/tex; mode=display">
+payoff(x,y)\geq 1/M</script><p>对每个(x,y)和x’，存在一个y’使得</p>
+<script type="math/tex; mode=display">
+payoff(x',y';x,y)\geq 1/M</script><p>故$pd_1\geq 1/M$，取等号的充要条件就是该Hash函数族是强泛的。</p>
+<h1 id="RSA密码体系和整数因子分解"><a href="#RSA密码体系和整数因子分解" class="headerlink" title="RSA密码体系和整数因子分解"></a>RSA密码体系和整数因子分解</h1><p>公钥密码体系无法提供无条件安全性，因此我们只研究其计算安全性。</p>
+<p><strong>Euclidean算法</strong></p>
+<p>先计算r=gcd(a,b)，然后得到sa+tb=r，那么$b^{-1}=t\mod a$</p>
+<p><strong>中国剩余定理</strong></p>
+<script type="math/tex; mode=display">
+x=a_i\:mod\:m_i</script><p>定义$M_i=M/m_i$，那么</p>
+<script type="math/tex; mode=display">
+x=\sum_{i=1}^n a_iM_iy_i\:mod\: M</script><p>其中$y_i=M_i^{-1}\mod m_i$</p>
+<p><strong>Langrange</strong></p>
+<p>n阶乘法群G的元素的阶整除n</p>
+<p><strong>Fermat</strong></p>
+<p>素数p，$b^p=b\mod p$</p>
+<p><strong>Euler准则</strong></p>
+<p>奇素数p，正整数a，那么a是模p的二次剩余当且仅当</p>
+<script type="math/tex; mode=display">
+a^{(p-1)/2}=1\:mod\:p</script><h2 id="RSA密码体系"><a href="#RSA密码体系" class="headerlink" title="RSA密码体系"></a>RSA密码体系</h2><p>n=pq，p,q为素数</p>
+<script type="math/tex; mode=display">
+K=\{(n,p,q,a,b):ab=1\:mod\:\phi(n)\}</script><p>定义</p>
+<script type="math/tex; mode=display">
+e_K(x)=x^b\:mod\:n\\
+d_K(y)=y^a\:mod\:n</script><p>n和b是公钥，p、q、a是私钥。</p>
+<p><strong>素性检测</strong></p>
+<p>素数个数定理：小于等于N的素数个数$\pi(N)\approx N/ln(n)$</p>
+<p><strong>判定问题的随机算法</strong></p>
+<p>Monte Carlo算法总是给出一个回答，但不一定正确。<strong>偏是</strong>的Monte Carlo算法的“是”回答总是正确，“否”也许是不正确的。</p>
+<p>Solovay-Strassen是对于合数问题一个<strong>偏是</strong>的Monte Carlo算法，具有错误概率1/2。</p>
+<p>称n为对于基底a的伪素数，如果$(a/n)=a^{(n-1)/2}\mod n$。可以证明，n对至多1/2的a为伪素数。</p>
+<p>Solovay计算x=(a/n)（利用二次互反律等），如果x=0则为合数，否则判断$x=a^{(n-1)/2}$。</p>
+<p>Miller-Rabin算法是另一个合数问题的算法，也是<strong>偏是</strong>的，错误概率至多为1/4。</p>
+<p>把n-1写成$2^km$，随机选取整数a，$1\leq a\leq n-1$，</p>
+<script type="math/tex; mode=display">
+b=a^m\:mod\:n</script><p>如果b=1，则n为素数，否则对重复k次</p>
+<script type="math/tex; mode=display">
+b=b^2\:mod\:n</script><p>每次如果b = -1，则n为素数。最后n为合数。</p>
+<p><strong>模n的平方根</strong></p>
+<p>假定</p>
+<script type="math/tex; mode=display">
+n=\prod_{i=1}^lp_i^{e_i}</script><p>那么同余方程</p>
+<script type="math/tex; mode=display">
+y^2=a\:mod\:n</script><p>当$(a/p_i)=1$对所有i成立时有$2^l$个解，其他情形下没有解。</p>
+<h2 id="分解因子算法"><a href="#分解因子算法" class="headerlink" title="分解因子算法"></a>分解因子算法</h2><p>攻击RSA密码最明显的方式就是试图分解公开模数。对于大整数最有效的三种算法是</p>
+<ul>
+<li>二次筛法</li>
+<li>椭圆曲线分解算法</li>
+<li>数域筛法</li>
+</ul>
+<p>其他先驱的著名算法有Pollard的$\rho$方法和p-1算法，William的p+1算法、连分式算法、试除法等等。</p>
+<p><strong>Pollard p-1算法</strong></p>
+<p>a=2</p>
+<p>for j = 2 to B do </p>
+<p>$a=a^j\mod n$，计算a-1和n的最大公约数，如果都找不到则认定为素数。</p>
+<p>合理性：n的素因子p，假定对每个素数$q|(p-1)$，q&lt;B，则有$(p-1)|B!$，此时$2^{B!}=1\mod p$</p>
+<p>一个缺陷是B的选择，另一个缺陷是对q的要求，所以可以选择p=2p+1这样的安全素数</p>
+<p><strong>Pollard $\rho$算法</strong></p>
+<p>选择随机子集X，对不同的x1,x2，计算gcd(x1-x2, n)。这个方法成功当且仅当x mod p出现碰撞。当</p>
+<script type="math/tex; mode=display">
+|X|\approx 1.17\sqrt{p}</script><p>时，50%的概率至少有一个碰撞。但这种方法需要计算很多次gcd，因此考虑定义整系数多项式f，例如$f(x)=x^2+a$，考察序列</p>
+<script type="math/tex; mode=display">
+x_i=f(x_{i-1})\:mod\:n</script><p>那么如果$x_i=x_j\mod p$，那么$x_{i+d}=x_{j+d}\mod p$，那么图构成1~i的尾巴，和i~j的圈。因此我们取j=2i来寻找碰撞。</p>
+<p><strong>Dixon随机平方算法</strong></p>
+<p>假设找到$x^2=y^2\mod n$，且$x\neq \pm y\mod n$，那么</p>
+<script type="math/tex; mode=display">
+n|(x-y)(x+y)</script><p>因此gcd(x+y, n)是n的一个非平凡因子。</p>
+<p>随机平方算法使用因子基B（b个最小素数的集合），找到几个整数z，使得$z^2\mod n$的所有素因子在B里，然后将这些z相乘使得B里素数都出现偶数次，由此导出一个期望的同余方程。</p>
+<p>一些技巧是选取形如$j+[\sqrt{kn}]$的整数，因为这样平方和模n比较小， 有可能在B上完全分解。</p>
+<p>称n是m-光滑的，如果n的任一素因子都小于等于m，$\phi(n,m)$定义为小于等于n且是m-光滑的正整数个数，如果$n&gt;&gt;m$</p>
+<script type="math/tex; mode=display">
+\frac{\phi(n,m)}{n}\approx \frac1{u^u},u=log(n)/log(m)</script><p>基B包含所有小于m的素数，约有b=m/ln(m)个，为了使算法成功，期望找到b个m光滑整数，测试$bu^u$个整数。通常期望运行时间</p>
+<script type="math/tex; mode=display">
+O(2^{c\sqrt{log_2(n)log_2(log_2(n))}})</script><p><strong>Pomerance二次筛法</strong></p>
+<script type="math/tex; mode=display">
+O(2^{(1+o(1))\sqrt{ln(n)ln(ln(n))}})</script><p><strong>椭圆曲线算法</strong></p>
+<script type="math/tex; mode=display">
+O(2^{(1+o(1))\sqrt{2ln(p)ln(ln(p))}})</script><p><strong>数域筛法</strong></p>
+<script type="math/tex; mode=display">
+O(2^{(1.92+o(1))(ln(n))^{1/3}(ln(ln(n)))^{2/3}})</script><h2 id="对RSA的其他攻击"><a href="#对RSA的其他攻击" class="headerlink" title="对RSA的其他攻击"></a>对RSA的其他攻击</h2><p><strong>计算$\phi(n)$</strong></p>
+<p>可以看到这不比分解n简单。得到$\phi(n)$之后，构造关于p的二次方程即可</p>
+<script type="math/tex; mode=display">
+p^2-(n-\phi(n)+1)p+n=0</script><p><strong>解密指数</strong></p>
+<p>如果解密指数a已知，那么n可以通过一个随机算法在多项式时间内分解。</p>
+<p>可以有算法达到1/2的成功率</p>
+<p><strong>Wiener低解密指数攻击</strong></p>
+<p>假设前提</p>
+<script type="math/tex; mode=display">
+3a<n^{1/4},q<p<2q</script><p>满足这个前提的a可以使得解密时间减少75%</p>
+<p>已知</p>
+<script type="math/tex; mode=display">
+0<n-\phi(n)=p+q-1<3q<3\sqrt{n}</script><p>假设</p>
+<script type="math/tex; mode=display">
+ab=1+t\phi(n)</script><p>考虑到$t&lt;a&lt;n^{1/4}$那么</p>
+<script type="math/tex; mode=display">
+|\frac bn-\frac ta|<\frac{3t}{a\sqrt{n}}<\frac1{an^{1/4}}<\frac1{3a^2}</script><p>因此t/a是b/n的近似，从<em>连分数理论</em>可知这样的近似是b/n连分数展开的<strong>收敛子</strong>。可以通过验证前几个收敛子判断。</p>
+<h2 id="Rabin密码体制"><a href="#Rabin密码体制" class="headerlink" title="Rabin密码体制"></a>Rabin密码体制</h2><p>假定n=pq不能被分解，则这类体制对明文攻击是计算安全的</p>
+<p>设n=pq，p,q为素数，定义</p>
+<script type="math/tex; mode=display">
+e_K(x)=x^2\:mod\:n\\
+d_K(y)=\sqrt{y}\:mod\:n</script><p>一个明显的问题是加密不是单射。</p>
+<p>解密可以<em>约化</em>到n的分解</p>
+<p>Rabin Oracle Factoring(n)</p>
+<p>选择$y=r^2\mod n$，计算$x=Rabin\:Decrypt(y)$，如果$x\neq\pm r\mod n$，那么$p=gcd(x+r,n)$。</p>
+<h2 id="RSA语义安全"><a href="#RSA语义安全" class="headerlink" title="RSA语义安全"></a>RSA语义安全</h2><p>half(y)：判断y的明文和n/2的大小关系</p>
+<p>parity(y)：判断y的明文二进制最后一位</p>
+<p>RSA解密可以约化为half(y)/parity(y) 【二分查找】</p>
+<blockquote>
+<p>语义安全的公钥密码体制</p>
+<p>正整数m,k，F为一族陷门单向置换，对任意$f\in F$，有$f:\{0,1\}^k\to\{0,1\}^k$，随机预言$G:\{0,1\}^k\to\{0,1\}^m$，随机选取$r\in\{0,1\}^k$，定义</p>
+<script type="math/tex; mode=display">
+e_K(x)=(y_1,y_2)=(f(r),G(r)\oplus x)\\
+d_K(y_1,y_2)=G(f^{-1}(y_1))\oplus y_2</script><p>f和G是公钥，$f^{-1}$是私钥。</p>
+</blockquote>
+<p>主要缺点是数据扩张，将m加密成m+k</p>
+<p>假定存在一个算法Distinguish可以对两个明文x1,x2求解密文识别问题，且是完善的（正确概率为$1/2+\epsilon$），我们可以构造新算法Invert以不为0的概率对y求逆。</p>
+<blockquote>
+<p>用SimG代替随机预言G</p>
+<p>SimG维护RList、GList。RList记录Distinguish询问的所有输入r，GList为对应的响应</p>
+<p>如果r已经询问过，那么用已定义的值g。</p>
+<p>如果有$f(r)=y$，那么随机选择j，$g=y_2\oplus x_j$。否则随机选择g</p>
+</blockquote>
+<p>那么可以证明得到$x=f^{-1}(y)$的概率大于等于$\epsilon$。</p>
+<blockquote>
+<p>更有效的非对称密码体制</p>
+<p>m&lt;k，$k_0=k-m$，F为一族陷门单向置换，对任意$f\in F$，有$f:\{0,1\}^k\to\{0,1\}^k$，随机预言$G:\{0,1\}^{k_0}\to\{0,1\}^m$，$H:\{0,1\}^m\to\{0,1\}^{k_0}$，随机选取$r_0\in\{0,1\}^m$。</p>
+<script type="math/tex; mode=display">
+e_K(x)=f(y_1||y_2)\\
+y_1=x\oplus G(r),\:y_2=r\oplus H(x\oplus G(r))</script><p>进一步定义</p>
+<script type="math/tex; mode=display">
+f^{-1}(y)=x_1||x_2\\
+r=x_2\oplus H(x_1)\\
+d_K(y)=G(r)\oplus x_1</script><p>$f,G,H$为公钥，$f^{-1}$为私钥</p>
+</blockquote>
+<h1 id="离散对数问题的公钥密码体制"><a href="#离散对数问题的公钥密码体制" class="headerlink" title="离散对数问题的公钥密码体制"></a>离散对数问题的公钥密码体制</h1><p><strong>离散对数</strong></p>
+<p>对乘法群$(G,·)$,一个n阶元素$\alpha$，$\beta\in&lt;\alpha&gt;$，找到a</p>
+<script type="math/tex; mode=display">
+\alpha^a=\beta</script><p>记a为$log_\alpha\beta$</p>
+<h2 id="ElGamal密码体制"><a href="#ElGamal密码体制" class="headerlink" title="ElGamal密码体制"></a>ElGamal密码体制</h2><p>设p是素数，$Z_p$上的离散对数问题是案处理的，$\alpha$是一个本原元</p>
+<p>$p,\alpha,\beta$是公钥，a是私钥。</p>
+<p>定义</p>
+<script type="math/tex; mode=display">
+e_K(x,k)=(y_1,y_2)\\
+y_1=\alpha^k\:mod\:p,\:y_2=x\beta^k\:mod\:p</script><p>定义</p>
+<script type="math/tex; mode=display">
+d_K(y_1,y_2)=y_2(y_1^a)^{-1}\:mod\:p</script><h2 id="离散对数问题的算法"><a href="#离散对数问题的算法" class="headerlink" title="离散对数问题的算法"></a>离散对数问题的算法</h2><p><strong>Shanks算法</strong></p>
+<p>m=$[\sqrt{n}]$，对$0\leq j\leq m-1$，计算$\alpha^{mj}$。</p>
+<p>对m个有序对$(j,\alpha^{mj})$按照第二个坐标排序，得到列表L1。</p>
+<p>对$0\leq i\leq m-1$，计算$\beta\alpha^{-i}$</p>
+<p>对m个有序对$(i,\beta\alpha^{-i})$关于第二个坐标排序，得到列表L2&gt;</p>
+<p>找到具有相同第二坐标的对，令a=mj+i</p>
+<p><strong>Pollard $\rho$离散对数算法</strong></p>
+<p>定义大致相等的划分$S_1,S_2,S_3$，定义函数f</p>
+<script type="math/tex; mode=display">
+f(x,a,b)=(\beta x,a,b+1),x\in S_1\\
+f(x,a,b)=(x^2,2a,2b),x\in S_2\\
+f(x,a,b)=(\alpha x,a+1,b),x\in S_3</script><p>这样产生的每个三元组都满足$x=\alpha^a\beta^b$</p>
+<p>比较三元组，知道发现$x_{2i}=x_i$，这时有</p>
+<script type="math/tex; mode=display">
+\alpha^{a_{2i}}\beta^{b_{2i}}=\alpha^{a_i}\beta^{b_i}</script><p>所以</p>
+<script type="math/tex; mode=display">
+log_\alpha\beta=(a_i-a_{2i})(b_{2i}-b_i)^{-1}\:mod\:n</script><p><strong>Pohlig-Hellman算法</strong></p>
+<p>假设</p>
+<script type="math/tex; mode=display">
+n=\prod_{i=1}^kp_i^{c_i}</script><p>把a表示为</p>
+<script type="math/tex; mode=display">
+a=\sum_{i=0}^{c-1}a_iq^i+sq^c</script><p>依次确定$a_0,a_1,…$（利用$\beta^{n/q}=\alpha^{a_0n/q}$）</p>
+<p>然后用中国剩余定理。</p>
+<p><strong>指数演算法</strong></p>
+<p>取B个小素数作为基，构造C&gt;B个模p的同余方程（要保证所有因子在B里）</p>
+<script type="math/tex; mode=display">
+\alpha^{x_j}=p_1^{a_{1j}}...p_B^{a_{Bj}}\:mod\:p</script><p>然后选择随机数s，使得</p>
+<script type="math/tex; mode=display">
+\beta\alpha^s</script><p>可以在B上分解，那么就容易得到答案。</p>
+<p><u>通用性算法复杂性的下界是$\sqrt{n}$，（这是可以证明的）</u></p>
+<h2 id="有限域"><a href="#有限域" class="headerlink" title="有限域"></a>有限域</h2><p>ElGamal密码体制可以咋任何离散对数问题难处理的群中实现</p>
+<ul>
+<li>有限域$F_{p^n}$的乘法群</li>
+<li>定义在有限域上的椭圆曲线群</li>
+</ul>
+<p>$Z_p[x]/(f(x))$是域当且仅当$f(x)$是不可约的</p>
+<p>$F_{2^n}$上离散对数问题当前被认为是计算不可行的</p>
+<h2 id="椭圆曲线"><a href="#椭圆曲线" class="headerlink" title="椭圆曲线"></a>椭圆曲线</h2><p>二元方程解的集合</p>
+<p>满足$4a^2+27b^3\neq 0$的方程</p>
+<script type="math/tex; mode=display">
+y^2=x^3+ax+b</script><p>的解加上无穷远点O。</p>
+<p>定义二元运算，对$P,Q\in E$，L是通过PQ的直线，交E于第三点$R’$，对x轴作反射得到R，定义</p>
+<script type="math/tex; mode=display">
+P+Q=R</script><p>显然若P、Q是实数，则R也是实数。</p>
+<p>可以解得</p>
+<script type="math/tex; mode=display">
+x_R=\lambda^2-x_P-x_Q\\
+y_R=\lambda(x_P-x_R)-y_P\\
+\lambda=(y_P-y_Q)/(x_P-x_Q)</script><p>进一步定义模素数的椭圆曲线</p>
+<script type="math/tex; mode=display">
+y^2\equiv x^3+ax+b\:mod\:p</script><p>同样有无穷远点O。</p>
+<p>加法群的定义是相似的。</p>
+<p>定理：定义在$Z_p$上的椭圆曲线E，则存在正整数$n_1,n_2$，使得$(E,+)$同构于$Z_{n_1}\times Z_{n_2}$，并且有$n_2|n_1$和$n_2|p-1$。</p>
+<p>有一类弱椭圆曲线（“trace one”）是易解的。具有大约$2^{160}$个元素循环子群的椭圆曲线是安全的。</p>
+<p><strong>点压缩和ECIES</strong></p>
+<p>实际中，椭圆曲线的实现有大约4倍的扩张因子。更为严重的问题是，没有方便的方法确定生成E上的点。</p>
+<p>由于确定了x，y的两个值是相反数，一个是奇数，另一个是偶数，因此点压缩技术可以通过判断y mod 2来确定y。</p>
+<p>ECIES利用点压缩技术，有一个近似2的信息扩张。</p>
+<p><u>计算椭圆曲线上点的乘积—对倍数c转换为二进制，利用2倍-和差法计算</u></p>
+<p>椭圆曲线加密有得到越来越广泛的应用</p>
+<h2 id="ElGamal体制的安全性"><a href="#ElGamal体制的安全性" class="headerlink" title="ElGamal体制的安全性"></a>ElGamal体制的安全性</h2><p>比特安全性：确定对数表示二进制的第i个最低比特</p>
+<p>最低位是容易的（利用二次剩余）</p>
+<p>如果$\beta$是二次剩余，那么$\beta$模p的两个平方根为$\pm\beta^{(p+1)/4}$，且这两个数的最低位不同。那么，我们利用ORACLEL2（假设有这种算法）计算最低第二位，进行判断。</p>
+<p>利用此方法可以从最低位开始依次计算。</p>
+<h1 id="签名方案"><a href="#签名方案" class="headerlink" title="签名方案"></a>签名方案</h1><p>签名算法（私有）+验证算法（公开）</p>
+<blockquote>
+<p>RSA签名方案</p>
+<p>利用RSA解密规则进行签名</p>
+<p>定义</p>
+<script type="math/tex; mode=display">
+sig_K(x)=x^a\:mod\:n</script><p>以及</p>
+<script type="math/tex; mode=display">
+ver_K(x,y)=true\Leftrightarrow x=y^b\:mod\:n</script></blockquote>
+<p>但是任何人都能随机生成y来伪造RSA签名，阻止这种攻击的方法是让消息足够冗余，使得x有意义的概率非常小。</p>
+<p>签名和Hash函数常常结合使用。通过Hash生成信息摘要，再对摘要进行签名。有三种攻击</p>
+<ul>
+<li>已知消息攻击的存在性伪造：Hash二次原像稳固可以避免</li>
+<li>选择消息攻击的存在性伪造：Hash碰撞稳固可以避免</li>
+<li>惟密钥攻击的存在性伪造：Hash原相稳固可以避免</li>
+</ul>
+<p>所以签名+Hash不减弱签名的安全性。</p>
+<h2 id="ElGamal签名方案"><a href="#ElGamal签名方案" class="headerlink" title="ElGamal签名方案"></a>ElGamal签名方案</h2><p>非确定性：有许多有效的签名</p>
+<p>难解的离散对数</p>
+<script type="math/tex; mode=display">
+\beta=\alpha^a\:mod\:p</script><p>定义</p>
+<script type="math/tex; mode=display">
+sig_K(x,k)=(\gamma,\delta)\\
+\gamma=\alpha^k\:mod\:p,\:\delta=(x-a\gamma)k^{-1}\mod{(p-1)}</script><script type="math/tex; mode=display">
+ver_K(x,(\gamma,\delta))=true\Leftrightarrow \beta^\gamma\gamma^\delta=\alpha^x\:mod\:p</script><p>需要注意随机值k不能泄露，否则计算a很容易。</p>
+<p>另外，对两个不同的消息签名使用相同的k，可以计算得到$d=gcd(\delta_1-\delta_2,p-1)$个候选的k进行验证。</p>
+<h3 id="一些变体"><a href="#一些变体" class="headerlink" title="一些变体"></a>一些变体</h3><p><strong>Schnorr签名方案</strong>（缩短了签名）</p>
+<p>素数p,q满足$p-1\equiv 0\mod q$。一般取$p\approx 2^{1024}$，$q\approx 2^{160}$。定义Hash函数$h:\{0,1\}^n\to Z_q$</p>
+<script type="math/tex; mode=display">
+sig_K(x,k)=(\gamma,\delta)\\
+\gamma=h(x||\alpha^k),\:\delta=k+a\gamma\:mod\:q</script><script type="math/tex; mode=display">
+ver_K(x,(\gamma,\delta))=true\Leftrightarrow h(x||\alpha^\delta\beta^{-\gamma})=\gamma</script><p><strong>数字签名算法（DSA）</strong></p>
+<p><u>特点：消息是经过Hash缩短的，所以我们会得到比较短的消息摘要</u></p>
+<p>和Schnorr签名一样，使用了一个q元子群。</p>
+<p>把ElGammal签名中$\delta$中的减号改为加号。</p>
+<script type="math/tex; mode=display">
+sig_K(x,k)=(\gamma,\delta)\\
+\gamma=(\alpha^k\:mod\:p)\:mod\:q\\
+\delta=(SHA-1(x)+a\gamma)k^{-1}\:mod\:q</script><p>验证</p>
+<script type="math/tex; mode=display">
+e_1=SHA-1(x)\delta^{-1}\mod q\\
+e_2=\gamma\delta^{-1}\mod q\\
+ver_K(x,(\gamma,\delta))=true\Leftrightarrow (\alpha^{e_1}\beta^{e_2}\mod p)\mod q=\gamma</script><p><strong>椭圆曲线DSA（ECDSA）</strong></p>
+<p>具有更高的安全性</p>
+<p>A是E上阶数为q的一个点，p、q、E、A、B是公钥，m是私钥，$B=mA$</p>
+<script type="math/tex; mode=display">
+sig_K(x,k)=(r,s)\\
+kA=(u,v)\\
+r=u\mod q\\
+s=k^{-1}(SHA-1(x)+mr)\mod q</script><p>验证</p>
+<script type="math/tex; mode=display">
+w=s^{-1}\mod q\\
+i = w\cdot SHA-1(x)\mod q\\
+j=wr\mod q\\
+(u,v)=iA+jB\\
+var_K(x,(r,s))=true\Leftrightarrow u\mod q=r</script><h2 id="可证明的安全签名方案"><a href="#可证明的安全签名方案" class="headerlink" title="可证明的安全签名方案"></a>可证明的安全签名方案</h2><p>可以证明破解概率的方案</p>
+<p><strong>一次签名</strong></p>
+<p>Lamport签名方案：$f:Y\to Z$单向，y是私钥，z公开</p>
+<script type="math/tex; mode=display">
+sig_K(x_1,x_2,...,x_k)=y_1,y_2,...,y_k\\
+var_K(x_1,x_2,...,x_k,a_1,a_2,...,a_k)=true\Leftrightarrow f(a_i)=z_i</script><p><strong>全域Hash</strong></p>
+<p>单向陷门f，随机函数G</p>
+<script type="math/tex; mode=display">
+sig_K(x)=f^{-1}(G(x))\\
+ver_K(x,y)=true\Leftrightarrow f(y)=G(x)</script><h2 id="不可否认的签名"><a href="#不可否认的签名" class="headerlink" title="不可否认的签名"></a>不可否认的签名</h2><p>验证签名需要签名者的合作</p>
+<p>Chaum-van Antwerpen</p>
+<p>p=2q+1，q是素数，$\beta=\alpha^a\mod p$</p>
+<script type="math/tex; mode=display">
+y=sig_K(x)=x^a\mod p</script><p>验证者随机选择$e_1,e_2$，计算$c=y_1^{e_1}\beta^{e_2}\mod p$。</p>
+<p>签名者计算$d=c^{a^{-1}\mod q}\mod p$，当且仅当$d=x^{e_1}\alpha^{e_2}\mod p$时是合法的签名。</p>
+<p><u>把y当成合法签名接受的概率为1/q</u></p>
+<p><strong>否认协议</strong></p>
+<p>验证者选择$e_1,e_2$，得到d不合法，然后再次选择$e_1’,e_2’$，得到$d’$，当</p>
+<script type="math/tex; mode=display">
+(d\alpha^{-e_2})^{e_1'}\equiv(d'\alpha^{-e_2'})^{e_1}\mod p</script><p>时，可以推断签名是伪造的。</p>
+<p><u>伪造否认协议成功的概率为1/q</u></p>
+<h2 id="fail-stop签名"><a href="#fail-stop签名" class="headerlink" title="fail-stop签名"></a>fail-stop签名</h2><p>van Heyst-Pedersen</p>
+<p>p=2q+1，q是素数，</p>
+<script type="math/tex; mode=display">
+\beta=\alpha^{a_0}\mod p</script><p>$p,q,\alpha,\beta$是公开且不变的。</p>
+<script type="math/tex; mode=display">
+\gamma_1=\alpha^{a_1}\beta^{a_2}\mod p\\
+\gamma_2=\alpha^{b_1}\beta^{b_2}\mod p</script><p>$\gamma_1,\gamma_2$是公钥，$a_1,a_2,b_1,b_2$是私钥</p>
+<p>签名</p>
+<script type="math/tex; mode=display">
+sig_K(x)=(y_1,y_2)\\
+y_1=a_1+xb_1\mod q\\
+y_2=a_2+xb_2\mod q</script><p>验证</p>
+<script type="math/tex; mode=display">
+ver_K(x,y)=true\Leftrightarrow \gamma_1\gamma_2^x=\alpha^{\gamma_1}\beta^{\gamma_2}\mod p</script><p>定义：如果$\gamma_1=\gamma_1’$，$\gamma_2=\gamma_2’$，那么密钥称为等价的</p>
+<p>引理：K和K‘等价，那么$ver_K(x,y)=ver_{K’}(x,y)$</p>
+<p>引理：恰好有q个等价的密钥K，$sig_K(x)=y$</p>
+<p>引理：至多有一个等价密钥K’，使得$ver_{K’}(x,y)=ver_{K’}(x’,y’)=true$</p>
+<p>定理：$sig_K(x)=y$，那么伪造者能计算出$sig_K(x’)$的概率为1/q</p>
+<p><u>这是一个一次签名方案</u></p>
+<p>246</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E7%90%89%E7%92%83%E7%8C%AB/" rel="tag"># 琉璃猫</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/03/22/program-design/" rel="prev" title="程序设计">
+      <i class="fa fa-chevron-left"></i> 程序设计
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/05/25/modern-physics-chemistry/" rel="next" title="现代物理有机化学">
+      现代物理有机化学 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#古典密码学"><span class="nav-number">1.</span> <span class="nav-text">古典密码学</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#几种古典密码"><span class="nav-number">1.1.</span> <span class="nav-text">几种古典密码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#密码分析"><span class="nav-number">1.2.</span> <span class="nav-text">密码分析</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Shannon理论"><span class="nav-number">2.</span> <span class="nav-text">Shannon理论</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#分组密码和高级加密标准"><span class="nav-number">3.</span> <span class="nav-text">分组密码和高级加密标准</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#代换-置换网络（SPN）"><span class="nav-number">3.1.</span> <span class="nav-text">代换-置换网络（SPN）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#线性密码分析"><span class="nav-number">3.2.</span> <span class="nav-text">线性密码分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#差分分析"><span class="nav-number">3.3.</span> <span class="nav-text">差分分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据加密标准"><span class="nav-number">3.4.</span> <span class="nav-text">数据加密标准</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#高级加密标准"><span class="nav-number">3.5.</span> <span class="nav-text">高级加密标准</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#工作模式"><span class="nav-number">3.6.</span> <span class="nav-text">工作模式</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Hash函数"><span class="nav-number">4.</span> <span class="nav-text">Hash函数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#迭代Hash函数"><span class="nav-number">4.1.</span> <span class="nav-text">迭代Hash函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Merkle-DamgArd结构"><span class="nav-number">4.1.1.</span> <span class="nav-text">Merkle-DamgArd结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安全Hash算法（SHA-1）"><span class="nav-number">4.1.2.</span> <span class="nav-text">安全Hash算法（SHA-1）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#消息认证码"><span class="nav-number">4.2.</span> <span class="nav-text">消息认证码</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#嵌套MAC和HMAC"><span class="nav-number">4.2.1.</span> <span class="nav-text">嵌套MAC和HMAC</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CBC-MAC"><span class="nav-number">4.2.2.</span> <span class="nav-text">CBC-MAC</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#无条件安全信息认证码"><span class="nav-number">4.2.3.</span> <span class="nav-text">无条件安全信息认证码</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#RSA密码体系和整数因子分解"><span class="nav-number">5.</span> <span class="nav-text">RSA密码体系和整数因子分解</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#RSA密码体系"><span class="nav-number">5.1.</span> <span class="nav-text">RSA密码体系</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分解因子算法"><span class="nav-number">5.2.</span> <span class="nav-text">分解因子算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对RSA的其他攻击"><span class="nav-number">5.3.</span> <span class="nav-text">对RSA的其他攻击</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Rabin密码体制"><span class="nav-number">5.4.</span> <span class="nav-text">Rabin密码体制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RSA语义安全"><span class="nav-number">5.5.</span> <span class="nav-text">RSA语义安全</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#离散对数问题的公钥密码体制"><span class="nav-number">6.</span> <span class="nav-text">离散对数问题的公钥密码体制</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ElGamal密码体制"><span class="nav-number">6.1.</span> <span class="nav-text">ElGamal密码体制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#离散对数问题的算法"><span class="nav-number">6.2.</span> <span class="nav-text">离散对数问题的算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#有限域"><span class="nav-number">6.3.</span> <span class="nav-text">有限域</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#椭圆曲线"><span class="nav-number">6.4.</span> <span class="nav-text">椭圆曲线</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ElGamal体制的安全性"><span class="nav-number">6.5.</span> <span class="nav-text">ElGamal体制的安全性</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#签名方案"><span class="nav-number">7.</span> <span class="nav-text">签名方案</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ElGamal签名方案"><span class="nav-number">7.1.</span> <span class="nav-text">ElGamal签名方案</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#一些变体"><span class="nav-number">7.1.1.</span> <span class="nav-text">一些变体</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#可证明的安全签名方案"><span class="nav-number">7.2.</span> <span class="nav-text">可证明的安全签名方案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#不可否认的签名"><span class="nav-number">7.3.</span> <span class="nav-text">不可否认的签名</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#fail-stop签名"><span class="nav-number">7.4.</span> <span class="nav-text">fail-stop签名</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="雨游璃风猫"
+      src="/images/avatar.gif">
+  <p class="site-author-name" itemprop="name">雨游璃风猫</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">26</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/husimplicity/husimplicity.github.io" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;husimplicity&#x2F;husimplicity.github.io" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:tulongzikun@126.com" title="E-Mail → mailto:tulongzikun@126.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+      <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=1364161141&auto=1&height=66"></iframe>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">雨游璃风猫</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>
+
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/clicklove.js"></script>
+

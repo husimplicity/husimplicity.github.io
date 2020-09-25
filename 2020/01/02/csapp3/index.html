@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
@@ -18,7 +18,7 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="汇编代码后缀    名称 代码 大小     char b 1个字节   short w 2个字节   int&#x2F;long int&#x2F;char* l 4个字节   float s 4个字节   double l 8个字节   long double t 8&#x2F;10&#x2F;12个字节(根据系统)     访问信息寄存器是用来存储整数数据和指针的。 三种操作数指示符：第一种：立即数 $格式 $Imm 操作数值 I">
@@ -27,14 +27,14 @@
 <meta property="og:url" content="http://yoursite.com/2020/01/02/csapp3/index.html">
 <meta property="og:site_name" content="Hulieu">
 <meta property="og:description" content="汇编代码后缀    名称 代码 大小     char b 1个字节   short w 2个字节   int&#x2F;long int&#x2F;char* l 4个字节   float s 4个字节   double l 8个字节   long double t 8&#x2F;10&#x2F;12个字节(根据系统)     访问信息寄存器是用来存储整数数据和指针的。 三种操作数指示符：第一种：立即数 $格式 $Imm 操作数值 I">
-<meta property="og:locale" content="en_US">
+<meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://yoursite.com/2020/01/02/csapp3/cpu.png">
 <meta property="og:image" content="http://yoursite.com/2020/01/02/csapp3/stackframe.png">
 <meta property="og:image" content="http://yoursite.com/2020/01/02/csapp3/stackframeExample.png">
 <meta property="og:image" content="http://yoursite.com/2020/01/02/csapp3/cpu64.png">
 <meta property="article:published_time" content="2020-01-02T11:59:31.000Z">
 <meta property="article:modified_time" content="2020-06-16T04:06:05.498Z">
-<meta property="article:author" content="Hulieu">
+<meta property="article:author" content="雨游璃风猫">
 <meta property="article:tag" content="琉璃猫">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://yoursite.com/2020/01/02/csapp3/cpu.png">
@@ -48,7 +48,7 @@
     sidebar: "",
     isHome : false,
     isPost : true,
-    lang   : 'en'
+    lang   : 'zh-CN'
   };
 </script>
 
@@ -92,7 +92,7 @@
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
   <div class="site-nav-toggle">
-    <div class="toggle" aria-label="Toggle navigation bar">
+    <div class="toggle" aria-label="切换导航栏">
       <span class="toggle-line toggle-line-first"></span>
       <span class="toggle-line toggle-line-middle"></span>
       <span class="toggle-line toggle-line-last"></span>
@@ -106,6 +106,7 @@
       <h1 class="site-title">Hulieu</h1>
       <span class="logo-line-after"><i></i></span>
     </a>
+      <p class="site-subtitle" itemprop="description">似曾相识焰归来，小圆香径独徘徊</p>
   </div>
 
   <div class="site-nav-right">
@@ -122,31 +123,36 @@
   <ul id="menu" class="main-menu menu">
         <li class="menu-item menu-item-home">
 
-    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>优雅的首页</a>
 
   </li>
         <li class="menu-item menu-item-about">
 
-    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>本站的历程</a>
 
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>随意的标签</a>
 
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>严谨的分类</a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>最终的归档</a>
+
+  </li>
+        <li class="menu-item menu-item-friends">
+
+    <a href="/friends/" rel="section"><i class="fa fa-heartbeat fa-fw"></i>永远的朋友</a>
 
   </li>
       <li class="menu-item menu-item-search">
-        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>朴素的搜索
         </a>
       </li>
   </ul>
@@ -162,7 +168,7 @@
   </span>
   <div class="search-input-container">
     <input autocomplete="off" autocapitalize="off"
-           placeholder="Searching..." spellcheck="false"
+           placeholder="搜索..." spellcheck="false"
            type="search" class="search-input">
   </div>
   <span class="popup-btn-close">
@@ -199,12 +205,12 @@
     
   
   
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/02/csapp3/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Hulieu">
+      <meta itemprop="name" content="雨游璃风猫">
       <meta itemprop="description" content="">
     </span>
 
@@ -221,37 +227,37 @@
               <span class="post-meta-item-icon">
                 <i class="far fa-calendar"></i>
               </span>
-              <span class="post-meta-item-text">Posted on</span>
+              <span class="post-meta-item-text">发表于</span>
 
-              <time title="Created: 2020-01-02 19:59:31" itemprop="dateCreated datePublished" datetime="2020-01-02T19:59:31+08:00">2020-01-02</time>
+              <time title="创建时间：2020-01-02 19:59:31" itemprop="dateCreated datePublished" datetime="2020-01-02T19:59:31+08:00">2020-01-02</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-06-16 12:06:05" itemprop="dateModified" datetime="2020-06-16T12:06:05+08:00">2020-06-16</time>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-06-16 12:06:05" itemprop="dateModified" datetime="2020-06-16T12:06:05+08:00">2020-06-16</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
-              <span class="post-meta-item-text">In</span>
+              <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/categories/%E7%8C%AB%E7%88%AA%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">猫爪记</span></a>
                 </span>
-                  , 
+                  ，
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/categories/%E7%8C%AB%E7%88%AA%E8%AE%B0/Computer-Science/" itemprop="url" rel="index"><span itemprop="name">Computer-Science</span></a>
                 </span>
             </span>
 
           
-            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
-              <span class="post-meta-item-text">Views: </span>
+              <span class="post-meta-item-text">阅读次数：</span>
               <span id="busuanzi_value_page_pv"></span>
             </span>
 
@@ -491,7 +497,7 @@
 </table>
 </div>
 <h3 id="条件赋值"><a href="#条件赋值" class="headerlink" title="条件赋值"></a>条件赋值</h3><p>cmovl S, R 如果&lt;，用S代替R<br>cmov系列指令和上面j系列相似<br><strong>不是所有的条件表达式可以用条件传送来编译</strong>，因为代码会对then-expr和else-expr求值，如果有一个值不存在或者操作了全局变量，即使测试为假，也会导致错误</p>
-<h3 id="switch方法"><a href="#switch方法" class="headerlink" title="switch方法"></a>switch方法</h3><p>在.rodata(Read-Only Data)里声明switch情况分配地址<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">.L7:</span><br><span class="line">  .long .L3</span><br><span class="line">  .long .L2</span><br><span class="line">  .long .L4</span><br><span class="line">  ... ...</span><br></pre></td></tr></table></figure><br>然后使用间接跳转<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jmp *.L7(, %eax, 4) # Goto *jt[index]</span><br></pre></td></tr></table></figure><br>值得注意的是，<strong>当switch的case值不连续且跨度足够大的时候，会编译成multi-if的形式</strong></p>
+<h3 id="switch方法"><a href="#switch方法" class="headerlink" title="switch方法"></a>switch方法</h3><p>在.rodata(Read-Only Data)里声明switch情况分配地址<br><figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">.L7</span>:</span><br><span class="line">  <span class="string">.long</span> <span class="string">.L3</span></span><br><span class="line">  <span class="string">.long</span> <span class="string">.L2</span></span><br><span class="line">  <span class="string">.long</span> <span class="string">.L4</span></span><br><span class="line">  <span class="string">...</span> <span class="string">...</span></span><br></pre></td></tr></table></figure><br>然后使用间接跳转<br><figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">jmp</span> *.L7(, %eax, <span class="number">4</span>) <span class="meta"># Goto *jt[index]</span></span><br></pre></td></tr></table></figure><br>值得注意的是，<strong>当switch的case值不连续且跨度足够大的时候，会编译成multi-if的形式</strong></p>
 <p><em>有传闻显示，编译器还有二分区间这样的骚操作</em></p>
 <h3 id="程序栈"><a href="#程序栈" class="headerlink" title="程序栈"></a>程序栈</h3><p>单个过程分配的那部分栈称为栈帧，最顶端以两个指针界定<br>%ebp为帧指针，%esp为栈指针，程序执行时，栈指针可以移动，一般相对于帧指针进行访问<br><img src="stackframe.png" alt=""></p>
 <p>转移控制指令</p>
@@ -503,7 +509,7 @@
 </ul>
 <p>一个典型的过程调用示例</p>
 <p><img src="stackframeExample.png" alt=""></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">caller:</span><br><span class="line">  pushl %ebp</span><br><span class="line">  movl %esp, %ebp</span><br><span class="line">  subl $24, %esp</span><br><span class="line">  ... # 赋值</span><br><span class="line">  call swap_add</span><br><span class="line">swap_add:</span><br><span class="line">  pushl %ebp # Save old %ebp</span><br><span class="line">  movl %esp, %ebp</span><br><span class="line">  pushl %ebx</span><br><span class="line">  ... # 主体代码</span><br><span class="line">  popl %ebx</span><br><span class="line">  popl %ebp</span><br><span class="line">  ret # 返回值在%eax</span><br><span class="line">caller: # 之后的代码</span><br><span class="line">  ... </span><br><span class="line">  imull %edx, %eax</span><br><span class="line">  leave</span><br><span class="line">  ret</span><br></pre></td></tr></table></figure>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">caller</span>:</span><br><span class="line">  pushl %ebp</span><br><span class="line">  movl %esp, %ebp</span><br><span class="line">  subl $24, %esp</span><br><span class="line">  ... <span class="comment"># 赋值</span></span><br><span class="line">  call swap_add</span><br><span class="line">swap_add:</span><br><span class="line">  pushl %ebp <span class="comment"># Save old %ebp</span></span><br><span class="line">  movl %esp, %ebp</span><br><span class="line">  pushl %ebx</span><br><span class="line">  ... <span class="comment"># 主体代码</span></span><br><span class="line">  popl %ebx</span><br><span class="line">  popl %ebp</span><br><span class="line">  ret <span class="comment"># 返回值在%eax</span></span><br><span class="line"><span class="keyword">caller</span>: <span class="comment"># 之后的代码</span></span><br><span class="line">  ... </span><br><span class="line">  imull %edx, %eax</span><br><span class="line">  leave</span><br><span class="line">  ret</span><br></pre></td></tr></table></figure>
 <p><em>leave效果上等价于几个popl</em>，但效率上更高</p>
 <h3 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h3><p>声明方式：T A[N]</p>
 <p>假设整型数组E存在%edx，整数索引i存在%ecx</p>
@@ -732,10 +738,10 @@
 
       <ul class="sidebar-nav motion-element">
         <li class="sidebar-nav-toc">
-          Table of Contents
+          文章目录
         </li>
         <li class="sidebar-nav-overview">
-          Overview
+          站点概览
         </li>
       </ul>
 
@@ -747,9 +753,9 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <img class="site-author-image" itemprop="image" alt="Hulieu"
+    <img class="site-author-image" itemprop="image" alt="雨游璃风猫"
       src="/images/avatar.gif">
-  <p class="site-author-name" itemprop="name">Hulieu</p>
+  <p class="site-author-name" itemprop="name">雨游璃风猫</p>
   <div class="site-description" itemprop="description"></div>
 </div>
 <div class="site-state-wrap motion-element">
@@ -757,21 +763,21 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">22</span>
-          <span class="site-state-item-name">posts</span>
+          <span class="site-state-item-count">26</span>
+          <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
         <span class="site-state-item-count">8</span>
-        <span class="site-state-item-name">categories</span></a>
+        <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
         <span class="site-state-item-count">2</span>
-        <span class="site-state-item-name">tags</span></a>
+        <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
 </div>
@@ -813,9 +819,9 @@
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">Hulieu</span>
+  <span class="author" itemprop="copyrightHolder">雨游璃风猫</span>
 </div>
-  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
 
         
@@ -825,7 +831,7 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-user"></i>
       </span>
-      <span class="site-uv" title="Total Visitors">
+      <span class="site-uv" title="总访客量">
         <span id="busuanzi_value_site_uv"></span>
       </span>
     </span>
@@ -834,7 +840,7 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-eye"></i>
       </span>
-      <span class="site-pv" title="Total Views">
+      <span class="site-pv" title="总访问量">
         <span id="busuanzi_value_site_pv"></span>
       </span>
     </span>
@@ -899,3 +905,7 @@
 
 </body>
 </html>
+
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/clicklove.js"></script>
+

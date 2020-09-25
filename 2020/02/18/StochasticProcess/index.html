@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="条件期望给定概率空间$(\Omega,F,P)$，随机变量X，定义随机变量$Y&#x3D;E(X|F)$如果它满足  $Y\in F$ for all $A\in F$，$\int_A XdP &#x3D; \int_A YdP$  显然Y可积且唯一 Radon-Nikodym定理：测度$\nu &lt;&lt;\mu$，那么存在函数$f\in F$，对所有$A\in F$，  \int_A fd\mu&#x3D;\nu(A)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="随机过程论">
+<meta property="og:url" content="http://yoursite.com/2020/02/18/StochasticProcess/index.html">
+<meta property="og:site_name" content="Hulieu">
+<meta property="og:description" content="条件期望给定概率空间$(\Omega,F,P)$，随机变量X，定义随机变量$Y&#x3D;E(X|F)$如果它满足  $Y\in F$ for all $A\in F$，$\int_A XdP &#x3D; \int_A YdP$  显然Y可积且唯一 Radon-Nikodym定理：测度$\nu &lt;&lt;\mu$，那么存在函数$f\in F$，对所有$A\in F$，  \int_A fd\mu&#x3D;\nu(A)">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-02-18T04:26:47.000Z">
+<meta property="article:modified_time" content="2020-09-12T14:12:02.609Z">
+<meta property="article:author" content="雨游璃风猫">
+<meta property="article:tag" content="琉璃猫">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/2020/02/18/StochasticProcess/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>随机过程论 | Hulieu</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Hulieu</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">似曾相识焰归来，小圆香径独徘徊</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>优雅的首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>本站的历程</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>随意的标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>严谨的分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>最终的归档</a>
+
+  </li>
+        <li class="menu-item menu-item-friends">
+
+    <a href="/friends/" rel="section"><i class="fa fa-heartbeat fa-fw"></i>永远的朋友</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>朴素的搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/18/StochasticProcess/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="雨游璃风猫">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hulieu">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          随机过程论
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-02-18 12:26:47" itemprop="dateCreated datePublished" datetime="2020-02-18T12:26:47+08:00">2020-02-18</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-09-12 22:12:02" itemprop="dateModified" datetime="2020-09-12T22:12:02+08:00">2020-09-12</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%8C%AB%E7%88%AA%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">猫爪记</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%8C%AB%E7%88%AA%E8%AE%B0/Mathematics/" itemprop="url" rel="index"><span itemprop="name">Mathematics</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="条件期望"><a href="#条件期望" class="headerlink" title="条件期望"></a>条件期望</h1><p>给定概率空间$(\Omega,F,P)$，随机变量X，定义随机变量$Y=E(X|F)$如果它满足</p>
+<ul>
+<li>$Y\in F$</li>
+<li>for all $A\in F$，$\int_A XdP = \int_A YdP$</li>
+</ul>
+<p>显然Y可积且唯一</p>
+<p><strong>Radon-Nikodym定理</strong>：测度$\nu &lt;&lt;\mu$，那么存在函数$f\in F$，对所有$A\in F$，</p>
+<script type="math/tex; mode=display">
+\int_A fd\mu=\nu(A)</script><p>先假设$X\geq 0$然后显然$\nu(A)=\int_A XdP$是测度，所以易证条件期望存在。</p>
+<a id="more"></a>
+<p>几个例子（小污猫说“这几个例子很重要”）</p>
+<ul>
+<li><p>$X\in F$，那么$E(X|F)=X$</p>
+</li>
+<li><p>$X$与$F$独立，则$E(X|F)=EX$</p>
+</li>
+<li><p>$F=\sigma(\Omega_1,\Omega_2,…)$，则$E(X|F)=\frac{E(X;\Omega_i)}{P(\Omega_i)}\:on\:\Omega_i$。所以初等概率论里的条件期望是其一个特例。</p>
+</li>
+<li><p>$X$，$Y$有联合概率密度$f(x,y)$，则</p>
+<script type="math/tex; mode=display">
+E(g(X)|Y)=h(Y)=\frac{\int g(x)f(X,y)dx}{\int f(X,y)dx}</script></li>
+<li><p>$X$，$Y$独立，$E(\phi(X,Y)|X)=E(\phi(x,Y))$</p>
+</li>
+</ul>
+<p>性质：</p>
+<ul>
+<li>$E(aX+Y|F)=aE(X|F)+E(Y|F)$</li>
+<li>$X\leq Y\Rightarrow E(X|F)\leq E(Y|F)$</li>
+<li>$X_n\geq 0$，$X_n\uparrow X$，$EX&lt;\infty$，那么$E(X_n|F)\uparrow E(X|F)$（Levi单调收敛定理）</li>
+<li>$X_n\geq 0$，$E(lim_{n\to\infty}X_n|F)\leq lim_{n\to\infty}E(X_n|F)$（Fatou引理，由lim xn=lim inf xk）</li>
+<li>$|X_n|&lt;Y&lt;\infty$，$lim_{n\to\infty}X_n=X$，那么$lim_{n\to\infty}E(X_n|F)=E(X|F)$（Lebesgue控制收敛定理）</li>
+<li>如果$\phi$凸，则$\phi(E(X|F))\leq E(\phi(X)|F)$（Jensen不等式，直线显然，然后利用直线包络）</li>
+<li>$F\subset G$，且$E(X|G)\in F$，那么$E(X|F)=E(X|G)$</li>
+<li>$F\subset G$，那么$E(E(X|F)|G)=E(E(X|G)|F)=E(X|F)$（条件期望平滑性）</li>
+</ul>
+<p>如果$X\in F$且$E|X|\:,\:E|XY|&lt;\infty$，那么$E(XY|F)=XE(Y|F)$。（典型four-step的证明）</p>
+<h2 id="正则条件概率："><a href="#正则条件概率：" class="headerlink" title="正则条件概率："></a>正则条件概率：</h2><p>可测映射$X\::\:(\Omega,F)\rightarrow (S,S)$（随机变量）。for X given G，<strong>正则条件分布</strong>$\mu\::\:\Omega\times S\rightarrow [0,1]$满足</p>
+<ul>
+<li>对每个A，$\omega\rightarrow\mu(\omega,A)$是$P(X\in A|G)$的一个版本</li>
+<li>对a.e. $\omega$，$A\rightarrow\mu(\omega,A)$是一个$(S,S)$上的测度。</li>
+</ul>
+<p>如果$S=\Omega$，X是恒等映射，$\mu$是<strong>正则条件概率</strong>。（此时$\mu(A)=PX^{-1}(A)=P(X\in A)$）</p>
+<p>正则条件分布可以<strong>同时计算X的所有函数的条件期望</strong>。</p>
+<p>由$E(f(x))=\int_R f(x)dPX^{-1}$可得</p>
+<p>定理：$\mu(\omega,A)$是<strong>正则条件分布</strong>，$f:(S,S)\rightarrow (R,R)$，且$E|f(X)|&lt;\infty$，那么f关于测度$\mu(\omega,·)$的积分存在，且</p>
+<script type="math/tex; mode=display">
+E(f(x)|F)(\omega)=\int \mu(\omega,dx)f(x)\:a.s.</script><p>正则条件分布并不总是存在。但是当$(S,S)$ <strong>is nice</strong>的时候，它总是存在。(定义：<strong>好的可测空间是指标准Borel空间</strong>，即存在从$S\to R$的一一可测映射。若S是<strong>Polish空间（完备+可分）的Borel子集</strong>，S是S上Borel $\sigma$域，那么是一个好的可测空间）</p>
+<p>证明：设$\phi:S\to R$是一一可测映射。则$\phi(X):(\Omega,F)\to(R,R)$，那么，$\forall A\in S$</p>
+<script type="math/tex; mode=display">
+P(X\in A|G)=P(\phi(X)\in\phi(A)|G)\\
+=P(Y\in\phi(A)|G)=P(Y\in B|G)\\
+(B=\phi(A)\in R)</script><p>然后构造$Y=\phi(x)$关于G的正则条件分布函数$P(Y\leq y|G)$：取除掉一个零测集以外的集合$\Omega_0$使得任意$\omega\in\Omega_0$</p>
+<script type="math/tex; mode=display">
+G(q,\omega)=P(Y\leq q|G)(\omega)</script><p>然后$F(x,\omega)=inf\{G(q,\omega),q&gt;x\}$。所以$F(x,\omega)$是$P(\phi(X)\leq x|G)$的一个版本。然后得到度量$\nu(\omega,·)$</p>
+<script type="math/tex; mode=display">
+\nu(w,(-\infty,x])=F(x,\omega)</script><p>然后得到$\mu(\omega,A)=\nu(\omega,\phi(A))$</p>
+<p>定理：X，Y在<strong>nice space</strong> (S,S)中取值，$G=\sigma(Y)$，那么存在$\mu\::\:S\times S\rightarrow [0,1]$，</p>
+<ul>
+<li>对每个A，$\mu(Y(\omega),A)$是$P(X\in A|G)$</li>
+<li>对a.e. $\omega$，$A\rightarrow\mu(Y(\omega),A)$是$(S,S)$上的测度</li>
+</ul>
+<h1 id="鞅过程Martingales"><a href="#鞅过程Martingales" class="headerlink" title="鞅过程Martingales"></a>鞅过程Martingales</h1><p>$F_n$是一个递增的$\sigma$-域序列，如果序列$X_n$满足</p>
+<ul>
+<li>$E|X_n|&lt;\infty$</li>
+<li>$Xn\in F_n$</li>
+<li>$E(X_{n+1}|F_n)=x_n$</li>
+</ul>
+<p>则称$X_n$为<strong>鞅过程</strong>。</p>
+<p>如果第三个条件改为$E(X_{n+1}|F_n)\geq(\leq) X_n$，则称为<strong>下鞅（上鞅）</strong></p>
+<p>最常见的是线性鞅：$S_n=S_0+\sum_{k=1}^n e_k$，$E(e)=0$。如果$E(e)\leq(\geq)0$，则为上鞅（下鞅）。</p>
+<p>定理：鞅过程满足$E(X_n|F_m)=X_m$，$m&lt;n$</p>
+<p>定理：凸函数$\phi$，那么$\phi(X_n)$下鞅。即$E(\phi(X_{n+1})|F_n)\geq \phi(E(X_{n+1}|F_n))=\phi(X_n)$。如果$X_n$下鞅，$\phi$增也有此结论。</p>
+<p>定义$H_n$为<strong>可预测序列</strong>，即$H_n\in F_{n-1}$。定理：$X_n$上鞅，那么如果$H_n\geq 0$有界，则$(H\cdot X)_n$也是上鞅。显然对下鞅和鞅也有类似结论。</p>
+<p>定理：若N是停时，$X_n$上鞅，则$X_{N\wedge n}$也是上鞅。</p>
+<h2 id="鞅收敛定理"><a href="#鞅收敛定理" class="headerlink" title="鞅收敛定理"></a>鞅收敛定理</h2><p>$\lim_{n\to\infty}X_n(\omega)$不存在$\Leftrightarrow\lim_{n\to\infty}inf\:X_n(\omega)&lt;\lim_{n\to\infty}sup\:X_n(\omega)$，也等价于存在有理数a,b：</p>
+<script type="math/tex; mode=display">
+\lim_{n\to\infty}inf\:X_n(\omega)<a<b<\lim_{n\to\infty}sup\:X_n(\omega)</script><p>定义$N_{2k-1}$为第k次下穿a的停时，$N_{2k}$是第k次上穿b的停时。定义$U_n=\{sup\:k|N_{2k}&lt;n\}$为上穿[a,b]的次数。而</p>
+<script type="math/tex; mode=display">
+\{\lim_{n\to\infty}inf\:X_n(\omega)<a<b<\lim_{n\to\infty}sup\:X_n(\omega)\}\subset \{\lim_{n\to\infty}U_n(\omega)=+\infty\}</script><p>定义$H_m=1_{\bigcup\{N_{2k-1}\leq m\leq N_{2k}\}}$，$W_n=\sum_{m-1}^nH_m(X_m-X_{m-1})$，</p>
+<p>（<strong>下鞅上穿不等式</strong>）若$X_n$下鞅，则对a&lt;b，$(b-a)EU_n\leq E(X_n-a)^+-E(X_0-a)^+$（证明：定义$Y_n=a+(X_n-a)^+$，则也是下鞅且上穿次数与$X_n$相等。那么$W_n=\sum_{m=1}^nH_m(Y_m-Y_{m-1})$\geq (b-a)U_n$。又令$K_m=1-H_m$，$V_n=\sum_{m=1}^nK_m(Y_m-Y_{m-1})$。那么$W_n+V_n=Y_n-Y_0$，且$V_n$下鞅，$EV_N\geq EV_0=0 $。所以</p>
+<script type="math/tex; mode=display">
+E(Y_n-Y_0)=EW_n+EV_n\geq EW_n\geq(b-a)EU_n</script><p> 即得证）</p>
+<p>利用上穿不等式，得到</p>
+<p>（<strong>下鞅基本收敛定理</strong>） 如果下鞅$X_n$满足$sup\:EX_n^+&lt;\infty$，则$X_n\to X$a.s.，且$E|X|&lt;+\infty$。（证明：$(X_n-a)^+$是下鞅，根据上穿不等式$EU_n\leq E(X_n-a)^+/(b-a)$有界，而根据$U_n$单调上升必有极限$U$，因此</p>
+<script type="math/tex; mode=display">
+P(\lim_{n\to\infty}inf\:X_n<a<b<\lim_{n\to\infty}sup\:X_n)=0</script><p>所以$X_n$极限a.s.存在。又由于$EX_n\geq EX_0$，$EX_n^-=EX_n^+-EX_n\leq sup\:EX_n^+-EX_0&lt;+\infty$然后由Fatou引理易得$E|X|&lt;+\infty$。）</p>
+<p> 定理：若$X_n$非负上鞅，则$\lim X_n=X$a.s.，且$EX\leq EX_0$。（证明：$-X_n$下鞅有界，a.s.收敛到极限X。）</p>
+<p><strong>注意：L1收敛并不成立。</strong>一个简单的反例就是$S_0=1$，$P(e_i=-1)=P(e_i=1)=1/2$，N为$S_n=0$的停时，$X_n=S_{n\wedge N}$是鞅。但是由上面的定理可知$X\to 0$a.s.，与$EX_n=1$矛盾。</p>
+<h2 id="四个例子"><a href="#四个例子" class="headerlink" title="四个例子"></a>四个例子</h2><h3 id="有界增长"><a href="#有界增长" class="headerlink" title="有界增长"></a>有界增长</h3><p>$X_n$为鞅过程，且$|X_{n+1}-X_n|\leq M&lt;\infty$，那么要么$lim\:X_n$存在且有限，要么$X_n$在正负无穷之间摇摆。(停时$N=inf\{X_n\leq k\}$，那么$x_{n\wedge N}+k+M$a.s.收敛)</p>
+<p>（Doob分解）下鞅$X_n$可以写成$X_n=M_n+A_n$。其中$M_n$是鞅过程，$A_n$是可预测序列。(令$A_n-A_{n-1}=E(X_n|F_{n-1})-X_{n-1}$)</p>
+<p>（第二Borel-Cantelli引理）$A_n\in F_n$，那么</p>
+<script type="math/tex; mode=display">
+\{A_n\:i.o.\}=\{\sum_{n=1}^\infty P(A_n|F_{n-1})=\infty\}</script><p>（第二B-C引理是第一引理的推广，去掉了独立性要求）</p>
+<p>证明：由Doob分解可得$M_n=\sum_{m=1}^n 1_{A_m}-P(A_m|F_{m-1})$是有界增长的鞅过程。</p>
+<h3 id="Polya’s-Urn-Scheme"><a href="#Polya’s-Urn-Scheme" class="headerlink" title="Polya’s Urn Scheme"></a>Polya’s Urn Scheme</h3><p>坛子模型：坛子里有r个红球、g个绿球，每次取出一个并放进与之同色的c+1个球。n次抽取后绿球比例$X_n$是鞅。</p>
+<p>如果r=g=c=1，可得$P(X_n=\frac{k}{n+2})=\frac{1}{n+1}$。</p>
+<p>实际上，$X_\infty$有参数为$g/c$和$r/c$的beta分布：</p>
+<script type="math/tex; mode=display">
+\frac{\Gamma((g+r)/c)}{\Gamma(g/c)\Gamma(r/c)}x^{(g/c)-1}(1-x)^{(r/c)-1}</script><h3 id="R-N微分"><a href="#R-N微分" class="headerlink" title="R-N微分"></a>R-N微分</h3><p>有限测度$\mu$，$\nu$，上升的$\sigma-$域$F_n$，定义$\mu_n=\mu|F_n$，$\nu_n=\nu|F_n$。</p>
+<p>定理：若$\mu_n&lt;&lt;\nu_n$，定义$X_n=\frac{d\mu_n}{d\nu_n}$，令$X=\lim_{n\to\infty}sup\:X_n$，则</p>
+<script type="math/tex; mode=display">
+\mu(A)=\int_AXd\nu+\mu(A\cap\{X=+\infty\})</script><p>证明：根据定义，$A\in F_n$，则$\mu(A)=\int_AX_nd\nu$。$X_n$是非负鞅，所以$X_n\to X$a.s.。又令$\rho=(\mu+\nu)/2$，$\rho_n=\rho|F_n$，$Y_n=\frac{d\mu_n}{d\rho_n}$，$Z_n=\frac{d\nu_n}{d\rho_n}$。显然$Y_n$和%Z_n$都是非负鞅，且$Y_n+Z_n=2$a.s.。所以有$Y_n\to Y$，$Z_n\to Z$。记$Y=\frac{d\mu}{d\rho}$，$Z=\frac{d\nu}{d\rho}$。那么对$A\in F_n$，则由有界收敛</p>
+<script type="math/tex; mode=display">
+\mu(A)=\mu_n(A)=\int_AY_nd\rho\to\int_AYd\rho</script><p>$X_n=Y_n/Z_n$a.s.，而$Y+Z=2$a.s.，且$\rho(Y=0,Z=0)=0$。所以$X=Y/Z$,$\rho-$a.s.。</p>
+<p>令$W=\frac{1}{Z}1_{\{Z&gt;0\}}$所以$1=WZ+1_{\{Z=0\}}$。所以可得</p>
+<script type="math/tex; mode=display">
+\mu(A)=\int_AYd\rho=\int_AYWZd\rho+\int_AY1_{\{Z=0\}}d\rho</script><p>马上得证（第二部分由$\{Z=0\}=\{X=\infty\}$得到）。</p>
+<p>由此推出<strong>Kakutani关于无穷乘积测度的二分法</strong>：$\mu$，$\nu$都是$(R^N,R^N)$上的概率测度，$e_n$独立，令$F_n(x)=\mu(e_n\leq x)$，$G_n(x)=\nu(e_n\leq x)$。</p>
+<p>$\lambda_{F_n}&lt;&lt;\lambda_{G_n}$，令$q_n=\frac{d\lambda_{F_n}}{d\lambda_{G_n}}$。令$F_n=\sigma(e_m,m\leq n)$，$X_n=\frac{d\mu_n}{d\nu_n}=\prod q_n$。根据上面的定理，$X_n\to X$ $\nu-$a.s.，所以根据Kolmogorov 0-1律，$\nu(X=0)\in\{0,1\}$。因而$\mu&lt;&lt;\nu$或者两者正交。</p>
+<p><strong>定理：$\mu\sim\nu$或者两者正交，根据$\prod\int\sqrt{q_m}dG_m$&gt;0或=0进行判断</strong></p>
+<p>证明：先证无穷乘积是有定义的。</p>
+<p>如果$\prod\int\sqrt{q_m}dG_m=0$，那么$\int X_n^{1/2}d\nu\to 0$。而$\int X^{1/2}d\nu\leq\lim inf\:\int X_n^{1/2}d\nu =0$。所以$\nu(X=0)=1$，$\mu$和$\nu$相互独立。</p>
+<p>反之，令$Y_n=X_n^{1/2}$，则$E(X_n)=E(Y_n^2)=1$。下证$Y_n$L2-基本列：$E(Y_{n+k}-Y_n)^2=2(1-\prod_{n+1}^{n+k} \int \sqrt{q_m}dG_m\to 0$。$E|X_{n+k}-X_n|\leq 2(E(Y_{n+k}-Y_n)^2)^{1/2}\to 0$，故而$X_n$是L1-基本列，$X_n\to X$。所以对$A\in F_n$</p>
+<script type="math/tex; mode=display">
+\mu(A)=\mu_n(A)=\int_AX_nd\nu_n=\int_AX_nd\nu\to\int_AXd\nu</script><p>有$\pi-\lambda$方法，A可以扩展到$R^N$，故而$\mu&lt;&lt;\nu$。</p>
+<p>$EX=\lim EX_n=1$，所以$\nu(X=0)<1$，故而$\nu(X=0)=0$，$\nu(X>0)=1$，$\mu\sim\nu$。</p>
+<h3 id="分支过程"><a href="#分支过程" class="headerlink" title="分支过程"></a>分支过程</h3><p>$e_n$独立非负，定义$Z_n$，满足$Z_0=1$以及</p>
+<script type="math/tex; mode=display">
+Z_{n+1}=\left\{\begin{array}.e_1^{n+1}+...+e_{Z_n}^{n+1}\:if\:Z_n>0\\0\:otherwise\end{array} \right.</script><p>也叫做Galtom-Watson过程，描述繁衍过程。</p>
+<p><em>引理：令$\mu=E(e_i^n)$，则$\{Z_n/\mu^n\}$是鞅过程 。</em></p>
+<p>定理：若$\mu&lt;1$，则对所有足够大的n，$Z_n=0$。因此$Z_n/\mu^n\to^{a.s.}0$</p>
+<p>(由$E(Z_n/\mu^n)=E(Z_0)=1$得$E(Z_n)=\mu^n\to 0$可得)</p>
+<p>定理：若$\mu=1$且$P(e_i^m=1)&lt;1$，那么对所有足够大的n，$Z_n=0$。</p>
+<p>（证明从$P(Z_n=k,n\geq N)=0$入手）</p>
+<p>定理：若$\mu&gt;1$，$P(Z_n&gt;0,\forall n)&gt;0$</p>
+<p>定理：(Kesten-Stigum)</p>
+<script type="math/tex; mode=display">
+P(W=\lim \frac{Z_n}{\mu^n}>0)>0\Leftrightarrow\sum P_kkln(k)<+\infty</script><h2 id="Doob不等式-以及LP收敛"><a href="#Doob不等式-以及LP收敛" class="headerlink" title="Doob不等式(以及LP收敛)"></a>Doob不等式(以及LP收敛)</h2><p>定理：设$X_n$下鞅，N有界停时，$P(N\leq k)=1$，那么$EX_0\leq EX_N\leq EX_k$。</p>
+<p>证明：$X_n$和$X_{N\wedge n}$下鞅，$Y_n=X_n-X_{N\wedge n}$下鞅，$EY_0\leq EY_k$得到$EX_N\leq EX_k$。</p>
+<p>(反例：当N不是有界的时候，不一定成立，考虑SRW，$S_0=1$，停时N为0的首达时，此时$ES_N=0$。)</p>
+<p><strong>(Doob不等式)</strong>$X_m$下鞅，令$\bar{X_n}=\max_{0\leq m\leq n}X_m^+$，$A=\{\bar{X_n}\geq\lambda\}$，那么</p>
+<script type="math/tex; mode=display">
+\lambda P(A)\leq EX_n1_A\leq EX_n^+</script><p>证明：令$N=\inf\{m\geq 0, X_m\geq\lambda\}\wedge n$，在A上$X_N\geq\lambda$，所以$X_N1_A\geq \lambda 1_A$，$\lambda P(A)\leq EX_N1_A$，根据$A^C$上$N=n$，$EX_N1_A\leq EX_n1_A$。右边不等号显然。</p>
+<p><strong>（LP不等式）</strong>下鞅$X_n$，p&gt;1，那么</p>
+<script type="math/tex; mode=display">
+E(\bar{X_n})^p\leq(\frac{p}{p-1})^pE(X_n^+)^p</script><p>特别的，若$Y_n$是鞅过程，$Y_n^*=\max|Y_m|$，那么</p>
+<script type="math/tex; mode=display">
+E(Y_n^*)^p\leq (\frac{p}{p-1})^pE|Y_n|^p</script><p>证明：$E(X_n^+)^p=+\infty$则显然成立。下设$E(X_n+)^p&lt;+\infty$，考虑$\bar{X_n}\wedge M$，所以</p>
+<script type="math/tex; mode=display">
+E(\bar{X_n}\wedge M)^p=\int_0^\infty p\lambda^{p-1}P(\bar{X_n}\wedge M\geq\lambda)d\lambda\\
+\leq\int_0^\infty p\lambda^{p-1}(\lambda^{-1}EX_n^+1_{\{\bar{X_n}\wedge M\}\geq\lambda})d\lambda\\
+=\int X_n^+\int_0^{\bar{X_n}\wedge M}p\lambda^{p-2}d\lambda dp\\
+=\frac{p}{p-1}\int X_n^+(\bar{X_n}\wedge M)^{p-1}dp\\
+\leq\frac{p}{p-1}(E(X_n^+)^p)^{1/p}(E(\bar{X_n}\wedge M)^p)^{(p-1)/p}</script><p>移项并令$M\to+\infty$由单调收敛定理可得证。</p>
+<p><strong>（LP收敛定理）</strong>若$X_n$鞅，满足$sup\:E|X_n|^p&lt;+\infty$，$p&gt;1$，那么</p>
+<script type="math/tex; mode=display">
+X_n\to^{a.s.}X,\:X_n\to^{LP}X</script><p><strong>（鞅增量正交性）</strong>若$X_n$鞅，$EX_n^2&lt;\infty$，若$Y\in F_m$，$EY^2&lt;\infty$，那么$E(X_n-X_m)Y=0$。</p>
+<p><strong>（条件方差公式）</strong>若$X_n$鞅，$EX_n^2&lt;\infty$，则$E((X_n-X_m)^2|F_m)=E(X_n^2|F_m)-X_m^2$。</p>
+<h3 id="平方可积鞅"><a href="#平方可积鞅" class="headerlink" title="平方可积鞅"></a>平方可积鞅</h3><p>$X_n$鞅，$X_0=0$，且$EX_n^2&lt;+\infty$，$X_n^2$下鞅，因而可以Doob分解为$X_n=M_n+A_n$，$M_n$鞅，而$A_n$非降。定义$A_\infty=\lim_{n\to\infty}A_n$。</p>
+<script type="math/tex; mode=display">
+A_n=\sum_{m=1}^nE((X_m-X_{m-1})^2|F_{m-1})</script><p>定理：$E\sup_{n\geq 0}|X_n|^2\leq 4 EA_\infty$（由LP不等式和单调收敛定理即得）</p>
+<p>定理：在$\{A_\infty&lt;\infty\}上$\lim_{n\to\infty}X_n$a.s.存在有限。</p>
+<p>证明：取停时$N=\inf\{n\geq 0,\:A_{n+1}&gt;a^2\}$，所以$X_{N\wedge n}$鞅。根据LP收敛定律，$X_{N\wedge n}$极限存在有限。所以在$\{A_\infty\leq a^2\}上$N=+\infty$，然后取并可得。</p>
+<p>定理：设$f:[0,+\infty)\to [1,+\infty)$非降且$\int_0^\infty \frac{1}{f^2(t)}dt&lt;+\infty$，则在$\{A_\infty=\infty\}$上$\frac{X_n}{f(A_n)}\to^{a.s.}0$</p>
+<p>证明：$H_n=\frac{1}{f(A_m)}$可料有界，则$Y_n=\sum_{m=1}^nH_m(X_m-X_{m-1})$鞅。分解$Y_n^2=N_n+B_n$，可证$B_\infty&lt;+\infty$，$Y_n\to^{a.s.}T_\infty$有限，由Kronecker引理得证。</p>
+<p>定理（第二Borel-Cantelli定理）：$P_n=P(B_n|F_{n-1})$，那么在$\{\sum_{n=1}^\infty P_n=\infty\}$上</p>
+<script type="math/tex; mode=display">
+\frac{\sum_{m=1}^n1_{B_m}}{\sum_{m=1}^nP_m}\to^{a.s.}1</script><p>证明：定义$X_n=\sum_{m=1}^n1_{B_m}-\sum_{m=1}^nP_m$，定义$f(t)=t\vee 1$，由上可得。</p>
+<h3 id="一致可积L1收敛"><a href="#一致可积L1收敛" class="headerlink" title="一致可积L1收敛"></a>一致可积L1收敛</h3><p>一致可积$\{X_i,\:i\in I\}$满足</p>
+<script type="math/tex; mode=display">
+\lim_{M\to\infty}\sup E|X_i|1_{|X_i|>M}=0</script><p>（一致）绝对连续$\{X_i,\:i\in I\}$满足</p>
+<script type="math/tex; mode=display">
+\lim_{p(A)\to 0}\sup E|X_i|1_A=0</script><p><u>一致可积当且仅当绝对连续+L1有界</u></p>
+<p>定理：$X\in L1(\Omega,F_0,P)$，那么$\{E(X|F),\:F是子\sigma-域\}$一致可积</p>
+<p>定理：若$X_n\to^P X$则下列叙述等价</p>
+<ul>
+<li>$\{X_n\}$一致可积</li>
+<li>$X_n\to{L1}X$</li>
+<li>$E|X_n|\to E|X|&lt;+\infty$</li>
+</ul>
+<p>证明：$(1)\Rightarrow (2)$：构造辅助函数$\phi_M(x)=trunc(x, -M, M)$。$(2)\Rightarrow (3)$：显然。$(3)\Rightarrow (1)$：构造辅助函数</p>
+<script type="math/tex; mode=display">
+\phi_M(x)=\left\{\begin{align}&x,&x\in[0,M-1]\\&-(M-1)(x-M),&x\in[M-1,M]\\&0,&x\in[M,+\infty)\end{align} \right.</script><p>定理：设$p\in (0,+\infty)$，$\{X_n\}\subset LP(\Omega, F, p)$，随机变量$X_n\to^P X$那么下列叙述等价</p>
+<ul>
+<li>$\{|X_n|^p\}一致可积</li>
+<li>$X\in LP$，$X_n\to^{LP}X$</li>
+<li>$X\in LP$，$E|X_n|^p\to E|X|^p$</li>
+</ul>
+<p>定理：对下鞅$\{X_n\}$，下列叙述等价</p>
+<ul>
+<li>$\{X_n\}$一致可积</li>
+<li>$X_n\to ^{a.s.}X$，且$X_n\to^{L1}X$</li>
+<li>$X_n\to^{L1}X$</li>
+</ul>
+<p>引理：$X_n\to^{L1}X$，那么$\forall A$，$EX_n1_A\to EX1_A$</p>
+<p>引理：若鞅$\{X_n\}$满足$X_n\to^{L1}X$，那么$X_n=E(X|F_n)$</p>
+<p>定理：对鞅$\{X_n\}$，下列叙述等价</p>
+<ul>
+<li>$\{X_n\}$一致可积</li>
+<li>$X_n\to ^{a.s.}X$，且$X_n\to^{L1}X$</li>
+<li>$X_n\to^{L1}X$</li>
+<li>存在可积随机变量X，$X_n=E(X|F_n)$</li>
+</ul>
+<p>定理：若$\sigma$域流$F_n\uparrow F_\infty$，$F_\infty=\sigma(\bigcup F_n)$，随机变量X满足$E|X|&lt;+\infty$，那么$E(X|F_n)\to^{a.s.,L1} E(X|F_\infty)$。</p>
+<p>证明：定义$Y_n=E(X|F_n)$是鞅过程。通过典型方法可得$EX1_A=EY_\infty 1_A$，因而$Y_n\to Y_\infty$。</p>
+<p>定理（Levy 0-1律）：若$F_n\uparrow F_\infty$，$A\in F_\infty$，那么$E(1_A|F_n)\to^{a.s.}1_A(n\to\infty)$</p>
+<p>特例：独立随机变量$X_n$，$A\in\tau(尾\sigma 代数)$，则$E(1_A|F_n)=E1_A=P(A)$。（$\tau=\bigcap_{n\geq 1}\sigma(X_{n+1},…)$）此时即为Kolmogorov 0-1律。</p>
+<p>定理（条件期望控制收敛）：$Y_n\to^{a.s.}Y$，$|Y_n|\leq Z$，$EZ&lt;+\infty$，$F_n\uparrow F$，那么$E(Y_n|F_n)\to^{a.s.}E(Y|F_\infty)$</p>
+<p>证明：</p>
+<script type="math/tex; mode=display">
+|E(Y_n|F_n)-E(Y|F_\infty)|\leq |E(Y_n|F_n)-E(Y|F_n)|+|E(Y|F_n)-E(Y|F_\infty)|</script><p>后一部分易证。为证明前一部分，令$W_N=\sup\{|Y_n-Y_m|,n,m\geq N\}$单调收敛可证。</p>
+<h2 id="倒向鞅"><a href="#倒向鞅" class="headerlink" title="倒向鞅"></a>倒向鞅</h2><p>鞅$\{X_n:n\leq 0\}$称为倒向鞅，定义$F_{-\infty}=\bigcap F_n$</p>
+<p>定理：$X_{-\infty}=\lim_{n\to -\infty}X_n$a.s.存在且L1收敛</p>
+<p>证明：记$U_n[a,b]$为$X_{-n}$上穿$[a,b]$的次数，根据上穿不等式，$(b-a)EU_n\leq E(X_0-a)^+$，根据单调收敛定理，$U_\infty[a,b]&lt;+\infty$。所以$X_{-n}$的极限a.s.存在。 然后根据一致可积得到L1收敛。</p>
+<p>定理：$\{X_n\}$倒向鞅，则</p>
+<script type="math/tex; mode=display">
+X_{-\infty}=E(X_0|F_{-\infty})</script><p>证明：先证$X_{-\infty}\in F_{-\infty}$，然后证明条件概率。</p>
+<p>定理：若$F_n\downarrow F_{-\infty}$且$E|Y|&lt;+\infty$，那么</p>
+<script type="math/tex; mode=display">
+\lim_{n\to-\infty}E(Y|F_n)=E(Y|F_{-\infty}),a.s.,L1</script><p>令$A_n(\omega)=\omega_n$</p>
+<p>如果单+满的映射$\pi:N\to N$，使得仅对有限个i，有$\pi(i)=i$，则称$\pi$为<strong>有限置换</strong>。定义$(\pi\omega)_i=\omega_{\pi(i)}$。若对任意有限置换$\pi$，$\pi^{-1}A=A$，则称A为<strong>可置换集合</strong>。$\{A|A可置换\}$构成$\sigma-$域，即为E。</p>
+<p>例：$(S,S)=(R,R)$，$S_n(\omega)=\sum_{i=1}^nX_i(\omega)$，那么</p>
+<ul>
+<li>$\{\omega|S_n(\omega)\in B\}$是可置换的，对$\forall B$Borel</li>
+<li>任意正常数列$C_n$，$\{\omega|\bar{\lim}S_n(\omega)/C_n\geq 1\}$可置换</li>
+<li>任意$A\in \tau$可换，则$\tau\subset E$</li>
+</ul>
+<p>$E_n=\{\A|\forall 有限置换\pi s.t.\pi(n+k)=n+k有\pi^{-1}A=A}$，$E=\bigcap E_n$</p>
+<p>定理（Hewitt-Savage 0-1律）：若$X_n$独立同分布，则任意$A\in E$，$P(A)=0或1$。</p>
+<p>证明：引理：若$X_n$独立同分布，$\phi:R^k\to R$，令$A_n(\phi)=\frac{1}{A_n^k}\sum\phi(X_{i_1},…,X_{i_k})$其中$A_n^k=\frac{n!}{(n-k)!}$。若$\phi$有界可测，则$A_n(\phi)\to E\phi(X_1,…,X_k)$a.s.。</p>
+<p>引理的证明：$A_n(\phi)\in E_n$，$A_n(\phi)=E(\phi(X_1,…,X_k)|E_n)$，令$F_{<em>**</em>-m}=E_m$，所以$E(\phi(X_1,…,X_k)|E_n)\to{a.s.L1}E(\phi(X_1,…,X_k)|E)$</p>
+<p>通过引理可知$E(\phi(X_1,…,X_k)|E)=E\phi(X_1,…,X_k)$，所以E与$\sigma(X_1,…,X_k)$独立，所以E与F独立。又由$E\subset F$可证。</p>
+<p>引理：若$EX^2&lt;\infty$，$E(X|G)\in F$，X和F独立，则$E(X|G)=EX$。</p>
+<p>例：（强大数律）：$e_n$独立同分布，$E|e_1|&lt;+\infty$，令$X_{-n}=S_n/n$。$F_{-n}=\sigma(S_n,…)$，可证$\{X_{-n},F_{-n}\}$倒向鞅。因而$X_{-n}\to{a.s.L1}E(X_{-1}|F_{-\infty})$。由于$F_{-n}\subset E_n$，所以$F_{-\infty}\subset E$，由H-S 0-1律，$E(X_{-1}|F_{-\infty})=EX_{-1}$</p>
+<p>例：（选票定理）设$e_n$非负整数，$G=\{S_j&lt;j\}$，则$P(G|S_n)=(1-\frac{S_n}{n})^+$</p>
+<h2 id="停时定理"><a href="#停时定理" class="headerlink" title="停时定理"></a>停时定理</h2><p>问题：若$X_n$下鞅，任意停时$M\geq N$，什么条件下$E(X_M|F_N)\geq X_N$，$X_M\geq X_N$？</p>
+<p>定理：若$X_n$下鞅一致可积，则对停时N，则$X_{N\wedge n}$一致可积。（由下鞅基本收敛定理，$X_{n\wedge N}\to^{a.s.}X_N$，易证）</p>
+<p>定理：对独立同分布的随机变量$X_n$和非负整数N，s.t. $E|X_N|&lt;+\infty。如果$\{|X_n|1_{N&gt;n}\}$一致可积，那么$\{X_{N\wedge n\}$一致可积。若还有$X_n$下鞅，停时$N&lt;+\infty$，则$EX_0\leq X_N$。</p>
+<p>定理：若$X_n$下鞅一致可积，任意停时$N\leq +\infty$，有$EX_0\leq EX_N\leq EX_\infty$。</p>
+<p>定理：若$X_n$非负上鞅，停时$N&lt;+\infty$，则$EX_0\geq EX_N$</p>
+<p>定理：$X_n$下鞅，$E(|X_{n+1}-X_n||F_n)\leq B$，那么对任意停时$EN&lt;+\infty$，有$\{X_{N\wedge n}\}$一致可积，从而$EX_0\leq EX_N$。</p>
+<p>定理（Wald等式）：$e_n$独立同分布，停时N有限，则$ES_N=EeEN$</p>
+<p>证明：$S_n-nEe$是鞅，由上面的定理可证。</p>
+<p>定理（Doob可选停止定理）：若$L\leq M$是停时，$Y_n\in F_n$，$\{Y_{M\wedge n}\}$一致可积，下鞅，则$EY_L\leq EY_M$，$Y_L\leq E(Y_M|F_L)$。其中$F_L=\{\A\in F|A\cap \{L=n\}\in F_n}$</p>
+<p>证明：令$X_n=Y_{M\wedge n}$，则$EX_N\leq EX_\infty=EY_M$，取N=L，则$EY_L\leq EY_M$。对任意A，N在A上取L，否则取M，则N为停时，$EY_N\leq EY_M$，所以$EY_L1_A\leq EY_M1_A=E(E(Y_M1_A|F_L))$。令$A_n=\{Y_L-E(Y_M|F_L)&gt;1/n\}$，所以$1/nP(A_n)\leq 0$</p>
+<p>例：随机游动，$\mu=Ee$有限，则$S_n-n\mu$鞅。这里设$\mu=0$，$Ee^2=\sigma^2&lt;+\infty$。则$S_n^2-n\sigma^2$也是鞅。</p>
+<p>（简单对称随机游动）$P(e=1)=P(e=-1)=1/2$，$S_0=x\in(a,b)$，停时N为S首次出区间(a,b)的时间。则$P(S_N=a)=\frac{b-x}{b-a}$，$E_xN=(x-a)(b-x)$</p>
+<p>(非对称简单随机游动)$P(e=1)=p$，$P(e=-1)=q=1-p$。设$0<p<1$，$\phi(y)=(\frac{1-p}{p})^y$，则$\phi(S_n)$鞅。令$T_Z=\inf\{S_n=z\}$，$P_x(T_a<T_b)=\frac{\phi(b)-\phi(x)}{\phi(b)-\phi(a)}$。设$1/2<p<1$，$a<0$，则$P_0(\inf S_n\leq a)=P_0(T_a<+\infty)=()(1-p)/p)^{-a}。$b>0$，则$P_0(T_b&lt;+\infty)=1$，$E_0T_b=b/(2p-1)$</p>
+<h1 id="遍历定理"><a href="#遍历定理" class="headerlink" title="遍历定理"></a>遍历定理</h1><p>如果r.v.s. $X_n$使得$\{X_n\}$和$\{X_{n+k\}$同分布称为<strong>（严）平稳随机变量序列</strong>。</p>
+<p><strong>Birkhoff遍历定理</strong>：若$f:R\to R$可测，$E|f(x_n)|&lt;+\infty$，则</p>
+<script type="math/tex; mode=display">
+\lim_{n\to\infty}\frac1n\sum_{m=0}^{n-1}f(X_m)</script><p>a.s.存在。</p>
+<p>若$\{X_n\}$遍历，则极限为$f(X_0)$</p>
+<p>例子：iid序列、随机游动、马氏链</p>
+<p>这里<strong>马氏链</strong>定义为任意$B\in S$，$P(X_{n+1}\in B|F_n)=P(X_{n+1}\in B|X_n)$</p>
+<p><strong>转移概率函数</strong>$p:S\times S\to[0,1]$满足：</p>
+<ul>
+<li>任意$x\in S$，$A\to p(x,A)$是一个概率测度</li>
+<li>任意$A\in S$，$x\to p(x,A)$可测</li>
+</ul>
+<p>对马氏链$X_n$，定义$p_n(x,A)=P(X_{n+1}\in A|X_n=x)$，则$P(X_{n+1}\in A|F_n)=p_n(X_n,A)$。若正则条件分布存在，则$p_n(x,A)$是转移概率。若$p_n(x,A)$不依赖于n，则称$X_n$时齐。特别的，当S可数集时，$p_n(i,j)$构成转移概率矩阵。</p>
+<p>如果可测映射$\phi$满足对任意A，$P(\phi^{-1}A)=P(A)$，则称$\phi$<strong>保测映射</strong>。$X_n(\omega)=X(\phi^n\omega)$是平稳序列。</p>
+<p>若$Y_n$平稳序列，取值于nice space，可构造概率测度p，使得</p>
+<script type="math/tex; mode=display">
+P(\omega\in S^N,(\omega_0,\omega_1,...,\omega_n)\in B)=P(B\times\prod_{i=n+1}^\infty S)=\bar{P}((Y_0,Y_1,...,Y_n)\in B)</script><p>（Kolmogorov相容性定理）令$X_n(\omega)=\omega_n$，则$X_n$与$Y_n$同分布。（可以构造推移算子，可以证明这个算子是保测映射）</p>
+<p>保测映射$\phi$对A，满足$P(A\Delta \phi^{-1}A)=0$，称A为<strong>不变集</strong>。若$A=\phi^{-1}A$，称A为<strong>强不变集</strong>。若任意不变集有$P(A)=0$或$1$，则称$\phi$<strong>遍历（ergodic）</strong>。</p>
+<p>定义$I=\{A|\phi^{-1}A=A,a.s.\}$，称为<strong>不变$\sigma$域</strong>，则$\phi 遍历\Leftrightarrow I 平凡$</p>
+<p>时齐马氏链$X_n$状态空间S可数，平稳分布$\pi$满足对任意状态$\pi(x)&gt;0$（正常返），那么$X_n遍历\Leftrightarrow X_n不可约$。</p>
+<p>证明：必要性：反证，可约推出不遍历。充分性：任何不变集A满足，$1_A\theta_n=1_A$，P(A)为0或1，I平凡。</p>
+<p><strong>Birkhoff个别遍历定理</strong>：保测变换$\phi$，X期望有限，则</p>
+<script type="math/tex; mode=display">
+\frac1n \sum_{k=0}^{n-1}X(\phi^k\omega)\to^{a.s.L1}E(X|I)</script><p>若$\phi$遍历，则$E(X|I)=EX$。</p>
+<p>引理（极大遍历定理）：令$X_r(\omega)=X(\phi^r\omega)$，$S_k(\omega)=\sum_{r=0}^{k-1}X_r(\omega)$，$M_k(\omega)=\max(0,S_1(\omega),…,S_k(\omega))$，则</p>
+<script type="math/tex; mode=display">
+EX1_{\{M_k>0\}}\geq 0</script><p>引理的证明：$X(\omega)\geq S_{j+1}(\omega)-M_k(\phi(\omega))$ 对任意$j\leq k$。所以$X(\omega)\geq \max S_{j+1}(\omega)-M_k(\phi(\omega))$。那么$EX1_{\{M_k&gt;0\}}\geq \int_{\{M_k&gt;0\}}(M_k(\omega)-M_k(\phi(\omega)))dP=0$。</p>
+<p>遍历定理的证明：不妨设$E(X|I)=0$，只需证</p>
+<script type="math/tex; mode=display">
+\sup\lim_{n\to\infty}\frac1n S_n(\omega)\leq 0</script><p>令$D=\{\omega|\sup\lim_{n\to\infty}\frac1n S_n(\omega)&gt;\epsilon\}$。令$X^*(\omega)=(X(\omega)-\epsilon)1_D(\omega)$，如此定义$S_n^*(\omega)$和$M_n^*(\omega)$。定义$F_n=\{M_n^*&gt;0\}$，F定义为它们的并集。</p>
+<p>那么F=D。由极大遍历定理，$EX^*1_{F_n}\geq 0$，$E|X^*|\leq E|X|+\epsilon$，由控制收敛定理，$X^*1_F$存在且大于等于0，即$EX^*1_D\geq 0$，这就推出$P(D)\leq 0$。由此可以证明a.s.收敛。根据有界收敛+控制收敛可得L1收敛。</p>
+<p><u>Birkhoff遍历定理可以直接推出强大数律</u></p>
+<p>根据Birkhoff遍历定理在圆周旋转上的应用，如果$\theta\in(0,1)$是无理数，$\phi(\omega)=\omega+\theta\:mod\:1$，令$X(\omega)=1_A(\omega)$，那么</p>
+<script type="math/tex; mode=display">
+\frac1n\sum_{m=1}^{n-1}1_{(\phi^m\omega\in A)}\to|A|,a.s.</script><p>当$\omega=0$时，也称做<strong>Weyl等分布定理</strong>。由此得到以下数论结论</p>
+<p>定理：如果$A=[a,b)$，那么倒外集为空集。</p>
+<p><strong>常返</strong></p>
+<p>设$X_n$取值$R^d$的平稳序列，定义</p>
+<script type="math/tex; mode=display">
+R_n=\#\{S_1,S_2,...,S_n\}</script><p>定理：</p>
+<script type="math/tex; mode=display">
+\lim_{n\to\infty}\frac{R_n}{n}=E(1_A|I)</script><p>其中$A=\{S_k\neq 0,\forall k\geq 1\}$</p>
+<p>证明：对$l\geq m$，$S_l=S_m+S_{l-m}(\phi^m\omega)$，</p>
+<script type="math/tex; mode=display">
+R_n\geq\sum_{m=1}^n1_A(\phi^m\omega)=\#\{m|S_l\neq S_m,\forall l>m\}</script><p>由Birkhoff，</p>
+<script type="math/tex; mode=display">
+\inf\lim_{n\to\infty}\frac{R_n}n\geq\lim_{n\to\infty}\frac1n\sum_{m=1}^n1_A(\phi^m\omega)=E(1_A|I)</script><p>令$A_k=\{S_m\neq 0, m\leq k\}$</p>
+<script type="math/tex; mode=display">
+\sum_{m=1}^{n-k}1_{A_k}(\phi^m\omega)=\#\{m|S_l\neq S_m,\forall>m\}</script><p>所以$R_n\leq k+\sum_{m=1}^{n-k}1_{A_k}(\phi^m\omega)$，如此</p>
+<script type="math/tex; mode=display">
+\sup\lim\frac{R_n}n\leq E(1_{A_k}|I)</script><p>由于$A_k\downarrow A$，由控制收敛可证上界。</p>
+<p>Durrent第四章、第六章</p>
+<p>206</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E7%90%89%E7%92%83%E7%8C%AB/" rel="tag"># 琉璃猫</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/02/14/ConvexOptimization/" rel="prev" title="凸优化问题">
+      <i class="fa fa-chevron-left"></i> 凸优化问题
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/02/21/ConvexOptimization2/" rel="next" title="凸优化问题-应用和算法">
+      凸优化问题-应用和算法 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#条件期望"><span class="nav-number">1.</span> <span class="nav-text">条件期望</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#正则条件概率："><span class="nav-number">1.1.</span> <span class="nav-text">正则条件概率：</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#鞅过程Martingales"><span class="nav-number">2.</span> <span class="nav-text">鞅过程Martingales</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#鞅收敛定理"><span class="nav-number">2.1.</span> <span class="nav-text">鞅收敛定理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四个例子"><span class="nav-number">2.2.</span> <span class="nav-text">四个例子</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#有界增长"><span class="nav-number">2.2.1.</span> <span class="nav-text">有界增长</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Polya’s-Urn-Scheme"><span class="nav-number">2.2.2.</span> <span class="nav-text">Polya’s Urn Scheme</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#R-N微分"><span class="nav-number">2.2.3.</span> <span class="nav-text">R-N微分</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分支过程"><span class="nav-number">2.2.4.</span> <span class="nav-text">分支过程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Doob不等式-以及LP收敛"><span class="nav-number">2.3.</span> <span class="nav-text">Doob不等式(以及LP收敛)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#平方可积鞅"><span class="nav-number">2.3.1.</span> <span class="nav-text">平方可积鞅</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一致可积L1收敛"><span class="nav-number">2.3.2.</span> <span class="nav-text">一致可积L1收敛</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#倒向鞅"><span class="nav-number">2.4.</span> <span class="nav-text">倒向鞅</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#停时定理"><span class="nav-number">2.5.</span> <span class="nav-text">停时定理</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#遍历定理"><span class="nav-number">3.</span> <span class="nav-text">遍历定理</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="雨游璃风猫"
+      src="/images/avatar.gif">
+  <p class="site-author-name" itemprop="name">雨游璃风猫</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">26</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/husimplicity/husimplicity.github.io" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;husimplicity&#x2F;husimplicity.github.io" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:tulongzikun@126.com" title="E-Mail → mailto:tulongzikun@126.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+      <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=1364161141&auto=1&height=66"></iframe>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">雨游璃风猫</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>
+
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/clicklove.js"></script>
+
