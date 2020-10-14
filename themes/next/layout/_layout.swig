@@ -59,6 +59,8 @@
 </body>
 </html>
 
-<!-- 页面点击小红心 -->
+<!-- 鼠标点击有小爱心 -->
 <script type="text/javascript" src="/js/clicklove.js"></script>
 
+<!-- 动态标签 -->
+<script type="text/javascript" src="/js/dynamic-title.js"></script> 

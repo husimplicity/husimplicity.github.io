@@ -117,3 +117,28 @@ git push
 ### 图片放大可查看
 
 `fancybox: true`
+
+# 阿尔托莉雅的重建计划
+
+
+
+大致分为四个目录和yml配置
+
++ layout：
++ source：
++ language：主题配置语言的翻译
++ scripts
++ _config.yml：这个yml的配置可以通过theme.xxx来获取
+
+前端模板主要有`ejs`和`swig`，前者是landscape使用的，后者是next使用的
+
+`ejs`模板下，在 `layout` 目录下的 `index.ejs` 会自动继承 `layout.ejs`，并将其中的内容填入 `< %- body % >` 的位置。
+
+{% raw %}`swig`模板下通过`{% extends 'xxx.swig' %}`对swig进行继承，再通过`{% block blockname %} xxx {% endblock %}`控制填入的位置。{% endraw %}
+
+%号后加-表明block里的内容删去前后空格
+
+
+
+
+
