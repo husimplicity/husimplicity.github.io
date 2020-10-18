@@ -1,3 +1,31 @@
+{%- if theme.control.enable %}
+  <!-- 切换背景（还在施工）-->
+  <div class="control">
+    <div class="control-gear" style="visibility: visible" onclick=open_control_menu()>
+      <span id="open-control-menu"> &nbsp 主题 | SCHEME 
+        <i class="fa fa-cog faa-spin animated" aria-hidden="true" style="font-size: 16px;"></i>
+      </span>
+    </div>
+    <div class="control-menu">
+      <ul class="control-menu-list">
+        <li id="saber-bg"> <i class="fa fa-bell" aria-hidden="true"onclick=saber_bg() title="默认背景"></i></li>
+        <li id="white-bg"> <i class="fa fa-mouse" aria-hidden="true" onclick=white_bg() title="纯白背景"></i></li>
+        <li id="cat-bg"> <i class="fa fa-cat" aria-hidden="true" onclick=cat_bg() title="猫咪背景"></i></li>
+        <li id="sun-mode"> <i class="fa fa-sun" aria-hidden="true" onclick=sun_mode() title="日间模式"></i></li>
+        <li id="dark-mode"> <i class="fa fa-moon" aria-hidden="true" onclick=dark_mode() title="夜间模式"></i></li>
+        
+      </ul>
+      <!--
+      <ul class="control-menu-list">
+        <li id="totem-bg"> <i class="fa fa-bell" aria-hidden="true"></i></li>
+        <li id="pixiv-bg"> <i class="fa fa-pizza-slice" aria-hidden="true"></i></li>
+        <li id="white-bg"> <i class="fa fa-cog" aria-hidden="true"></i></li>
+        <li id="KAdots-bg"> <i class="fa fa-car" aria-hidden="true"></i></li>
+      </ul>
+      -->
+    </div>
+  </div>
+{%- endif %}
 {%- if theme.back2top.enable and not theme.back2top.sidebar %}
   <div class="back-to-top">
     <i class="fa fa-arrow-up"></i>
