@@ -71,6 +71,174 @@
       </tags>
   </entry>
   <entry>
+    <title>凸优化问题-应用和算法</title>
+    <url>/2020/02/21/ConvexOptimization2/</url>
+    <content><![CDATA[<p><a href="/2020/02/14/ConvexOptimization/">上一篇：凸优化问题</a></p>
+<h3 id="一些应用"><a href="#一些应用" class="headerlink" title="一些应用"></a>一些应用</h3><h4 id="逼近和拟合"><a href="#逼近和拟合" class="headerlink" title="逼近和拟合"></a>逼近和拟合</h4><p>范数逼近</p>
+<script type="math/tex; mode=display">
+min\:||Ax-b||</script><p>罚函数逼近（$l_p$-范数的一个有用的推广）</p>
+<script type="math/tex; mode=display">
+min\:\sum\phi(r_i)\\
+subject\:to\:r=Ax-b</script><p>对<strong>野值</strong>不敏感的函数称为<strong>鲁棒</strong>的。当限定为凸的罚函数时，最不敏感的就是线性增长函数。例子就是绝对值函数和<strong>Huber罚函数</strong>。</p>
+<p>基本问题</p>
+<script type="math/tex; mode=display">
+min\:||x||\\
+subject\:to\:Ax=b</script><p>这是个凸优化问题。</p>
+<a id="more"></a>
+<p>正则化逼近：</p>
+<script type="math/tex; mode=display">
+min\:||Ax-b||+\gamma||x||</script><p><strong>Tikhonov正则化</strong>：</p>
+<script type="math/tex; mode=display">
+min\:||Ax-b||_2^2+\delta||x||_2^2</script><p>有解析解</p>
+<script type="math/tex; mode=display">
+x=(A^TA+\delta I)^{-1}A^Tb</script><p>重构、光滑、去噪声：</p>
+<script type="math/tex; mode=display">
+min\:(||x-x_{cor}||_2,\phi(x))</script><p><strong>函数拟合与插值</strong>：</p>
+<p>考虑一族函数，通过</p>
+<script type="math/tex; mode=display">
+f(u)=\sum_{i=1}^nx_nf_n(u)</script><p>将x与映射$f:R^M\to R$联系起来。</p>
+<p>另外还有插值<strong>条件约束</strong>，或者插值的不等式约束。以及对f的凸约束，比如Lipschitz约束。</p>
+<p><strong>基筛选</strong>中寻找较少数目的基函数，使得能够在card(x)很小的情况下进行拟合。称为<strong>稀疏描述</strong>。</p>
+<h4 id="统计估计"><a href="#统计估计" class="headerlink" title="统计估计"></a>统计估计</h4><p>最大似然问题可以表述如下</p>
+<script type="math/tex; mode=display">
+max\:l(x)=log(p_x(y))\\
+subject\:to\:x\in C</script><p>Chebyshev界：我们希望给$prob(X\in C)$定界，假设$f(z)\geq 1_C(z)$，那么可以求解凸优化问题</p>
+<script type="math/tex; mode=display">
+min\:x_o+\sum a_ix_i\\
+subject\:to\:f(z)=\sum x_if_i(z)\geq1\:\forall z\in C\\
+f(z)=\sum x_if_i(z)\geq0\:\forall z\notin C</script><p>Chernoff界：定义为$prob(X\geq u)\leq inf_{\lambda\geq 0}Ee^{\lambda(X-u)}$同样得到</p>
+<script type="math/tex; mode=display">
+log(prob(X\in C))\leq\mu+logEe^{\lambda^Tx}</script><p>（这里略过数章…）</p>
+<h3 id="无约束优化算法"><a href="#无约束优化算法" class="headerlink" title="无约束优化算法"></a>无约束优化算法</h3><script type="math/tex; mode=display">
+min\:f(x)</script><p>其中$f$二次可微凸函数。那么最优点应该满足一阶导数为0，我们需要通过迭代求解。首先需要一个适当的初始点$x_0$，且$f(x_0)$下水平集必须是闭集。（下水平集的形状影响收敛速度）</p>
+<p>我们假设目标函数是<strong>强凸</strong>的，即存在m&gt;0，满足$\nabla^2 f(x)\succeq mI$。（好处是梯度足够小的点都可以计算得到近似最优解。）</p>
+<p>通用下降方法：确定下降方向；选择步长；修改x。</p>
+<p>利用负梯度作为搜索方向是一种自然的选择，称为<strong>梯度下降法</strong>。</p>
+<p>我们假设强凸，因此存在$mI\preceq \nabla^2f(x)\preceq MI$，那么可以得到上界</p>
+<script type="math/tex; mode=display">
+f(t)\leq f(x)-t||\nabla f(x)||_2^2+\frac{Mt^2}{2}||\nabla f(x)||_2^2</script><p>采用<strong>精确直线搜索</strong>的话，右边的最小值为$f(x)-(1/2M)||\nabla f(x)||_2^2$，所以</p>
+<script type="math/tex; mode=display">
+f(x^+)-p^*\leq (1-m/M)(f(x)-p^*)</script><p>因此是<strong>线性收敛</strong>的。事实上，即使是<strong>回溯直线搜索</strong>，满足$0\leq t\leq 1/M$，也可以达到<strong>线性收敛</strong>。</p>
+<p><strong>最速下降方法</strong>是通过定义<strong>规范化的最速下降方向</strong>，即找到</p>
+<script type="math/tex; mode=display">
+\Delta x_{nsd}=argmin\{\nabla f(x)^Tv|||v||=1\}</script><p>上面范数取Euclid范数时即为梯度下降，采用二次范数$||·||_P$时，$\Delta x_{nsd}=-(\nabla f(x)^TP^{-1}\nabla f(x))^{-1/2}P^{-1}\nabla f(x)$。</p>
+<p><strong>Newton方法</strong>：$\Delta x_{nt}=-\nabla^2 f(x)^{-1}\nabla f(x)$，这其实等价于Hessian矩阵定义的二次范数下的最速下降方法</p>
+<p>可以表明，Newton方法的迭代过程分为两个阶段，第一阶段称为<strong>阻尼Newton阶段</strong>，步长t&lt;1，线性收敛速度，第二阶段为<strong>纯Newton阶段</strong>，步长t=1，二次收敛速度。</p>
+<p><strong>自和谐函数</strong>的Newton方法分析不依赖未知常数（强凸性常数、李普西茨常数），且具有仿射不变性。</p>
+<p>定义凸函数$f:R\to R$满足对所有x</p>
+<script type="math/tex; mode=display">
+|f'''(x)|\leq 2f''(x)^{3/2}</script><p>就是<strong>自和谐</strong>的。常数2可以被任何常数k替代。这个条件可以写成</p>
+<script type="math/tex; mode=display">
+|\frac{d}{dt}(f''(t)^{-1/2})|\leq1</script><p>由此得到$f’’(t)$的上下界</p>
+<script type="math/tex; mode=display">
+\frac{f''(0)}{(1+tf''(0)^{1/2})^2}\leq f''(t)\leq \frac{f''(0)}{(1-tf''(0)^{1/2})^2}</script><p>由此可以得到次优性的界。</p>
+<p><strong>共轭梯度法</strong>：每次下降要求梯度在共轭空间里</p>
+<p>定义$\alpha,\beta$Q-共轭为$\alpha^TQ\beta = 0$</p>
+<p>每次计算</p>
+<script type="math/tex; mode=display">
+g^{k+1}=\nabla f(x^{k+1})\\
+d^{k+1}=-g^{k+1}+\beta_kd^k=-g^{k+1}+\frac{(g^{k+1})^TQd^k}{(d^k)^TQd^k}d^k\\
+x^{k+2}=x^{k+1}+\alpha_{k+1}d^{k+1}=x^{k+1}-\frac{(g^{k+1})^Td^{k+1}}{(d^{k+1})^TQd^{k+1}}d^{k+1}</script><p>对二次式$f(x)=\frac12 x^TQx-b^Tx$进行优化时可以证明$d^i$是Q-共轭的，因而</p>
+<script type="math/tex; mode=display">
+(g^{k+1})^Td^i=0</script><p>根据这个式子，</p>
+<script type="math/tex; mode=display">
+\beta_k=\frac{(g^{k+1})^Tg^{k+1}}{(g^k)^Tg^k}</script><p>$\alpha_k$可以通过线性搜索得到。以此避免计算Hessian矩阵。</p>
+<p><strong>Quasi-Newton</strong></p>
+<p>用$H^K$来拟合$F(X^k)^{-1}$</p>
+<script type="math/tex; mode=display">
+d^k=-H_kg^k\\
+\alpha_k=\arg\min_\alpha f(x^k+\alpha d^k)\\
+x^{k+1}=x^k+\alpha_k d^k</script><p>对$H_k$的更新有三种</p>
+<ul>
+<li>Rank One Correction</li>
+<li>Davidon-Fletcher-Powell（DFP）</li>
+<li>Broyden-Fletcher-Goldfarb-Shanno（BFGS）</li>
+</ul>
+<h3 id="等式约束优化"><a href="#等式约束优化" class="headerlink" title="等式约束优化"></a>等式约束优化</h3><script type="math/tex; mode=display">
+\min f(x)\\s.t. Ax=b</script><p>考虑二阶Taylor近似</p>
+<script type="math/tex; mode=display">
+\min f(x+v)=f(x)+\nabla f(x)^Tv+(1/2)v^T\nabla^2f(x)v\\
+s.t.A(x+v)=b</script><p><strong>Newton方向</strong>$\Delta x_{nt}$由以下方程确定</p>
+<script type="math/tex; mode=display">
+\begin{pmatrix}\nabla^2f(x)&A^T\\A&0\end{pmatrix}\begin{pmatrix}\Delta x_{nt}\\w\end{pmatrix}=\begin{pmatrix}-\nabla f(x)\\0\end{pmatrix}</script><p>对于<strong>不可行初始点</strong>的newton方向，</p>
+<script type="math/tex; mode=display">
+\begin{pmatrix}\nabla^2f(x)&A^T\\A&0\end{pmatrix}\begin{pmatrix}\Delta x_{nt}\\w\end{pmatrix}=\begin{pmatrix}-\nabla f(x)\\b-Ax\end{pmatrix}</script><h3 id="线性规划问题的解法"><a href="#线性规划问题的解法" class="headerlink" title="线性规划问题的解法"></a>线性规划问题的解法</h3><p><strong>Primal单纯形法</strong></p>
+<p>对于线性规划</p>
+<script type="math/tex; mode=display">
+min\:c^Tx\\
+s.t.\:Ax=b\\
+x\geq 0</script><p>和对偶问题</p>
+<script type="math/tex; mode=display">
+max\:b^Ty\\
+s.t.\:A^Ty+s=c\\
+s\geq 0</script><p>得到KKT条件</p>
+<script type="math/tex; mode=display">
+Ax=b,x\geq 0\\
+A^Ty+s=c,s\geq 0\\
+x_is_i=0</script><p>Primal单纯形法得到</p>
+<script type="math/tex; mode=display">
+x_B=B^{-1}b\geq 0,x_N=0\\
+y=B^{-T}c_B\\
+s_B=c_B-B^Ty=0,s_N=c_N-N^Ty？？0</script><p>（B是一个基，N是自由基）然后判断$s_N$和0的大小关系，决定是否停止迭代。如果$s_j\geq 0$那么x是最优解，否则可以找到q，$s_q&lt;0$。那么就找到$p\in B$移出基。</p>
+<p>令$u=B^{-1}A_q$，那么$x_B^+=x_B-ux_q^+$。如果$u\leq 0$则原问题无界；否则找到$u_k&gt;0$，就可以找到$x_q^+$和$p$满足$ x_B^+\geq 0$和$x_p^+=0，确定</p>
+<script type="math/tex; mode=display">
+p=argmin\frac{x_B(i)}{u_i}</script><p><u>单纯形法工业级应用还需要解决很多问题，比如快速求逆、防止循环迭代等等。</u></p>
+<p><strong>对偶单纯形法</strong></p>
+<script type="math/tex; mode=display">
+x_B=B^{-1}b？？0,x_N=0\\
+y=B^{-T}c_B\\
+s_B=c_B-B^Ty=0,s_N=c_N-N^Ty\geq 0</script><p> 如果$x_B\geq 0$，则达到最优，否则找到$q\in B$使得$x_q&lt;0$退出基，选择r加入基，$s_r^+=0$。然后进行更新：</p>
+<script type="math/tex; mode=display">
+s_B^+=s_b+ae_q\\
+y^+=y+av(e_q=-B^Tv)</script><p><u>对偶单纯形法和单纯形法有时候速度差距很大。</u></p>
+<p><strong>内点法</strong></p>
+<p>$(x,y,s)$为当前估计，$(\Delta x,\Delta y,\Delta s)$是搜索方向，定义$\mu=\sum x_is_i/n$。所以要找到</p>
+<script type="math/tex; mode=display">
+A(x+\Delta x)=b\\
+A^T(y+\Delta y)+s+\Delta s=c\\
+(x_i+\Delta x_i)(s_i+\Delta s_i)=\sigma_\mu</script><p>舍弃二阶小量得到</p>
+<script type="math/tex; mode=display">
+A\Delta x=r_p:=b-Ax\\
+A^T\Delta y+\Delta s=r_d:=c-A^Ty-s\\
+x_i\Delta s_i+\Delta x_is_i=(r_c)_i:=\sigma_\mu-x_is_i</script><p>写成矩阵形式如下，令$L_x=Diag(x)$，$L_s=Diag(s)$</p>
+<script type="math/tex; mode=display">
+\begin{pmatrix}A&0&0\\
+0&A^T&I\\
+L_s&0&L_x\end{pmatrix}
+\begin{pmatrix}\Delta x\\
+\Delta y\\
+\Delta s\end{pmatrix}
+=
+\begin{pmatrix}r_p\\
+r_d\\
+r_c
+\end{pmatrix}</script><p>如果A满秩，$AL_s^{-1}L_xA^T$是对称正定的，可以解得到</p>
+<script type="math/tex; mode=display">
+\Delta y=(AL_s^{-1}L_xA^T)^{-1}(r_p+AL_s^{-1}(L_xr_d-r_c))\\
+\Delta s = r_d-A^T\Delta y\\
+\Delta x = -L_s^{-1}(L_x\Delta s-r_c)</script><p>然后进行步长搜索，保证$(x^{k+1},s^{k+1})&gt;0$。</p>
+<p><u>步长搜索用Central Path，具体定义如下：</u> $C=\{(x_\tau,y_\tau,s_\tau|\tau&gt;0\}$满足</p>
+<script type="math/tex; mode=display">
+Ax_\tau=b,x_\tau>0\\
+A^Ty_\tau+s_\tau=c,s_\tau>0\\
+(x_\tau)_i(s_\tau)_i=\tau</script><p>Central Path neighborhoods是对$\theta,\gamma\in[0,1)$：</p>
+<script type="math/tex; mode=display">
+N_2(\theta)=\{(x,y,s)|||L_xL_se-\mu e||_2\leq\theta\mu\}\\
+N_{-\infty}(\gamma)=\{(x,y,s)|x_is_i\geq\gamma\mu\}</script><p>一般而言$\theta=0.5$，$\gamma=10^{-3}$。</p>
+<p>Path-Following：设定步长$\alpha_k$为最大的满足$(x^{k+1},y^{k+1},s^{k+1})\in N_{-\infty}(\gamma)$的值。那么$|\Delta x\cdot\Delta s|\leq 2^{-3/2}(1+1/\gamma)n\mu$，更新</p>
+<script type="math/tex; mode=display">
+\mu_{k+1}\leq(1-\delta/n)\mu_k,\delta=2^{3/2}\gamma\frac{1-\gamma}{1+\gamma}\sigma(1-\sigma)</script><p>那么如果$(x^0,y^0,s^0)\in N_{-\infty}(\gamma)$，存在$K=O(nln(1/\epsilon))$使得$\mu_k\leq\epsilon\mu_0$</p>
+<p><u>内点法是很少见的多项式时间算法</u></p>
+]]></content>
+      <categories>
+        <category>猫爪记</category>
+        <category>Mathematics</category>
+      </categories>
+      <tags>
+        <tag>琉璃猫</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>凸优化问题</title>
     <url>/2020/02/14/ConvexOptimization/</url>
     <content><![CDATA[<p>凸优化问题具有如下形式</p>
@@ -863,678 +1031,6 @@ R_n\geq\sum_{m=1}^n1_A(\phi^m\omega)=\#\{m|S_l\neq S_m,\forall l>m\}</script><p>
 \sup\lim\frac{R_n}n\leq E(1_{A_k}|I)</script><p>由于$A_k\downarrow A$，由控制收敛可证上界。</p>
 <p>Durrent第四章、第六章</p>
 <p>206</p>
-]]></content>
-      <categories>
-        <category>猫爪记</category>
-        <category>Mathematics</category>
-      </categories>
-      <tags>
-        <tag>琉璃猫</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>凸优化问题-应用和算法</title>
-    <url>/2020/02/21/ConvexOptimization2/</url>
-    <content><![CDATA[<p><a href="/2020/02/14/ConvexOptimization/">上一篇：凸优化问题</a></p>
-<h3 id="一些应用"><a href="#一些应用" class="headerlink" title="一些应用"></a>一些应用</h3><h4 id="逼近和拟合"><a href="#逼近和拟合" class="headerlink" title="逼近和拟合"></a>逼近和拟合</h4><p>范数逼近</p>
-<script type="math/tex; mode=display">
-min\:||Ax-b||</script><p>罚函数逼近（$l_p$-范数的一个有用的推广）</p>
-<script type="math/tex; mode=display">
-min\:\sum\phi(r_i)\\
-subject\:to\:r=Ax-b</script><p>对<strong>野值</strong>不敏感的函数称为<strong>鲁棒</strong>的。当限定为凸的罚函数时，最不敏感的就是线性增长函数。例子就是绝对值函数和<strong>Huber罚函数</strong>。</p>
-<p>基本问题</p>
-<script type="math/tex; mode=display">
-min\:||x||\\
-subject\:to\:Ax=b</script><p>这是个凸优化问题。</p>
-<a id="more"></a>
-<p>正则化逼近：</p>
-<script type="math/tex; mode=display">
-min\:||Ax-b||+\gamma||x||</script><p><strong>Tikhonov正则化</strong>：</p>
-<script type="math/tex; mode=display">
-min\:||Ax-b||_2^2+\delta||x||_2^2</script><p>有解析解</p>
-<script type="math/tex; mode=display">
-x=(A^TA+\delta I)^{-1}A^Tb</script><p>重构、光滑、去噪声：</p>
-<script type="math/tex; mode=display">
-min\:(||x-x_{cor}||_2,\phi(x))</script><p><strong>函数拟合与插值</strong>：</p>
-<p>考虑一族函数，通过</p>
-<script type="math/tex; mode=display">
-f(u)=\sum_{i=1}^nx_nf_n(u)</script><p>将x与映射$f:R^M\to R$联系起来。</p>
-<p>另外还有插值<strong>条件约束</strong>，或者插值的不等式约束。以及对f的凸约束，比如Lipschitz约束。</p>
-<p><strong>基筛选</strong>中寻找较少数目的基函数，使得能够在card(x)很小的情况下进行拟合。称为<strong>稀疏描述</strong>。</p>
-<h4 id="统计估计"><a href="#统计估计" class="headerlink" title="统计估计"></a>统计估计</h4><p>最大似然问题可以表述如下</p>
-<script type="math/tex; mode=display">
-max\:l(x)=log(p_x(y))\\
-subject\:to\:x\in C</script><p>Chebyshev界：我们希望给$prob(X\in C)$定界，假设$f(z)\geq 1_C(z)$，那么可以求解凸优化问题</p>
-<script type="math/tex; mode=display">
-min\:x_o+\sum a_ix_i\\
-subject\:to\:f(z)=\sum x_if_i(z)\geq1\:\forall z\in C\\
-f(z)=\sum x_if_i(z)\geq0\:\forall z\notin C</script><p>Chernoff界：定义为$prob(X\geq u)\leq inf_{\lambda\geq 0}Ee^{\lambda(X-u)}$同样得到</p>
-<script type="math/tex; mode=display">
-log(prob(X\in C))\leq\mu+logEe^{\lambda^Tx}</script><p>（这里略过数章…）</p>
-<h3 id="无约束优化算法"><a href="#无约束优化算法" class="headerlink" title="无约束优化算法"></a>无约束优化算法</h3><script type="math/tex; mode=display">
-min\:f(x)</script><p>其中$f$二次可微凸函数。那么最优点应该满足一阶导数为0，我们需要通过迭代求解。首先需要一个适当的初始点$x_0$，且$f(x_0)$下水平集必须是闭集。（下水平集的形状影响收敛速度）</p>
-<p>我们假设目标函数是<strong>强凸</strong>的，即存在m&gt;0，满足$\nabla^2 f(x)\succeq mI$。（好处是梯度足够小的点都可以计算得到近似最优解。）</p>
-<p>通用下降方法：确定下降方向；选择步长；修改x。</p>
-<p>利用负梯度作为搜索方向是一种自然的选择，称为<strong>梯度下降法</strong>。</p>
-<p>我们假设强凸，因此存在$mI\preceq \nabla^2f(x)\preceq MI$，那么可以得到上界</p>
-<script type="math/tex; mode=display">
-f(t)\leq f(x)-t||\nabla f(x)||_2^2+\frac{Mt^2}{2}||\nabla f(x)||_2^2</script><p>采用<strong>精确直线搜索</strong>的话，右边的最小值为$f(x)-(1/2M)||\nabla f(x)||_2^2$，所以</p>
-<script type="math/tex; mode=display">
-f(x^+)-p^*\leq (1-m/M)(f(x)-p^*)</script><p>因此是<strong>线性收敛</strong>的。事实上，即使是<strong>回溯直线搜索</strong>，满足$0\leq t\leq 1/M$，也可以达到<strong>线性收敛</strong>。</p>
-<p><strong>最速下降方法</strong>是通过定义<strong>规范化的最速下降方向</strong>，即找到</p>
-<script type="math/tex; mode=display">
-\Delta x_{nsd}=argmin\{\nabla f(x)^Tv|||v||=1\}</script><p>上面范数取Euclid范数时即为梯度下降，采用二次范数$||·||_P$时，$\Delta x_{nsd}=-(\nabla f(x)^TP^{-1}\nabla f(x))^{-1/2}P^{-1}\nabla f(x)$。</p>
-<p><strong>Newton方法</strong>：$\Delta x_{nt}=-\nabla^2 f(x)^{-1}\nabla f(x)$，这其实等价于Hessian矩阵定义的二次范数下的最速下降方法</p>
-<p>可以表明，Newton方法的迭代过程分为两个阶段，第一阶段称为<strong>阻尼Newton阶段</strong>，步长t&lt;1，线性收敛速度，第二阶段为<strong>纯Newton阶段</strong>，步长t=1，二次收敛速度。</p>
-<p><strong>自和谐函数</strong>的Newton方法分析不依赖未知常数（强凸性常数、李普西茨常数），且具有仿射不变性。</p>
-<p>定义凸函数$f:R\to R$满足对所有x</p>
-<script type="math/tex; mode=display">
-|f'''(x)|\leq 2f''(x)^{3/2}</script><p>就是<strong>自和谐</strong>的。常数2可以被任何常数k替代。这个条件可以写成</p>
-<script type="math/tex; mode=display">
-|\frac{d}{dt}(f''(t)^{-1/2})|\leq1</script><p>由此得到$f’’(t)$的上下界</p>
-<script type="math/tex; mode=display">
-\frac{f''(0)}{(1+tf''(0)^{1/2})^2}\leq f''(t)\leq \frac{f''(0)}{(1-tf''(0)^{1/2})^2}</script><p>由此可以得到次优性的界。</p>
-<p><strong>共轭梯度法</strong>：每次下降要求梯度在共轭空间里</p>
-<p>定义$\alpha,\beta$Q-共轭为$\alpha^TQ\beta = 0$</p>
-<p>每次计算</p>
-<script type="math/tex; mode=display">
-g^{k+1}=\nabla f(x^{k+1})\\
-d^{k+1}=-g^{k+1}+\beta_kd^k=-g^{k+1}+\frac{(g^{k+1})^TQd^k}{(d^k)^TQd^k}d^k\\
-x^{k+2}=x^{k+1}+\alpha_{k+1}d^{k+1}=x^{k+1}-\frac{(g^{k+1})^Td^{k+1}}{(d^{k+1})^TQd^{k+1}}d^{k+1}</script><p>对二次式$f(x)=\frac12 x^TQx-b^Tx$进行优化时可以证明$d^i$是Q-共轭的，因而</p>
-<script type="math/tex; mode=display">
-(g^{k+1})^Td^i=0</script><p>根据这个式子，</p>
-<script type="math/tex; mode=display">
-\beta_k=\frac{(g^{k+1})^Tg^{k+1}}{(g^k)^Tg^k}</script><p>$\alpha_k$可以通过线性搜索得到。以此避免计算Hessian矩阵。</p>
-<p><strong>Quasi-Newton</strong></p>
-<p>用$H^K$来拟合$F(X^k)^{-1}$</p>
-<script type="math/tex; mode=display">
-d^k=-H_kg^k\\
-\alpha_k=\arg\min_\alpha f(x^k+\alpha d^k)\\
-x^{k+1}=x^k+\alpha_k d^k</script><p>对$H_k$的更新有三种</p>
-<ul>
-<li>Rank One Correction</li>
-<li>Davidon-Fletcher-Powell（DFP）</li>
-<li>Broyden-Fletcher-Goldfarb-Shanno（BFGS）</li>
-</ul>
-<h3 id="等式约束优化"><a href="#等式约束优化" class="headerlink" title="等式约束优化"></a>等式约束优化</h3><script type="math/tex; mode=display">
-\min f(x)\\s.t. Ax=b</script><p>考虑二阶Taylor近似</p>
-<script type="math/tex; mode=display">
-\min f(x+v)=f(x)+\nabla f(x)^Tv+(1/2)v^T\nabla^2f(x)v\\
-s.t.A(x+v)=b</script><p><strong>Newton方向</strong>$\Delta x_{nt}$由以下方程确定</p>
-<script type="math/tex; mode=display">
-\begin{pmatrix}\nabla^2f(x)&A^T\\A&0\end{pmatrix}\begin{pmatrix}\Delta x_{nt}\\w\end{pmatrix}=\begin{pmatrix}-\nabla f(x)\\0\end{pmatrix}</script><p>对于<strong>不可行初始点</strong>的newton方向，</p>
-<script type="math/tex; mode=display">
-\begin{pmatrix}\nabla^2f(x)&A^T\\A&0\end{pmatrix}\begin{pmatrix}\Delta x_{nt}\\w\end{pmatrix}=\begin{pmatrix}-\nabla f(x)\\b-Ax\end{pmatrix}</script><h3 id="线性规划问题的解法"><a href="#线性规划问题的解法" class="headerlink" title="线性规划问题的解法"></a>线性规划问题的解法</h3><p><strong>Primal单纯形法</strong></p>
-<p>对于线性规划</p>
-<script type="math/tex; mode=display">
-min\:c^Tx\\
-s.t.\:Ax=b\\
-x\geq 0</script><p>和对偶问题</p>
-<script type="math/tex; mode=display">
-max\:b^Ty\\
-s.t.\:A^Ty+s=c\\
-s\geq 0</script><p>得到KKT条件</p>
-<script type="math/tex; mode=display">
-Ax=b,x\geq 0\\
-A^Ty+s=c,s\geq 0\\
-x_is_i=0</script><p>Primal单纯形法得到</p>
-<script type="math/tex; mode=display">
-x_B=B^{-1}b\geq 0,x_N=0\\
-y=B^{-T}c_B\\
-s_B=c_B-B^Ty=0,s_N=c_N-N^Ty？？0</script><p>（B是一个基，N是自由基）然后判断$s_N$和0的大小关系，决定是否停止迭代。如果$s_j\geq 0$那么x是最优解，否则可以找到q，$s_q&lt;0$。那么就找到$p\in B$移出基。</p>
-<p>令$u=B^{-1}A_q$，那么$x_B^+=x_B-ux_q^+$。如果$u\leq 0$则原问题无界；否则找到$u_k&gt;0$，就可以找到$x_q^+$和$p$满足$ x_B^+\geq 0$和$x_p^+=0，确定</p>
-<script type="math/tex; mode=display">
-p=argmin\frac{x_B(i)}{u_i}</script><p><u>单纯形法工业级应用还需要解决很多问题，比如快速求逆、防止循环迭代等等。</u></p>
-<p><strong>对偶单纯形法</strong></p>
-<script type="math/tex; mode=display">
-x_B=B^{-1}b？？0,x_N=0\\
-y=B^{-T}c_B\\
-s_B=c_B-B^Ty=0,s_N=c_N-N^Ty\geq 0</script><p> 如果$x_B\geq 0$，则达到最优，否则找到$q\in B$使得$x_q&lt;0$退出基，选择r加入基，$s_r^+=0$。然后进行更新：</p>
-<script type="math/tex; mode=display">
-s_B^+=s_b+ae_q\\
-y^+=y+av(e_q=-B^Tv)</script><p><u>对偶单纯形法和单纯形法有时候速度差距很大。</u></p>
-<p><strong>内点法</strong></p>
-<p>$(x,y,s)$为当前估计，$(\Delta x,\Delta y,\Delta s)$是搜索方向，定义$\mu=\sum x_is_i/n$。所以要找到</p>
-<script type="math/tex; mode=display">
-A(x+\Delta x)=b\\
-A^T(y+\Delta y)+s+\Delta s=c\\
-(x_i+\Delta x_i)(s_i+\Delta s_i)=\sigma_\mu</script><p>舍弃二阶小量得到</p>
-<script type="math/tex; mode=display">
-A\Delta x=r_p:=b-Ax\\
-A^T\Delta y+\Delta s=r_d:=c-A^Ty-s\\
-x_i\Delta s_i+\Delta x_is_i=(r_c)_i:=\sigma_\mu-x_is_i</script><p>写成矩阵形式如下，令$L_x=Diag(x)$，$L_s=Diag(s)$</p>
-<script type="math/tex; mode=display">
-\begin{pmatrix}A&0&0\\
-0&A^T&I\\
-L_s&0&L_x\end{pmatrix}
-\begin{pmatrix}\Delta x\\
-\Delta y\\
-\Delta s\end{pmatrix}
-=
-\begin{pmatrix}r_p\\
-r_d\\
-r_c
-\end{pmatrix}</script><p>如果A满秩，$AL_s^{-1}L_xA^T$是对称正定的，可以解得到</p>
-<script type="math/tex; mode=display">
-\Delta y=(AL_s^{-1}L_xA^T)^{-1}(r_p+AL_s^{-1}(L_xr_d-r_c))\\
-\Delta s = r_d-A^T\Delta y\\
-\Delta x = -L_s^{-1}(L_x\Delta s-r_c)</script><p>然后进行步长搜索，保证$(x^{k+1},s^{k+1})&gt;0$。</p>
-<p><u>步长搜索用Central Path，具体定义如下：</u> $C=\{(x_\tau,y_\tau,s_\tau|\tau&gt;0\}$满足</p>
-<script type="math/tex; mode=display">
-Ax_\tau=b,x_\tau>0\\
-A^Ty_\tau+s_\tau=c,s_\tau>0\\
-(x_\tau)_i(s_\tau)_i=\tau</script><p>Central Path neighborhoods是对$\theta,\gamma\in[0,1)$：</p>
-<script type="math/tex; mode=display">
-N_2(\theta)=\{(x,y,s)|||L_xL_se-\mu e||_2\leq\theta\mu\}\\
-N_{-\infty}(\gamma)=\{(x,y,s)|x_is_i\geq\gamma\mu\}</script><p>一般而言$\theta=0.5$，$\gamma=10^{-3}$。</p>
-<p>Path-Following：设定步长$\alpha_k$为最大的满足$(x^{k+1},y^{k+1},s^{k+1})\in N_{-\infty}(\gamma)$的值。那么$|\Delta x\cdot\Delta s|\leq 2^{-3/2}(1+1/\gamma)n\mu$，更新</p>
-<script type="math/tex; mode=display">
-\mu_{k+1}\leq(1-\delta/n)\mu_k,\delta=2^{3/2}\gamma\frac{1-\gamma}{1+\gamma}\sigma(1-\sigma)</script><p>那么如果$(x^0,y^0,s^0)\in N_{-\infty}(\gamma)$，存在$K=O(nln(1/\epsilon))$使得$\mu_k\leq\epsilon\mu_0$</p>
-<p><u>内点法是很少见的多项式时间算法</u></p>
-]]></content>
-      <categories>
-        <category>猫爪记</category>
-        <category>Mathematics</category>
-      </categories>
-      <tags>
-        <tag>琉璃猫</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>密码学</title>
-    <url>/2020/04/08/cryptography/</url>
-    <content><![CDATA[<h1 id="古典密码学"><a href="#古典密码学" class="headerlink" title="古典密码学"></a>古典密码学</h1><h2 id="几种古典密码"><a href="#几种古典密码" class="headerlink" title="几种古典密码"></a>几种古典密码</h2><p>移位密码（K=3即为凯撒密码）</p>
-<script type="math/tex; mode=display">
-e_k(x)=(x+K)\:mod\:26\\
-d_k(y)=(x-K)\:mod\:26</script><p>代换密码</p>
-<script type="math/tex; mode=display">
-e_\pi(x)=\pi(x)\\
-d_\pi(x)=\pi^{-1}(x)</script><a id="more"></a>
-<p>仿射密码</p>
-<script type="math/tex; mode=display">
-e(x)=(ax+b)\:mod\:26\\
-d(y)=a^{-1}(y-b)\:mod\:26\\
-gcd(a,26)=1\:(保证a^{-1}唯一)</script><p>维吉尼亚密码</p>
-<script type="math/tex; mode=display">
-e(x_1,x_2,...,x_m)=(x_1+k_1,x_2+k_2,...,x_m+k_m)\\
-d(y_1,y_2,...,y_m)=(y_1-k_1,y_2-k_2,...,y_m-k_m)</script><p>希尔密码</p>
-<script type="math/tex; mode=display">
-e(x)=xK\\
-d(x)=yK^{-1}\\
-K为Z_{26}上的m\times m可逆矩阵</script><p>置换密码</p>
-<script type="math/tex; mode=display">
-e_\pi(x_1,x_2,...,x_m)=(x_{\pi(1)},x_{\pi(2)},...,x_{\pi(m)})\\
-d_\pi(y_1,y_2,...,y_m)=(y_{\pi^{-1}(1)},y_{\pi^{-1}(2)},...,y_{\pi^{-1}(m)})</script><p>流密码</p>
-<p>自动秘钥密码</p>
-<script type="math/tex; mode=display">
-e_z(x)=(x+z)\:mod\:26\\
-d_z(y)=(y-z)\:mod\:26\\
-z_i=x_{i-1}，x_1=K</script><h2 id="密码分析"><a href="#密码分析" class="headerlink" title="密码分析"></a>密码分析</h2><p>常见攻击类型：</p>
-<ul>
-<li>唯密文攻击</li>
-<li>已知明文攻击</li>
-<li>选择明文攻击：有加密机访问权限</li>
-<li>选择密文攻击：有解密机访问权限</li>
-</ul>
-<p>统计分析：</p>
-<p>根据字母出现的频率（或者结合二元组出现频率）</p>
-<p>维吉尼亚密码的分析：</p>
-<p>Kasiski测试法，搜索长度至少为3的相同密文段，记录这些密文段到起始点之间的距离，猜测m为这些距离的最大公因子的因子</p>
-<p>重合指数法，随机两个字母相等的概率（称为重合指数）为0.038，如果相隔为m，这个概率提高到0.065</p>
-<p>希尔密码的分析：</p>
-<p>需要至少m个不同的明-密文对</p>
-<h1 id="Shannon理论"><a href="#Shannon理论" class="headerlink" title="Shannon理论"></a>Shannon理论</h1><p>1949年Claude Shannon发表的”Communication Theory of Secrecy Systems”</p>
-<ul>
-<li>计算安全性：度量破解所做的计算</li>
-<li>可证明安全性：归入数学难题</li>
-<li>无条件安全性</li>
-</ul>
-<p><strong>完善保密性</strong>定义为对任意明文x，密文y，有$P(x|y)=P(x)$</p>
-<p>定义：密文空间C、明文空间P、密钥空间K</p>
-<p>定理：如果密码体制满足|K|=|C|=|P|。那么这个密码体制是完善保密的，当且仅当每个密钥被使用的概率为1/|K|，且对$x\in P$，$y\in C$，存在唯一的密钥K，$e_K(x)=y$。</p>
-<p>一个著名的完善保密的密码体制是”一次一密“，$P=C=K=(Z_2)^n$，加密和解密都是取异或。但是这个体制要求用n比特的密钥加密n比特的明文，且对已知明文攻击是脆弱的。</p>
-<p>由于以概率$2^{-n}$发生的事件可以编码为长度为n的比特串，因此定义随机变量X的熵为</p>
-<script type="math/tex; mode=display">
-H(X)=-\sum P(x)log(x)</script><p><strong>Huffman算法</strong>找到了使得加权平均编码长度最小的<strong>单射</strong>编码l，他是无前缀的，并且</p>
-<script type="math/tex; mode=display">
-H(X)\leq l(f)<H(X)+1</script><p>熵的性质</p>
-<ul>
-<li>$H(X)\leq log(n)$</li>
-<li>$H(X,Y)\leq H(X)+H(Y)$，(X、Y独立时取等号)</li>
-<li>$H(X,Y)=H(Y)+H(X|Y)$</li>
-<li>$H(X|Y)\leq H(X)$</li>
-</ul>
-<p>定义条件熵H(K|C)为密钥含糊度。那么</p>
-<script type="math/tex; mode=display">
-H(K|C)=H(K)+H(P)-H(C)</script><p>($H(K|C)=H(K,C)-H(C)=H(K,P,C)-H(C)=H(K,P)-H(C)=H(K)+H(P)-H(C)$)</p>
-<p>自然语言L的熵定义为</p>
-<script type="math/tex; mode=display">
-H_L=\lim_{n\to\infty}\frac{H(P^n)}{n}</script><p>语言L的冗余度定义为</p>
-<script type="math/tex; mode=display">
-R_L=1-\frac{H_L}{log_2|P|}</script><p>英语中$H(P)=4.19$，$H(P^2)/2=3.90$，$1.0\leq H_L\leq 1.5$</p>
-<p>定理：|C|=|P|且密钥是等概率选取的，那么给定长为n的密文串，伪密钥的期望数满足</p>
-<script type="math/tex; mode=display">
-\bar{s_n}\geq \frac{|K|}{|P|^{nR_L}}-1</script><p>($\bar{s_n}=\sum P(y)|K(y)|-1$，而$H(K|C)=H(K)+H(P^n)-H(C^n)\geq H(K)-nR_Llog_2|P|$)</p>
-<p>定义<strong>唯一解距离</strong>为使得伪密钥期望等于0的n，记为$n_0$。这是给定足够时间下，分析者能唯一计算出密钥所需密文的平均量。</p>
-<script type="math/tex; mode=display">
-n\approx \frac{log_2|K|}{R_Llog_2|P|}</script><p><strong>乘积密码体制</strong>密钥$K=(K_1,K_2)$，定义加密解密如下</p>
-<script type="math/tex; mode=display">
-e_{(K_1,K_2)}(x)=e_{K_2}(e_{K_1}(x))\\
-d_{(K_1,K_2)}(y)=d_{K_1}(d_{K_2}(y))</script><p>如果密码体制不是幂等的，那么多次迭代有可能提高安全性。</p>
-<h1 id="分组密码和高级加密标准"><a href="#分组密码和高级加密标准" class="headerlink" title="分组密码和高级加密标准"></a>分组密码和高级加密标准</h1><p>大多数分组密码都是乘积密码：用K来生成$N_r$个<strong>轮密钥</strong>（也叫子密钥），轮密钥的列表就是<strong>密钥编排方案</strong>。通过这些轮密钥依次进行加密。</p>
-<h2 id="代换-置换网络（SPN）"><a href="#代换-置换网络（SPN）" class="headerlink" title="代换-置换网络（SPN）"></a>代换-置换网络（SPN）</h2><script type="math/tex; mode=display">
-\pi_s:\{0,1\}^l\to\{0,1\}^l\\
-\pi_p:\{1,...,lm\}\to\{1,...,lm\}</script><p>均为置换，设$P=C=\{0,1\}^{lm}$，$K\subset(\{0,1\}^{lm})^{N_r+1}$是由K生成的密钥编排方案的集合。</p>
-<p>每轮加密先用异或操作混入该轮密钥，再用$\pi_s$进行m次代换，再用$\pi_p$进行一次置换。（最后一轮只做异或操作）</p>
-<h2 id="线性密码分析"><a href="#线性密码分析" class="headerlink" title="线性密码分析"></a>线性密码分析</h2><p>取值01的随机变量$P(X_i=1)=p_i$，定义<strong>偏差</strong>$e_i=p_i-1$</p>
-<p>堆积引理：独立随机变量$X_i$，那么随机变量$X_1\oplus X_2\oplus … \oplus X_n$的偏差满足</p>
-<script type="math/tex; mode=display">
-e=2^{k-1}\prod_{j=1}^ke_k</script><p>对于一个置换$\pi_s:\{0,1\}^4\to\{0,1\}^4$，把每个相关的随机变量表示成如下形式</p>
-<script type="math/tex; mode=display">
-(\oplus_{i=1}^4a_iX_i)\oplus(\oplus_{i=1}^4b_iY_i)</script><p>设$N_L(a,b)$表示满足如下条件的8元组对(a,b),(x,y)的个数</p>
-<script type="math/tex; mode=display">
-(y_1,y_2,y_3,y_4)=\pi_S(x_1,x_2,x_3,x_4)\\
-(\oplus_{i=1}^4a_iX_i)\oplus(\oplus_{i=1}^4b_iY_i)=0</script><p>该随机变量的偏差$e(a,b)=(N_L(a,b)-8)/16$</p>
-<p>一个基于偏差为$e$的线性逼近的线性攻击想要成功所需要的的明-密文对数$T\approx ce^{-2}$</p>
-<h2 id="差分分析"><a href="#差分分析" class="headerlink" title="差分分析"></a>差分分析</h2><p>定义$\Delta(x’)=\{(x,x^*|x\oplus x^*=x’\}$，则显然这个集合大小为$2^m$</p>
-<p>定义</p>
-<script type="math/tex; mode=display">
-N_D(x',y')=|\{(x,x^*)\in \Delta(x'):\pi_s(x)\oplus\pi_s(x^*)=y'\}|</script><p>由此定义对应于差分$(a’,b’)$的扩散率</p>
-<script type="math/tex; mode=display">
-R_p(a',b')=\frac{N_D(a',b')}{2^m}(=P(b'|a'))</script><p>一个基于扩散率为e的差分攻击，需要4重组$(x,x^*,y,y^*)$的数量$T\approx ce^{-1}$</p>
-<h2 id="数据加密标准"><a href="#数据加密标准" class="headerlink" title="数据加密标准"></a>数据加密标准</h2><p>DES是一种特殊的迭代密码，叫做<strong>Feistel型密码</strong>，每个状态$u^i$被分成长度相同的两部分$L^i$和$R^i$，轮函数g有如下形式</p>
-<script type="math/tex; mode=display">
-g(L^{i-1},R^{i-1},K^i)=(L^i,R^i)\\
-L^i=R^{i-1},R^i=L^{i-1}\oplus f(R^{i-1},K^i)</script><p>显然Feistel型轮函数是可逆的，所以f不需要满足单射条件。</p>
-<p>DES是16轮Feistel型密码，分组长度为64，密钥空间为$2^56$。</p>
-<p>1998年56小时找到了DES密钥</p>
-<h2 id="高级加密标准"><a href="#高级加密标准" class="headerlink" title="高级加密标准"></a>高级加密标准</h2><p>AES要求具有分组长度128，支持128、192、256的密钥长度，轮数依赖于密钥长度</p>
-<p>最终<strong>Rijndael</strong>当选</p>
-<p>前N-1轮，用S盒进行一次代换SubBytes，对State做一置换ShiftRows，再对State做一次操作MixColumns，然后进行AddRoundKey。最后一轮不用MixColumns。</p>
-<p>目前来看，AES是安全的，不存在快于穷尽密钥搜索的攻击。</p>
-<h2 id="工作模式"><a href="#工作模式" class="headerlink" title="工作模式"></a>工作模式</h2><p>四种模式</p>
-<ul>
-<li>密码本（ECB）</li>
-<li>密码反馈（CFB）：$z_i=e_K(y_{i-1}),\:y_i=x_i\oplus z_i$</li>
-<li>密码分组连接（CBC）：$y_i=e_K(y_{i-1}\oplus x_i)$</li>
-<li>输出反馈（OFB）：$z_i=e_K(z_{i-1}),\:y_i=x_i\oplus z_i$</li>
-</ul>
-<p>ECB和OFB中，改变一个明文分组不影响其他密文分组，常用于信道不安全的通信，OFB常用于卫星通信。</p>
-<p>CBC和CFB模式对于认证是有用的，能产生消息认证码MAC。</p>
-<h1 id="Hash函数"><a href="#Hash函数" class="headerlink" title="Hash函数"></a>Hash函数</h1><p>Hash函数安全性从三个问题来评估（这三个问题都是难解的才是稳固的）</p>
-<ul>
-<li>原像</li>
-<li>第二原像</li>
-<li>碰撞</li>
-</ul>
-<p>随机预言模型：理想的Hash函数，这个模型对x，随机选择Hash函数h，h(x)是完全随机的。</p>
-<p>取q个点寻找原像的平均成功率$e=1-(1-1/M)^q$。（也是寻找第二原像的成功率）</p>
-<p>取q个点寻找碰撞的成功率为$e=1-P_M^q/M^q$</p>
-<p>可以估计$q\approx\sqrt{2Mln(1/(1-e))}$，（这就说明大约$\sqrt{M}$个随机元素计算有50%概率出现碰撞）</p>
-<p>解决碰撞问题比原像问题和第二原像问题容易。碰撞问题可以很容易地转变为第二原像问题。任何能解决原像问题且概率为1的算法也能解决碰撞问题。</p>
-<h2 id="迭代Hash函数"><a href="#迭代Hash函数" class="headerlink" title="迭代Hash函数"></a>迭代Hash函数</h2><p>输入一个比特串x，用公开算法构造串y，使得</p>
-<script type="math/tex; mode=display">
-|y|=0\:mod\:t</script><p>处理阶段必须保证x到y是单射（常见的是一个变换+padding）</p>
-<p>然后以长度为m的公开初始值作为$z_0$，然后</p>
-<script type="math/tex; mode=display">
-z_i=compress(z_{i-1}||y_i)</script><h3 id="Merkle-DamgArd结构"><a href="#Merkle-DamgArd结构" class="headerlink" title="Merkle-DamgArd结构"></a>Merkle-DamgArd结构</h3><p>如果有抗碰撞的compress函数，则这样的迭代Hash函数也是抗碰撞的。先将x分成长为k-1的部分，得到y</p>
-<script type="math/tex; mode=display">
-z_1=0^{m+1}||y_1,g_1=compress(z_1)\\
-for\:i\:in\:1\:to\:k\:do\:
-z_{i+1}=g_i||1||y_{i+1},g_{i+1}=compress(z_{i+1})</script><p>以$g_{k+1}$为密文。</p>
-<p>定理4.6：找到h的碰撞，则能找到compress函数的碰撞。（证明考察x长度mod t-1）</p>
-<h3 id="安全Hash算法（SHA-1）"><a href="#安全Hash算法（SHA-1）" class="headerlink" title="安全Hash算法（SHA-1）"></a>安全Hash算法（SHA-1）</h3><p>要求$|x|\leq 2^{64} - 1$，则$l=|x|$长度最多为64比特</p>
-<p>PADDING算法：</p>
-<script type="math/tex; mode=display">
-y=x||1||0^d||l</script><p>其中 |l|=64，padding的d = 447-|x| mod 512。把y分成512比特的分组</p>
-<script type="math/tex; mode=display">
-y=M_1||M_2||...||M_n</script><p><img src="sha1.png" alt=""></p>
-<p>其中$f_i$是分组定义的函数，输入是三个字，输出是一个字，$K_i$是分组定义的常数。</p>
-<p>之后还有新的Hash函数（SHA-256，SHA-384，SHA-512…）</p>
-<h2 id="消息认证码"><a href="#消息认证码" class="headerlink" title="消息认证码"></a>消息认证码</h2><p>一个消息的MAC计算为</p>
-<script type="math/tex; mode=display">
-h_k(x||x')=compress(h_K(x)||x')</script><p>对于攻击者来说，即使K是保密的，计算上式的值也是简单的事情。</p>
-<h3 id="嵌套MAC和HMAC"><a href="#嵌套MAC和HMAC" class="headerlink" title="嵌套MAC和HMAC"></a>嵌套MAC和HMAC</h3><p>嵌套MAC是指合成两个带密钥的Hash组建立MAC算法。假定(X,Y,K,G)和(Y,Z,L,H)是Hash族，复合成Hash族$(X,Z,M,G\cdot H)$，其中$M=K\times L$。对所有的x</p>
-<script type="math/tex; mode=display">
-(g\cdot h )_{(K,L)}(x)=h_L(g_K(x))</script><p>这个结构中$|Y|\geq |Z|$是有限集，$|X|&gt;|Y|$或者为无限集。如果满足以下两个条件，嵌套MAC是安全的</p>
-<ul>
-<li>给定固定的密钥，作为MAC，(Y,Z,L,H)是安全的</li>
-<li>给定固定的密钥，(X,Y,K,G)是碰撞稳定的</li>
-</ul>
-<p>直观上讲是通过安全的“小MAC”和碰撞固定的Hash族复合成安全的“大MAC”。考虑三种攻击</p>
-<ul>
-<li>对嵌套MAC的假冒</li>
-<li>对小MAC的假冒</li>
-<li>对Hash族的碰撞-探测</li>
-</ul>
-<p>HMAC是一个被提议作为FIPS标准的嵌套MAC算法。密钥记为K，ipad和opad是常数。定义</p>
-<script type="math/tex; mode=display">
-HMAC_K(x)=SHA-1(K\oplus opad||SHA-1((K\oplus ipad)||x))</script><h3 id="CBC-MAC"><a href="#CBC-MAC" class="headerlink" title="CBC-MAC"></a>CBC-MAC</h3><p>构造MAC的常用方式是基于固定的（公开的）初始化向量的CBC模式。每个密文分组在被K加密之前与下一组明文分组一起异或。</p>
-<script type="math/tex; mode=display">
-y_i=e_K(y_{i-1}\oplus x_i)</script><p>对CBC-MAC最好的通用攻击是碰撞攻击。</p>
-<p>攻击细节如下：选择q个独立的、长度为t的比特串，记为$x_1^1,…,x_1^q$，随机选择$x_2^i$，/定义$x_3,…,x_n$是固定比特串，定义</p>
-<script type="math/tex; mode=display">
-x^i=x_1^i||x_2^i||...||x_n^i</script><p>那么如果$h_K(x_i)=h_K(x_j)$，则</p>
-<script type="math/tex; mode=display">
-y_1^i\oplus x_2^i=y_1^j\oplus x_2^j</script><p>那么攻击者定义</p>
-<script type="math/tex; mode=display">
-v=x_1^i||(x_2^i\oplus x_\delta)||...\\
-w=x_2^j||(x_2^j\oplus x_\delta)||...</script><p>并请求v的MAC，这也就是w的MAC。</p>
-<h3 id="无条件安全信息认证码"><a href="#无条件安全信息认证码" class="headerlink" title="无条件安全信息认证码"></a>无条件安全信息认证码</h3><p>假定一个密钥只产生一个认证表情，即攻击者至多只能进行一次查询</p>
-<p>定义</p>
-<script type="math/tex; mode=display">
-payoff(x,y)=Pr[y=h_{K_0}(x)]=|\{k\in K|h_K(x)=y\}|/|K|</script><p>那么</p>
-<script type="math/tex; mode=display">
-pd_0=\max\{payoff(x,y)\}\\
-pd_1=\max\{payoff(x',y';x,y):x\neq x',(x,y)至少在一个密钥下有效\}</script><p>定义<strong>强泛Hash函数族</strong>，如果对任意$x\neq x’$</p>
-<script type="math/tex; mode=display">
-|\{K|h_K(x)=y,h_K(x')=y'\}|=|K|/|Y|^2</script><p>定理：强泛(N,M)-Hash函数族的认证码的$pd_0=pd_1=1/M$。</p>
-<p>显然，(N,M)-Hash函数族(X,Y,K,H)对任意指定x，存在y，使得</p>
-<script type="math/tex; mode=display">
-payoff(x,y)\geq 1/M</script><p>对每个(x,y)和x’，存在一个y’使得</p>
-<script type="math/tex; mode=display">
-payoff(x',y';x,y)\geq 1/M</script><p>故$pd_1\geq 1/M$，取等号的充要条件就是该Hash函数族是强泛的。</p>
-<h1 id="RSA密码体系和整数因子分解"><a href="#RSA密码体系和整数因子分解" class="headerlink" title="RSA密码体系和整数因子分解"></a>RSA密码体系和整数因子分解</h1><p>公钥密码体系无法提供无条件安全性，因此我们只研究其计算安全性。</p>
-<p><strong>Euclidean算法</strong></p>
-<p>先计算r=gcd(a,b)，然后得到sa+tb=r，那么$b^{-1}=t\mod a$</p>
-<p><strong>中国剩余定理</strong></p>
-<script type="math/tex; mode=display">
-x=a_i\:mod\:m_i</script><p>定义$M_i=M/m_i$，那么</p>
-<script type="math/tex; mode=display">
-x=\sum_{i=1}^n a_iM_iy_i\:mod\: M</script><p>其中$y_i=M_i^{-1}\mod m_i$</p>
-<p><strong>Langrange</strong></p>
-<p>n阶乘法群G的元素的阶整除n</p>
-<p><strong>Fermat</strong></p>
-<p>素数p，$b^p=b\mod p$</p>
-<p><strong>Euler准则</strong></p>
-<p>奇素数p，正整数a，那么a是模p的二次剩余当且仅当</p>
-<script type="math/tex; mode=display">
-a^{(p-1)/2}=1\:mod\:p</script><h2 id="RSA密码体系"><a href="#RSA密码体系" class="headerlink" title="RSA密码体系"></a>RSA密码体系</h2><p>n=pq，p,q为素数</p>
-<script type="math/tex; mode=display">
-K=\{(n,p,q,a,b):ab=1\:mod\:\phi(n)\}</script><p>定义</p>
-<script type="math/tex; mode=display">
-e_K(x)=x^b\:mod\:n\\
-d_K(y)=y^a\:mod\:n</script><p>n和b是公钥，p、q、a是私钥。</p>
-<p><strong>素性检测</strong></p>
-<p>素数个数定理：小于等于N的素数个数$\pi(N)\approx N/ln(n)$</p>
-<p><strong>判定问题的随机算法</strong></p>
-<p>Monte Carlo算法总是给出一个回答，但不一定正确。<strong>偏是</strong>的Monte Carlo算法的“是”回答总是正确，“否”也许是不正确的。</p>
-<p>Solovay-Strassen是对于合数问题一个<strong>偏是</strong>的Monte Carlo算法，具有错误概率1/2。</p>
-<p>称n为对于基底a的伪素数，如果$(a/n)=a^{(n-1)/2}\mod n$。可以证明，n对至多1/2的a为伪素数。</p>
-<p>Solovay计算x=(a/n)（利用二次互反律等），如果x=0则为合数，否则判断$x=a^{(n-1)/2}$。</p>
-<p>Miller-Rabin算法是另一个合数问题的算法，也是<strong>偏是</strong>的，错误概率至多为1/4。</p>
-<p>把n-1写成$2^km$，随机选取整数a，$1\leq a\leq n-1$，</p>
-<script type="math/tex; mode=display">
-b=a^m\:mod\:n</script><p>如果b=1，则n为素数，否则对重复k次</p>
-<script type="math/tex; mode=display">
-b=b^2\:mod\:n</script><p>每次如果b = -1，则n为素数。最后n为合数。</p>
-<p><strong>模n的平方根</strong></p>
-<p>假定</p>
-<script type="math/tex; mode=display">
-n=\prod_{i=1}^lp_i^{e_i}</script><p>那么同余方程</p>
-<script type="math/tex; mode=display">
-y^2=a\:mod\:n</script><p>当$(a/p_i)=1$对所有i成立时有$2^l$个解，其他情形下没有解。</p>
-<h2 id="分解因子算法"><a href="#分解因子算法" class="headerlink" title="分解因子算法"></a>分解因子算法</h2><p>攻击RSA密码最明显的方式就是试图分解公开模数。对于大整数最有效的三种算法是</p>
-<ul>
-<li>二次筛法</li>
-<li>椭圆曲线分解算法</li>
-<li>数域筛法</li>
-</ul>
-<p>其他先驱的著名算法有Pollard的$\rho$方法和p-1算法，William的p+1算法、连分式算法、试除法等等。</p>
-<p><strong>Pollard p-1算法</strong></p>
-<p>a=2</p>
-<p>for j = 2 to B do </p>
-<p>$a=a^j\mod n$，计算a-1和n的最大公约数，如果都找不到则认定为素数。</p>
-<p>合理性：n的素因子p，假定对每个素数$q|(p-1)$，q&lt;B，则有$(p-1)|B!$，此时$2^{B!}=1\mod p$</p>
-<p>一个缺陷是B的选择，另一个缺陷是对q的要求，所以可以选择p=2p+1这样的安全素数</p>
-<p><strong>Pollard $\rho$算法</strong></p>
-<p>选择随机子集X，对不同的x1,x2，计算gcd(x1-x2, n)。这个方法成功当且仅当x mod p出现碰撞。当</p>
-<script type="math/tex; mode=display">
-|X|\approx 1.17\sqrt{p}</script><p>时，50%的概率至少有一个碰撞。但这种方法需要计算很多次gcd，因此考虑定义整系数多项式f，例如$f(x)=x^2+a$，考察序列</p>
-<script type="math/tex; mode=display">
-x_i=f(x_{i-1})\:mod\:n</script><p>那么如果$x_i=x_j\mod p$，那么$x_{i+d}=x_{j+d}\mod p$，那么图构成1~i的尾巴，和i~j的圈。因此我们取j=2i来寻找碰撞。</p>
-<p><strong>Dixon随机平方算法</strong></p>
-<p>假设找到$x^2=y^2\mod n$，且$x\neq \pm y\mod n$，那么</p>
-<script type="math/tex; mode=display">
-n|(x-y)(x+y)</script><p>因此gcd(x+y, n)是n的一个非平凡因子。</p>
-<p>随机平方算法使用因子基B（b个最小素数的集合），找到几个整数z，使得$z^2\mod n$的所有素因子在B里，然后将这些z相乘使得B里素数都出现偶数次，由此导出一个期望的同余方程。</p>
-<p>一些技巧是选取形如$j+[\sqrt{kn}]$的整数，因为这样平方和模n比较小， 有可能在B上完全分解。</p>
-<p>称n是m-光滑的，如果n的任一素因子都小于等于m，$\phi(n,m)$定义为小于等于n且是m-光滑的正整数个数，如果$n&gt;&gt;m$</p>
-<script type="math/tex; mode=display">
-\frac{\phi(n,m)}{n}\approx \frac1{u^u},u=log(n)/log(m)</script><p>基B包含所有小于m的素数，约有b=m/ln(m)个，为了使算法成功，期望找到b个m光滑整数，测试$bu^u$个整数。通常期望运行时间</p>
-<script type="math/tex; mode=display">
-O(2^{c\sqrt{log_2(n)log_2(log_2(n))}})</script><p><strong>Pomerance二次筛法</strong></p>
-<script type="math/tex; mode=display">
-O(2^{(1+o(1))\sqrt{ln(n)ln(ln(n))}})</script><p><strong>椭圆曲线算法</strong></p>
-<script type="math/tex; mode=display">
-O(2^{(1+o(1))\sqrt{2ln(p)ln(ln(p))}})</script><p><strong>数域筛法</strong></p>
-<script type="math/tex; mode=display">
-O(2^{(1.92+o(1))(ln(n))^{1/3}(ln(ln(n)))^{2/3}})</script><h2 id="对RSA的其他攻击"><a href="#对RSA的其他攻击" class="headerlink" title="对RSA的其他攻击"></a>对RSA的其他攻击</h2><p><strong>计算$\phi(n)$</strong></p>
-<p>可以看到这不比分解n简单。得到$\phi(n)$之后，构造关于p的二次方程即可</p>
-<script type="math/tex; mode=display">
-p^2-(n-\phi(n)+1)p+n=0</script><p><strong>解密指数</strong></p>
-<p>如果解密指数a已知，那么n可以通过一个随机算法在多项式时间内分解。</p>
-<p>可以有算法达到1/2的成功率</p>
-<p><strong>Wiener低解密指数攻击</strong></p>
-<p>假设前提</p>
-<script type="math/tex; mode=display">
-3a<n^{1/4},q<p<2q</script><p>满足这个前提的a可以使得解密时间减少75%</p>
-<p>已知</p>
-<script type="math/tex; mode=display">
-0<n-\phi(n)=p+q-1<3q<3\sqrt{n}</script><p>假设</p>
-<script type="math/tex; mode=display">
-ab=1+t\phi(n)</script><p>考虑到$t&lt;a&lt;n^{1/4}$那么</p>
-<script type="math/tex; mode=display">
-|\frac bn-\frac ta|<\frac{3t}{a\sqrt{n}}<\frac1{an^{1/4}}<\frac1{3a^2}</script><p>因此t/a是b/n的近似，从<em>连分数理论</em>可知这样的近似是b/n连分数展开的<strong>收敛子</strong>。可以通过验证前几个收敛子判断。</p>
-<h2 id="Rabin密码体制"><a href="#Rabin密码体制" class="headerlink" title="Rabin密码体制"></a>Rabin密码体制</h2><p>假定n=pq不能被分解，则这类体制对明文攻击是计算安全的</p>
-<p>设n=pq，p,q为素数，定义</p>
-<script type="math/tex; mode=display">
-e_K(x)=x^2\:mod\:n\\
-d_K(y)=\sqrt{y}\:mod\:n</script><p>一个明显的问题是加密不是单射。</p>
-<p>解密可以<em>约化</em>到n的分解</p>
-<p>Rabin Oracle Factoring(n)</p>
-<p>选择$y=r^2\mod n$，计算$x=Rabin\:Decrypt(y)$，如果$x\neq\pm r\mod n$，那么$p=gcd(x+r,n)$。</p>
-<h2 id="RSA语义安全"><a href="#RSA语义安全" class="headerlink" title="RSA语义安全"></a>RSA语义安全</h2><p>half(y)：判断y的明文和n/2的大小关系</p>
-<p>parity(y)：判断y的明文二进制最后一位</p>
-<p>RSA解密可以约化为half(y)/parity(y) 【二分查找】</p>
-<blockquote>
-<p>语义安全的公钥密码体制</p>
-<p>正整数m,k，F为一族陷门单向置换，对任意$f\in F$，有$f:\{0,1\}^k\to\{0,1\}^k$，随机预言$G:\{0,1\}^k\to\{0,1\}^m$，随机选取$r\in\{0,1\}^k$，定义</p>
-<script type="math/tex; mode=display">
-e_K(x)=(y_1,y_2)=(f(r),G(r)\oplus x)\\
-d_K(y_1,y_2)=G(f^{-1}(y_1))\oplus y_2</script><p>f和G是公钥，$f^{-1}$是私钥。</p>
-</blockquote>
-<p>主要缺点是数据扩张，将m加密成m+k</p>
-<p>假定存在一个算法Distinguish可以对两个明文x1,x2求解密文识别问题，且是完善的（正确概率为$1/2+\epsilon$），我们可以构造新算法Invert以不为0的概率对y求逆。</p>
-<blockquote>
-<p>用SimG代替随机预言G</p>
-<p>SimG维护RList、GList。RList记录Distinguish询问的所有输入r，GList为对应的响应</p>
-<p>如果r已经询问过，那么用已定义的值g。</p>
-<p>如果有$f(r)=y$，那么随机选择j，$g=y_2\oplus x_j$。否则随机选择g</p>
-</blockquote>
-<p>那么可以证明得到$x=f^{-1}(y)$的概率大于等于$\epsilon$。</p>
-<blockquote>
-<p>更有效的非对称密码体制</p>
-<p>m&lt;k，$k_0=k-m$，F为一族陷门单向置换，对任意$f\in F$，有$f:\{0,1\}^k\to\{0,1\}^k$，随机预言$G:\{0,1\}^{k_0}\to\{0,1\}^m$，$H:\{0,1\}^m\to\{0,1\}^{k_0}$，随机选取$r_0\in\{0,1\}^m$。</p>
-<script type="math/tex; mode=display">
-e_K(x)=f(y_1||y_2)\\
-y_1=x\oplus G(r),\:y_2=r\oplus H(x\oplus G(r))</script><p>进一步定义</p>
-<script type="math/tex; mode=display">
-f^{-1}(y)=x_1||x_2\\
-r=x_2\oplus H(x_1)\\
-d_K(y)=G(r)\oplus x_1</script><p>$f,G,H$为公钥，$f^{-1}$为私钥</p>
-</blockquote>
-<h1 id="离散对数问题的公钥密码体制"><a href="#离散对数问题的公钥密码体制" class="headerlink" title="离散对数问题的公钥密码体制"></a>离散对数问题的公钥密码体制</h1><p><strong>离散对数</strong></p>
-<p>对乘法群$(G,·)$,一个n阶元素$\alpha$，$\beta\in&lt;\alpha&gt;$，找到a</p>
-<script type="math/tex; mode=display">
-\alpha^a=\beta</script><p>记a为$log_\alpha\beta$</p>
-<h2 id="ElGamal密码体制"><a href="#ElGamal密码体制" class="headerlink" title="ElGamal密码体制"></a>ElGamal密码体制</h2><p>设p是素数，$Z_p$上的离散对数问题是案处理的，$\alpha$是一个本原元</p>
-<p>$p,\alpha,\beta$是公钥，a是私钥。</p>
-<p>定义</p>
-<script type="math/tex; mode=display">
-e_K(x,k)=(y_1,y_2)\\
-y_1=\alpha^k\:mod\:p,\:y_2=x\beta^k\:mod\:p</script><p>定义</p>
-<script type="math/tex; mode=display">
-d_K(y_1,y_2)=y_2(y_1^a)^{-1}\:mod\:p</script><h2 id="离散对数问题的算法"><a href="#离散对数问题的算法" class="headerlink" title="离散对数问题的算法"></a>离散对数问题的算法</h2><p><strong>Shanks算法</strong></p>
-<p>m=$[\sqrt{n}]$，对$0\leq j\leq m-1$，计算$\alpha^{mj}$。</p>
-<p>对m个有序对$(j,\alpha^{mj})$按照第二个坐标排序，得到列表L1。</p>
-<p>对$0\leq i\leq m-1$，计算$\beta\alpha^{-i}$</p>
-<p>对m个有序对$(i,\beta\alpha^{-i})$关于第二个坐标排序，得到列表L2&gt;</p>
-<p>找到具有相同第二坐标的对，令a=mj+i</p>
-<p><strong>Pollard $\rho$离散对数算法</strong></p>
-<p>定义大致相等的划分$S_1,S_2,S_3$，定义函数f</p>
-<script type="math/tex; mode=display">
-f(x,a,b)=(\beta x,a,b+1),x\in S_1\\
-f(x,a,b)=(x^2,2a,2b),x\in S_2\\
-f(x,a,b)=(\alpha x,a+1,b),x\in S_3</script><p>这样产生的每个三元组都满足$x=\alpha^a\beta^b$</p>
-<p>比较三元组，知道发现$x_{2i}=x_i$，这时有</p>
-<script type="math/tex; mode=display">
-\alpha^{a_{2i}}\beta^{b_{2i}}=\alpha^{a_i}\beta^{b_i}</script><p>所以</p>
-<script type="math/tex; mode=display">
-log_\alpha\beta=(a_i-a_{2i})(b_{2i}-b_i)^{-1}\:mod\:n</script><p><strong>Pohlig-Hellman算法</strong></p>
-<p>假设</p>
-<script type="math/tex; mode=display">
-n=\prod_{i=1}^kp_i^{c_i}</script><p>把a表示为</p>
-<script type="math/tex; mode=display">
-a=\sum_{i=0}^{c-1}a_iq^i+sq^c</script><p>依次确定$a_0,a_1,…$（利用$\beta^{n/q}=\alpha^{a_0n/q}$）</p>
-<p>然后用中国剩余定理。</p>
-<p><strong>指数演算法</strong></p>
-<p>取B个小素数作为基，构造C&gt;B个模p的同余方程（要保证所有因子在B里）</p>
-<script type="math/tex; mode=display">
-\alpha^{x_j}=p_1^{a_{1j}}...p_B^{a_{Bj}}\:mod\:p</script><p>然后选择随机数s，使得</p>
-<script type="math/tex; mode=display">
-\beta\alpha^s</script><p>可以在B上分解，那么就容易得到答案。</p>
-<p><u>通用性算法复杂性的下界是$\sqrt{n}$，（这是可以证明的）</u></p>
-<h2 id="有限域"><a href="#有限域" class="headerlink" title="有限域"></a>有限域</h2><p>ElGamal密码体制可以咋任何离散对数问题难处理的群中实现</p>
-<ul>
-<li>有限域$F_{p^n}$的乘法群</li>
-<li>定义在有限域上的椭圆曲线群</li>
-</ul>
-<p>$Z_p[x]/(f(x))$是域当且仅当$f(x)$是不可约的</p>
-<p>$F_{2^n}$上离散对数问题当前被认为是计算不可行的</p>
-<h2 id="椭圆曲线"><a href="#椭圆曲线" class="headerlink" title="椭圆曲线"></a>椭圆曲线</h2><p>二元方程解的集合</p>
-<p>满足$4a^2+27b^3\neq 0$的方程</p>
-<script type="math/tex; mode=display">
-y^2=x^3+ax+b</script><p>的解加上无穷远点O。</p>
-<p>定义二元运算，对$P,Q\in E$，L是通过PQ的直线，交E于第三点$R’$，对x轴作反射得到R，定义</p>
-<script type="math/tex; mode=display">
-P+Q=R</script><p>显然若P、Q是实数，则R也是实数。</p>
-<p>可以解得</p>
-<script type="math/tex; mode=display">
-x_R=\lambda^2-x_P-x_Q\\
-y_R=\lambda(x_P-x_R)-y_P\\
-\lambda=(y_P-y_Q)/(x_P-x_Q)</script><p>进一步定义模素数的椭圆曲线</p>
-<script type="math/tex; mode=display">
-y^2\equiv x^3+ax+b\:mod\:p</script><p>同样有无穷远点O。</p>
-<p>加法群的定义是相似的。</p>
-<p>定理：定义在$Z_p$上的椭圆曲线E，则存在正整数$n_1,n_2$，使得$(E,+)$同构于$Z_{n_1}\times Z_{n_2}$，并且有$n_2|n_1$和$n_2|p-1$。</p>
-<p>有一类弱椭圆曲线（“trace one”）是易解的。具有大约$2^{160}$个元素循环子群的椭圆曲线是安全的。</p>
-<p><strong>点压缩和ECIES</strong></p>
-<p>实际中，椭圆曲线的实现有大约4倍的扩张因子。更为严重的问题是，没有方便的方法确定生成E上的点。</p>
-<p>由于确定了x，y的两个值是相反数，一个是奇数，另一个是偶数，因此点压缩技术可以通过判断y mod 2来确定y。</p>
-<p>ECIES利用点压缩技术，有一个近似2的信息扩张。</p>
-<p><u>计算椭圆曲线上点的乘积—对倍数c转换为二进制，利用2倍-和差法计算</u></p>
-<p>椭圆曲线加密有得到越来越广泛的应用</p>
-<h2 id="ElGamal体制的安全性"><a href="#ElGamal体制的安全性" class="headerlink" title="ElGamal体制的安全性"></a>ElGamal体制的安全性</h2><p>比特安全性：确定对数表示二进制的第i个最低比特</p>
-<p>最低位是容易的（利用二次剩余）</p>
-<p>如果$\beta$是二次剩余，那么$\beta$模p的两个平方根为$\pm\beta^{(p+1)/4}$，且这两个数的最低位不同。那么，我们利用ORACLEL2（假设有这种算法）计算最低第二位，进行判断。</p>
-<p>利用此方法可以从最低位开始依次计算。</p>
-<h1 id="签名方案"><a href="#签名方案" class="headerlink" title="签名方案"></a>签名方案</h1><p>签名算法（私有）+验证算法（公开）</p>
-<blockquote>
-<p>RSA签名方案</p>
-<p>利用RSA解密规则进行签名</p>
-<p>定义</p>
-<script type="math/tex; mode=display">
-sig_K(x)=x^a\:mod\:n</script><p>以及</p>
-<script type="math/tex; mode=display">
-ver_K(x,y)=true\Leftrightarrow x=y^b\:mod\:n</script></blockquote>
-<p>但是任何人都能随机生成y来伪造RSA签名，阻止这种攻击的方法是让消息足够冗余，使得x有意义的概率非常小。</p>
-<p>签名和Hash函数常常结合使用。通过Hash生成信息摘要，再对摘要进行签名。有三种攻击</p>
-<ul>
-<li>已知消息攻击的存在性伪造：Hash二次原像稳固可以避免</li>
-<li>选择消息攻击的存在性伪造：Hash碰撞稳固可以避免</li>
-<li>惟密钥攻击的存在性伪造：Hash原相稳固可以避免</li>
-</ul>
-<p>所以签名+Hash不减弱签名的安全性。</p>
-<h2 id="ElGamal签名方案"><a href="#ElGamal签名方案" class="headerlink" title="ElGamal签名方案"></a>ElGamal签名方案</h2><p>非确定性：有许多有效的签名</p>
-<p>难解的离散对数</p>
-<script type="math/tex; mode=display">
-\beta=\alpha^a\:mod\:p</script><p>定义</p>
-<script type="math/tex; mode=display">
-sig_K(x,k)=(\gamma,\delta)\\
-\gamma=\alpha^k\:mod\:p,\:\delta=(x-a\gamma)k^{-1}\mod{(p-1)}</script><script type="math/tex; mode=display">
-ver_K(x,(\gamma,\delta))=true\Leftrightarrow \beta^\gamma\gamma^\delta=\alpha^x\:mod\:p</script><p>需要注意随机值k不能泄露，否则计算a很容易。</p>
-<p>另外，对两个不同的消息签名使用相同的k，可以计算得到$d=gcd(\delta_1-\delta_2,p-1)$个候选的k进行验证。</p>
-<h3 id="一些变体"><a href="#一些变体" class="headerlink" title="一些变体"></a>一些变体</h3><p><strong>Schnorr签名方案</strong>（缩短了签名）</p>
-<p>素数p,q满足$p-1\equiv 0\mod q$。一般取$p\approx 2^{1024}$，$q\approx 2^{160}$。定义Hash函数$h:\{0,1\}^n\to Z_q$</p>
-<script type="math/tex; mode=display">
-sig_K(x,k)=(\gamma,\delta)\\
-\gamma=h(x||\alpha^k),\:\delta=k+a\gamma\:mod\:q</script><script type="math/tex; mode=display">
-ver_K(x,(\gamma,\delta))=true\Leftrightarrow h(x||\alpha^\delta\beta^{-\gamma})=\gamma</script><p><strong>数字签名算法（DSA）</strong></p>
-<p><u>特点：消息是经过Hash缩短的，所以我们会得到比较短的消息摘要</u></p>
-<p>和Schnorr签名一样，使用了一个q元子群。</p>
-<p>把ElGammal签名中$\delta$中的减号改为加号。</p>
-<script type="math/tex; mode=display">
-sig_K(x,k)=(\gamma,\delta)\\
-\gamma=(\alpha^k\:mod\:p)\:mod\:q\\
-\delta=(SHA-1(x)+a\gamma)k^{-1}\:mod\:q</script><p>验证</p>
-<script type="math/tex; mode=display">
-e_1=SHA-1(x)\delta^{-1}\mod q\\
-e_2=\gamma\delta^{-1}\mod q\\
-ver_K(x,(\gamma,\delta))=true\Leftrightarrow (\alpha^{e_1}\beta^{e_2}\mod p)\mod q=\gamma</script><p><strong>椭圆曲线DSA（ECDSA）</strong></p>
-<p>具有更高的安全性</p>
-<p>A是E上阶数为q的一个点，p、q、E、A、B是公钥，m是私钥，$B=mA$</p>
-<script type="math/tex; mode=display">
-sig_K(x,k)=(r,s)\\
-kA=(u,v)\\
-r=u\mod q\\
-s=k^{-1}(SHA-1(x)+mr)\mod q</script><p>验证</p>
-<script type="math/tex; mode=display">
-w=s^{-1}\mod q\\
-i = w\cdot SHA-1(x)\mod q\\
-j=wr\mod q\\
-(u,v)=iA+jB\\
-var_K(x,(r,s))=true\Leftrightarrow u\mod q=r</script><h2 id="可证明的安全签名方案"><a href="#可证明的安全签名方案" class="headerlink" title="可证明的安全签名方案"></a>可证明的安全签名方案</h2><p>可以证明破解概率的方案</p>
-<p><strong>一次签名</strong></p>
-<p>Lamport签名方案：$f:Y\to Z$单向，y是私钥，z公开</p>
-<script type="math/tex; mode=display">
-sig_K(x_1,x_2,...,x_k)=y_1,y_2,...,y_k\\
-var_K(x_1,x_2,...,x_k,a_1,a_2,...,a_k)=true\Leftrightarrow f(a_i)=z_i</script><p><strong>全域Hash</strong></p>
-<p>单向陷门f，随机函数G</p>
-<script type="math/tex; mode=display">
-sig_K(x)=f^{-1}(G(x))\\
-ver_K(x,y)=true\Leftrightarrow f(y)=G(x)</script><h2 id="不可否认的签名"><a href="#不可否认的签名" class="headerlink" title="不可否认的签名"></a>不可否认的签名</h2><p>验证签名需要签名者的合作</p>
-<p>Chaum-van Antwerpen</p>
-<p>p=2q+1，q是素数，$\beta=\alpha^a\mod p$</p>
-<script type="math/tex; mode=display">
-y=sig_K(x)=x^a\mod p</script><p>验证者随机选择$e_1,e_2$，计算$c=y_1^{e_1}\beta^{e_2}\mod p$。</p>
-<p>签名者计算$d=c^{a^{-1}\mod q}\mod p$，当且仅当$d=x^{e_1}\alpha^{e_2}\mod p$时是合法的签名。</p>
-<p><u>把y当成合法签名接受的概率为1/q</u></p>
-<p><strong>否认协议</strong></p>
-<p>验证者选择$e_1,e_2$，得到d不合法，然后再次选择$e_1’,e_2’$，得到$d’$，当</p>
-<script type="math/tex; mode=display">
-(d\alpha^{-e_2})^{e_1'}\equiv(d'\alpha^{-e_2'})^{e_1}\mod p</script><p>时，可以推断签名是伪造的。</p>
-<p><u>伪造否认协议成功的概率为1/q</u></p>
-<h2 id="fail-stop签名"><a href="#fail-stop签名" class="headerlink" title="fail-stop签名"></a>fail-stop签名</h2><p>van Heyst-Pedersen</p>
-<p>p=2q+1，q是素数，</p>
-<script type="math/tex; mode=display">
-\beta=\alpha^{a_0}\mod p</script><p>$p,q,\alpha,\beta$是公开且不变的。</p>
-<script type="math/tex; mode=display">
-\gamma_1=\alpha^{a_1}\beta^{a_2}\mod p\\
-\gamma_2=\alpha^{b_1}\beta^{b_2}\mod p</script><p>$\gamma_1,\gamma_2$是公钥，$a_1,a_2,b_1,b_2$是私钥</p>
-<p>签名</p>
-<script type="math/tex; mode=display">
-sig_K(x)=(y_1,y_2)\\
-y_1=a_1+xb_1\mod q\\
-y_2=a_2+xb_2\mod q</script><p>验证</p>
-<script type="math/tex; mode=display">
-ver_K(x,y)=true\Leftrightarrow \gamma_1\gamma_2^x=\alpha^{\gamma_1}\beta^{\gamma_2}\mod p</script><p>定义：如果$\gamma_1=\gamma_1’$，$\gamma_2=\gamma_2’$，那么密钥称为等价的</p>
-<p>引理：K和K‘等价，那么$ver_K(x,y)=ver_{K’}(x,y)$</p>
-<p>引理：恰好有q个等价的密钥K，$sig_K(x)=y$</p>
-<p>引理：至多有一个等价密钥K’，使得$ver_{K’}(x,y)=ver_{K’}(x’,y’)=true$</p>
-<p>定理：$sig_K(x)=y$，那么伪造者能计算出$sig_K(x’)$的概率为1/q</p>
-<p><u>这是一个一次签名方案</u></p>
-<p>246</p>
 ]]></content>
       <categories>
         <category>猫爪记</category>
@@ -2523,6 +2019,49 @@ UCT=X_j+2C_p\sqrt{2ln(n)/n_j}</script><p>其中n是当前节点访问次数，$n
       </tags>
   </entry>
   <entry>
+    <title>A review of Hamlet</title>
+    <url>/2019/04/09/claudius/</url>
+    <content><![CDATA[<p><strong>Claudius</strong> - The villain of the play, a calculating, ambitious politician, driven by his sexual appetites and his lust for power, but he occasionally shows signs of guilt and human feeling—his love for Gertrude, for instance, seems sincere. </p>
+<p><strong>Hamlet</strong> - melancholy, bitter, and cynical, full of hatred for his uncle’s scheming and his mother’s frailty. </p>
+<p><strong>Gertrude</strong> - Danish queen, the prince’s own mother. Pharaoh died she remarried Claudius. </p>
+<p><strong>Ophelia</strong> - Polonius’s daughter, a beautiful young lady with whom Hamlet has been in love. Ophelia is a sweet and innocent young girl, who obeys her father and her brother, Laertes. </p>
+<p><strong>The Ghost</strong> - The spectre of Hamlet’s recently deceased father. The ghost, who claims to have been murdered by Claudius, calls upon Hamlet to avenge him. </p>
+<p><strong>Laertes</strong> - Polonius’s son. For his father and his sister’s death with swords killed Hamlet. He also died in the poison of the sword, though Hamlet didn’t realize sword is poisoned.</p>
+<a id="more"></a>
+<p><strong>Hamlet’s Madness is Feigned</strong></p>
+<p>Some hold that Shakespeare never intended to represent Hamlet as mad but expressly a feigner of madness, and even created the real madness of Ophelia, to contrast it with feigned madness. In every single instance in which Hamlet’s madness is manifested, he has good reason for assuming that madness: while, on the other hand, whenever there was no need to hoodwink anyone, his thought, language and action, bear no resemblance to unsoundness of intellect.” In Act I, Scene V, Hamlet tells Horatio and others that from now on he shall behave like a mad. His feigned madness provides him a great opportunity to find out the reality.:</p>
+<p><strong><em>Here, as before, never, so help you mercy,\</em></strong><br> <strong><em>How strange or odd so e’er I bear myself,\</em></strong><br> <strong><em>As I perchance hereafter shall think meet,\</em></strong><br> <strong><em>To put an antic disposition on……..\</em></strong></p>
+<p>Hamlet’s madness is feigned on the ground that, on various occasions, he is seen in a good temper. His usage of phrases and ideas are not like that of an insane man. He rarely talks in a manner that compels us to say that Hamlet’s madness is real. In the Closet Scene, Hamlet tells his mother:</p>
+<p><strong><em>That I essentially am not in madness\</em></strong><br> <strong><em>But mad in craft.\</em></strong></p>
+<p>To prove the words of the ghost, Hamlet is going to stage a mock-play. No mad person can handle such things. Moreover, Hamlet also directs the actors about the play they are going to enact before the King. Hamlet also tells his friend, Horatio, to keep an eye on the King to catch his conscience, which no one can manage but a man of sense and intellect. Even Guildenstern and Rosencrantz do not think that Hamlet is mad. They describe his behaviour as a “crafty madness.” </p>
+<p>In the Closet Scene, Hamlet convinces her mother in such a manner that she is compelled to accept her guilt.</p>
+<blockquote>
+<p> She says:</p>
+<p><strong><em>O Hamlet, speak no more:\</em></strong><br> <strong><em>Thou turn’st mine eyes into my very soul;\</em></strong><br> <strong><em>And there I see such black and grained spots\</em></strong><br> <strong><em>As will not leave their tinct.\</em></strong></p>
+<p>Hamlet’s comments on the art of acting are so effective and precise that such kinds of statements could not have come from the lips of an insane man. He advises the actors in the following manner:</p>
+<p><strong><em>Speak the speech, I pray you, as I pronounced it to\</em></strong><br> <strong><em>you, trippingly on the tongue: but if you mouth it,\</em></strong><br> <strong><em>as many of your players do, I had as lief the\</em></strong><br> <strong><em>town-crier spoke my lines. Nor do not saw t***</em></strong>he air*<strong><br> *</strong>too much with your hand, thus, but use all gently;*<strong><br> *</strong>for in the very torrent, tempest, and, as I may say,*<strong><br> *</strong>the whirlwind of passion, you must acquire and beget*<strong><br> *</strong>a temperance that may give it smoothness..…….***</p>
+</blockquote>
+<p>Polonius is so much impressed with the replies of Hamlet that he remarks:</p>
+<p>“ How pregnant sometimes his replies are! a happiness that often madness his on, which reason and sanity could not so prosperously be delivered of.”</p>
+<p><strong>Hamlet’s Madness is Real</strong></p>
+<p>Many critics are of the opinion that Hamlet’s madness is real on the basis of some grounds. Though, in the beginning of the play, he tells his friends that he is going to pretend as mad, yet due to the circumstances, his melancholic nature and grief over hasty marriage of his mother bring about drastic changes in his mental behaviour. Look at the following lines taken from Act II, Scene I, wherein Ophelia gives an account of the strange behaviour of Hamlet:</p>
+<p><strong><em>My lord, as I was sewing in my closet,\</em></strong><br> <strong><em>Lord Hamlet, with his doublet all unbraced;\</em></strong><br> <strong><em>No hat upon his head; his stockings foul’d,\</em></strong><br> <strong><em>Ungarter’d, and down-gyved to his ancle;\</em></strong><br> <strong><em>Pale as his shirt; his knees knocking each other;\</em></strong><br> <strong><em>And with a look so piteous in purport\</em></strong><br> <strong><em>As if he had been loosed out of hell\</em></strong><br> <strong><em>To speak of horrors,—he comes before me.\</em></strong></p>
+<p>She also tells her father that he took her by hand and took such a sigh, which was “so piteous and profound as it did seem to shatter all his bulk.” Polonius, when hears her statement about the strange behaviour of Hamlet, concludes that the strange behaviour of Hamlet is due to disappointment in love. Polonius calls his strange behaviour as “the very ecstasy of love.” </p>
+<p>And in the nunnery scene, Hamlet insults Ophelia in the same manner as he insulted her earlier in the play. He advises her not to marry but to go to nunnery.</p>
+<p>(“If thou dost marry, I’ll give thee this plague for thy dowry. Be thou as chaste as ice, as pure as snow, thou shalt not escape calumny. Get thee to a nunnery, go. Farewell. Or, if thou wilt needs marry, marry a fool, for wise men know well enough what monsters you make of them. To a nunnery, go, and quickly too. Farewell.”)</p>
+<p>This strange behaviour of Hamlet convinces Ophelia that he has really gone mad. She expresses her grief over the mental ailment of Hamlet in the following words:</p>
+<p><strong><em>Oh, what a noble mind is here o’erthrown!—\</em></strong><br> <strong>*The courtier’s, soldier’s, scholar’s, eye, to</strong>ngue, sword,……*<strong><br> *</strong>Oh, woe is me,*<strong><br> *</strong>T’ have seen what I have seen, see what I see!***</p>
+<p>On the “vile king” Claudius.</p>
+<p>Actually both Claudius and Hamlet ultimately sacrifice humanity and humaneness in the acquisition of their goals. But what makes Claudius a villain is that he is wrong to kill people merely to fulfill his own thirst for power and sex, and Hamlet is right for the vengeance on the vile king with a flag of integrity; Claudius is a sneak who murdered and lied. Hamlet commits his murders in the open and suffers the pangs of his own conscience. Claudius subverts his conscience and refuses to ask for divine forgiveness; Hamlet seeks contrition and absolves himself of guilt before he dies; Claudius receives no absolution and seeks none. Hamlet will spend eternity in Heaven; Claudius will burn in Hell.</p>
+]]></content>
+      <categories>
+        <category>喵后记</category>
+      </categories>
+      <tags>
+        <tag>小刁猫</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>复杂性问题</title>
     <url>/2020/03/20/complexity/</url>
     <content><![CDATA[<p>P/NP</p>
@@ -2579,264 +2118,504 @@ Q_{ABXY}^S=\{(<\phi,A_a^x\otimes B_b^y\phi>)_{a,b,x,y}:\phi\in H_A\otimes H_B,\\
       </tags>
   </entry>
   <entry>
-    <title>A review of Hamlet</title>
-    <url>/2019/04/09/claudius/</url>
-    <content><![CDATA[<p><strong>Claudius</strong> - The villain of the play, a calculating, ambitious politician, driven by his sexual appetites and his lust for power, but he occasionally shows signs of guilt and human feeling—his love for Gertrude, for instance, seems sincere. </p>
-<p><strong>Hamlet</strong> - melancholy, bitter, and cynical, full of hatred for his uncle’s scheming and his mother’s frailty. </p>
-<p><strong>Gertrude</strong> - Danish queen, the prince’s own mother. Pharaoh died she remarried Claudius. </p>
-<p><strong>Ophelia</strong> - Polonius’s daughter, a beautiful young lady with whom Hamlet has been in love. Ophelia is a sweet and innocent young girl, who obeys her father and her brother, Laertes. </p>
-<p><strong>The Ghost</strong> - The spectre of Hamlet’s recently deceased father. The ghost, who claims to have been murdered by Claudius, calls upon Hamlet to avenge him. </p>
-<p><strong>Laertes</strong> - Polonius’s son. For his father and his sister’s death with swords killed Hamlet. He also died in the poison of the sword, though Hamlet didn’t realize sword is poisoned.</p>
-<a id="more"></a>
-<p><strong>Hamlet’s Madness is Feigned</strong></p>
-<p>Some hold that Shakespeare never intended to represent Hamlet as mad but expressly a feigner of madness, and even created the real madness of Ophelia, to contrast it with feigned madness. In every single instance in which Hamlet’s madness is manifested, he has good reason for assuming that madness: while, on the other hand, whenever there was no need to hoodwink anyone, his thought, language and action, bear no resemblance to unsoundness of intellect.” In Act I, Scene V, Hamlet tells Horatio and others that from now on he shall behave like a mad. His feigned madness provides him a great opportunity to find out the reality.:</p>
-<p><strong><em>Here, as before, never, so help you mercy,\</em></strong><br> <strong><em>How strange or odd so e’er I bear myself,\</em></strong><br> <strong><em>As I perchance hereafter shall think meet,\</em></strong><br> <strong><em>To put an antic disposition on……..\</em></strong></p>
-<p>Hamlet’s madness is feigned on the ground that, on various occasions, he is seen in a good temper. His usage of phrases and ideas are not like that of an insane man. He rarely talks in a manner that compels us to say that Hamlet’s madness is real. In the Closet Scene, Hamlet tells his mother:</p>
-<p><strong><em>That I essentially am not in madness\</em></strong><br> <strong><em>But mad in craft.\</em></strong></p>
-<p>To prove the words of the ghost, Hamlet is going to stage a mock-play. No mad person can handle such things. Moreover, Hamlet also directs the actors about the play they are going to enact before the King. Hamlet also tells his friend, Horatio, to keep an eye on the King to catch his conscience, which no one can manage but a man of sense and intellect. Even Guildenstern and Rosencrantz do not think that Hamlet is mad. They describe his behaviour as a “crafty madness.” </p>
-<p>In the Closet Scene, Hamlet convinces her mother in such a manner that she is compelled to accept her guilt.</p>
+    <title>密码学</title>
+    <url>/2020/04/08/cryptography/</url>
+    <content><![CDATA[<h1 id="古典密码学"><a href="#古典密码学" class="headerlink" title="古典密码学"></a>古典密码学</h1><h2 id="几种古典密码"><a href="#几种古典密码" class="headerlink" title="几种古典密码"></a>几种古典密码</h2><p>移位密码（K=3即为凯撒密码）</p>
+<script type="math/tex; mode=display">
+e_k(x)=(x+K)\:mod\:26\\
+d_k(y)=(x-K)\:mod\:26</script><p>代换密码</p>
+<script type="math/tex; mode=display">
+e_\pi(x)=\pi(x)\\
+d_\pi(x)=\pi^{-1}(x)</script><a id="more"></a>
+<p>仿射密码</p>
+<script type="math/tex; mode=display">
+e(x)=(ax+b)\:mod\:26\\
+d(y)=a^{-1}(y-b)\:mod\:26\\
+gcd(a,26)=1\:(保证a^{-1}唯一)</script><p>维吉尼亚密码</p>
+<script type="math/tex; mode=display">
+e(x_1,x_2,...,x_m)=(x_1+k_1,x_2+k_2,...,x_m+k_m)\\
+d(y_1,y_2,...,y_m)=(y_1-k_1,y_2-k_2,...,y_m-k_m)</script><p>希尔密码</p>
+<script type="math/tex; mode=display">
+e(x)=xK\\
+d(x)=yK^{-1}\\
+K为Z_{26}上的m\times m可逆矩阵</script><p>置换密码</p>
+<script type="math/tex; mode=display">
+e_\pi(x_1,x_2,...,x_m)=(x_{\pi(1)},x_{\pi(2)},...,x_{\pi(m)})\\
+d_\pi(y_1,y_2,...,y_m)=(y_{\pi^{-1}(1)},y_{\pi^{-1}(2)},...,y_{\pi^{-1}(m)})</script><p>流密码</p>
+<p>自动秘钥密码</p>
+<script type="math/tex; mode=display">
+e_z(x)=(x+z)\:mod\:26\\
+d_z(y)=(y-z)\:mod\:26\\
+z_i=x_{i-1}，x_1=K</script><h2 id="密码分析"><a href="#密码分析" class="headerlink" title="密码分析"></a>密码分析</h2><p>常见攻击类型：</p>
+<ul>
+<li>唯密文攻击</li>
+<li>已知明文攻击</li>
+<li>选择明文攻击：有加密机访问权限</li>
+<li>选择密文攻击：有解密机访问权限</li>
+</ul>
+<p>统计分析：</p>
+<p>根据字母出现的频率（或者结合二元组出现频率）</p>
+<p>维吉尼亚密码的分析：</p>
+<p>Kasiski测试法，搜索长度至少为3的相同密文段，记录这些密文段到起始点之间的距离，猜测m为这些距离的最大公因子的因子</p>
+<p>重合指数法，随机两个字母相等的概率（称为重合指数）为0.038，如果相隔为m，这个概率提高到0.065</p>
+<p>希尔密码的分析：</p>
+<p>需要至少m个不同的明-密文对</p>
+<h1 id="Shannon理论"><a href="#Shannon理论" class="headerlink" title="Shannon理论"></a>Shannon理论</h1><p>1949年Claude Shannon发表的”Communication Theory of Secrecy Systems”</p>
+<ul>
+<li>计算安全性：度量破解所做的计算</li>
+<li>可证明安全性：归入数学难题</li>
+<li>无条件安全性</li>
+</ul>
+<p><strong>完善保密性</strong>定义为对任意明文x，密文y，有$P(x|y)=P(x)$</p>
+<p>定义：密文空间C、明文空间P、密钥空间K</p>
+<p>定理：如果密码体制满足|K|=|C|=|P|。那么这个密码体制是完善保密的，当且仅当每个密钥被使用的概率为1/|K|，且对$x\in P$，$y\in C$，存在唯一的密钥K，$e_K(x)=y$。</p>
+<p>一个著名的完善保密的密码体制是”一次一密“，$P=C=K=(Z_2)^n$，加密和解密都是取异或。但是这个体制要求用n比特的密钥加密n比特的明文，且对已知明文攻击是脆弱的。</p>
+<p>由于以概率$2^{-n}$发生的事件可以编码为长度为n的比特串，因此定义随机变量X的熵为</p>
+<script type="math/tex; mode=display">
+H(X)=-\sum P(x)log(x)</script><p><strong>Huffman算法</strong>找到了使得加权平均编码长度最小的<strong>单射</strong>编码l，他是无前缀的，并且</p>
+<script type="math/tex; mode=display">
+H(X)\leq l(f)<H(X)+1</script><p>熵的性质</p>
+<ul>
+<li>$H(X)\leq log(n)$</li>
+<li>$H(X,Y)\leq H(X)+H(Y)$，(X、Y独立时取等号)</li>
+<li>$H(X,Y)=H(Y)+H(X|Y)$</li>
+<li>$H(X|Y)\leq H(X)$</li>
+</ul>
+<p>定义条件熵H(K|C)为密钥含糊度。那么</p>
+<script type="math/tex; mode=display">
+H(K|C)=H(K)+H(P)-H(C)</script><p>($H(K|C)=H(K,C)-H(C)=H(K,P,C)-H(C)=H(K,P)-H(C)=H(K)+H(P)-H(C)$)</p>
+<p>自然语言L的熵定义为</p>
+<script type="math/tex; mode=display">
+H_L=\lim_{n\to\infty}\frac{H(P^n)}{n}</script><p>语言L的冗余度定义为</p>
+<script type="math/tex; mode=display">
+R_L=1-\frac{H_L}{log_2|P|}</script><p>英语中$H(P)=4.19$，$H(P^2)/2=3.90$，$1.0\leq H_L\leq 1.5$</p>
+<p>定理：|C|=|P|且密钥是等概率选取的，那么给定长为n的密文串，伪密钥的期望数满足</p>
+<script type="math/tex; mode=display">
+\bar{s_n}\geq \frac{|K|}{|P|^{nR_L}}-1</script><p>($\bar{s_n}=\sum P(y)|K(y)|-1$，而$H(K|C)=H(K)+H(P^n)-H(C^n)\geq H(K)-nR_Llog_2|P|$)</p>
+<p>定义<strong>唯一解距离</strong>为使得伪密钥期望等于0的n，记为$n_0$。这是给定足够时间下，分析者能唯一计算出密钥所需密文的平均量。</p>
+<script type="math/tex; mode=display">
+n\approx \frac{log_2|K|}{R_Llog_2|P|}</script><p><strong>乘积密码体制</strong>密钥$K=(K_1,K_2)$，定义加密解密如下</p>
+<script type="math/tex; mode=display">
+e_{(K_1,K_2)}(x)=e_{K_2}(e_{K_1}(x))\\
+d_{(K_1,K_2)}(y)=d_{K_1}(d_{K_2}(y))</script><p>如果密码体制不是幂等的，那么多次迭代有可能提高安全性。</p>
+<h1 id="分组密码和高级加密标准"><a href="#分组密码和高级加密标准" class="headerlink" title="分组密码和高级加密标准"></a>分组密码和高级加密标准</h1><p>大多数分组密码都是乘积密码：用K来生成$N_r$个<strong>轮密钥</strong>（也叫子密钥），轮密钥的列表就是<strong>密钥编排方案</strong>。通过这些轮密钥依次进行加密。</p>
+<h2 id="代换-置换网络（SPN）"><a href="#代换-置换网络（SPN）" class="headerlink" title="代换-置换网络（SPN）"></a>代换-置换网络（SPN）</h2><script type="math/tex; mode=display">
+\pi_s:\{0,1\}^l\to\{0,1\}^l\\
+\pi_p:\{1,...,lm\}\to\{1,...,lm\}</script><p>均为置换，设$P=C=\{0,1\}^{lm}$，$K\subset(\{0,1\}^{lm})^{N_r+1}$是由K生成的密钥编排方案的集合。</p>
+<p>每轮加密先用异或操作混入该轮密钥，再用$\pi_s$进行m次代换，再用$\pi_p$进行一次置换。（最后一轮只做异或操作）</p>
+<h2 id="线性密码分析"><a href="#线性密码分析" class="headerlink" title="线性密码分析"></a>线性密码分析</h2><p>取值01的随机变量$P(X_i=1)=p_i$，定义<strong>偏差</strong>$e_i=p_i-1$</p>
+<p>堆积引理：独立随机变量$X_i$，那么随机变量$X_1\oplus X_2\oplus … \oplus X_n$的偏差满足</p>
+<script type="math/tex; mode=display">
+e=2^{k-1}\prod_{j=1}^ke_k</script><p>对于一个置换$\pi_s:\{0,1\}^4\to\{0,1\}^4$，把每个相关的随机变量表示成如下形式</p>
+<script type="math/tex; mode=display">
+(\oplus_{i=1}^4a_iX_i)\oplus(\oplus_{i=1}^4b_iY_i)</script><p>设$N_L(a,b)$表示满足如下条件的8元组对(a,b),(x,y)的个数</p>
+<script type="math/tex; mode=display">
+(y_1,y_2,y_3,y_4)=\pi_S(x_1,x_2,x_3,x_4)\\
+(\oplus_{i=1}^4a_iX_i)\oplus(\oplus_{i=1}^4b_iY_i)=0</script><p>该随机变量的偏差$e(a,b)=(N_L(a,b)-8)/16$</p>
+<p>一个基于偏差为$e$的线性逼近的线性攻击想要成功所需要的的明-密文对数$T\approx ce^{-2}$</p>
+<h2 id="差分分析"><a href="#差分分析" class="headerlink" title="差分分析"></a>差分分析</h2><p>定义$\Delta(x’)=\{(x,x^*|x\oplus x^*=x’\}$，则显然这个集合大小为$2^m$</p>
+<p>定义</p>
+<script type="math/tex; mode=display">
+N_D(x',y')=|\{(x,x^*)\in \Delta(x'):\pi_s(x)\oplus\pi_s(x^*)=y'\}|</script><p>由此定义对应于差分$(a’,b’)$的扩散率</p>
+<script type="math/tex; mode=display">
+R_p(a',b')=\frac{N_D(a',b')}{2^m}(=P(b'|a'))</script><p>一个基于扩散率为e的差分攻击，需要4重组$(x,x^*,y,y^*)$的数量$T\approx ce^{-1}$</p>
+<h2 id="数据加密标准"><a href="#数据加密标准" class="headerlink" title="数据加密标准"></a>数据加密标准</h2><p>DES是一种特殊的迭代密码，叫做<strong>Feistel型密码</strong>，每个状态$u^i$被分成长度相同的两部分$L^i$和$R^i$，轮函数g有如下形式</p>
+<script type="math/tex; mode=display">
+g(L^{i-1},R^{i-1},K^i)=(L^i,R^i)\\
+L^i=R^{i-1},R^i=L^{i-1}\oplus f(R^{i-1},K^i)</script><p>显然Feistel型轮函数是可逆的，所以f不需要满足单射条件。</p>
+<p>DES是16轮Feistel型密码，分组长度为64，密钥空间为$2^56$。</p>
+<p>1998年56小时找到了DES密钥</p>
+<h2 id="高级加密标准"><a href="#高级加密标准" class="headerlink" title="高级加密标准"></a>高级加密标准</h2><p>AES要求具有分组长度128，支持128、192、256的密钥长度，轮数依赖于密钥长度</p>
+<p>最终<strong>Rijndael</strong>当选</p>
+<p>前N-1轮，用S盒进行一次代换SubBytes，对State做一置换ShiftRows，再对State做一次操作MixColumns，然后进行AddRoundKey。最后一轮不用MixColumns。</p>
+<p>目前来看，AES是安全的，不存在快于穷尽密钥搜索的攻击。</p>
+<h2 id="工作模式"><a href="#工作模式" class="headerlink" title="工作模式"></a>工作模式</h2><p>四种模式</p>
+<ul>
+<li>密码本（ECB）</li>
+<li>密码反馈（CFB）：$z_i=e_K(y_{i-1}),\:y_i=x_i\oplus z_i$</li>
+<li>密码分组连接（CBC）：$y_i=e_K(y_{i-1}\oplus x_i)$</li>
+<li>输出反馈（OFB）：$z_i=e_K(z_{i-1}),\:y_i=x_i\oplus z_i$</li>
+</ul>
+<p>ECB和OFB中，改变一个明文分组不影响其他密文分组，常用于信道不安全的通信，OFB常用于卫星通信。</p>
+<p>CBC和CFB模式对于认证是有用的，能产生消息认证码MAC。</p>
+<h1 id="Hash函数"><a href="#Hash函数" class="headerlink" title="Hash函数"></a>Hash函数</h1><p>Hash函数安全性从三个问题来评估（这三个问题都是难解的才是稳固的）</p>
+<ul>
+<li>原像</li>
+<li>第二原像</li>
+<li>碰撞</li>
+</ul>
+<p>随机预言模型：理想的Hash函数，这个模型对x，随机选择Hash函数h，h(x)是完全随机的。</p>
+<p>取q个点寻找原像的平均成功率$e=1-(1-1/M)^q$。（也是寻找第二原像的成功率）</p>
+<p>取q个点寻找碰撞的成功率为$e=1-P_M^q/M^q$</p>
+<p>可以估计$q\approx\sqrt{2Mln(1/(1-e))}$，（这就说明大约$\sqrt{M}$个随机元素计算有50%概率出现碰撞）</p>
+<p>解决碰撞问题比原像问题和第二原像问题容易。碰撞问题可以很容易地转变为第二原像问题。任何能解决原像问题且概率为1的算法也能解决碰撞问题。</p>
+<h2 id="迭代Hash函数"><a href="#迭代Hash函数" class="headerlink" title="迭代Hash函数"></a>迭代Hash函数</h2><p>输入一个比特串x，用公开算法构造串y，使得</p>
+<script type="math/tex; mode=display">
+|y|=0\:mod\:t</script><p>处理阶段必须保证x到y是单射（常见的是一个变换+padding）</p>
+<p>然后以长度为m的公开初始值作为$z_0$，然后</p>
+<script type="math/tex; mode=display">
+z_i=compress(z_{i-1}||y_i)</script><h3 id="Merkle-DamgArd结构"><a href="#Merkle-DamgArd结构" class="headerlink" title="Merkle-DamgArd结构"></a>Merkle-DamgArd结构</h3><p>如果有抗碰撞的compress函数，则这样的迭代Hash函数也是抗碰撞的。先将x分成长为k-1的部分，得到y</p>
+<script type="math/tex; mode=display">
+z_1=0^{m+1}||y_1,g_1=compress(z_1)\\
+for\:i\:in\:1\:to\:k\:do\:
+z_{i+1}=g_i||1||y_{i+1},g_{i+1}=compress(z_{i+1})</script><p>以$g_{k+1}$为密文。</p>
+<p>定理4.6：找到h的碰撞，则能找到compress函数的碰撞。（证明考察x长度mod t-1）</p>
+<h3 id="安全Hash算法（SHA-1）"><a href="#安全Hash算法（SHA-1）" class="headerlink" title="安全Hash算法（SHA-1）"></a>安全Hash算法（SHA-1）</h3><p>要求$|x|\leq 2^{64} - 1$，则$l=|x|$长度最多为64比特</p>
+<p>PADDING算法：</p>
+<script type="math/tex; mode=display">
+y=x||1||0^d||l</script><p>其中 |l|=64，padding的d = 447-|x| mod 512。把y分成512比特的分组</p>
+<script type="math/tex; mode=display">
+y=M_1||M_2||...||M_n</script><p><img src="sha1.png" alt=""></p>
+<p>其中$f_i$是分组定义的函数，输入是三个字，输出是一个字，$K_i$是分组定义的常数。</p>
+<p>之后还有新的Hash函数（SHA-256，SHA-384，SHA-512…）</p>
+<h2 id="消息认证码"><a href="#消息认证码" class="headerlink" title="消息认证码"></a>消息认证码</h2><p>一个消息的MAC计算为</p>
+<script type="math/tex; mode=display">
+h_k(x||x')=compress(h_K(x)||x')</script><p>对于攻击者来说，即使K是保密的，计算上式的值也是简单的事情。</p>
+<h3 id="嵌套MAC和HMAC"><a href="#嵌套MAC和HMAC" class="headerlink" title="嵌套MAC和HMAC"></a>嵌套MAC和HMAC</h3><p>嵌套MAC是指合成两个带密钥的Hash组建立MAC算法。假定(X,Y,K,G)和(Y,Z,L,H)是Hash族，复合成Hash族$(X,Z,M,G\cdot H)$，其中$M=K\times L$。对所有的x</p>
+<script type="math/tex; mode=display">
+(g\cdot h )_{(K,L)}(x)=h_L(g_K(x))</script><p>这个结构中$|Y|\geq |Z|$是有限集，$|X|&gt;|Y|$或者为无限集。如果满足以下两个条件，嵌套MAC是安全的</p>
+<ul>
+<li>给定固定的密钥，作为MAC，(Y,Z,L,H)是安全的</li>
+<li>给定固定的密钥，(X,Y,K,G)是碰撞稳定的</li>
+</ul>
+<p>直观上讲是通过安全的“小MAC”和碰撞固定的Hash族复合成安全的“大MAC”。考虑三种攻击</p>
+<ul>
+<li>对嵌套MAC的假冒</li>
+<li>对小MAC的假冒</li>
+<li>对Hash族的碰撞-探测</li>
+</ul>
+<p>HMAC是一个被提议作为FIPS标准的嵌套MAC算法。密钥记为K，ipad和opad是常数。定义</p>
+<script type="math/tex; mode=display">
+HMAC_K(x)=SHA-1(K\oplus opad||SHA-1((K\oplus ipad)||x))</script><h3 id="CBC-MAC"><a href="#CBC-MAC" class="headerlink" title="CBC-MAC"></a>CBC-MAC</h3><p>构造MAC的常用方式是基于固定的（公开的）初始化向量的CBC模式。每个密文分组在被K加密之前与下一组明文分组一起异或。</p>
+<script type="math/tex; mode=display">
+y_i=e_K(y_{i-1}\oplus x_i)</script><p>对CBC-MAC最好的通用攻击是碰撞攻击。</p>
+<p>攻击细节如下：选择q个独立的、长度为t的比特串，记为$x_1^1,…,x_1^q$，随机选择$x_2^i$，/定义$x_3,…,x_n$是固定比特串，定义</p>
+<script type="math/tex; mode=display">
+x^i=x_1^i||x_2^i||...||x_n^i</script><p>那么如果$h_K(x_i)=h_K(x_j)$，则</p>
+<script type="math/tex; mode=display">
+y_1^i\oplus x_2^i=y_1^j\oplus x_2^j</script><p>那么攻击者定义</p>
+<script type="math/tex; mode=display">
+v=x_1^i||(x_2^i\oplus x_\delta)||...\\
+w=x_2^j||(x_2^j\oplus x_\delta)||...</script><p>并请求v的MAC，这也就是w的MAC。</p>
+<h3 id="无条件安全信息认证码"><a href="#无条件安全信息认证码" class="headerlink" title="无条件安全信息认证码"></a>无条件安全信息认证码</h3><p>假定一个密钥只产生一个认证表情，即攻击者至多只能进行一次查询</p>
+<p>定义</p>
+<script type="math/tex; mode=display">
+payoff(x,y)=Pr[y=h_{K_0}(x)]=|\{k\in K|h_K(x)=y\}|/|K|</script><p>那么</p>
+<script type="math/tex; mode=display">
+pd_0=\max\{payoff(x,y)\}\\
+pd_1=\max\{payoff(x',y';x,y):x\neq x',(x,y)至少在一个密钥下有效\}</script><p>定义<strong>强泛Hash函数族</strong>，如果对任意$x\neq x’$</p>
+<script type="math/tex; mode=display">
+|\{K|h_K(x)=y,h_K(x')=y'\}|=|K|/|Y|^2</script><p>定理：强泛(N,M)-Hash函数族的认证码的$pd_0=pd_1=1/M$。</p>
+<p>显然，(N,M)-Hash函数族(X,Y,K,H)对任意指定x，存在y，使得</p>
+<script type="math/tex; mode=display">
+payoff(x,y)\geq 1/M</script><p>对每个(x,y)和x’，存在一个y’使得</p>
+<script type="math/tex; mode=display">
+payoff(x',y';x,y)\geq 1/M</script><p>故$pd_1\geq 1/M$，取等号的充要条件就是该Hash函数族是强泛的。</p>
+<h1 id="RSA密码体系和整数因子分解"><a href="#RSA密码体系和整数因子分解" class="headerlink" title="RSA密码体系和整数因子分解"></a>RSA密码体系和整数因子分解</h1><p>公钥密码体系无法提供无条件安全性，因此我们只研究其计算安全性。</p>
+<p><strong>Euclidean算法</strong></p>
+<p>先计算r=gcd(a,b)，然后得到sa+tb=r，那么$b^{-1}=t\mod a$</p>
+<p><strong>中国剩余定理</strong></p>
+<script type="math/tex; mode=display">
+x=a_i\:mod\:m_i</script><p>定义$M_i=M/m_i$，那么</p>
+<script type="math/tex; mode=display">
+x=\sum_{i=1}^n a_iM_iy_i\:mod\: M</script><p>其中$y_i=M_i^{-1}\mod m_i$</p>
+<p><strong>Langrange</strong></p>
+<p>n阶乘法群G的元素的阶整除n</p>
+<p><strong>Fermat</strong></p>
+<p>素数p，$b^p=b\mod p$</p>
+<p><strong>Euler准则</strong></p>
+<p>奇素数p，正整数a，那么a是模p的二次剩余当且仅当</p>
+<script type="math/tex; mode=display">
+a^{(p-1)/2}=1\:mod\:p</script><h2 id="RSA密码体系"><a href="#RSA密码体系" class="headerlink" title="RSA密码体系"></a>RSA密码体系</h2><p>n=pq，p,q为素数</p>
+<script type="math/tex; mode=display">
+K=\{(n,p,q,a,b):ab=1\:mod\:\phi(n)\}</script><p>定义</p>
+<script type="math/tex; mode=display">
+e_K(x)=x^b\:mod\:n\\
+d_K(y)=y^a\:mod\:n</script><p>n和b是公钥，p、q、a是私钥。</p>
+<p><strong>素性检测</strong></p>
+<p>素数个数定理：小于等于N的素数个数$\pi(N)\approx N/ln(n)$</p>
+<p><strong>判定问题的随机算法</strong></p>
+<p>Monte Carlo算法总是给出一个回答，但不一定正确。<strong>偏是</strong>的Monte Carlo算法的“是”回答总是正确，“否”也许是不正确的。</p>
+<p>Solovay-Strassen是对于合数问题一个<strong>偏是</strong>的Monte Carlo算法，具有错误概率1/2。</p>
+<p>称n为对于基底a的伪素数，如果$(a/n)=a^{(n-1)/2}\mod n$。可以证明，n对至多1/2的a为伪素数。</p>
+<p>Solovay计算x=(a/n)（利用二次互反律等），如果x=0则为合数，否则判断$x=a^{(n-1)/2}$。</p>
+<p>Miller-Rabin算法是另一个合数问题的算法，也是<strong>偏是</strong>的，错误概率至多为1/4。</p>
+<p>把n-1写成$2^km$，随机选取整数a，$1\leq a\leq n-1$，</p>
+<script type="math/tex; mode=display">
+b=a^m\:mod\:n</script><p>如果b=1，则n为素数，否则对重复k次</p>
+<script type="math/tex; mode=display">
+b=b^2\:mod\:n</script><p>每次如果b = -1，则n为素数。最后n为合数。</p>
+<p><strong>模n的平方根</strong></p>
+<p>假定</p>
+<script type="math/tex; mode=display">
+n=\prod_{i=1}^lp_i^{e_i}</script><p>那么同余方程</p>
+<script type="math/tex; mode=display">
+y^2=a\:mod\:n</script><p>当$(a/p_i)=1$对所有i成立时有$2^l$个解，其他情形下没有解。</p>
+<h2 id="分解因子算法"><a href="#分解因子算法" class="headerlink" title="分解因子算法"></a>分解因子算法</h2><p>攻击RSA密码最明显的方式就是试图分解公开模数。对于大整数最有效的三种算法是</p>
+<ul>
+<li>二次筛法</li>
+<li>椭圆曲线分解算法</li>
+<li>数域筛法</li>
+</ul>
+<p>其他先驱的著名算法有Pollard的$\rho$方法和p-1算法，William的p+1算法、连分式算法、试除法等等。</p>
+<p><strong>Pollard p-1算法</strong></p>
+<p>a=2</p>
+<p>for j = 2 to B do </p>
+<p>$a=a^j\mod n$，计算a-1和n的最大公约数，如果都找不到则认定为素数。</p>
+<p>合理性：n的素因子p，假定对每个素数$q|(p-1)$，q&lt;B，则有$(p-1)|B!$，此时$2^{B!}=1\mod p$</p>
+<p>一个缺陷是B的选择，另一个缺陷是对q的要求，所以可以选择p=2p+1这样的安全素数</p>
+<p><strong>Pollard $\rho$算法</strong></p>
+<p>选择随机子集X，对不同的x1,x2，计算gcd(x1-x2, n)。这个方法成功当且仅当x mod p出现碰撞。当</p>
+<script type="math/tex; mode=display">
+|X|\approx 1.17\sqrt{p}</script><p>时，50%的概率至少有一个碰撞。但这种方法需要计算很多次gcd，因此考虑定义整系数多项式f，例如$f(x)=x^2+a$，考察序列</p>
+<script type="math/tex; mode=display">
+x_i=f(x_{i-1})\:mod\:n</script><p>那么如果$x_i=x_j\mod p$，那么$x_{i+d}=x_{j+d}\mod p$，那么图构成1~i的尾巴，和i~j的圈。因此我们取j=2i来寻找碰撞。</p>
+<p><strong>Dixon随机平方算法</strong></p>
+<p>假设找到$x^2=y^2\mod n$，且$x\neq \pm y\mod n$，那么</p>
+<script type="math/tex; mode=display">
+n|(x-y)(x+y)</script><p>因此gcd(x+y, n)是n的一个非平凡因子。</p>
+<p>随机平方算法使用因子基B（b个最小素数的集合），找到几个整数z，使得$z^2\mod n$的所有素因子在B里，然后将这些z相乘使得B里素数都出现偶数次，由此导出一个期望的同余方程。</p>
+<p>一些技巧是选取形如$j+[\sqrt{kn}]$的整数，因为这样平方和模n比较小， 有可能在B上完全分解。</p>
+<p>称n是m-光滑的，如果n的任一素因子都小于等于m，$\phi(n,m)$定义为小于等于n且是m-光滑的正整数个数，如果$n&gt;&gt;m$</p>
+<script type="math/tex; mode=display">
+\frac{\phi(n,m)}{n}\approx \frac1{u^u},u=log(n)/log(m)</script><p>基B包含所有小于m的素数，约有b=m/ln(m)个，为了使算法成功，期望找到b个m光滑整数，测试$bu^u$个整数。通常期望运行时间</p>
+<script type="math/tex; mode=display">
+O(2^{c\sqrt{log_2(n)log_2(log_2(n))}})</script><p><strong>Pomerance二次筛法</strong></p>
+<script type="math/tex; mode=display">
+O(2^{(1+o(1))\sqrt{ln(n)ln(ln(n))}})</script><p><strong>椭圆曲线算法</strong></p>
+<script type="math/tex; mode=display">
+O(2^{(1+o(1))\sqrt{2ln(p)ln(ln(p))}})</script><p><strong>数域筛法</strong></p>
+<script type="math/tex; mode=display">
+O(2^{(1.92+o(1))(ln(n))^{1/3}(ln(ln(n)))^{2/3}})</script><h2 id="对RSA的其他攻击"><a href="#对RSA的其他攻击" class="headerlink" title="对RSA的其他攻击"></a>对RSA的其他攻击</h2><p><strong>计算$\phi(n)$</strong></p>
+<p>可以看到这不比分解n简单。得到$\phi(n)$之后，构造关于p的二次方程即可</p>
+<script type="math/tex; mode=display">
+p^2-(n-\phi(n)+1)p+n=0</script><p><strong>解密指数</strong></p>
+<p>如果解密指数a已知，那么n可以通过一个随机算法在多项式时间内分解。</p>
+<p>可以有算法达到1/2的成功率</p>
+<p><strong>Wiener低解密指数攻击</strong></p>
+<p>假设前提</p>
+<script type="math/tex; mode=display">
+3a<n^{1/4},q<p<2q</script><p>满足这个前提的a可以使得解密时间减少75%</p>
+<p>已知</p>
+<script type="math/tex; mode=display">
+0<n-\phi(n)=p+q-1<3q<3\sqrt{n}</script><p>假设</p>
+<script type="math/tex; mode=display">
+ab=1+t\phi(n)</script><p>考虑到$t&lt;a&lt;n^{1/4}$那么</p>
+<script type="math/tex; mode=display">
+|\frac bn-\frac ta|<\frac{3t}{a\sqrt{n}}<\frac1{an^{1/4}}<\frac1{3a^2}</script><p>因此t/a是b/n的近似，从<em>连分数理论</em>可知这样的近似是b/n连分数展开的<strong>收敛子</strong>。可以通过验证前几个收敛子判断。</p>
+<h2 id="Rabin密码体制"><a href="#Rabin密码体制" class="headerlink" title="Rabin密码体制"></a>Rabin密码体制</h2><p>假定n=pq不能被分解，则这类体制对明文攻击是计算安全的</p>
+<p>设n=pq，p,q为素数，定义</p>
+<script type="math/tex; mode=display">
+e_K(x)=x^2\:mod\:n\\
+d_K(y)=\sqrt{y}\:mod\:n</script><p>一个明显的问题是加密不是单射。</p>
+<p>解密可以<em>约化</em>到n的分解</p>
+<p>Rabin Oracle Factoring(n)</p>
+<p>选择$y=r^2\mod n$，计算$x=Rabin\:Decrypt(y)$，如果$x\neq\pm r\mod n$，那么$p=gcd(x+r,n)$。</p>
+<h2 id="RSA语义安全"><a href="#RSA语义安全" class="headerlink" title="RSA语义安全"></a>RSA语义安全</h2><p>half(y)：判断y的明文和n/2的大小关系</p>
+<p>parity(y)：判断y的明文二进制最后一位</p>
+<p>RSA解密可以约化为half(y)/parity(y) 【二分查找】</p>
 <blockquote>
-<p> She says:</p>
-<p><strong><em>O Hamlet, speak no more:\</em></strong><br> <strong><em>Thou turn’st mine eyes into my very soul;\</em></strong><br> <strong><em>And there I see such black and grained spots\</em></strong><br> <strong><em>As will not leave their tinct.\</em></strong></p>
-<p>Hamlet’s comments on the art of acting are so effective and precise that such kinds of statements could not have come from the lips of an insane man. He advises the actors in the following manner:</p>
-<p><strong><em>Speak the speech, I pray you, as I pronounced it to\</em></strong><br> <strong><em>you, trippingly on the tongue: but if you mouth it,\</em></strong><br> <strong><em>as many of your players do, I had as lief the\</em></strong><br> <strong><em>town-crier spoke my lines. Nor do not saw t***</em></strong>he air*<strong><br> *</strong>too much with your hand, thus, but use all gently;*<strong><br> *</strong>for in the very torrent, tempest, and, as I may say,*<strong><br> *</strong>the whirlwind of passion, you must acquire and beget*<strong><br> *</strong>a temperance that may give it smoothness..…….***</p>
+<p>语义安全的公钥密码体制</p>
+<p>正整数m,k，F为一族陷门单向置换，对任意$f\in F$，有$f:\{0,1\}^k\to\{0,1\}^k$，随机预言$G:\{0,1\}^k\to\{0,1\}^m$，随机选取$r\in\{0,1\}^k$，定义</p>
+<script type="math/tex; mode=display">
+e_K(x)=(y_1,y_2)=(f(r),G(r)\oplus x)\\
+d_K(y_1,y_2)=G(f^{-1}(y_1))\oplus y_2</script><p>f和G是公钥，$f^{-1}$是私钥。</p>
 </blockquote>
-<p>Polonius is so much impressed with the replies of Hamlet that he remarks:</p>
-<p>“ How pregnant sometimes his replies are! a happiness that often madness his on, which reason and sanity could not so prosperously be delivered of.”</p>
-<p><strong>Hamlet’s Madness is Real</strong></p>
-<p>Many critics are of the opinion that Hamlet’s madness is real on the basis of some grounds. Though, in the beginning of the play, he tells his friends that he is going to pretend as mad, yet due to the circumstances, his melancholic nature and grief over hasty marriage of his mother bring about drastic changes in his mental behaviour. Look at the following lines taken from Act II, Scene I, wherein Ophelia gives an account of the strange behaviour of Hamlet:</p>
-<p><strong><em>My lord, as I was sewing in my closet,\</em></strong><br> <strong><em>Lord Hamlet, with his doublet all unbraced;\</em></strong><br> <strong><em>No hat upon his head; his stockings foul’d,\</em></strong><br> <strong><em>Ungarter’d, and down-gyved to his ancle;\</em></strong><br> <strong><em>Pale as his shirt; his knees knocking each other;\</em></strong><br> <strong><em>And with a look so piteous in purport\</em></strong><br> <strong><em>As if he had been loosed out of hell\</em></strong><br> <strong><em>To speak of horrors,—he comes before me.\</em></strong></p>
-<p>She also tells her father that he took her by hand and took such a sigh, which was “so piteous and profound as it did seem to shatter all his bulk.” Polonius, when hears her statement about the strange behaviour of Hamlet, concludes that the strange behaviour of Hamlet is due to disappointment in love. Polonius calls his strange behaviour as “the very ecstasy of love.” </p>
-<p>And in the nunnery scene, Hamlet insults Ophelia in the same manner as he insulted her earlier in the play. He advises her not to marry but to go to nunnery.</p>
-<p>(“If thou dost marry, I’ll give thee this plague for thy dowry. Be thou as chaste as ice, as pure as snow, thou shalt not escape calumny. Get thee to a nunnery, go. Farewell. Or, if thou wilt needs marry, marry a fool, for wise men know well enough what monsters you make of them. To a nunnery, go, and quickly too. Farewell.”)</p>
-<p>This strange behaviour of Hamlet convinces Ophelia that he has really gone mad. She expresses her grief over the mental ailment of Hamlet in the following words:</p>
-<p><strong><em>Oh, what a noble mind is here o’erthrown!—\</em></strong><br> <strong>*The courtier’s, soldier’s, scholar’s, eye, to</strong>ngue, sword,……*<strong><br> *</strong>Oh, woe is me,*<strong><br> *</strong>T’ have seen what I have seen, see what I see!***</p>
-<p>On the “vile king” Claudius.</p>
-<p>Actually both Claudius and Hamlet ultimately sacrifice humanity and humaneness in the acquisition of their goals. But what makes Claudius a villain is that he is wrong to kill people merely to fulfill his own thirst for power and sex, and Hamlet is right for the vengeance on the vile king with a flag of integrity; Claudius is a sneak who murdered and lied. Hamlet commits his murders in the open and suffers the pangs of his own conscience. Claudius subverts his conscience and refuses to ask for divine forgiveness; Hamlet seeks contrition and absolves himself of guilt before he dies; Claudius receives no absolution and seeks none. Hamlet will spend eternity in Heaven; Claudius will burn in Hell.</p>
-]]></content>
-      <categories>
-        <category>喵后记</category>
-      </categories>
-      <tags>
-        <tag>小刁猫</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>从一开始的汇编</title>
-    <url>/2020/01/10/csapp4/</url>
-    <content><![CDATA[<p><a href="/2020/01/02/csapp3/">上一篇：从零开始的汇编</a></p>
-<h3 id="Y86-一个玩具"><a href="#Y86-一个玩具" class="headerlink" title="Y86(一个玩具)"></a>Y86(一个玩具)</h3><p>定义Y86指令集只处理四字节的数据</p>
-<p><img src="y86.png" alt=""></p>
+<p>主要缺点是数据扩张，将m加密成m+k</p>
+<p>假定存在一个算法Distinguish可以对两个明文x1,x2求解密文识别问题，且是完善的（正确概率为$1/2+\epsilon$），我们可以构造新算法Invert以不为0的概率对y求逆。</p>
+<blockquote>
+<p>用SimG代替随机预言G</p>
+<p>SimG维护RList、GList。RList记录Distinguish询问的所有输入r，GList为对应的响应</p>
+<p>如果r已经询问过，那么用已定义的值g。</p>
+<p>如果有$f(r)=y$，那么随机选择j，$g=y_2\oplus x_j$。否则随机选择g</p>
+</blockquote>
+<p>那么可以证明得到$x=f^{-1}(y)$的概率大于等于$\epsilon$。</p>
+<blockquote>
+<p>更有效的非对称密码体制</p>
+<p>m&lt;k，$k_0=k-m$，F为一族陷门单向置换，对任意$f\in F$，有$f:\{0,1\}^k\to\{0,1\}^k$，随机预言$G:\{0,1\}^{k_0}\to\{0,1\}^m$，$H:\{0,1\}^m\to\{0,1\}^{k_0}$，随机选取$r_0\in\{0,1\}^m$。</p>
+<script type="math/tex; mode=display">
+e_K(x)=f(y_1||y_2)\\
+y_1=x\oplus G(r),\:y_2=r\oplus H(x\oplus G(r))</script><p>进一步定义</p>
+<script type="math/tex; mode=display">
+f^{-1}(y)=x_1||x_2\\
+r=x_2\oplus H(x_1)\\
+d_K(y)=G(r)\oplus x_1</script><p>$f,G,H$为公钥，$f^{-1}$为私钥</p>
+</blockquote>
+<h1 id="离散对数问题的公钥密码体制"><a href="#离散对数问题的公钥密码体制" class="headerlink" title="离散对数问题的公钥密码体制"></a>离散对数问题的公钥密码体制</h1><p><strong>离散对数</strong></p>
+<p>对乘法群$(G,·)$,一个n阶元素$\alpha$，$\beta\in&lt;\alpha&gt;$，找到a</p>
+<script type="math/tex; mode=display">
+\alpha^a=\beta</script><p>记a为$log_\alpha\beta$</p>
+<h2 id="ElGamal密码体制"><a href="#ElGamal密码体制" class="headerlink" title="ElGamal密码体制"></a>ElGamal密码体制</h2><p>设p是素数，$Z_p$上的离散对数问题是案处理的，$\alpha$是一个本原元</p>
+<p>$p,\alpha,\beta$是公钥，a是私钥。</p>
+<p>定义</p>
+<script type="math/tex; mode=display">
+e_K(x,k)=(y_1,y_2)\\
+y_1=\alpha^k\:mod\:p,\:y_2=x\beta^k\:mod\:p</script><p>定义</p>
+<script type="math/tex; mode=display">
+d_K(y_1,y_2)=y_2(y_1^a)^{-1}\:mod\:p</script><h2 id="离散对数问题的算法"><a href="#离散对数问题的算法" class="headerlink" title="离散对数问题的算法"></a>离散对数问题的算法</h2><p><strong>Shanks算法</strong></p>
+<p>m=$[\sqrt{n}]$，对$0\leq j\leq m-1$，计算$\alpha^{mj}$。</p>
+<p>对m个有序对$(j,\alpha^{mj})$按照第二个坐标排序，得到列表L1。</p>
+<p>对$0\leq i\leq m-1$，计算$\beta\alpha^{-i}$</p>
+<p>对m个有序对$(i,\beta\alpha^{-i})$关于第二个坐标排序，得到列表L2&gt;</p>
+<p>找到具有相同第二坐标的对，令a=mj+i</p>
+<p><strong>Pollard $\rho$离散对数算法</strong></p>
+<p>定义大致相等的划分$S_1,S_2,S_3$，定义函数f</p>
+<script type="math/tex; mode=display">
+f(x,a,b)=(\beta x,a,b+1),x\in S_1\\
+f(x,a,b)=(x^2,2a,2b),x\in S_2\\
+f(x,a,b)=(\alpha x,a+1,b),x\in S_3</script><p>这样产生的每个三元组都满足$x=\alpha^a\beta^b$</p>
+<p>比较三元组，知道发现$x_{2i}=x_i$，这时有</p>
+<script type="math/tex; mode=display">
+\alpha^{a_{2i}}\beta^{b_{2i}}=\alpha^{a_i}\beta^{b_i}</script><p>所以</p>
+<script type="math/tex; mode=display">
+log_\alpha\beta=(a_i-a_{2i})(b_{2i}-b_i)^{-1}\:mod\:n</script><p><strong>Pohlig-Hellman算法</strong></p>
+<p>假设</p>
+<script type="math/tex; mode=display">
+n=\prod_{i=1}^kp_i^{c_i}</script><p>把a表示为</p>
+<script type="math/tex; mode=display">
+a=\sum_{i=0}^{c-1}a_iq^i+sq^c</script><p>依次确定$a_0,a_1,…$（利用$\beta^{n/q}=\alpha^{a_0n/q}$）</p>
+<p>然后用中国剩余定理。</p>
+<p><strong>指数演算法</strong></p>
+<p>取B个小素数作为基，构造C&gt;B个模p的同余方程（要保证所有因子在B里）</p>
+<script type="math/tex; mode=display">
+\alpha^{x_j}=p_1^{a_{1j}}...p_B^{a_{Bj}}\:mod\:p</script><p>然后选择随机数s，使得</p>
+<script type="math/tex; mode=display">
+\beta\alpha^s</script><p>可以在B上分解，那么就容易得到答案。</p>
+<p><u>通用性算法复杂性的下界是$\sqrt{n}$，（这是可以证明的）</u></p>
+<h2 id="有限域"><a href="#有限域" class="headerlink" title="有限域"></a>有限域</h2><p>ElGamal密码体制可以咋任何离散对数问题难处理的群中实现</p>
 <ul>
-<li>将movl拆分成四个指令，显示指定源和目的。i表示立即数，r表示寄存器，m表示存储器。</li>
-<li>OPl包含四个整数操作，分别是addl,subl,andl,xorl</li>
-<li>三个条件码ZF、SF和OF</li>
-<li>7个跳转指令jmp、jle、jl、je、jne、jge、jg</li>
-<li>6个条件传送cmovle、cmovl、cmove、cmovne、cmovge、cmovg（属于rrmovl类）</li>
-<li>call、ret、pushl、popl不变</li>
-<li>halt相当于X86里的hlt，会直接导致处理器暂停</li>
+<li>有限域$F_{p^n}$的乘法群</li>
+<li>定义在有限域上的椭圆曲线群</li>
 </ul>
-<p>指令集模拟器YIS</p>
-<a id="more"></a>
-<h3 id="HCL"><a href="#HCL" class="headerlink" title="HCL"></a>HCL</h3><p>位级电路-&gt;字级电路</p>
-<p>多路复用电路</p>
-<p>ALU（算术单元）：根据输入做一次算术运算</p>
-<h3 id="寄存器"><a href="#寄存器" class="headerlink" title="寄存器"></a>寄存器</h3><p>寄存器操作时，输出会一直保存在当前寄存器状态上，直到时钟信号上升。</p>
-<p><img src="register.png" alt=""></p>
-<p>这是一个典型的寄存器文件，这样一个多端口随机访问存储器允许同时进行多个读写操作。向寄存器文件写入字是由时钟信号控制的。</p>
-<p><img src="register2.png" alt=""></p>
-<p>数据存储器只有一个输入输出。</p>
-<p><em>现实中更为复杂</em></p>
-<h3 id="顺序实现"><a href="#顺序实现" class="headerlink" title="顺序实现"></a>顺序实现</h3><p>一个指令的各个阶段</p>
+<p>$Z_p[x]/(f(x))$是域当且仅当$f(x)$是不可约的</p>
+<p>$F_{2^n}$上离散对数问题当前被认为是计算不可行的</p>
+<h2 id="椭圆曲线"><a href="#椭圆曲线" class="headerlink" title="椭圆曲线"></a>椭圆曲线</h2><p>二元方程解的集合</p>
+<p>满足$4a^2+27b^3\neq 0$的方程</p>
+<script type="math/tex; mode=display">
+y^2=x^3+ax+b</script><p>的解加上无穷远点O。</p>
+<p>定义二元运算，对$P,Q\in E$，L是通过PQ的直线，交E于第三点$R’$，对x轴作反射得到R，定义</p>
+<script type="math/tex; mode=display">
+P+Q=R</script><p>显然若P、Q是实数，则R也是实数。</p>
+<p>可以解得</p>
+<script type="math/tex; mode=display">
+x_R=\lambda^2-x_P-x_Q\\
+y_R=\lambda(x_P-x_R)-y_P\\
+\lambda=(y_P-y_Q)/(x_P-x_Q)</script><p>进一步定义模素数的椭圆曲线</p>
+<script type="math/tex; mode=display">
+y^2\equiv x^3+ax+b\:mod\:p</script><p>同样有无穷远点O。</p>
+<p>加法群的定义是相似的。</p>
+<p>定理：定义在$Z_p$上的椭圆曲线E，则存在正整数$n_1,n_2$，使得$(E,+)$同构于$Z_{n_1}\times Z_{n_2}$，并且有$n_2|n_1$和$n_2|p-1$。</p>
+<p>有一类弱椭圆曲线（“trace one”）是易解的。具有大约$2^{160}$个元素循环子群的椭圆曲线是安全的。</p>
+<p><strong>点压缩和ECIES</strong></p>
+<p>实际中，椭圆曲线的实现有大约4倍的扩张因子。更为严重的问题是，没有方便的方法确定生成E上的点。</p>
+<p>由于确定了x，y的两个值是相反数，一个是奇数，另一个是偶数，因此点压缩技术可以通过判断y mod 2来确定y。</p>
+<p>ECIES利用点压缩技术，有一个近似2的信息扩张。</p>
+<p><u>计算椭圆曲线上点的乘积—对倍数c转换为二进制，利用2倍-和差法计算</u></p>
+<p>椭圆曲线加密有得到越来越广泛的应用</p>
+<h2 id="ElGamal体制的安全性"><a href="#ElGamal体制的安全性" class="headerlink" title="ElGamal体制的安全性"></a>ElGamal体制的安全性</h2><p>比特安全性：确定对数表示二进制的第i个最低比特</p>
+<p>最低位是容易的（利用二次剩余）</p>
+<p>如果$\beta$是二次剩余，那么$\beta$模p的两个平方根为$\pm\beta^{(p+1)/4}$，且这两个数的最低位不同。那么，我们利用ORACLEL2（假设有这种算法）计算最低第二位，进行判断。</p>
+<p>利用此方法可以从最低位开始依次计算。</p>
+<h1 id="签名方案"><a href="#签名方案" class="headerlink" title="签名方案"></a>签名方案</h1><p>签名算法（私有）+验证算法（公开）</p>
+<blockquote>
+<p>RSA签名方案</p>
+<p>利用RSA解密规则进行签名</p>
+<p>定义</p>
+<script type="math/tex; mode=display">
+sig_K(x)=x^a\:mod\:n</script><p>以及</p>
+<script type="math/tex; mode=display">
+ver_K(x,y)=true\Leftrightarrow x=y^b\:mod\:n</script></blockquote>
+<p>但是任何人都能随机生成y来伪造RSA签名，阻止这种攻击的方法是让消息足够冗余，使得x有意义的概率非常小。</p>
+<p>签名和Hash函数常常结合使用。通过Hash生成信息摘要，再对摘要进行签名。有三种攻击</p>
 <ul>
-<li>取指 fetch</li>
-<li>解码 decode</li>
-<li>执行 execute（包括计算和设置条件码）</li>
-<li>访存 memory</li>
-<li>写回 write back</li>
-<li>更新PC PC update，将PC设置成下一条指令的地址</li>
+<li>已知消息攻击的存在性伪造：Hash二次原像稳固可以避免</li>
+<li>选择消息攻击的存在性伪造：Hash碰撞稳固可以避免</li>
+<li>惟密钥攻击的存在性伪造：Hash原相稳固可以避免</li>
 </ul>
-<p>大多数指令比较简单，最难实现的应该是pushl和popl（举例如下）</p>
-<div class="table-container">
-<table>
-<thead>
-<tr>
-<th>阶段</th>
-<th>call Dest</th>
-<th>ret</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>fetch</td>
-<td>icode: ifun &lt;-M[PC]<br>valC&lt;-M[PC+1]<br>valP&lt;-PC+5</td>
-<td>icode: ifun &lt;-M[PC]<br>valP&lt;-PC+1</td>
-</tr>
-<tr>
-<td>decode</td>
-<td>valB&lt;-R[%esp]</td>
-<td>valA&lt;-R[%esp]<br>valB&lt;-R[%esp]</td>
-</tr>
-<tr>
-<td>execute</td>
-<td>valE&lt;-valB-4</td>
-<td>valE&lt;-valB+4</td>
-</tr>
-<tr>
-<td>memory</td>
-<td>M[valE]&lt;-valP</td>
-<td>valM&lt;-M[valA]</td>
-</tr>
-<tr>
-<td>write back</td>
-<td>R[%esp]&lt;-valE</td>
-<td>R[%esp]&lt;-valE</td>
-</tr>
-<tr>
-<td>PC update</td>
-<td>PC&lt;-valC</td>
-<td>PC&lt;-valM</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="table-container">
-<table>
-<thead>
-<tr>
-<th>阶段</th>
-<th>pushl rA</th>
-<th>popl rA</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>fetch</td>
-<td>icode: ifun &lt;-M[PC]<br> rA:rB&lt;-M[PC+1]</td>
-<td>icode: ifun &lt;-M[PC]<br/> rA:rB&lt;-M[PC+1]</td>
-</tr>
-<tr>
-<td>decode</td>
-<td>valP&lt;-PC+2</td>
-<td>valP&lt;-PC+2</td>
-</tr>
-<tr>
-<td>execute</td>
-<td>valA&lt;-R[rA] <br/>valB&lt;-R[%esp]</td>
-<td>valA&lt;-R[%esp]<br/> valB&lt;-R[%esp]</td>
-</tr>
-<tr>
-<td>memory</td>
-<td>valE&lt;-valB+(-4)</td>
-<td>valE&lt;-valB+4</td>
-</tr>
-<tr>
-<td>write back</td>
-<td>M[valE]&lt;-valA <br/>R[%esp]&lt;-valE</td>
-<td>valM&lt;-M[valA]<br/> R[%esp]&lt;-valE <br/>R[rA]&lt;-valM</td>
-</tr>
-<tr>
-<td>PC update</td>
-<td>PC&lt;-valP</td>
-<td>PC&lt;-valP</td>
-</tr>
-</tbody>
-</table>
-</div>
-<p>一种顺序实现如下</p>
-<p><img src="seq.png" alt=""></p>
-<h3 id="SEQ实现"><a href="#SEQ实现" class="headerlink" title="SEQ实现"></a>SEQ实现</h3><p>所使用的常数如下（除了指令之外还包括了状态码）</p>
-<p><img src="seqconstant.png" alt=""></p>
-<h4 id="取指阶段"><a href="#取指阶段" class="headerlink" title="取指阶段"></a>取指阶段</h4><ul>
-<li>instr_valid：合法指令</li>
-<li>need_regids：包括寄存器指示符</li>
-<li>need_valC：包含常数</li>
-</ul>
-<p><img src="seqfetch.png" alt=""></p>
-<p>增加器产生值p+1+need_rigids+4*need_valC</p>
-<h4 id="译码和写回阶段"><a href="#译码和写回阶段" class="headerlink" title="译码和写回阶段"></a>译码和写回阶段</h4><p><img src="seqfetch.png" alt=""></p>
-<h4 id="执行阶段"><a href="#执行阶段" class="headerlink" title="执行阶段"></a>执行阶段</h4><p><img src="seqexecute.png" alt=""></p>
-<h4 id="访存阶段"><a href="#访存阶段" class="headerlink" title="访存阶段"></a>访存阶段</h4><p><img src="seqmemory.png" alt=""></p>
-<h4 id="更新PC阶段"><a href="#更新PC阶段" class="headerlink" title="更新PC阶段"></a>更新PC阶段</h4><p>HCL描述如下</p>
-<figure class="highlight nix"><table><tr><td class="code"><pre><span class="line">int <span class="attr">new_pc</span> = [</span><br><span class="line">	<span class="attr">icode</span> == ICALL: valC; <span class="comment"># 调用</span></span><br><span class="line">	<span class="attr">icode</span> == IJXX &amp;&amp; Cnd: valC; <span class="comment"># 跳转</span></span><br><span class="line">	<span class="attr">icode</span> == IRET: valM; <span class="comment"># 返回</span></span><br><span class="line">	<span class="number">1</span>: valP; <span class="comment"># 默认</span></span><br><span class="line">];</span><br></pre></td></tr></table></figure>
-<h3 id="流水线"><a href="#流水线" class="headerlink" title="流水线"></a>流水线</h3><p>SEQ的问题在于每个单元只在整个时钟周期的一部分时间里被使用</p>
-<p>理想流水线：划分成n个相互独立的周期，每个阶段需要的时间是原来的1/n，其他因素：</p>
-<ul>
-<li>不一致的划分</li>
-<li>流水线过深，反而降低收益（寄存器的延迟）</li>
-</ul>
-<p>现代处理器采用15或更深的流水线，因而需要划分指令的执行减小延迟、设计更好的流水线寄存器、设计时钟传播网络</p>
-<p><u>带反馈的流水线：处理有数据相关的相邻指令</u></p>
-<h3 id="Y86流水线的实现"><a href="#Y86流水线的实现" class="headerlink" title="Y86流水线的实现"></a>Y86流水线的实现</h3><h4 id="SEQ-：重新安排计算阶段"><a href="#SEQ-：重新安排计算阶段" class="headerlink" title="SEQ+：重新安排计算阶段"></a>SEQ+：重新安排计算阶段</h4><p>PC计算移到了时钟周期开始</p>
-<p><img src="seq+.png" alt=""></p>
-<h4 id="插入流水线寄存器"><a href="#插入流水线寄存器" class="headerlink" title="插入流水线寄存器"></a>插入流水线寄存器</h4><p><img src="pipe.png" alt=""></p>
-<p>寄存器按以下方式标号</p>
-<ul>
-<li>F 保存计数器的预测值</li>
-<li>D 保存指令信息</li>
-<li>E 保存指令和寄存器文件读出的值</li>
-<li>M 保存执行指令的结果</li>
-<li>W 提供计算出来的值，提供返回地址</li>
-</ul>
-<h4 id="预测下一个PC"><a href="#预测下一个PC" class="headerlink" title="预测下一个PC"></a>预测下一个PC</h4><p>除了条件转移指令和ret之外，我们能够根据取指信息确定下一条指令地址。</p>
-<p>这里分支预测总是预测选择了条件分支，预测PC为valC。 <u>这种预测成功率约为60%。其他还有根据分支地址高低进行预测（分支地址低则预测选择分支），成功率约为65%，这种改进源自循环是由后向分支结束这一事实。</u></p>
-<p>ret只是简单地暂停处理新指令。<u>大多数程序可以利用栈顶的值作为预测的返回值。</u></p>
-<h4 id="数据冒险"><a href="#数据冒险" class="headerlink" title="数据冒险"></a>数据冒险</h4><p>加入暂停（nop）自动产生的nop指令为气泡（bubble）</p>
-<p><img src="bubble.png" alt=""></p>
-<p>但这会导致流水线暂停过长，降低整体吞吐量。</p>
-<p>解决方法是将要写的值传到流水线寄存器E作为源操作数。在译码阶段发现有写回阶段对寄存器未进行的写，则用这个值作为源操作数。</p>
-<p>这样就有5个转发源e_valE,m_valM,M_valE,W_valM,W_valE</p>
-<p>有两个不同的转发目的valA, valB</p>
-<p>在结构中就是加入Sel+Fwd A和Fwd B的模块更新valA和valB</p>
-<p><u>加载互锁和转发技术结合起来处理所有可能的数据冒险</u></p>
-<h4 id="异常处理"><a href="#异常处理" class="headerlink" title="异常处理"></a>异常处理</h4><p>没有实际的异常指令</p>
-<p>异常处理的几个细节</p>
-<ul>
-<li>多条指令引起异常</li>
-<li>分支预测错误取消了异常指令</li>
-<li>异常指令之后的指令改变了部分状态</li>
-</ul>
-<p><u>当处于访存或写回阶段中的指令导致异常时，流线控制逻辑必须禁止更新条件码或数据存储器。</u></p>
-<h4 id="PIPE各阶段"><a href="#PIPE各阶段" class="headerlink" title="PIPE各阶段"></a>PIPE各阶段</h4><ul>
-<li><p>取指：增加了f_pred</p>
-</li>
-<li><p>译码和写回：使用sel+fwd A和fwd B </p>
-<p>五个转发源的顺序很重要，应该是e_dstE, m_valM, M_valE, W_valM, W_valE</p>
-</li>
-<li><p>执行阶段</p>
-</li>
-<li><p>访存阶段</p>
-</li>
-</ul>
-<h4 id="控制逻辑"><a href="#控制逻辑" class="headerlink" title="控制逻辑"></a>控制逻辑</h4><p>处理4种控制</p>
-<ul>
-<li><p>ret</p>
-<p>ret后加入三个bubble</p>
-<p>但是取指阶段没有办法插入bubble，实际处理中ret后加入三个rrmovl+bubble效果等价</p>
-</li>
-<li><p>加载/使用冒险</p>
-<p>气泡+转发</p>
-</li>
-<li><p>预测错误的分支</p>
-<p>在下一个周期译码和执行阶段加入bubble 指令排除预测错误的指令</p>
-</li>
-<li><p>异常</p>
-</li>
-</ul>
-<p>我们可以由此产生各个流水线控制信号的HCL描述</p>
-<p><u>遇到加载/使用冒险和ret指令组合时，寄存器D不应该插入气泡。</u></p>
-<h4 id="性能分析"><a href="#性能分析" class="headerlink" title="性能分析"></a>性能分析</h4><script type="math/tex; mode=display">
-CPI（每指令周期数）=1+C_b/C_i 
-=1+\sum 指令频率*条件频率*气泡数</script><p>其中C_b是气泡数，C_i是指令数，分加载/使用、预测错误、ret三种情况考虑。</p>
-<h4 id="未完成工作"><a href="#未完成工作" class="headerlink" title="未完成工作"></a>未完成工作</h4><ul>
-<li>多周期指令：计算单元做不同运算所需时间不同</li>
-<li>存储系统的接口</li>
-</ul>
-<p><a href="/2020/01/29/csapp5/">下一篇：从二开始的汇编</a></p>
+<p>所以签名+Hash不减弱签名的安全性。</p>
+<h2 id="ElGamal签名方案"><a href="#ElGamal签名方案" class="headerlink" title="ElGamal签名方案"></a>ElGamal签名方案</h2><p>非确定性：有许多有效的签名</p>
+<p>难解的离散对数</p>
+<script type="math/tex; mode=display">
+\beta=\alpha^a\:mod\:p</script><p>定义</p>
+<script type="math/tex; mode=display">
+sig_K(x,k)=(\gamma,\delta)\\
+\gamma=\alpha^k\:mod\:p,\:\delta=(x-a\gamma)k^{-1}\mod{(p-1)}</script><script type="math/tex; mode=display">
+ver_K(x,(\gamma,\delta))=true\Leftrightarrow \beta^\gamma\gamma^\delta=\alpha^x\:mod\:p</script><p>需要注意随机值k不能泄露，否则计算a很容易。</p>
+<p>另外，对两个不同的消息签名使用相同的k，可以计算得到$d=gcd(\delta_1-\delta_2,p-1)$个候选的k进行验证。</p>
+<h3 id="一些变体"><a href="#一些变体" class="headerlink" title="一些变体"></a>一些变体</h3><p><strong>Schnorr签名方案</strong>（缩短了签名）</p>
+<p>素数p,q满足$p-1\equiv 0\mod q$。一般取$p\approx 2^{1024}$，$q\approx 2^{160}$。定义Hash函数$h:\{0,1\}^n\to Z_q$</p>
+<script type="math/tex; mode=display">
+sig_K(x,k)=(\gamma,\delta)\\
+\gamma=h(x||\alpha^k),\:\delta=k+a\gamma\:mod\:q</script><script type="math/tex; mode=display">
+ver_K(x,(\gamma,\delta))=true\Leftrightarrow h(x||\alpha^\delta\beta^{-\gamma})=\gamma</script><p><strong>数字签名算法（DSA）</strong></p>
+<p><u>特点：消息是经过Hash缩短的，所以我们会得到比较短的消息摘要</u></p>
+<p>和Schnorr签名一样，使用了一个q元子群。</p>
+<p>把ElGammal签名中$\delta$中的减号改为加号。</p>
+<script type="math/tex; mode=display">
+sig_K(x,k)=(\gamma,\delta)\\
+\gamma=(\alpha^k\:mod\:p)\:mod\:q\\
+\delta=(SHA-1(x)+a\gamma)k^{-1}\:mod\:q</script><p>验证</p>
+<script type="math/tex; mode=display">
+e_1=SHA-1(x)\delta^{-1}\mod q\\
+e_2=\gamma\delta^{-1}\mod q\\
+ver_K(x,(\gamma,\delta))=true\Leftrightarrow (\alpha^{e_1}\beta^{e_2}\mod p)\mod q=\gamma</script><p><strong>椭圆曲线DSA（ECDSA）</strong></p>
+<p>具有更高的安全性</p>
+<p>A是E上阶数为q的一个点，p、q、E、A、B是公钥，m是私钥，$B=mA$</p>
+<script type="math/tex; mode=display">
+sig_K(x,k)=(r,s)\\
+kA=(u,v)\\
+r=u\mod q\\
+s=k^{-1}(SHA-1(x)+mr)\mod q</script><p>验证</p>
+<script type="math/tex; mode=display">
+w=s^{-1}\mod q\\
+i = w\cdot SHA-1(x)\mod q\\
+j=wr\mod q\\
+(u,v)=iA+jB\\
+var_K(x,(r,s))=true\Leftrightarrow u\mod q=r</script><h2 id="可证明的安全签名方案"><a href="#可证明的安全签名方案" class="headerlink" title="可证明的安全签名方案"></a>可证明的安全签名方案</h2><p>可以证明破解概率的方案</p>
+<p><strong>一次签名</strong></p>
+<p>Lamport签名方案：$f:Y\to Z$单向，y是私钥，z公开</p>
+<script type="math/tex; mode=display">
+sig_K(x_1,x_2,...,x_k)=y_1,y_2,...,y_k\\
+var_K(x_1,x_2,...,x_k,a_1,a_2,...,a_k)=true\Leftrightarrow f(a_i)=z_i</script><p><strong>全域Hash</strong></p>
+<p>单向陷门f，随机函数G</p>
+<script type="math/tex; mode=display">
+sig_K(x)=f^{-1}(G(x))\\
+ver_K(x,y)=true\Leftrightarrow f(y)=G(x)</script><h2 id="不可否认的签名"><a href="#不可否认的签名" class="headerlink" title="不可否认的签名"></a>不可否认的签名</h2><p>验证签名需要签名者的合作</p>
+<p>Chaum-van Antwerpen</p>
+<p>p=2q+1，q是素数，$\beta=\alpha^a\mod p$</p>
+<script type="math/tex; mode=display">
+y=sig_K(x)=x^a\mod p</script><p>验证者随机选择$e_1,e_2$，计算$c=y_1^{e_1}\beta^{e_2}\mod p$。</p>
+<p>签名者计算$d=c^{a^{-1}\mod q}\mod p$，当且仅当$d=x^{e_1}\alpha^{e_2}\mod p$时是合法的签名。</p>
+<p><u>把y当成合法签名接受的概率为1/q</u></p>
+<p><strong>否认协议</strong></p>
+<p>验证者选择$e_1,e_2$，得到d不合法，然后再次选择$e_1’,e_2’$，得到$d’$，当</p>
+<script type="math/tex; mode=display">
+(d\alpha^{-e_2})^{e_1'}\equiv(d'\alpha^{-e_2'})^{e_1}\mod p</script><p>时，可以推断签名是伪造的。</p>
+<p><u>伪造否认协议成功的概率为1/q</u></p>
+<h2 id="fail-stop签名"><a href="#fail-stop签名" class="headerlink" title="fail-stop签名"></a>fail-stop签名</h2><p>van Heyst-Pedersen</p>
+<p>p=2q+1，q是素数，</p>
+<script type="math/tex; mode=display">
+\beta=\alpha^{a_0}\mod p</script><p>$p,q,\alpha,\beta$是公开且不变的。</p>
+<script type="math/tex; mode=display">
+\gamma_1=\alpha^{a_1}\beta^{a_2}\mod p\\
+\gamma_2=\alpha^{b_1}\beta^{b_2}\mod p</script><p>$\gamma_1,\gamma_2$是公钥，$a_1,a_2,b_1,b_2$是私钥</p>
+<p>签名</p>
+<script type="math/tex; mode=display">
+sig_K(x)=(y_1,y_2)\\
+y_1=a_1+xb_1\mod q\\
+y_2=a_2+xb_2\mod q</script><p>验证</p>
+<script type="math/tex; mode=display">
+ver_K(x,y)=true\Leftrightarrow \gamma_1\gamma_2^x=\alpha^{\gamma_1}\beta^{\gamma_2}\mod p</script><p>定义：如果$\gamma_1=\gamma_1’$，$\gamma_2=\gamma_2’$，那么密钥称为等价的</p>
+<p>引理：K和K‘等价，那么$ver_K(x,y)=ver_{K’}(x,y)$</p>
+<p>引理：恰好有q个等价的密钥K，$sig_K(x)=y$</p>
+<p>引理：至多有一个等价密钥K’，使得$ver_{K’}(x,y)=ver_{K’}(x’,y’)=true$</p>
+<p>定理：$sig_K(x)=y$，那么伪造者能计算出$sig_K(x’)$的概率为1/q</p>
+<p><u>这是一个一次签名方案</u></p>
+<p>246</p>
 ]]></content>
       <categories>
         <category>猫爪记</category>
-        <category>Computer-Science</category>
+        <category>Mathematics</category>
       </categories>
       <tags>
         <tag>琉璃猫</tag>
@@ -3354,178 +3133,86 @@ CPI（每指令周期数）=1+C_b/C_i
       </tags>
   </entry>
   <entry>
-    <title>从二开始的汇编</title>
-    <url>/2020/01/29/csapp5/</url>
-    <content><![CDATA[<p><a href="/2020/01/10/csapp4/">上一篇：从一开始的汇编</a></p>
-<h3 id="编写高效程序"><a href="#编写高效程序" class="headerlink" title="编写高效程序"></a>编写高效程序</h3><ul>
-<li>合适的算法和数据结构</li>
-<li>高效执行的源代码</li>
-</ul>
-<p>GCC 命令行标志 -01 到 -03 提供不同程度的优化</p>
-<p>妨碍优化的几个因素</p>
+    <title>设计模式</title>
+    <url>/2020/03/17/design-pattern/</url>
+    <content><![CDATA[<p>两种手段</p>
 <ul>
-<li><p>存储器别名使用：两个指针可能指向同一个存储器</p>
-</li>
-<li><p>函数调用：大多数编译器不会判断函数是否有副作用，并保持所有函数调用不变</p>
-<p>可以使用内联函数替换（将函数代码展开）对此进行优化（-finline或者-02以上）</p>
-</li>
+<li>抽象</li>
+<li>分解</li>
 </ul>
-<p>运行时间可以通过最小二乘拟合得到，线性因子系数称为每元素的周期数（CPE）的有效数</p>
-<p>CPE是主要的优化目标</p>
-<p>两种优化界限：</p>
+<p>八大原则</p>
 <ul>
-<li>延迟界限：指令级并行的能力</li>
-<li>吞吐量界限：终极限制，处理器功能单元的计算能力</li>
-</ul>
-<p>整体操作：分为指令控制单元ICU和执行单元EU，可以乱序执行指令</p>
-<p>功能单元的性能：</p>
-<ul>
-<li>延迟：完成运算总时间</li>
-<li>发射：连续运算需要的时钟周期数，发射时间为1即为完全流水线化的</li>
+<li>依赖倒置原则（DIP）</li>
+<li>开放封闭原则（OCP）</li>
+<li>单一职责原则（SRP）</li>
+<li>Liskov替换原则（LSP）</li>
+<li>接口隔离原则（ISP）</li>
+<li>对象组合优于类继承</li>
+<li>封装变化点</li>
+<li>面向接口编程</li>
 </ul>
 <a id="more"></a>
-<h3 id="循环里的优化"><a href="#循环里的优化" class="headerlink" title="循环里的优化"></a>循环里的优化</h3><ul>
-<li>代码移动：将strlen或vec_length的计算移出循环（特别是strlen，因为它是O(n)的）</li>
-<li>减少过程调用</li>
-<li>减少不必要的存储调用：在临时变量里存放结果代替直接访问</li>
-<li>-02 的优化：会最后将结果写到目标位置，而不是重复读写</li>
-<li><u>循环展开：通过增加每次迭代计算的元素数量，减少循环迭代次数。比如在求数组累加和的时候，每次计算两个元素。因为减少了循环分支以及减少了关键路径操作数量，可以提升延迟界限。但是并不能提升浮点数计算的CPE。</u></li>
-<li><u>并行计算：将一组合并运算分割成两个或更多的部分，最后合并结果以提高性能。但是需要注意浮点乘法和加法由于四舍五入或溢出的不可结合性，可能会改变最终结果。</u></li>
-<li><u>重新结合变换：在循环中改变元素合并顺序，减少关键路径操作。同上，可能改变最终结果。</u></li>
-</ul>
-<p>高级设计、编码原则、低级优化</p>
-<h3 id="SIMD"><a href="#SIMD" class="headerlink" title="SIMD"></a>SIMD</h3><p>SSE=Streaming SIMD Extensions</p>
-<p>SIMD是单指令多数据Single-Instruction, Multiple-Data</p>
-<p>16字节的XMM可以存放多个值，因此指令会读取多个值并行计算</p>
-<p>-msse4</p>
-<h3 id="一些限制"><a href="#一些限制" class="headerlink" title="一些限制"></a>一些限制</h3><ul>
-<li>寄存器溢出</li>
-<li>分支预测和预测错误处罚<ul>
-<li>可预测的分支不太影响</li>
-<li>使用功能式风格的代码（用条件操作计算值），而非命令式（用条件语句来选择更新）</li>
-</ul>
-</li>
-<li>加载/存储性能</li>
-</ul>
-<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><ul>
-<li><p>程序剖析 GCC -pg </p>
-</li>
-<li><p>Amdahl定律 </p>
-<p>加速比S，其中\alpha是加速部分所占时间比例，k是加速到的倍数。</p>
-<script type="math/tex; mode=display">
-S=\frac{1}{1-\alpha+\alpha/k}</script></li>
-</ul>
-<h3 id="存储器"><a href="#存储器" class="headerlink" title="存储器"></a>存储器</h3><ul>
-<li>高速缓存存储器</li>
-<li>主存储器</li>
-<li>磁盘</li>
-</ul>
-<p><img src="memory.png" alt=""></p>
-<p>随机访问存储器（RAM），SRAM更快更贵，作为高速存储，一般不超过几MB，而DRAM有可以有几GB</p>
+<p>五个重构技巧</p>
 <ul>
-<li><p>静态RAM（SRAM）</p>
-<p>存储在双稳态单元，用六晶体管来实现，可以无限保持在两个不同状态，其他状态都是不稳定的，即使有干扰，也能在干扰消除时恢复稳态。</p>
-</li>
-<li><p>动态RAM（DRAM）</p>
-<p>存储为对一个电容充电，因此对干扰敏感。</p>
-</li>
-<li><p>传统DRAM</p>
-<p>DRAM芯片中的单元被分成d个超单元(supercell)，每个超单元有w个DRAM单元，信息通过引脚(pin)流入流出。</p>
-</li>
-<li><p>存储器模块</p>
-<p>DRAM芯片包装在存储器模块里，常见的168引脚的双列直插存储器模块DIMM，以64位为块，也有72个引脚的单列直插存储器模块SIMM，以32位为块。存储器将地址A转换为超单元地址，然后广播到每个DRAM，每个DRAM输出超单元地址处的8位内容，然后将他们合并为64位双字。</p>
-</li>
-<li><p>增强的DRAM</p>
+<li>静态改为动态</li>
+<li>早绑定改为晚绑定</li>
+<li>继承改为组合</li>
+<li>编译时依赖改为运行时依赖</li>
+<li>紧耦合改为松耦合</li>
+</ul>
+<p>二十三个模式分类<em>（斜体为不常用）</em></p>
 <ul>
-<li>快页模式 FPM DRAM 允许对同一行连续地址从缓存区访问</li>
-<li>扩展数据输出 EDO DRAM 允许单独CAS信号时间上更紧密</li>
-<li>同步 SDRAM 用外部时钟信号上升代替控制信号，输出更快</li>
-<li>双倍速率同步DRAM（DDR SDRAM）通过两个时钟作为控制，不同DDR是根据预取缓存区大小来划分的 DDR（2位）DDR2（4位） DDR3（8位）</li>
-<li>Rambus DRAM 最大带宽更高</li>
-<li>视频RAM（Video RAM） 对内部缓存区整个内容移位</li>
+<li>组件协作<ul>
+<li>模板（Template Method）</li>
+<li>策略（Strategy）</li>
+<li>观察者（Observer）</li>
 </ul>
 </li>
-<li><p>非易失性存储器</p>
-<p>即使断电也能保存，ROM、PROM、EPROM、EEPROM、闪存</p>
-</li>
-<li><p>读取主存</p>
-<p>I/O通过主线(bus)</p>
-</li>
-</ul>
-<h3 id="磁盘"><a href="#磁盘" class="headerlink" title="磁盘"></a>磁盘</h3><p>磁盘存储，比DRAM慢10万倍，比SRAM慢100万倍。</p>
-<p>磁盘由多个盘片（platter）构成，盘片有表面（surface）和主轴（spindle），有固定的旋转速率（54k-150k RPM）。每个表面是一组同心圆（磁道track）组成，每个磁道划分为一组扇区（sector）用以储存等长的数据，扇区之间有间隙（gap）。</p>
-<p>磁盘操作时，通过传动臂（actuator arm）连接到读写头，通过寻道（seek）定位到磁道上，然后进行读写。读写时间=寻道时间+旋转时间+传送时间，其中寻道时间和旋转延迟大致相等。</p>
-<p>磁盘还有逻辑磁盘块，维护逻辑块好和磁盘扇区的映射关系。</p>
-<p>连接到I/O设备：通用串行总线（USB）、图形卡、主机总线适配器（将磁盘连接到I/O总线，包括SCSI和SATA）</p>
-<p><img src="IObus.png" alt=""></p>
-<p>磁盘控制器收到CPU读命令后，将逻辑块号翻译成扇区地址，然后将这些内容直接传送到主存，不需要CPU干涉，称为直接存储器访问（DMA）。</p>
-<p>固态硬盘 SSD：基于闪存技术，更快能耗也更低。</p>
-<p>趋势：降低成本（增加密度）比降低访问时间更容易。</p>
-<h3 id="局部性"><a href="#局部性" class="headerlink" title="局部性"></a>局部性</h3><p>DRAM和磁盘的性能滞后于CPU的性能。现代计算机频繁使用基于SRAM的高速缓存试图弥补这一差距（利用局部性）。</p>
-<p>一个编写良好的程序具有良好的局部性（倾向于引用最近引用数据的邻近数据或其本身）。</p>
-<p>步长为k的引用模式：stride-k reference pattern，一个连续向量中，每隔k个元素进行访问，随着步长的增加，空间局部性下降。步长为1的引用模式有良好的空间局部性。</p>
-<p>取指令的局部性：循环具有好的时间局部性。</p>
-<h3 id="存储器层次结构"><a href="#存储器层次结构" class="headerlink" title="存储器层次结构"></a>存储器层次结构</h3><p>离CPU越远的存储器缓存越大，延迟越高，传送的块越大。</p>
-<p>核心思想是k层的存储设备作为k+1层的存储设备的缓存</p>
-<ul>
-<li>缓存命中</li>
-<li>缓存不命中<ul>
-<li>冷缓存（强制性不命中）：缓存是空的</li>
-<li>冲突不命中</li>
-<li>容量不命中</li>
+<li>单一职责<ul>
+<li>装饰器（Decorator）</li>
+<li>桥（Bridge）</li>
 </ul>
 </li>
+<li>对象创建<ul>
+<li>工厂模式（Factory Method）</li>
+<li>抽象工厂（Abstract Factory）</li>
+<li>原型（Prototype）</li>
+<li><em>构建器（Builder）</em></li>
 </ul>
-<p>高速缓存（S，E，B，m）的通用组织：S个高速缓存组数组，每个组含有E个高速缓存行，每个行有B字节的数据块，1个有效位和t个标记位。m个地址划分为t个标记位，s个组索引位和b个块偏移位。</p>
-<p><img src="cache.png" alt=""></p>
-<p><u>抖动冲突不命中问题：即使有良好的空间局部性，引用还是会导致冲突不命中，因为这些块被映射到了同一个高速缓存组，一个简单的方法就是在数组结尾放B子节的填充。</u></p>
-<p><u>用中间位做索引，使得连续存储器映射到不同的高速缓存块。</u></p>
-<p>写的问题：</p>
-<ul>
-<li>直写 write-through</li>
-<li>写回 write-back 块要被驱逐时才更新存储器，能显著减少总线流量，但是需要维护额外的修改位</li>
-<li>写分配 write-allocate（加载之后写）/ 非写分配 not-write-allocate</li>
+</li>
+<li>对象性能<ul>
+<li>Singleton</li>
+<li>Flyweight</li>
 </ul>
-<p><u>越往下层传送时间更差，因此越可能使用写回。</u></p>
-<p>举例：矩阵乘法 C=AB</p>
-<div class="table-container">
-<table>
-<thead>
-<tr>
-<th>乘法版本</th>
-<th>存储次数</th>
-<th>A不命中次数</th>
-<th>B不命中次数</th>
-<th>C不命中次数</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>ijk&amp;jik</td>
-<td>0</td>
-<td>0.25</td>
-<td>1</td>
-<td>0</td>
-</tr>
-<tr>
-<td>jki&amp;kji</td>
-<td>1</td>
-<td>1</td>
-<td>0</td>
-<td>1</td>
-</tr>
-<tr>
-<td>kij&amp;ikj</td>
-<td>1</td>
-<td>0</td>
-<td>0.25</td>
-<td>0.25</td>
-</tr>
-</tbody>
-</table>
-</div>
-<p>kij和ikj性能最好。</p>
-<p><a href="/2020/02/08/csapp7/">下一篇：从三开始的汇编</a></p>
+</li>
+<li>接口隔离<ul>
+<li>门面（Facade）</li>
+<li>代理（Proxy）</li>
+<li><em>中介模式（Mediator）：中介对象的具体实现过于复杂</em></li>
+<li>转换器（Adapter）</li>
+</ul>
+</li>
+<li>状态变化<ul>
+<li><em>备忘录（Memento）：被序列化所替代</em></li>
+<li>状态模式（State）</li>
+</ul>
+</li>
+<li>数据结构<ul>
+<li>组合器（Composite）</li>
+<li><em>迭代器（Iterator）：编译时多态</em></li>
+<li><em>职责链（Chain of Responsibility）</em></li>
+</ul>
+</li>
+<li>行为变化<ul>
+<li><em>命令模式（Command）：Function Object</em></li>
+<li><em>访问者（Visitor）：前提苛刻</em></li>
+</ul>
+</li>
+<li>领域问题<ul>
+<li><em>编译器（Interpreter）</em></li>
+</ul>
+</li>
+</ul>
 ]]></content>
       <categories>
         <category>猫爪记</category>
@@ -3716,6 +3403,409 @@ S=\frac{1}{1-\alpha+\alpha/k}</script></li>
 <li>存储器泄露（不释放空间）</li>
 </ul>
 <p><a href="/2020/02/14/csapp10/">下一篇：从四开始的汇编</a></p>
+]]></content>
+      <categories>
+        <category>猫爪记</category>
+        <category>Computer-Science</category>
+      </categories>
+      <tags>
+        <tag>琉璃猫</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>从一开始的汇编</title>
+    <url>/2020/01/10/csapp4/</url>
+    <content><![CDATA[<p><a href="/2020/01/02/csapp3/">上一篇：从零开始的汇编</a></p>
+<h3 id="Y86-一个玩具"><a href="#Y86-一个玩具" class="headerlink" title="Y86(一个玩具)"></a>Y86(一个玩具)</h3><p>定义Y86指令集只处理四字节的数据</p>
+<p><img src="y86.png" alt=""></p>
+<ul>
+<li>将movl拆分成四个指令，显示指定源和目的。i表示立即数，r表示寄存器，m表示存储器。</li>
+<li>OPl包含四个整数操作，分别是addl,subl,andl,xorl</li>
+<li>三个条件码ZF、SF和OF</li>
+<li>7个跳转指令jmp、jle、jl、je、jne、jge、jg</li>
+<li>6个条件传送cmovle、cmovl、cmove、cmovne、cmovge、cmovg（属于rrmovl类）</li>
+<li>call、ret、pushl、popl不变</li>
+<li>halt相当于X86里的hlt，会直接导致处理器暂停</li>
+</ul>
+<p>指令集模拟器YIS</p>
+<a id="more"></a>
+<h3 id="HCL"><a href="#HCL" class="headerlink" title="HCL"></a>HCL</h3><p>位级电路-&gt;字级电路</p>
+<p>多路复用电路</p>
+<p>ALU（算术单元）：根据输入做一次算术运算</p>
+<h3 id="寄存器"><a href="#寄存器" class="headerlink" title="寄存器"></a>寄存器</h3><p>寄存器操作时，输出会一直保存在当前寄存器状态上，直到时钟信号上升。</p>
+<p><img src="register.png" alt=""></p>
+<p>这是一个典型的寄存器文件，这样一个多端口随机访问存储器允许同时进行多个读写操作。向寄存器文件写入字是由时钟信号控制的。</p>
+<p><img src="register2.png" alt=""></p>
+<p>数据存储器只有一个输入输出。</p>
+<p><em>现实中更为复杂</em></p>
+<h3 id="顺序实现"><a href="#顺序实现" class="headerlink" title="顺序实现"></a>顺序实现</h3><p>一个指令的各个阶段</p>
+<ul>
+<li>取指 fetch</li>
+<li>解码 decode</li>
+<li>执行 execute（包括计算和设置条件码）</li>
+<li>访存 memory</li>
+<li>写回 write back</li>
+<li>更新PC PC update，将PC设置成下一条指令的地址</li>
+</ul>
+<p>大多数指令比较简单，最难实现的应该是pushl和popl（举例如下）</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>阶段</th>
+<th>call Dest</th>
+<th>ret</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>fetch</td>
+<td>icode: ifun &lt;-M[PC]<br>valC&lt;-M[PC+1]<br>valP&lt;-PC+5</td>
+<td>icode: ifun &lt;-M[PC]<br>valP&lt;-PC+1</td>
+</tr>
+<tr>
+<td>decode</td>
+<td>valB&lt;-R[%esp]</td>
+<td>valA&lt;-R[%esp]<br>valB&lt;-R[%esp]</td>
+</tr>
+<tr>
+<td>execute</td>
+<td>valE&lt;-valB-4</td>
+<td>valE&lt;-valB+4</td>
+</tr>
+<tr>
+<td>memory</td>
+<td>M[valE]&lt;-valP</td>
+<td>valM&lt;-M[valA]</td>
+</tr>
+<tr>
+<td>write back</td>
+<td>R[%esp]&lt;-valE</td>
+<td>R[%esp]&lt;-valE</td>
+</tr>
+<tr>
+<td>PC update</td>
+<td>PC&lt;-valC</td>
+<td>PC&lt;-valM</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>阶段</th>
+<th>pushl rA</th>
+<th>popl rA</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>fetch</td>
+<td>icode: ifun &lt;-M[PC]<br> rA:rB&lt;-M[PC+1]</td>
+<td>icode: ifun &lt;-M[PC]<br/> rA:rB&lt;-M[PC+1]</td>
+</tr>
+<tr>
+<td>decode</td>
+<td>valP&lt;-PC+2</td>
+<td>valP&lt;-PC+2</td>
+</tr>
+<tr>
+<td>execute</td>
+<td>valA&lt;-R[rA] <br/>valB&lt;-R[%esp]</td>
+<td>valA&lt;-R[%esp]<br/> valB&lt;-R[%esp]</td>
+</tr>
+<tr>
+<td>memory</td>
+<td>valE&lt;-valB+(-4)</td>
+<td>valE&lt;-valB+4</td>
+</tr>
+<tr>
+<td>write back</td>
+<td>M[valE]&lt;-valA <br/>R[%esp]&lt;-valE</td>
+<td>valM&lt;-M[valA]<br/> R[%esp]&lt;-valE <br/>R[rA]&lt;-valM</td>
+</tr>
+<tr>
+<td>PC update</td>
+<td>PC&lt;-valP</td>
+<td>PC&lt;-valP</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>一种顺序实现如下</p>
+<p><img src="seq.png" alt=""></p>
+<h3 id="SEQ实现"><a href="#SEQ实现" class="headerlink" title="SEQ实现"></a>SEQ实现</h3><p>所使用的常数如下（除了指令之外还包括了状态码）</p>
+<p><img src="seqconstant.png" alt=""></p>
+<h4 id="取指阶段"><a href="#取指阶段" class="headerlink" title="取指阶段"></a>取指阶段</h4><ul>
+<li>instr_valid：合法指令</li>
+<li>need_regids：包括寄存器指示符</li>
+<li>need_valC：包含常数</li>
+</ul>
+<p><img src="seqfetch.png" alt=""></p>
+<p>增加器产生值p+1+need_rigids+4*need_valC</p>
+<h4 id="译码和写回阶段"><a href="#译码和写回阶段" class="headerlink" title="译码和写回阶段"></a>译码和写回阶段</h4><p><img src="seqfetch.png" alt=""></p>
+<h4 id="执行阶段"><a href="#执行阶段" class="headerlink" title="执行阶段"></a>执行阶段</h4><p><img src="seqexecute.png" alt=""></p>
+<h4 id="访存阶段"><a href="#访存阶段" class="headerlink" title="访存阶段"></a>访存阶段</h4><p><img src="seqmemory.png" alt=""></p>
+<h4 id="更新PC阶段"><a href="#更新PC阶段" class="headerlink" title="更新PC阶段"></a>更新PC阶段</h4><p>HCL描述如下</p>
+<figure class="highlight nix"><table><tr><td class="code"><pre><span class="line">int <span class="attr">new_pc</span> = [</span><br><span class="line">	<span class="attr">icode</span> == ICALL: valC; <span class="comment"># 调用</span></span><br><span class="line">	<span class="attr">icode</span> == IJXX &amp;&amp; Cnd: valC; <span class="comment"># 跳转</span></span><br><span class="line">	<span class="attr">icode</span> == IRET: valM; <span class="comment"># 返回</span></span><br><span class="line">	<span class="number">1</span>: valP; <span class="comment"># 默认</span></span><br><span class="line">];</span><br></pre></td></tr></table></figure>
+<h3 id="流水线"><a href="#流水线" class="headerlink" title="流水线"></a>流水线</h3><p>SEQ的问题在于每个单元只在整个时钟周期的一部分时间里被使用</p>
+<p>理想流水线：划分成n个相互独立的周期，每个阶段需要的时间是原来的1/n，其他因素：</p>
+<ul>
+<li>不一致的划分</li>
+<li>流水线过深，反而降低收益（寄存器的延迟）</li>
+</ul>
+<p>现代处理器采用15或更深的流水线，因而需要划分指令的执行减小延迟、设计更好的流水线寄存器、设计时钟传播网络</p>
+<p><u>带反馈的流水线：处理有数据相关的相邻指令</u></p>
+<h3 id="Y86流水线的实现"><a href="#Y86流水线的实现" class="headerlink" title="Y86流水线的实现"></a>Y86流水线的实现</h3><h4 id="SEQ-：重新安排计算阶段"><a href="#SEQ-：重新安排计算阶段" class="headerlink" title="SEQ+：重新安排计算阶段"></a>SEQ+：重新安排计算阶段</h4><p>PC计算移到了时钟周期开始</p>
+<p><img src="seq+.png" alt=""></p>
+<h4 id="插入流水线寄存器"><a href="#插入流水线寄存器" class="headerlink" title="插入流水线寄存器"></a>插入流水线寄存器</h4><p><img src="pipe.png" alt=""></p>
+<p>寄存器按以下方式标号</p>
+<ul>
+<li>F 保存计数器的预测值</li>
+<li>D 保存指令信息</li>
+<li>E 保存指令和寄存器文件读出的值</li>
+<li>M 保存执行指令的结果</li>
+<li>W 提供计算出来的值，提供返回地址</li>
+</ul>
+<h4 id="预测下一个PC"><a href="#预测下一个PC" class="headerlink" title="预测下一个PC"></a>预测下一个PC</h4><p>除了条件转移指令和ret之外，我们能够根据取指信息确定下一条指令地址。</p>
+<p>这里分支预测总是预测选择了条件分支，预测PC为valC。 <u>这种预测成功率约为60%。其他还有根据分支地址高低进行预测（分支地址低则预测选择分支），成功率约为65%，这种改进源自循环是由后向分支结束这一事实。</u></p>
+<p>ret只是简单地暂停处理新指令。<u>大多数程序可以利用栈顶的值作为预测的返回值。</u></p>
+<h4 id="数据冒险"><a href="#数据冒险" class="headerlink" title="数据冒险"></a>数据冒险</h4><p>加入暂停（nop）自动产生的nop指令为气泡（bubble）</p>
+<p><img src="bubble.png" alt=""></p>
+<p>但这会导致流水线暂停过长，降低整体吞吐量。</p>
+<p>解决方法是将要写的值传到流水线寄存器E作为源操作数。在译码阶段发现有写回阶段对寄存器未进行的写，则用这个值作为源操作数。</p>
+<p>这样就有5个转发源e_valE,m_valM,M_valE,W_valM,W_valE</p>
+<p>有两个不同的转发目的valA, valB</p>
+<p>在结构中就是加入Sel+Fwd A和Fwd B的模块更新valA和valB</p>
+<p><u>加载互锁和转发技术结合起来处理所有可能的数据冒险</u></p>
+<h4 id="异常处理"><a href="#异常处理" class="headerlink" title="异常处理"></a>异常处理</h4><p>没有实际的异常指令</p>
+<p>异常处理的几个细节</p>
+<ul>
+<li>多条指令引起异常</li>
+<li>分支预测错误取消了异常指令</li>
+<li>异常指令之后的指令改变了部分状态</li>
+</ul>
+<p><u>当处于访存或写回阶段中的指令导致异常时，流线控制逻辑必须禁止更新条件码或数据存储器。</u></p>
+<h4 id="PIPE各阶段"><a href="#PIPE各阶段" class="headerlink" title="PIPE各阶段"></a>PIPE各阶段</h4><ul>
+<li><p>取指：增加了f_pred</p>
+</li>
+<li><p>译码和写回：使用sel+fwd A和fwd B </p>
+<p>五个转发源的顺序很重要，应该是e_dstE, m_valM, M_valE, W_valM, W_valE</p>
+</li>
+<li><p>执行阶段</p>
+</li>
+<li><p>访存阶段</p>
+</li>
+</ul>
+<h4 id="控制逻辑"><a href="#控制逻辑" class="headerlink" title="控制逻辑"></a>控制逻辑</h4><p>处理4种控制</p>
+<ul>
+<li><p>ret</p>
+<p>ret后加入三个bubble</p>
+<p>但是取指阶段没有办法插入bubble，实际处理中ret后加入三个rrmovl+bubble效果等价</p>
+</li>
+<li><p>加载/使用冒险</p>
+<p>气泡+转发</p>
+</li>
+<li><p>预测错误的分支</p>
+<p>在下一个周期译码和执行阶段加入bubble 指令排除预测错误的指令</p>
+</li>
+<li><p>异常</p>
+</li>
+</ul>
+<p>我们可以由此产生各个流水线控制信号的HCL描述</p>
+<p><u>遇到加载/使用冒险和ret指令组合时，寄存器D不应该插入气泡。</u></p>
+<h4 id="性能分析"><a href="#性能分析" class="headerlink" title="性能分析"></a>性能分析</h4><script type="math/tex; mode=display">
+CPI（每指令周期数）=1+C_b/C_i 
+=1+\sum 指令频率*条件频率*气泡数</script><p>其中C_b是气泡数，C_i是指令数，分加载/使用、预测错误、ret三种情况考虑。</p>
+<h4 id="未完成工作"><a href="#未完成工作" class="headerlink" title="未完成工作"></a>未完成工作</h4><ul>
+<li>多周期指令：计算单元做不同运算所需时间不同</li>
+<li>存储系统的接口</li>
+</ul>
+<p><a href="/2020/01/29/csapp5/">下一篇：从二开始的汇编</a></p>
+]]></content>
+      <categories>
+        <category>猫爪记</category>
+        <category>Computer-Science</category>
+      </categories>
+      <tags>
+        <tag>琉璃猫</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>从二开始的汇编</title>
+    <url>/2020/01/29/csapp5/</url>
+    <content><![CDATA[<p><a href="/2020/01/10/csapp4/">上一篇：从一开始的汇编</a></p>
+<h3 id="编写高效程序"><a href="#编写高效程序" class="headerlink" title="编写高效程序"></a>编写高效程序</h3><ul>
+<li>合适的算法和数据结构</li>
+<li>高效执行的源代码</li>
+</ul>
+<p>GCC 命令行标志 -01 到 -03 提供不同程度的优化</p>
+<p>妨碍优化的几个因素</p>
+<ul>
+<li><p>存储器别名使用：两个指针可能指向同一个存储器</p>
+</li>
+<li><p>函数调用：大多数编译器不会判断函数是否有副作用，并保持所有函数调用不变</p>
+<p>可以使用内联函数替换（将函数代码展开）对此进行优化（-finline或者-02以上）</p>
+</li>
+</ul>
+<p>运行时间可以通过最小二乘拟合得到，线性因子系数称为每元素的周期数（CPE）的有效数</p>
+<p>CPE是主要的优化目标</p>
+<p>两种优化界限：</p>
+<ul>
+<li>延迟界限：指令级并行的能力</li>
+<li>吞吐量界限：终极限制，处理器功能单元的计算能力</li>
+</ul>
+<p>整体操作：分为指令控制单元ICU和执行单元EU，可以乱序执行指令</p>
+<p>功能单元的性能：</p>
+<ul>
+<li>延迟：完成运算总时间</li>
+<li>发射：连续运算需要的时钟周期数，发射时间为1即为完全流水线化的</li>
+</ul>
+<a id="more"></a>
+<h3 id="循环里的优化"><a href="#循环里的优化" class="headerlink" title="循环里的优化"></a>循环里的优化</h3><ul>
+<li>代码移动：将strlen或vec_length的计算移出循环（特别是strlen，因为它是O(n)的）</li>
+<li>减少过程调用</li>
+<li>减少不必要的存储调用：在临时变量里存放结果代替直接访问</li>
+<li>-02 的优化：会最后将结果写到目标位置，而不是重复读写</li>
+<li><u>循环展开：通过增加每次迭代计算的元素数量，减少循环迭代次数。比如在求数组累加和的时候，每次计算两个元素。因为减少了循环分支以及减少了关键路径操作数量，可以提升延迟界限。但是并不能提升浮点数计算的CPE。</u></li>
+<li><u>并行计算：将一组合并运算分割成两个或更多的部分，最后合并结果以提高性能。但是需要注意浮点乘法和加法由于四舍五入或溢出的不可结合性，可能会改变最终结果。</u></li>
+<li><u>重新结合变换：在循环中改变元素合并顺序，减少关键路径操作。同上，可能改变最终结果。</u></li>
+</ul>
+<p>高级设计、编码原则、低级优化</p>
+<h3 id="SIMD"><a href="#SIMD" class="headerlink" title="SIMD"></a>SIMD</h3><p>SSE=Streaming SIMD Extensions</p>
+<p>SIMD是单指令多数据Single-Instruction, Multiple-Data</p>
+<p>16字节的XMM可以存放多个值，因此指令会读取多个值并行计算</p>
+<p>-msse4</p>
+<h3 id="一些限制"><a href="#一些限制" class="headerlink" title="一些限制"></a>一些限制</h3><ul>
+<li>寄存器溢出</li>
+<li>分支预测和预测错误处罚<ul>
+<li>可预测的分支不太影响</li>
+<li>使用功能式风格的代码（用条件操作计算值），而非命令式（用条件语句来选择更新）</li>
+</ul>
+</li>
+<li>加载/存储性能</li>
+</ul>
+<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><ul>
+<li><p>程序剖析 GCC -pg </p>
+</li>
+<li><p>Amdahl定律 </p>
+<p>加速比S，其中\alpha是加速部分所占时间比例，k是加速到的倍数。</p>
+<script type="math/tex; mode=display">
+S=\frac{1}{1-\alpha+\alpha/k}</script></li>
+</ul>
+<h3 id="存储器"><a href="#存储器" class="headerlink" title="存储器"></a>存储器</h3><ul>
+<li>高速缓存存储器</li>
+<li>主存储器</li>
+<li>磁盘</li>
+</ul>
+<p><img src="memory.png" alt=""></p>
+<p>随机访问存储器（RAM），SRAM更快更贵，作为高速存储，一般不超过几MB，而DRAM有可以有几GB</p>
+<ul>
+<li><p>静态RAM（SRAM）</p>
+<p>存储在双稳态单元，用六晶体管来实现，可以无限保持在两个不同状态，其他状态都是不稳定的，即使有干扰，也能在干扰消除时恢复稳态。</p>
+</li>
+<li><p>动态RAM（DRAM）</p>
+<p>存储为对一个电容充电，因此对干扰敏感。</p>
+</li>
+<li><p>传统DRAM</p>
+<p>DRAM芯片中的单元被分成d个超单元(supercell)，每个超单元有w个DRAM单元，信息通过引脚(pin)流入流出。</p>
+</li>
+<li><p>存储器模块</p>
+<p>DRAM芯片包装在存储器模块里，常见的168引脚的双列直插存储器模块DIMM，以64位为块，也有72个引脚的单列直插存储器模块SIMM，以32位为块。存储器将地址A转换为超单元地址，然后广播到每个DRAM，每个DRAM输出超单元地址处的8位内容，然后将他们合并为64位双字。</p>
+</li>
+<li><p>增强的DRAM</p>
+<ul>
+<li>快页模式 FPM DRAM 允许对同一行连续地址从缓存区访问</li>
+<li>扩展数据输出 EDO DRAM 允许单独CAS信号时间上更紧密</li>
+<li>同步 SDRAM 用外部时钟信号上升代替控制信号，输出更快</li>
+<li>双倍速率同步DRAM（DDR SDRAM）通过两个时钟作为控制，不同DDR是根据预取缓存区大小来划分的 DDR（2位）DDR2（4位） DDR3（8位）</li>
+<li>Rambus DRAM 最大带宽更高</li>
+<li>视频RAM（Video RAM） 对内部缓存区整个内容移位</li>
+</ul>
+</li>
+<li><p>非易失性存储器</p>
+<p>即使断电也能保存，ROM、PROM、EPROM、EEPROM、闪存</p>
+</li>
+<li><p>读取主存</p>
+<p>I/O通过主线(bus)</p>
+</li>
+</ul>
+<h3 id="磁盘"><a href="#磁盘" class="headerlink" title="磁盘"></a>磁盘</h3><p>磁盘存储，比DRAM慢10万倍，比SRAM慢100万倍。</p>
+<p>磁盘由多个盘片（platter）构成，盘片有表面（surface）和主轴（spindle），有固定的旋转速率（54k-150k RPM）。每个表面是一组同心圆（磁道track）组成，每个磁道划分为一组扇区（sector）用以储存等长的数据，扇区之间有间隙（gap）。</p>
+<p>磁盘操作时，通过传动臂（actuator arm）连接到读写头，通过寻道（seek）定位到磁道上，然后进行读写。读写时间=寻道时间+旋转时间+传送时间，其中寻道时间和旋转延迟大致相等。</p>
+<p>磁盘还有逻辑磁盘块，维护逻辑块好和磁盘扇区的映射关系。</p>
+<p>连接到I/O设备：通用串行总线（USB）、图形卡、主机总线适配器（将磁盘连接到I/O总线，包括SCSI和SATA）</p>
+<p><img src="IObus.png" alt=""></p>
+<p>磁盘控制器收到CPU读命令后，将逻辑块号翻译成扇区地址，然后将这些内容直接传送到主存，不需要CPU干涉，称为直接存储器访问（DMA）。</p>
+<p>固态硬盘 SSD：基于闪存技术，更快能耗也更低。</p>
+<p>趋势：降低成本（增加密度）比降低访问时间更容易。</p>
+<h3 id="局部性"><a href="#局部性" class="headerlink" title="局部性"></a>局部性</h3><p>DRAM和磁盘的性能滞后于CPU的性能。现代计算机频繁使用基于SRAM的高速缓存试图弥补这一差距（利用局部性）。</p>
+<p>一个编写良好的程序具有良好的局部性（倾向于引用最近引用数据的邻近数据或其本身）。</p>
+<p>步长为k的引用模式：stride-k reference pattern，一个连续向量中，每隔k个元素进行访问，随着步长的增加，空间局部性下降。步长为1的引用模式有良好的空间局部性。</p>
+<p>取指令的局部性：循环具有好的时间局部性。</p>
+<h3 id="存储器层次结构"><a href="#存储器层次结构" class="headerlink" title="存储器层次结构"></a>存储器层次结构</h3><p>离CPU越远的存储器缓存越大，延迟越高，传送的块越大。</p>
+<p>核心思想是k层的存储设备作为k+1层的存储设备的缓存</p>
+<ul>
+<li>缓存命中</li>
+<li>缓存不命中<ul>
+<li>冷缓存（强制性不命中）：缓存是空的</li>
+<li>冲突不命中</li>
+<li>容量不命中</li>
+</ul>
+</li>
+</ul>
+<p>高速缓存（S，E，B，m）的通用组织：S个高速缓存组数组，每个组含有E个高速缓存行，每个行有B字节的数据块，1个有效位和t个标记位。m个地址划分为t个标记位，s个组索引位和b个块偏移位。</p>
+<p><img src="cache.png" alt=""></p>
+<p><u>抖动冲突不命中问题：即使有良好的空间局部性，引用还是会导致冲突不命中，因为这些块被映射到了同一个高速缓存组，一个简单的方法就是在数组结尾放B子节的填充。</u></p>
+<p><u>用中间位做索引，使得连续存储器映射到不同的高速缓存块。</u></p>
+<p>写的问题：</p>
+<ul>
+<li>直写 write-through</li>
+<li>写回 write-back 块要被驱逐时才更新存储器，能显著减少总线流量，但是需要维护额外的修改位</li>
+<li>写分配 write-allocate（加载之后写）/ 非写分配 not-write-allocate</li>
+</ul>
+<p><u>越往下层传送时间更差，因此越可能使用写回。</u></p>
+<p>举例：矩阵乘法 C=AB</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>乘法版本</th>
+<th>存储次数</th>
+<th>A不命中次数</th>
+<th>B不命中次数</th>
+<th>C不命中次数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ijk&amp;jik</td>
+<td>0</td>
+<td>0.25</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>jki&amp;kji</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>kij&amp;ikj</td>
+<td>1</td>
+<td>0</td>
+<td>0.25</td>
+<td>0.25</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>kij和ikj性能最好。</p>
+<p><a href="/2020/02/08/csapp7/">下一篇：从三开始的汇编</a></p>
 ]]></content>
       <categories>
         <category>猫爪记</category>
@@ -4180,162 +4270,6 @@ BCNF\subset 3NF\subset 2NF</script><p>模式分解</p>
       </tags>
   </entry>
   <entry>
-    <title>团团伙伙论</title>
-    <url>/2020/02/26/group/</url>
-    <content><![CDATA[<h3 id="群论"><a href="#群论" class="headerlink" title="群论"></a>群论</h3><p>集合X的变换$\alpha$的群记为$S_X$（对称群）</p>
-<p><u>Cycle notation：可以证明任意变换可以写作不相交的轮换</u></p>
-<p>另一种形式是写成交换的形式。</p>
-<p>由此可以确定变换的奇偶。可以证明$sgn(\alpha)=(-1)^{n-t}$，t为轮换的个数。显然奇偶变换数量一样。</p>
-<a id="more"></a>
-<p>定义：操作$\mu:G\times G\rightarrow G$，半群$(G,<em>)$定义为G上有结合律的操作$\</em>$。</p>
-<p>定义：群是有单位元的半群。</p>
-<p>定义：同态$f:G\to H$，$f(ab)=f(a)f(b)$。同构是双射的同态。</p>
-<p>定义：子群$S\leq G$。</p>
-<p>定义：有限群，order</p>
-<p>定义：同态$f$的kernel：$ker\:f={a|f(a)=1}$和image：$im\:f={h|h=f(a)}$</p>
-<p>定义：$S\leq G$，右（左）陪集 =St(tS)。显然右陪集不交。</p>
-<p>定义：index为右陪集数量，记为[G:S]。（Lagrange：G有限，则[G:S]=|G|/|S|）</p>
-<p>循环群$|G|=n$，那么对于每个n的因子d，存在唯一子群$|H|=d$。（因此$n=\sum_{d|n}\phi(d)$。）反之，若对每个d，至多存在一个这样的子群，则G为循环群。</p>
-<p>$|ST||S\cap T|=|S||T|$</p>
-<p>定义：正规子群$K\lhd G$，如果对任意$g\in G$，$gKg^{-1}=K$。</p>
-<p>定义：x的共轭为$\{x^*|\exists a\:,x^*=axa^{-1}\}$</p>
-<p>题目：（H.B.Mann)有限群G，子集ST，|S|+|T|&gt;G，那么G=ST。（考察S^{-1}g，必和T有交集）；有限域F的任意元素可以写成平方和。（考察a^2和b-a^2）</p>
-<p>定义：$N\lhd G$，商群G/N定义为陪集的集合</p>
-<p>定义：交换子$aba^{-1}b^{-1}$，其生成的群为交换子群。交换子群G’是G的正规子群。$H\lhd G$，则$G/H$可交换$\Leftrightarrow G’\leq H$</p>
-<p>性质：(P.YFF)交换子群为“长交换子集”的子集。</p>
-<p>性质：交换子集不一定等于交换子群，一个例子就是P.J.Cassidy给出的</p>
-<script type="math/tex; mode=display">
-\pmatrix{1&f(x)&h(x,y)\\
-0&1&g(y)\\
-0&0&1}</script><p>第一同构定理：同态$f$，$G/(ker\:f)\cong im\:f$</p>
-<p>引理：G子群S、T中有一个是正规的，那么ST=TS也是子群</p>
-<p>第二同构定理：$N\lhd G$，$T\leq G$，那么$N\cap T\lhd T$且$T/(N\cap T)\cong NT/N$。</p>
-<p>第三同构定理：$K\leq H\leq G$，K、H正规，那么$(G/K)/(H/K)\cong G/H$。</p>
-<p>Correspondence Theorem：$K\leq T\leq S\leq G$，K正规，那么$T\lhd S\Leftrightarrow T^*\lhd S^*$，且此时$S/T\cong S^*/T^*$。其中$S^*=S/K$。</p>
-<p>定理：H，K正规，如果$HK=G$,$H\cap K=1$，那么$G\cong H\times K$。</p>
-<p>定理：$A\lhd H$，$B\lhd K$，那么$(H\times K)/(A\times B)\cong(H/A)\times(K/B)$</p>
-<p>定义：a的共轭的集合记为$a^G$</p>
-<p>定义：群G的中心Z(G)是所有的$\{a|ag=ga\:,\:\forall g\in G\}$</p>
-<p>定义：中心化子$C_G(a)=\{x|ax=xa\}$，显然这是个子群。</p>
-<script type="math/tex; mode=display">
-|a^G|=[G:C_G(a)]</script><p>定义：群H的共轭记为$H^g=gHg^{-1}$</p>
-<p>定义：正规化子$N_G(H)=\{a\in G:\:aHa^{-1}=H\}$，显然这是个子群，且$|H\lhd N_G(H)|$。</p>
-<p>H的共轭的个数=$[G:\:N_G(H)]$</p>
-<p>题目：$H\lhd G$且有质数index，且$C_H(x)&lt;C_G(x)$，那么x在H中共轭的数量和在G中相等。（考虑$G=C_G(x)H$）（在证明A_n单群中多次用到）</p>
-<p>引理：$\alpha,\:\beta\in S_n$，那么$\alpha\beta\alpha^{-1}$和$\beta$有相同的结构，即r-cycle数量相等。（证明：$\beta(i)=j,\:\alpha(i)=k,\:\alpha(j)=l$，那么$\alpha\beta\alpha^{-1}(k)=l$）</p>
-<p>定理：$\beta$和$\gamma$是共轭当且仅当他们有相同的结构。</p>
-<p>定理：order为12 的A4没有order为6的子群</p>
-<p>定理：$A_n,\:n\geq 5$是单群。证明如下</p>
-<ul>
-<li>$A_4$有正规子群{(), (1,2)(3,4), (1,3)(2,4), (1,4)(2,3)}</li>
-<li>$A_5$是单群（1、所有3-cycle是共轭的；2、所有不交的交换是共轭的；3、5-cycle构成两个12元的共轭集合；4、|H|=60，但是1+共轭集合都不是60的约数）</li>
-<li>如果$H\lhd A_n$，且H中有3-cycle，那么$H=A_n$（首先证明所有3-cycle共轭，然后证明An可由3-cycle生成）</li>
-<li>$A_6$是单群（考察$\{\alpha|\alpha(i)=i\}$，与$A_5$同构）</li>
-<li>$A_n$是单群（考察$\beta(i)=j$，必有3-cycle与之不交换，所以可以找到$A_6$的同构）</li>
-</ul>
-<h3 id="一些群表示论定理"><a href="#一些群表示论定理" class="headerlink" title="一些群表示论定理"></a>一些群表示论定理</h3><p>（Cayley）任何一个群G可以被嵌入为$S_G$的子群。如果|G|=n，那么G可以被嵌入$S_n$。（Left translation $L_a(x)=ax$，<strong>$a\to L_a$也被称为G的左正规表示</strong>）</p>
-<p>推论：k是一个域，有限群|G|=n，那么G可以被嵌入GL(n,k)。</p>
-<p>定理：如果$H\leq G$且$[G:H]=n$，那么有同态$\rho:G\to S_n$，满足$\ker\rho\leq H$。（这样的同态$\rho$称为<strong>G在H陪集上的表示</strong>）</p>
-<p>推论：若定理中的G为单群，那么G可以被嵌入到$S_n$。（这也是Cayley定理的一个推广）</p>
-<p>定理：$H\leq G$，定义$X$是H在G中的共轭。那么有同态$\phi:G\to S_X$，满足$\ker\phi\leq N_G(H)$。（这样的同态$\phi$称为<strong>G在H共轭上的表示</strong>）</p>
-<h3 id="G-set"><a href="#G-set" class="headerlink" title="G-set"></a>G-set</h3><p>集合X，群G，定义X是G-set如果存在$\alpha:G\times X\to X$使得</p>
-<ol>
-<li>对$\forall x\in X$，1x=x</li>
-<li>g(hx)=(gh)x</li>
-</ol>
-<p>也称为G作用在X上。</p>
-<p>可以看到存在G到$S_x$的同态。同时，群G到$S_X$的同态也能定义一个X上的群作用G。</p>
-<p>定义：轨道G-orbit为</p>
-<script type="math/tex; mode=display">
-O(x)=\{gx:g\in G\}\subset X</script><p>定义：x的stabilizer</p>
-<script type="math/tex; mode=display">
-G_x=\{g\in G:gx=x\}\leq G</script><p>定理：如果X是G-set，$x\in X$</p>
-<script type="math/tex; mode=display">
-|O(x)|=[G:G_x]</script><p>推论：如果G是有限群，$x\in G$，那么x的共轭个数为$[G:C_G(x)]$</p>
-<p>推论：如果G是有限群，$H\leq G$，那么H的共轭个数是$[G:N_G(H)]$</p>
-<p>定义：X是transitive如果它只有一条轨道</p>
-<p>定义：如果X和G都是有限的，称G-set X是有限的</p>
-<p>定理（Burnside 引理）：有限的G-set X，轨道数量N</p>
-<script type="math/tex; mode=display">
-N=(1/|G|)\sum_{\tau\in G}F(\tau)</script><p>其中$F(\tau)$是被$\tau$所固定的x。</p>
-<p>定义：$G\leq S_X$，其中$X=\{1,2,…,n\}$，如果C是colors的集合，那么$C^n$是一个G-set，如果我们定义$\tau(c_1,…,c_n)=(c_{\tau 1},…,c_{\tau n})$。如果$|C|=q$，那么一个$C^n$的轨道称为(q-G)-coloring of X。</p>
-<p>引理：C是q个颜色的集合，$G\leq S_X$，如果$\tau\in G$，那么$F(\tau)=q^{t(\tau)}$，其中$t(\tau)$是$\tau$的完全分解的cycle个数。</p>
-<p>定义：如果$\tau$的完全分解有$e_r(\tau)\geq 0$个r-cycle，那么定义index</p>
-<script type="math/tex; mode=display">
-ind(\tau)=x_1^{e_1(\tau)}...x_n^{e_n(\tau)}</script><p>如果$G\leq S_n$，那么G的cycle index就是多项式</p>
-<script type="math/tex; mode=display">
-P_G(x_1,...,x_n)=(1/|G|)\sum_{\tau\in G}ind(\tau)\in Q[x_1,...,x_n]</script><p>推论：如果|X|=n，且$G\leq S_n$，那么(q,G)-coloring的数量是$P_G(q,…,q)$。</p>
-<p>定理（Polya，1937）：$G\leq S_X$，其中$|X|=n$，$|C|=q$，定义</p>
-<script type="math/tex; mode=display">
-\sigma^i=c_1^i+...+c_1^i</script><p>那么(q,G)-cloring of X且有$f_r$个元素是$c_r$的个数是$P_G(\sigma_1,…,\sigma_n)$中$c_1^{f_1}…c_q^{f_q}$的系数。</p>
-<h3 id="Geometry"><a href="#Geometry" class="headerlink" title="Geometry"></a>Geometry</h3><p>定义：motion是保距变换T满足$||Tx-Ty||=||x-y||$。</p>
-<p>定义：线性变换S是正交的，如果$||Sx||=||x||$。</p>
-<p>定理：集合$O(n,R)$（实正交群）是$GL(n,R)$的子群。motion的集合$M(n,R)$是一个群。</p>
-<p>定义：矩阵$A\in GL(n,R)$是正交的，如果$AA^T=I$</p>
-<p>定义：如果|T|=1（orietation-preserving），称为旋转。旋转群$SO(n,R)\leq O(n,R)$，显然$[O(n,R):SO(n,R)]=2$</p>
-<p>定理：任何沿着过原点的超平面H的反射都不是旋转。</p>
-<p>定义：二维平面上的图像$\Delta$的对称群</p>
-<script type="math/tex; mode=display">
-\Phi(\Delta)=\{S\in O(2,R):S(\Delta)=\Delta\}</script><p>定理：如果$\Delta$是一个正n边形，那么$\Phi(\Delta)$是由n阶元素S（旋转）和2阶元素T（反射）生成的。</p>
-<p>定义：二面体群$D_{2n}$是2n阶群，由两个元素s,t生成，满足</p>
-<script type="math/tex; mode=display">
-s^n=1,\:t^2=1,\:tst=s^{-1}</script><p>定理：如果G是有限群，如果$a,b\in G$阶都是2，那么存在n，$<a,b>\cong D_{2n}$。（只需取s=ab,t=a即可）</p>
-<p>定义：三维平面上的图像$\Omega$</p>
-<script type="math/tex; mode=display">
-\Phi(\Omega)=\{S\in O(3,R):S(\Omega)=\Omega\}</script><p>如果$\Omega$是正n面体，每个面有k个边，那么这个群是nk阶的。</p>
-<p>定义：函数$\phi:R^2\to R^2$是仿射映射如果有线性变换$\lambda$和向量z</p>
-<script type="math/tex; mode=display">
-\phi(v)=\lambda(v)+z</script><p>用Aff(2,R)记所有仿射映射的群。</p>
-<h3 id="Sylow-Theorems"><a href="#Sylow-Theorems" class="headerlink" title="Sylow Theorems"></a>Sylow Theorems</h3><p>定义：素数p，p-群是每个元素的阶都是p的幂次。</p>
-<p>引理：如果G是个有限阿贝尔群且阶可被素数p整数，那个G有阶为p的元素。</p>
-<p>定理（Cauchy，1845）：如果有限G的阶被素数p整除，则G有阶为p的元素。</p>
-<p>根据群分类定理：</p>
-<script type="math/tex; mode=display">
-|G|=|Z(G)|+\sum_i[G:C_G(x_i)]</script><p>可得$p|C_G(x_i)$或者$p||Z(G)|$。前者递归可证，后者是阿贝尔群。</p>
-<p>另一种证明由J.H.McKay给出，定义$X=\{(a_1,a_2,…,a_p)|a_1a_2…a_p=1\}$，显然$|X|=|G|^{p-1}$，考虑X的每个元素都有p个轮换，除了满足$\forall i,a_i=a,\:a^p=1$。如果没有阶为1的元素，则只有a=1，那么</p>
-<script type="math/tex; mode=display">
-|X|=|G|^{p-1}=1+kp</script><p>与p||G|矛盾。</p>
-<p>推论：有限群G是p群当且仅当|G|是p的幂次。</p>
-<p>定理：如果$G\neq 1$是有限p群，那么它的中心$Z(G)\neq 1$。</p>
-<p>推论：素数p，每个阶为$p^2$的群G都是阿贝尔群。（考察G/Z(G)易知）</p>
-<p>定理：G是有限p群，如果H是G的真子群，那么$H&lt;N_G(H)$。</p>
-<p>定理：G是有限p群，每个G的最大子群都是正规的，且序为p。（由上可知$N_G(H)=G$）</p>
-<p>引理：如果有限p群G有$r_1$个阶为p的子群，那么$r_1=1\mod p$（证明：p阶元素central的mod p=-1，not central是p的幂次。$r_1(p-1)\cong -1\mod p$）</p>
-<p>定理：有限p群G有$r_s$个阶为$p^s$的子群，那么$r_s\cong 1\mod p$</p>
-<p>证明：H是阶为$p^s$的子群，K是阶为$p^{s+1}$的子群且包含H。那么由上定理可知N是K的正规子群，又由上述引理，这样的K个数a mod p = 1。又可以证明，K是阶为$p^{s+1}$的子群，K的$p^s$子群个数b mod p = 1。因此</p>
-<script type="math/tex; mode=display">
-\sum_{i=1}^{r_s}a_i=\sum_{j=1}^{r_{s+1}}b_j</script><p>由此递归得证。</p>
-<p>引理（Laudau，1903）：给定n&gt;0，有理数q，那么只有有限个n元正整数对满足$q=\sum_{j=1}^n(1/i_j)$</p>
-<p>定理：给定n，只有有限多个有限群恰好有n个共轭类。（根据引理和共轭类分类定理可得）</p>
-<p>定义：素数p，G的sylow p-子群是一个最大p-子群。</p>
-<p>引理4.11：P是有限群G的一个sylow p-子群。那么</p>
-<ul>
-<li>$|N_G(P)/P|$和p互素</li>
-<li>如果a是p的幂次阶元素，且$aPa^{-1}=P$，那么$a\in P$</li>
-</ul>
-<p>定理（Sylow，1872）：（sylow第二定理）如果P是有限群G的一个sylow p-子群，那么G的所有sylow p-子群和P共轭；（sylow第三定理）如果有r个sylow p-子群，那么r||G|，$r\cong 1\mod p$。</p>
-<p>证明：定义X为G所有sylow p-子群的集合。定义G在X上的共轭作用，存在同态$\phi:G\to S_X$，定义为$\phi_a(P_i)=aP_ia^{-1}$。考虑sylow p-子群Q在X上的作用，那么X的所有轨道大小都是p的幂次。如果某个轨道大小为1，那么意味着$P_i=Q$。由此得到sylow第三定理。</p>
-<p>推论：有限群G只有一个sylow p-子群P当且仅当P是正规子群。</p>
-<p>定理：如果有限群G的阶为$p^em$，且$(p,m)=1$那么G的每个sylow p-子群阶为$p^e$。（根据引理4.11-1可得）</p>
-<p>推论：如果有限群G，素数p，$p^k||G|$，那么G有一个阶为$p^k$的子群。</p>
-<p>定理4.17（Wielandt的证明）：如果有限群G的阶为$p^em$，且$(p,m)=1$那么G有一个阶为$p^e$的子群。</p>
-<p>证明：X是所有G的基数为$p^e$的子集的集合，显然p不能整除|X|。考虑G在X上的左乘作用，必有一个子集B满足|O(B)|不能被p整除。B的稳定化子$|G_B|=p^em’\geq p^e$。同时$|G_B|\leq |B|=p^e$，所以$|G_B|=p^e$。</p>
-<p>定理4.18（Frattini Argument）K是有限群G的正规子群，如果P是K的sylow p-子群，那么$G=KN_G(p)$</p>
-<p>定义：矩阵A是unitriangular，如果他是对角线为1的上三角矩阵。这样的的矩阵构成的群记为UT</p>
-<p>定理：素数p，那么每个阶为2p的群G是循环群或者二面体群。</p>
-<p>定理：素数p&gt;q，|G|=pg，那么G是循环群，或者G=<a,b>，满足$b^p=1,a^q=1,aba^{-1}=b^m$，且$m^q=1\mod p$，但$m\not\equiv 1 \mod p$。</p>
-<p>推论：如果q不能整除p-1，那么G必然是循环群。</p>
-<p>53</p>
-]]></content>
-      <categories>
-        <category>猫爪记</category>
-        <category>Mathematics</category>
-      </categories>
-      <tags>
-        <tag>琉璃猫</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Hello World</title>
     <url>/2019/01/12/hello-world/</url>
     <content><![CDATA[<p>惯例hello world。</p>
@@ -4383,96 +4317,6 @@ s^n=1,\:t^2=1,\:tst=s^{-1}</script><p>定理：如果G是有限群，如果$a,b\
 `swig`模板下通过`{% extends 'xxx.swig' %}`对swig进行继承，再通过`{% block blockname %} xxx {% endblock %}`控制填入的位置。
 <p>%号后加-表明block里的内容删去前后空格</p>
 ]]></content>
-  </entry>
-  <entry>
-    <title>设计模式</title>
-    <url>/2020/03/17/design-pattern/</url>
-    <content><![CDATA[<p>两种手段</p>
-<ul>
-<li>抽象</li>
-<li>分解</li>
-</ul>
-<p>八大原则</p>
-<ul>
-<li>依赖倒置原则（DIP）</li>
-<li>开放封闭原则（OCP）</li>
-<li>单一职责原则（SRP）</li>
-<li>Liskov替换原则（LSP）</li>
-<li>接口隔离原则（ISP）</li>
-<li>对象组合优于类继承</li>
-<li>封装变化点</li>
-<li>面向接口编程</li>
-</ul>
-<a id="more"></a>
-<p>五个重构技巧</p>
-<ul>
-<li>静态改为动态</li>
-<li>早绑定改为晚绑定</li>
-<li>继承改为组合</li>
-<li>编译时依赖改为运行时依赖</li>
-<li>紧耦合改为松耦合</li>
-</ul>
-<p>二十三个模式分类<em>（斜体为不常用）</em></p>
-<ul>
-<li>组件协作<ul>
-<li>模板（Template Method）</li>
-<li>策略（Strategy）</li>
-<li>观察者（Observer）</li>
-</ul>
-</li>
-<li>单一职责<ul>
-<li>装饰器（Decorator）</li>
-<li>桥（Bridge）</li>
-</ul>
-</li>
-<li>对象创建<ul>
-<li>工厂模式（Factory Method）</li>
-<li>抽象工厂（Abstract Factory）</li>
-<li>原型（Prototype）</li>
-<li><em>构建器（Builder）</em></li>
-</ul>
-</li>
-<li>对象性能<ul>
-<li>Singleton</li>
-<li>Flyweight</li>
-</ul>
-</li>
-<li>接口隔离<ul>
-<li>门面（Facade）</li>
-<li>代理（Proxy）</li>
-<li><em>中介模式（Mediator）：中介对象的具体实现过于复杂</em></li>
-<li>转换器（Adapter）</li>
-</ul>
-</li>
-<li>状态变化<ul>
-<li><em>备忘录（Memento）：被序列化所替代</em></li>
-<li>状态模式（State）</li>
-</ul>
-</li>
-<li>数据结构<ul>
-<li>组合器（Composite）</li>
-<li><em>迭代器（Iterator）：编译时多态</em></li>
-<li><em>职责链（Chain of Responsibility）</em></li>
-</ul>
-</li>
-<li>行为变化<ul>
-<li><em>命令模式（Command）：Function Object</em></li>
-<li><em>访问者（Visitor）：前提苛刻</em></li>
-</ul>
-</li>
-<li>领域问题<ul>
-<li><em>编译器（Interpreter）</em></li>
-</ul>
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>猫爪记</category>
-        <category>Computer-Science</category>
-      </categories>
-      <tags>
-        <tag>琉璃猫</tag>
-      </tags>
   </entry>
   <entry>
     <title>王的日语笔记本</title>
@@ -4933,6 +4777,162 @@ s^n=1,\:t^2=1,\:tst=s^{-1}</script><p>定理：如果G是有限群，如果$a,b\
       </tags>
   </entry>
   <entry>
+    <title>团团伙伙论</title>
+    <url>/2020/02/26/group/</url>
+    <content><![CDATA[<h3 id="群论"><a href="#群论" class="headerlink" title="群论"></a>群论</h3><p>集合X的变换$\alpha$的群记为$S_X$（对称群）</p>
+<p><u>Cycle notation：可以证明任意变换可以写作不相交的轮换</u></p>
+<p>另一种形式是写成交换的形式。</p>
+<p>由此可以确定变换的奇偶。可以证明$sgn(\alpha)=(-1)^{n-t}$，t为轮换的个数。显然奇偶变换数量一样。</p>
+<a id="more"></a>
+<p>定义：操作$\mu:G\times G\rightarrow G$，半群$(G,<em>)$定义为G上有结合律的操作$\</em>$。</p>
+<p>定义：群是有单位元的半群。</p>
+<p>定义：同态$f:G\to H$，$f(ab)=f(a)f(b)$。同构是双射的同态。</p>
+<p>定义：子群$S\leq G$。</p>
+<p>定义：有限群，order</p>
+<p>定义：同态$f$的kernel：$ker\:f={a|f(a)=1}$和image：$im\:f={h|h=f(a)}$</p>
+<p>定义：$S\leq G$，右（左）陪集 =St(tS)。显然右陪集不交。</p>
+<p>定义：index为右陪集数量，记为[G:S]。（Lagrange：G有限，则[G:S]=|G|/|S|）</p>
+<p>循环群$|G|=n$，那么对于每个n的因子d，存在唯一子群$|H|=d$。（因此$n=\sum_{d|n}\phi(d)$。）反之，若对每个d，至多存在一个这样的子群，则G为循环群。</p>
+<p>$|ST||S\cap T|=|S||T|$</p>
+<p>定义：正规子群$K\lhd G$，如果对任意$g\in G$，$gKg^{-1}=K$。</p>
+<p>定义：x的共轭为$\{x^*|\exists a\:,x^*=axa^{-1}\}$</p>
+<p>题目：（H.B.Mann)有限群G，子集ST，|S|+|T|&gt;G，那么G=ST。（考察S^{-1}g，必和T有交集）；有限域F的任意元素可以写成平方和。（考察a^2和b-a^2）</p>
+<p>定义：$N\lhd G$，商群G/N定义为陪集的集合</p>
+<p>定义：交换子$aba^{-1}b^{-1}$，其生成的群为交换子群。交换子群G’是G的正规子群。$H\lhd G$，则$G/H$可交换$\Leftrightarrow G’\leq H$</p>
+<p>性质：(P.YFF)交换子群为“长交换子集”的子集。</p>
+<p>性质：交换子集不一定等于交换子群，一个例子就是P.J.Cassidy给出的</p>
+<script type="math/tex; mode=display">
+\pmatrix{1&f(x)&h(x,y)\\
+0&1&g(y)\\
+0&0&1}</script><p>第一同构定理：同态$f$，$G/(ker\:f)\cong im\:f$</p>
+<p>引理：G子群S、T中有一个是正规的，那么ST=TS也是子群</p>
+<p>第二同构定理：$N\lhd G$，$T\leq G$，那么$N\cap T\lhd T$且$T/(N\cap T)\cong NT/N$。</p>
+<p>第三同构定理：$K\leq H\leq G$，K、H正规，那么$(G/K)/(H/K)\cong G/H$。</p>
+<p>Correspondence Theorem：$K\leq T\leq S\leq G$，K正规，那么$T\lhd S\Leftrightarrow T^*\lhd S^*$，且此时$S/T\cong S^*/T^*$。其中$S^*=S/K$。</p>
+<p>定理：H，K正规，如果$HK=G$,$H\cap K=1$，那么$G\cong H\times K$。</p>
+<p>定理：$A\lhd H$，$B\lhd K$，那么$(H\times K)/(A\times B)\cong(H/A)\times(K/B)$</p>
+<p>定义：a的共轭的集合记为$a^G$</p>
+<p>定义：群G的中心Z(G)是所有的$\{a|ag=ga\:,\:\forall g\in G\}$</p>
+<p>定义：中心化子$C_G(a)=\{x|ax=xa\}$，显然这是个子群。</p>
+<script type="math/tex; mode=display">
+|a^G|=[G:C_G(a)]</script><p>定义：群H的共轭记为$H^g=gHg^{-1}$</p>
+<p>定义：正规化子$N_G(H)=\{a\in G:\:aHa^{-1}=H\}$，显然这是个子群，且$|H\lhd N_G(H)|$。</p>
+<p>H的共轭的个数=$[G:\:N_G(H)]$</p>
+<p>题目：$H\lhd G$且有质数index，且$C_H(x)&lt;C_G(x)$，那么x在H中共轭的数量和在G中相等。（考虑$G=C_G(x)H$）（在证明A_n单群中多次用到）</p>
+<p>引理：$\alpha,\:\beta\in S_n$，那么$\alpha\beta\alpha^{-1}$和$\beta$有相同的结构，即r-cycle数量相等。（证明：$\beta(i)=j,\:\alpha(i)=k,\:\alpha(j)=l$，那么$\alpha\beta\alpha^{-1}(k)=l$）</p>
+<p>定理：$\beta$和$\gamma$是共轭当且仅当他们有相同的结构。</p>
+<p>定理：order为12 的A4没有order为6的子群</p>
+<p>定理：$A_n,\:n\geq 5$是单群。证明如下</p>
+<ul>
+<li>$A_4$有正规子群{(), (1,2)(3,4), (1,3)(2,4), (1,4)(2,3)}</li>
+<li>$A_5$是单群（1、所有3-cycle是共轭的；2、所有不交的交换是共轭的；3、5-cycle构成两个12元的共轭集合；4、|H|=60，但是1+共轭集合都不是60的约数）</li>
+<li>如果$H\lhd A_n$，且H中有3-cycle，那么$H=A_n$（首先证明所有3-cycle共轭，然后证明An可由3-cycle生成）</li>
+<li>$A_6$是单群（考察$\{\alpha|\alpha(i)=i\}$，与$A_5$同构）</li>
+<li>$A_n$是单群（考察$\beta(i)=j$，必有3-cycle与之不交换，所以可以找到$A_6$的同构）</li>
+</ul>
+<h3 id="一些群表示论定理"><a href="#一些群表示论定理" class="headerlink" title="一些群表示论定理"></a>一些群表示论定理</h3><p>（Cayley）任何一个群G可以被嵌入为$S_G$的子群。如果|G|=n，那么G可以被嵌入$S_n$。（Left translation $L_a(x)=ax$，<strong>$a\to L_a$也被称为G的左正规表示</strong>）</p>
+<p>推论：k是一个域，有限群|G|=n，那么G可以被嵌入GL(n,k)。</p>
+<p>定理：如果$H\leq G$且$[G:H]=n$，那么有同态$\rho:G\to S_n$，满足$\ker\rho\leq H$。（这样的同态$\rho$称为<strong>G在H陪集上的表示</strong>）</p>
+<p>推论：若定理中的G为单群，那么G可以被嵌入到$S_n$。（这也是Cayley定理的一个推广）</p>
+<p>定理：$H\leq G$，定义$X$是H在G中的共轭。那么有同态$\phi:G\to S_X$，满足$\ker\phi\leq N_G(H)$。（这样的同态$\phi$称为<strong>G在H共轭上的表示</strong>）</p>
+<h3 id="G-set"><a href="#G-set" class="headerlink" title="G-set"></a>G-set</h3><p>集合X，群G，定义X是G-set如果存在$\alpha:G\times X\to X$使得</p>
+<ol>
+<li>对$\forall x\in X$，1x=x</li>
+<li>g(hx)=(gh)x</li>
+</ol>
+<p>也称为G作用在X上。</p>
+<p>可以看到存在G到$S_x$的同态。同时，群G到$S_X$的同态也能定义一个X上的群作用G。</p>
+<p>定义：轨道G-orbit为</p>
+<script type="math/tex; mode=display">
+O(x)=\{gx:g\in G\}\subset X</script><p>定义：x的stabilizer</p>
+<script type="math/tex; mode=display">
+G_x=\{g\in G:gx=x\}\leq G</script><p>定理：如果X是G-set，$x\in X$</p>
+<script type="math/tex; mode=display">
+|O(x)|=[G:G_x]</script><p>推论：如果G是有限群，$x\in G$，那么x的共轭个数为$[G:C_G(x)]$</p>
+<p>推论：如果G是有限群，$H\leq G$，那么H的共轭个数是$[G:N_G(H)]$</p>
+<p>定义：X是transitive如果它只有一条轨道</p>
+<p>定义：如果X和G都是有限的，称G-set X是有限的</p>
+<p>定理（Burnside 引理）：有限的G-set X，轨道数量N</p>
+<script type="math/tex; mode=display">
+N=(1/|G|)\sum_{\tau\in G}F(\tau)</script><p>其中$F(\tau)$是被$\tau$所固定的x。</p>
+<p>定义：$G\leq S_X$，其中$X=\{1,2,…,n\}$，如果C是colors的集合，那么$C^n$是一个G-set，如果我们定义$\tau(c_1,…,c_n)=(c_{\tau 1},…,c_{\tau n})$。如果$|C|=q$，那么一个$C^n$的轨道称为(q-G)-coloring of X。</p>
+<p>引理：C是q个颜色的集合，$G\leq S_X$，如果$\tau\in G$，那么$F(\tau)=q^{t(\tau)}$，其中$t(\tau)$是$\tau$的完全分解的cycle个数。</p>
+<p>定义：如果$\tau$的完全分解有$e_r(\tau)\geq 0$个r-cycle，那么定义index</p>
+<script type="math/tex; mode=display">
+ind(\tau)=x_1^{e_1(\tau)}...x_n^{e_n(\tau)}</script><p>如果$G\leq S_n$，那么G的cycle index就是多项式</p>
+<script type="math/tex; mode=display">
+P_G(x_1,...,x_n)=(1/|G|)\sum_{\tau\in G}ind(\tau)\in Q[x_1,...,x_n]</script><p>推论：如果|X|=n，且$G\leq S_n$，那么(q,G)-coloring的数量是$P_G(q,…,q)$。</p>
+<p>定理（Polya，1937）：$G\leq S_X$，其中$|X|=n$，$|C|=q$，定义</p>
+<script type="math/tex; mode=display">
+\sigma^i=c_1^i+...+c_1^i</script><p>那么(q,G)-cloring of X且有$f_r$个元素是$c_r$的个数是$P_G(\sigma_1,…,\sigma_n)$中$c_1^{f_1}…c_q^{f_q}$的系数。</p>
+<h3 id="Geometry"><a href="#Geometry" class="headerlink" title="Geometry"></a>Geometry</h3><p>定义：motion是保距变换T满足$||Tx-Ty||=||x-y||$。</p>
+<p>定义：线性变换S是正交的，如果$||Sx||=||x||$。</p>
+<p>定理：集合$O(n,R)$（实正交群）是$GL(n,R)$的子群。motion的集合$M(n,R)$是一个群。</p>
+<p>定义：矩阵$A\in GL(n,R)$是正交的，如果$AA^T=I$</p>
+<p>定义：如果|T|=1（orietation-preserving），称为旋转。旋转群$SO(n,R)\leq O(n,R)$，显然$[O(n,R):SO(n,R)]=2$</p>
+<p>定理：任何沿着过原点的超平面H的反射都不是旋转。</p>
+<p>定义：二维平面上的图像$\Delta$的对称群</p>
+<script type="math/tex; mode=display">
+\Phi(\Delta)=\{S\in O(2,R):S(\Delta)=\Delta\}</script><p>定理：如果$\Delta$是一个正n边形，那么$\Phi(\Delta)$是由n阶元素S（旋转）和2阶元素T（反射）生成的。</p>
+<p>定义：二面体群$D_{2n}$是2n阶群，由两个元素s,t生成，满足</p>
+<script type="math/tex; mode=display">
+s^n=1,\:t^2=1,\:tst=s^{-1}</script><p>定理：如果G是有限群，如果$a,b\in G$阶都是2，那么存在n，$<a,b>\cong D_{2n}$。（只需取s=ab,t=a即可）</p>
+<p>定义：三维平面上的图像$\Omega$</p>
+<script type="math/tex; mode=display">
+\Phi(\Omega)=\{S\in O(3,R):S(\Omega)=\Omega\}</script><p>如果$\Omega$是正n面体，每个面有k个边，那么这个群是nk阶的。</p>
+<p>定义：函数$\phi:R^2\to R^2$是仿射映射如果有线性变换$\lambda$和向量z</p>
+<script type="math/tex; mode=display">
+\phi(v)=\lambda(v)+z</script><p>用Aff(2,R)记所有仿射映射的群。</p>
+<h3 id="Sylow-Theorems"><a href="#Sylow-Theorems" class="headerlink" title="Sylow Theorems"></a>Sylow Theorems</h3><p>定义：素数p，p-群是每个元素的阶都是p的幂次。</p>
+<p>引理：如果G是个有限阿贝尔群且阶可被素数p整数，那个G有阶为p的元素。</p>
+<p>定理（Cauchy，1845）：如果有限G的阶被素数p整除，则G有阶为p的元素。</p>
+<p>根据群分类定理：</p>
+<script type="math/tex; mode=display">
+|G|=|Z(G)|+\sum_i[G:C_G(x_i)]</script><p>可得$p|C_G(x_i)$或者$p||Z(G)|$。前者递归可证，后者是阿贝尔群。</p>
+<p>另一种证明由J.H.McKay给出，定义$X=\{(a_1,a_2,…,a_p)|a_1a_2…a_p=1\}$，显然$|X|=|G|^{p-1}$，考虑X的每个元素都有p个轮换，除了满足$\forall i,a_i=a,\:a^p=1$。如果没有阶为1的元素，则只有a=1，那么</p>
+<script type="math/tex; mode=display">
+|X|=|G|^{p-1}=1+kp</script><p>与p||G|矛盾。</p>
+<p>推论：有限群G是p群当且仅当|G|是p的幂次。</p>
+<p>定理：如果$G\neq 1$是有限p群，那么它的中心$Z(G)\neq 1$。</p>
+<p>推论：素数p，每个阶为$p^2$的群G都是阿贝尔群。（考察G/Z(G)易知）</p>
+<p>定理：G是有限p群，如果H是G的真子群，那么$H&lt;N_G(H)$。</p>
+<p>定理：G是有限p群，每个G的最大子群都是正规的，且序为p。（由上可知$N_G(H)=G$）</p>
+<p>引理：如果有限p群G有$r_1$个阶为p的子群，那么$r_1=1\mod p$（证明：p阶元素central的mod p=-1，not central是p的幂次。$r_1(p-1)\cong -1\mod p$）</p>
+<p>定理：有限p群G有$r_s$个阶为$p^s$的子群，那么$r_s\cong 1\mod p$</p>
+<p>证明：H是阶为$p^s$的子群，K是阶为$p^{s+1}$的子群且包含H。那么由上定理可知N是K的正规子群，又由上述引理，这样的K个数a mod p = 1。又可以证明，K是阶为$p^{s+1}$的子群，K的$p^s$子群个数b mod p = 1。因此</p>
+<script type="math/tex; mode=display">
+\sum_{i=1}^{r_s}a_i=\sum_{j=1}^{r_{s+1}}b_j</script><p>由此递归得证。</p>
+<p>引理（Laudau，1903）：给定n&gt;0，有理数q，那么只有有限个n元正整数对满足$q=\sum_{j=1}^n(1/i_j)$</p>
+<p>定理：给定n，只有有限多个有限群恰好有n个共轭类。（根据引理和共轭类分类定理可得）</p>
+<p>定义：素数p，G的sylow p-子群是一个最大p-子群。</p>
+<p>引理4.11：P是有限群G的一个sylow p-子群。那么</p>
+<ul>
+<li>$|N_G(P)/P|$和p互素</li>
+<li>如果a是p的幂次阶元素，且$aPa^{-1}=P$，那么$a\in P$</li>
+</ul>
+<p>定理（Sylow，1872）：（sylow第二定理）如果P是有限群G的一个sylow p-子群，那么G的所有sylow p-子群和P共轭；（sylow第三定理）如果有r个sylow p-子群，那么r||G|，$r\cong 1\mod p$。</p>
+<p>证明：定义X为G所有sylow p-子群的集合。定义G在X上的共轭作用，存在同态$\phi:G\to S_X$，定义为$\phi_a(P_i)=aP_ia^{-1}$。考虑sylow p-子群Q在X上的作用，那么X的所有轨道大小都是p的幂次。如果某个轨道大小为1，那么意味着$P_i=Q$。由此得到sylow第三定理。</p>
+<p>推论：有限群G只有一个sylow p-子群P当且仅当P是正规子群。</p>
+<p>定理：如果有限群G的阶为$p^em$，且$(p,m)=1$那么G的每个sylow p-子群阶为$p^e$。（根据引理4.11-1可得）</p>
+<p>推论：如果有限群G，素数p，$p^k||G|$，那么G有一个阶为$p^k$的子群。</p>
+<p>定理4.17（Wielandt的证明）：如果有限群G的阶为$p^em$，且$(p,m)=1$那么G有一个阶为$p^e$的子群。</p>
+<p>证明：X是所有G的基数为$p^e$的子集的集合，显然p不能整除|X|。考虑G在X上的左乘作用，必有一个子集B满足|O(B)|不能被p整除。B的稳定化子$|G_B|=p^em’\geq p^e$。同时$|G_B|\leq |B|=p^e$，所以$|G_B|=p^e$。</p>
+<p>定理4.18（Frattini Argument）K是有限群G的正规子群，如果P是K的sylow p-子群，那么$G=KN_G(p)$</p>
+<p>定义：矩阵A是unitriangular，如果他是对角线为1的上三角矩阵。这样的的矩阵构成的群记为UT</p>
+<p>定理：素数p，那么每个阶为2p的群G是循环群或者二面体群。</p>
+<p>定理：素数p&gt;q，|G|=pg，那么G是循环群，或者G=<a,b>，满足$b^p=1,a^q=1,aba^{-1}=b^m$，且$m^q=1\mod p$，但$m\not\equiv 1 \mod p$。</p>
+<p>推论：如果q不能整除p-1，那么G必然是循环群。</p>
+<p>53</p>
+]]></content>
+      <categories>
+        <category>猫爪记</category>
+        <category>Mathematics</category>
+      </categories>
+      <tags>
+        <tag>琉璃猫</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>轻兵器</title>
     <url>/2020/06/12/light-weapons/</url>
     <content><![CDATA[<h1 id="远古手枪"><a href="#远古手枪" class="headerlink" title="远古手枪"></a>远古手枪</h1><h2 id="柯尔特左轮"><a href="#柯尔特左轮" class="headerlink" title="柯尔特左轮"></a>柯尔特左轮</h2><p>左轮手枪是美国人塞缨尔柯尔特于1835年发明的，他在发明转轮手枪后，一方面不断改进，从1847年至1860年间，他共改进与推出12种转轮手枪。由于左轮手枪结构简单，操作灵活，很快受到各国官兵的喜爱，19世纪中期以后，这种枪更是风靡全球。</p>
@@ -5145,6 +5145,20 @@ s^n=1,\:t^2=1,\:tst=s^{-1}</script><p>定理：如果G是有限群，如果$a,b\
 ]]></content>
       <categories>
         <category>小鱼干</category>
+      </categories>
+      <tags>
+        <tag>琉璃猫</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>吉斯尼亚传奇</title>
+    <url>/2020/01/12/%E5%90%89%E6%96%AF%E5%B0%BC%E4%BA%9A%E4%BC%A0%E5%A5%8701/</url>
+    <content><![CDATA[<h2 id="序章：初雪"><a href="#序章：初雪" class="headerlink" title="序章：初雪"></a>序章：初雪</h2><p>​        今年的冬天虽然来得晚了些，但是来得够快。十二月初的时候，京城还像是延续刚刚过去的夏天一样，温暖的仿佛阳春三月。然而人们根本没有想到，寒气来的迅猛，就连北面大兴安岭绵延的山脉，也只能略微延缓寒气南下的步伐。短短几天里，凛冬真的来了，京城冷的像另一个世界。永定河结起了薄冰，西山上萧瑟地立着满山枯木，庭院里只有几枝梅花迎风傲立，人们都已经不愿意出门了，街上仅存的行人也都把自己裹得严严实实。</p>
+<a id="more"></a>
+<p>​        罗一成清早就出门了，带着他的行李箱，迎着略有些刺骨的微风，登上了前往机场的列车。由于才刚刚过七点，车上还很空，罗一成随意地坐下了。他看向窗外，只见清冷的早晨，整个城市都昏昏沉沉；加上这是个没有生气的季节，平日里喜爱热闹的鸟儿，也消踪匿迹了，一切都显得灰蒙蒙的。<br>​        列车跑的很快，罗一成的思绪没有飘多远，就发现自己已经出了城。城外的这一站，平日就没什么人，罗一成心想，他往车里挪了挪，以躲避车外的冷风。一声提示音响起来，车厢的门整齐地打开了，猛地一阵风吹过，罗一成缩了缩脖子，那一瞬间他仿佛看见车外一只橘猫跑过，但仔细看去却没了踪迹。罗一成转头看去，却发现隔壁车厢不知何时上来了个三十岁左右的年轻人。</p>
+]]></content>
+      <categories>
+        <category>吉斯尼亚传奇</category>
       </categories>
       <tags>
         <tag>琉璃猫</tag>
@@ -5419,14 +5433,51 @@ Rln(L)=-\Delta H(1/T)+\Delta C_pln(T)+\Delta S-\Delta C_p</script><p><strong>协
       </tags>
   </entry>
   <entry>
-    <title>吉斯尼亚传奇</title>
-    <url>/2020/01/12/%E5%90%89%E6%96%AF%E5%B0%BC%E4%BA%9A%E4%BC%A0%E5%A5%8701/</url>
-    <content><![CDATA[<h2 id="序章：初雪"><a href="#序章：初雪" class="headerlink" title="序章：初雪"></a>序章：初雪</h2><p>​        今年的冬天虽然来得晚了些，但是来得够快。十二月初的时候，京城还像是延续刚刚过去的夏天一样，温暖的仿佛阳春三月。然而人们根本没有想到，寒气来的迅猛，就连北面大兴安岭绵延的山脉，也只能略微延缓寒气南下的步伐。短短几天里，凛冬真的来了，京城冷的像另一个世界。永定河结起了薄冰，西山上萧瑟地立着满山枯木，庭院里只有几枝梅花迎风傲立，人们都已经不愿意出门了，街上仅存的行人也都把自己裹得严严实实。</p>
+    <title>吉斯尼亚传奇N</title>
+    <url>/2019/09/28/%E5%90%89%E6%96%AF%E5%B0%BC%E4%BA%9A%E4%BC%A0%E5%A5%870n/</url>
+    <content><![CDATA[<p>​    经过漫漫长夜的飞行，飞机缓缓地降落在跑道上。地面上星星点点的小房子渐渐明晰起来，地上还在闪耀着的跑道灯，在晨曦中显得暗淡无力，罗一成恍惚间意识到，他终于来到了吉斯尼娅，这个古老而年轻的国度，这个陌生而熟悉的城市了。</p>
 <a id="more"></a>
-<p>​        罗一成清早就出门了，带着他的行李箱，迎着略有些刺骨的微风，登上了前往机场的列车。由于才刚刚过七点，车上还很空，罗一成随意地坐下了。他看向窗外，只见清冷的早晨，整个城市都昏昏沉沉；加上这是个没有生气的季节，平日里喜爱热闹的鸟儿，也消踪匿迹了，一切都显得灰蒙蒙的。<br>​        列车跑的很快，罗一成的思绪没有飘多远，就发现自己已经出了城。城外的这一站，平日就没什么人，罗一成心想，他往车里挪了挪，以躲避车外的冷风。一声提示音响起来，车厢的门整齐地打开了，猛地一阵风吹过，罗一成缩了缩脖子，那一瞬间他仿佛看见车外一只橘猫跑过，但仔细看去却没了踪迹。罗一成转头看去，却发现隔壁车厢不知何时上来了个三十岁左右的年轻人。</p>
+<p>​    飞机在跑道上开始减速，随着一抹晨光从飞机的后弦方向斜斜地照射过来，整个飞机仿佛也开始苏醒了。乘客们的交谈声渐渐响了起来，打破了延续十七个小时的安静；机舱里再次活跃了起来，有些乘客已经开始急急忙忙地收拾自己的行李了。</p>
+<p>​    不过，这些都似乎与罗一成毫无关系。</p>
+<p>​    罗一成也开始清醒过来，十七个小时的飞行中，他完完全全地沉浸在自己的迷梦里，这是一个旖旎多姿的梦，如果他的梦有颜色的话，那一定是金色的：从小罗一成就听闻吉斯尼娅的种种传奇，带着对吉斯尼娅美好的想象，只不过他从没想过，他会如今天一般真正来到吉斯尼娅，至少，不会来得那么快。</p>
+<p>​    在他的印象里，或者说，在大多数人眼里，吉斯尼娅是危险而神秘的，而罗一成似乎对这样捉摸不定的东西尤其有好感；那些有关吉斯尼娅的美丽传说就仿佛五光十色的肥皂泡，越是缥缈、越是虚幻、越是引人入迷。</p>
 ]]></content>
       <categories>
         <category>吉斯尼亚传奇</category>
+      </categories>
+      <tags>
+        <tag>琉璃猫</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>阿尔托莉雅的shell</title>
+    <url>/2020/06/09/shell/</url>
+    <content><![CDATA[<h3 id="切分数据集"><a href="#切分数据集" class="headerlink" title="切分数据集"></a>切分数据集</h3><p> <code>ls -l DATA_DIR | awk &#39;BEGIN{srand();} {printf &quot;%s %s\n&quot;, rand(), $0}&#39; | sort -k1n | awk &#39;{gsub($1FS,&quot;&quot;); print $0}&#39; | awk &#39;{print $9}&#39; | awk &#39;FNR&lt;=2000&#39; | xargs -i sudo mv DATA_DIR/{} TEST-DIR/.</code></p>
+<p><code>ls -l DATA_DIR | awk &#39;BEGIN{srand();} {print rand(), $0}&#39; | sort -k1n | awk &#39;{print $10}&#39; | awk &#39;FNR&lt;=2000&#39; | xargs -i sudo mv DATA_DIR/{} TEST-DIR/.</code>【魏武精修版】</p>
+<a id="more"></a>
+<h3 id="杀幽灵的方法"><a href="#杀幽灵的方法" class="headerlink" title="杀幽灵的方法"></a>杀幽灵的方法</h3><p><code>ps aux | grep &quot;cuda 1&quot; | awk &#39;{print $2}&#39; | xargs kill -9</code></p>
+<h3 id="批量重命名文件-注意，不能出现同名否则会覆盖）"><a href="#批量重命名文件-注意，不能出现同名否则会覆盖）" class="headerlink" title="批量重命名文件 (注意，不能出现同名否则会覆盖）"></a>批量重命名文件 (注意，不能出现同名否则会覆盖）</h3><p><code>c=0;for i in *.pdf;do mv -f $i $((c+=1)).pdf;done</code></p>
+<h3 id="将图片批量转换为PDF"><a href="#将图片批量转换为PDF" class="headerlink" title="将图片批量转换为PDF"></a>将图片批量转换为PDF</h3><p><code>convert *.jpg a.pdf</code></p>
+<h3 id="清理回收站"><a href="#清理回收站" class="headerlink" title="清理回收站"></a>清理回收站</h3><p><code>cd ~/.local/share/Trash； sudo su；rm -fr files/*</code></p>
+<h3 id="合并pdf"><a href="#合并pdf" class="headerlink" title="合并pdf"></a>合并pdf</h3><p><code>pdftk *.pdf cat output 1.pdf</code></p>
+<h3 id="看文件夹大小"><a href="#看文件夹大小" class="headerlink" title="看文件夹大小"></a>看文件夹大小</h3><p><code>sudo du -h --max-depth=1</code></p>
+<h3 id="统计文件个数"><a href="#统计文件个数" class="headerlink" title="统计文件个数"></a>统计文件个数</h3><p><code>ls -al | wc -l | awk &#39;{print $1 -3}&#39;</code></p>
+<h3 id="自动登录远程主机"><a href="#自动登录远程主机" class="headerlink" title="自动登录远程主机"></a>自动登录远程主机</h3><p>在本地运行命令:</p>
+<p><code>ssh-keygen -t rsa</code> (连续三次回车,即在本地生成了公钥和私钥,不设置密码)</p>
+<p><code>ssh xxx@xx.xx.xx.xx &quot;mkdir .ssh&quot;</code>(需要输入密码)</p>
+<p><code>scp ~/.ssh/id_rsa.pub xxx@xx.xx.xx.xx:.ssh/id_rsa.pub</code> (需要输入密码)</p>
+<p>在远程机的命令:</p>
+<p><code>touch /root/.ssh/authorized_keys</code> (如果已经存在这个文件, 跳过这条)</p>
+<p><code>cat /root/.ssh/id_rsa.pub &gt;&gt; /root/.ssh/authorized_keys</code> (将id_rsa.pub的内容追加到authorized_keys 中)</p>
+<p>回到本地机器:</p>
+<p><code>ssh xxx@xx.xx.xx.xx</code> (不需要密码, 登录成功)</p>
+<h3 id="Tmux"><a href="#Tmux" class="headerlink" title="Tmux"></a>Tmux</h3><p>在tmux运行然后要退出但是让tmux在后台运行，使用<code>Ctrl+B d</code><br>要在命令行重新回到tmux，在命令行输入<code>tmux a</code><br>如果开了多个tmux session，在<code>tmux a</code>进入任意的tmux之后，使用<code>Ctrl+B s</code></p>
+<h3 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h3><p>根目录：<code>export PYTHONPATH=pwd:$PYTHONPATH</code></p>
+<p>访问服务器 Jupyter Notebook<br><code>ssh -L 8000:localhost:8888 xxxx@xx.xx.xx.xx</code> (8000是本地的port,随便换)</p>
+<h3 id="Git"><a href="#Git" class="headerlink" title="Git"></a>Git</h3><p>撤销commit: <code>git reset --soft HEAD</code><br>批量删除Branch: <code>git branch | grep -v &quot;master&quot; |xargs git branch -D</code><br>清楚无用Branch: <code>git remote prune origin</code><br>合并最近4次提交记录 <code>git rebase -i HEAD~4</code> (先合并 后提交)s</p>
+]]></content>
+      <categories>
+        <category>小鱼干</category>
       </categories>
       <tags>
         <tag>琉璃猫</tag>
@@ -6049,57 +6100,6 @@ Rln(L)=-\Delta H(1/T)+\Delta C_pln(T)+\Delta S-\Delta C_p</script><p><strong>协
       <categories>
         <category>猫爪记</category>
         <category>Computer-Science</category>
-      </categories>
-      <tags>
-        <tag>琉璃猫</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>阿尔托莉雅的shell</title>
-    <url>/2020/06/09/shell/</url>
-    <content><![CDATA[<h3 id="切分数据集"><a href="#切分数据集" class="headerlink" title="切分数据集"></a>切分数据集</h3><p> <code>ls -l DATA_DIR | awk &#39;BEGIN{srand();} {printf &quot;%s %s\n&quot;, rand(), $0}&#39; | sort -k1n | awk &#39;{gsub($1FS,&quot;&quot;); print $0}&#39; | awk &#39;{print $9}&#39; | awk &#39;FNR&lt;=2000&#39; | xargs -i sudo mv DATA_DIR/{} TEST-DIR/.</code></p>
-<p><code>ls -l DATA_DIR | awk &#39;BEGIN{srand();} {print rand(), $0}&#39; | sort -k1n | awk &#39;{print $10}&#39; | awk &#39;FNR&lt;=2000&#39; | xargs -i sudo mv DATA_DIR/{} TEST-DIR/.</code>【魏武精修版】</p>
-<a id="more"></a>
-<h3 id="杀幽灵的方法"><a href="#杀幽灵的方法" class="headerlink" title="杀幽灵的方法"></a>杀幽灵的方法</h3><p><code>ps aux | grep &quot;cuda 1&quot; | awk &#39;{print $2}&#39; | xargs kill -9</code></p>
-<h3 id="批量重命名文件-注意，不能出现同名否则会覆盖）"><a href="#批量重命名文件-注意，不能出现同名否则会覆盖）" class="headerlink" title="批量重命名文件 (注意，不能出现同名否则会覆盖）"></a>批量重命名文件 (注意，不能出现同名否则会覆盖）</h3><p><code>c=0;for i in *.pdf;do mv -f $i $((c+=1)).pdf;done</code></p>
-<h3 id="将图片批量转换为PDF"><a href="#将图片批量转换为PDF" class="headerlink" title="将图片批量转换为PDF"></a>将图片批量转换为PDF</h3><p><code>convert *.jpg a.pdf</code></p>
-<h3 id="清理回收站"><a href="#清理回收站" class="headerlink" title="清理回收站"></a>清理回收站</h3><p><code>cd ~/.local/share/Trash； sudo su；rm -fr files/*</code></p>
-<h3 id="合并pdf"><a href="#合并pdf" class="headerlink" title="合并pdf"></a>合并pdf</h3><p><code>pdftk *.pdf cat output 1.pdf</code></p>
-<h3 id="看文件夹大小"><a href="#看文件夹大小" class="headerlink" title="看文件夹大小"></a>看文件夹大小</h3><p><code>sudo du -h --max-depth=1</code></p>
-<h3 id="统计文件个数"><a href="#统计文件个数" class="headerlink" title="统计文件个数"></a>统计文件个数</h3><p><code>ls -al | wc -l | awk &#39;{print $1 -3}&#39;</code></p>
-<h3 id="自动登录远程主机"><a href="#自动登录远程主机" class="headerlink" title="自动登录远程主机"></a>自动登录远程主机</h3><p>在本地运行命令:</p>
-<p><code>ssh-keygen -t rsa</code> (连续三次回车,即在本地生成了公钥和私钥,不设置密码)</p>
-<p><code>ssh xxx@xx.xx.xx.xx &quot;mkdir .ssh&quot;</code>(需要输入密码)</p>
-<p><code>scp ~/.ssh/id_rsa.pub xxx@xx.xx.xx.xx:.ssh/id_rsa.pub</code> (需要输入密码)</p>
-<p>在远程机的命令:</p>
-<p><code>touch /root/.ssh/authorized_keys</code> (如果已经存在这个文件, 跳过这条)</p>
-<p><code>cat /root/.ssh/id_rsa.pub &gt;&gt; /root/.ssh/authorized_keys</code> (将id_rsa.pub的内容追加到authorized_keys 中)</p>
-<p>回到本地机器:</p>
-<p><code>ssh xxx@xx.xx.xx.xx</code> (不需要密码, 登录成功)</p>
-<h3 id="Tmux"><a href="#Tmux" class="headerlink" title="Tmux"></a>Tmux</h3><p>在tmux运行然后要退出但是让tmux在后台运行，使用<code>Ctrl+B d</code><br>要在命令行重新回到tmux，在命令行输入<code>tmux a</code><br>如果开了多个tmux session，在<code>tmux a</code>进入任意的tmux之后，使用<code>Ctrl+B s</code></p>
-<h3 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h3><p>根目录：<code>export PYTHONPATH=pwd:$PYTHONPATH</code></p>
-<p>访问服务器 Jupyter Notebook<br><code>ssh -L 8000:localhost:8888 xxxx@xx.xx.xx.xx</code> (8000是本地的port,随便换)</p>
-<h3 id="Git"><a href="#Git" class="headerlink" title="Git"></a>Git</h3><p>撤销commit: <code>git reset --soft HEAD</code><br>批量删除Branch: <code>git branch | grep -v &quot;master&quot; |xargs git branch -D</code><br>清楚无用Branch: <code>git remote prune origin</code><br>合并最近4次提交记录 <code>git rebase -i HEAD~4</code> (先合并 后提交)s</p>
-]]></content>
-      <categories>
-        <category>小鱼干</category>
-      </categories>
-      <tags>
-        <tag>琉璃猫</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>吉斯尼亚传奇N</title>
-    <url>/2019/09/28/%E5%90%89%E6%96%AF%E5%B0%BC%E4%BA%9A%E4%BC%A0%E5%A5%870n/</url>
-    <content><![CDATA[<p>​    经过漫漫长夜的飞行，飞机缓缓地降落在跑道上。地面上星星点点的小房子渐渐明晰起来，地上还在闪耀着的跑道灯，在晨曦中显得暗淡无力，罗一成恍惚间意识到，他终于来到了吉斯尼娅，这个古老而年轻的国度，这个陌生而熟悉的城市了。</p>
-<a id="more"></a>
-<p>​    飞机在跑道上开始减速，随着一抹晨光从飞机的后弦方向斜斜地照射过来，整个飞机仿佛也开始苏醒了。乘客们的交谈声渐渐响了起来，打破了延续十七个小时的安静；机舱里再次活跃了起来，有些乘客已经开始急急忙忙地收拾自己的行李了。</p>
-<p>​    不过，这些都似乎与罗一成毫无关系。</p>
-<p>​    罗一成也开始清醒过来，十七个小时的飞行中，他完完全全地沉浸在自己的迷梦里，这是一个旖旎多姿的梦，如果他的梦有颜色的话，那一定是金色的：从小罗一成就听闻吉斯尼娅的种种传奇，带着对吉斯尼娅美好的想象，只不过他从没想过，他会如今天一般真正来到吉斯尼娅，至少，不会来得那么快。</p>
-<p>​    在他的印象里，或者说，在大多数人眼里，吉斯尼娅是危险而神秘的，而罗一成似乎对这样捉摸不定的东西尤其有好感；那些有关吉斯尼娅的美丽传说就仿佛五光十色的肥皂泡，越是缥缈、越是虚幻、越是引人入迷。</p>
-]]></content>
-      <categories>
-        <category>吉斯尼亚传奇</category>
       </categories>
       <tags>
         <tag>琉璃猫</tag>
