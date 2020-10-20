@@ -1,3 +1,28 @@
+//博客内容透明化
+//文章内容的透明度设置
+.content-wrap {
+  opacity: 0.9;
+  background: rgba(255,255,255,0.9);
+}
+
+//侧边框的透明度设置
+.sidebar {
+  opacity: 0.9;
+}
+
+//菜单栏的透明度设置
+.header-inner {
+  background: rgba(255,255,255,0.9);
+}
+
+.footer-inner {
+  background: rgba(255,255,255,0.9);
+}
+
+//搜索框（local-search）的透明度设置
+.popup {
+  opacity: 0.9;
+}
 // 主页文章添加阴影效果 好像没有效果
  .post {
    margin-top: 60px;
@@ -6,3 +31,23 @@
    -webkit-box-shadow: 0 0 5px rgba(202, 203, 203, .5);
    -moz-box-shadow: 0 0 5px rgba(202, 203, 204, .5);
   }
+
+// 夜间模式使用的css
+.white-fg {
+    color: #CCCCCC;   
+    li, a {
+        color: #CCCCCC;
+    } 
+}
+.black-bg {
+    background: rgba(0, 0, 0, 0.9);    
+}
+
+body, body.white-fg, body.black-bg  {
+  background: url(/images/background.png);//自己喜欢的图片地址
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: 50% 50%;
+}
+
