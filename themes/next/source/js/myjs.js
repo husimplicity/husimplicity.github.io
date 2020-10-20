@@ -156,20 +156,42 @@ function sun_dark_mode(dark=true){
     }
 }
 
+// 模式control
+current_mode = "sun";
+current_bg = "saber";
 // 特别注意，这里opacity通过bg来体现！！
 // 夜间模式
 function dark_mode(){
     sun_dark_mode(dark=true);
+    if (current_mode != "dark"){
+        document.getElementById("dark-mode").style.color = "indianred";
+        document.getElementById(current_mode+"-mode").style.color = "black";
+        current_mode = "dark";
+    }
 }
 
 // 日间模式
 function sun_mode(){
     sun_dark_mode(dark=false);
+    if (current_mode != "sun"){
+        document.getElementById("sun-mode").style.color = "indianred";
+        document.getElementById(current_mode+"-mode").style.color = "black";
+        current_mode = "sun";
+    }
+}
+
+function control_new_bg(n){
+    if (current_bg != n){
+        document.getElementById(n+"-bg").style.color = "indianred";
+        document.getElementById(current_bg+"-bg").style.color = "black";
+        current_bg = n;
+    }
 }
 
 // 纯白背景
 function white_bg(){
     document.body.style.background="white";
+    control_new_bg("white");
 }
 
 // 恢复默认
@@ -179,6 +201,7 @@ function saber_bg(){
     document.body.style.backgroundRepeat = "no-repeat";
     document.body.style.backgroundAttachment = "fixed";
     document.body.style.backgroundPosition = "50% 50%";
+    control_new_bg("saber");
 }
 
 // 猫咪背景
@@ -188,5 +211,6 @@ function cat_bg(){
     document.body.style.backgroundRepeat = "repeat";
     document.body.style.backgroundAttachment = "fixed";
     document.body.style.backgroundPosition = "50% 50%";
+    control_new_bg("cat");
 }
     
