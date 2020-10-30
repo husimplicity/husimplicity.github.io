@@ -42,7 +42,11 @@ function sun_dark_mode(dark=true){
     }
     var menus = document.getElementsByClassName("menu-item-active");
     for (num = 0; num < menus.length; num++){
-        menus[num].getElementsByTagName("a")[0].style.color=bg;
+        if (dark) {
+            menus[num].getElementsByTagName("a")[0].style.color=bg;
+        } else {
+            menus[num].getElementsByTagName("a")[0].style.color=fg;
+        }
     }
 
     // // 一般内容处理
