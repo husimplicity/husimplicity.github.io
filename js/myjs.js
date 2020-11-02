@@ -152,12 +152,21 @@ function sun_dark_mode(dark=true){
         }
     )
 
-    var bgfilter = document.getElementsByClassName("background-filter")[0];
+    // var bgfilter = document.getElementsByClassName("background-filter")[0];
+    // if (dark){
+    //     bgfilter.style.background = "rgba(0, 0, 0, 0.6)";
+    // } else {
+    //     bgfilter.style.background = "rgba(0, 0, 0, 0)";
+    // }
+
+    var nowbgImage = $("body").css("backgroundImage");
+    var reg = /\s((\d+\.)?\d+)\)/;
     if (dark){
-        bgfilter.style.background = "rgba(0, 0, 0, 0.6)";
+        nowbgImage = nowbgImage.replace(reg, " 0.6)");
     } else {
-        bgfilter.style.background = "rgba(0, 0, 0, 0)";
+        nowbgImage = nowbgImage.replace(reg, " 0)");
     }
+    $("body").css("backgroundImage", nowbgImage);
 }
 
 // 模式control
@@ -194,27 +203,33 @@ function control_new_bg(n){
 
 // 纯白背景
 function white_bg(){
-    document.body.style.background="white";
+    var nowbgImage = $("body").css("backgroundImage");
+    var reg = /url\(.*?\)/;
+    nowbgImage = nowbgImage.replace(reg, "url(/images/white.jpg)");
+    $("body").css("backgroundImage", nowbgImage);
     control_new_bg("white");
 }
 
 // 恢复默认
 function saber_bg(){
-    document.body.style.background="url(/images/background.png)";
-    document.body.style.backgroundSize = "cover";
-    document.body.style.backgroundRepeat = "no-repeat";
-    document.body.style.backgroundAttachment = "fixed";
-    document.body.style.backgroundPosition = "50% 50%";
+    var nowbgImage = $("body").css("backgroundImage");
+    var reg = /url\(.*?\)/;
+    nowbgImage = nowbgImage.replace(reg, "url(https://gitee.com/zhou-zikun/hulieu-image/raw/master/saber.jpg)");
+    $("body").css("backgroundImage", nowbgImage);
+    $("body").css("backgroundSize", "cover");
+    $("body").css("backgroundRepeat", "no-repeat");
     control_new_bg("saber");
 }
 
 // 猫咪背景
 function cat_bg(){
-    document.body.style.background="url(/images/goodcat.jpg)";
-    document.body.style.backgroundSize = "224 224px";
-    document.body.style.backgroundRepeat = "repeat";
-    document.body.style.backgroundAttachment = "fixed";
-    document.body.style.backgroundPosition = "50% 50%";
+    var nowbgImage = $("body").css("backgroundImage");
+    var reg = /url\(.*?\)/;
+    nowbgImage = nowbgImage.replace(reg, "url(/images/goodcat.jpg)");
+    $("body").css("backgroundImage", nowbgImage);
+    // document.body.style.background="url(/images/goodcat.jpg)";
+    $("body").css("backgroundSize", "224px 224px");
+    $("body").css("backgroundRepeat", "repeat");
     control_new_bg("cat");
 }
     

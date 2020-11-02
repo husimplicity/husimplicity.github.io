@@ -1194,7 +1194,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #ff8eff;
+  background: #4fff0b;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -2702,7 +2702,7 @@ mjx-container + br {
   background: rgba(0,0,0,0.9);
 }
 body {
-  background: url("/images/background.png");
+  background-image: -webkit-cross-fade(url("https://gitee.com/zhou-zikun/hulieu-image/raw/master/saber.jpg"), url("/images/black.jpg"), 0%);
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
