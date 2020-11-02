@@ -10,7 +10,6 @@
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
-  <div class="background-filter">
   <div class="container{%- if theme.motion.enable %} use-motion{%- endif %}">
     <div class="headband"></div>
 
@@ -57,14 +56,13 @@
   {%- if theme.pjax %}
     </div>
   {%- endif %}
-  </div>
 </body>
 </html>
 
 <!-- 鼠标点击有小爱心 -->
-<!-- <script type="text/javascript" src="/js/clicklove.js"></script> -->
+<script type="text/javascript" src="/js/clicklove.js"></script>
 <!-- 鼠标点击有社会主义核心价值观 -->
-<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/Sanarous/files@1.151/js/clicksocialvalue.js"></script>
+<!--<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/Sanarous/files@1.151/js/clicksocialvalue.js"></script> -->
 
 <!-- 动态标签 -->
 <script type="text/javascript" src="/js/dynamic-title.js"></script> 

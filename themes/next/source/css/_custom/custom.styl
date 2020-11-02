@@ -23,28 +23,32 @@
 .popup {
   opacity: 0.9;
 }
-// 主页文章添加阴影效果 好像没有效果
- .post {
-   margin-top: 60px;
-   margin-bottom: 60px;
-   padding: 25px;
-   -webkit-box-shadow: 0 0 5px rgba(202, 203, 203, .5);
-   -moz-box-shadow: 0 0 5px rgba(202, 203, 204, .5);
-  }
 
-// 夜间模式使用的css
+//主页文章添加阴影效果 好像没有效果
+.post {
+  margin-top: 60px;
+  margin-bottom: 60px;
+  padding: 25px;
+  -webkit-box-shadow: 0 0 5px rgba(202, 203, 203, .5);
+  -moz-box-shadow: 0 0 5px rgba(202, 203, 204, .5);
+}
+
+//夜间模式使用的css
 .white-fg {
-    color: #CCCCCC;   
-    li, a {
-        color: #CCCCCC;
-    } 
-}
-.black-bg {
-    background: rgba(0, 0, 0, 0.9);    
+  color: #CCCCCC;   
+  li, a {
+      color: #CCCCCC;
+  } 
 }
 
-body, body.white-fg, body.black-bg  {
-  background: url(/images/background.png);//自己喜欢的图片地址
+.black-bg {
+  background: rgba(0, 0, 0, 0.9);    
+}
+
+body {
+  // background: url("https://gitee.com/zhou-zikun/hulieu-image/raw/master/saber.jpg");
+  // url(/images/background.png);//自己喜欢的图片地址
+  background-image: -webkit-cross-fade(url("https://gitee.com/zhou-zikun/hulieu-image/raw/master/saber.jpg"), url("/images/black.jpg"), 0%);
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;

@@ -572,7 +572,7 @@ comments:
   style: tabs
   # Choose a comment system to be displayed by default.
   # Available values: changyan | disqus | disqusjs | gitalk | livere | valine
-  active: valine
+  active: 
   # Setting `true` means remembering the comment system selected by the visitor.
   storage: true
   # Lazyload all comment systems.
@@ -616,7 +616,7 @@ changyan:
 # Valine
 # For more information: https://valine.js.org, https://github.com/xCss/Valine
 valine:
-  enable: true
+  enable: false
   appid: OTlxBKNJmL8LPWp35aFMcwkM-gzGzoHsz # Your leancloud application appid
   appkey: TgQ4OoxWjTLVc3SyTX2wG7JM # Your leancloud application appkey
   notify: true # Mail notifier
