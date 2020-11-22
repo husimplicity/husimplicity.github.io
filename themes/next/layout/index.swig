@@ -18,3 +18,16 @@
 {% block sidebar %}
   {{ sidebar_template.render(false) }}
 {% endblock %}
+
+
+{% block page_head %}
+  <div class="index-head-image">
+    <img src="https://gitee.com/zhou-zikun/hulieu-image/raw/master/2saber1M.jpg"/>
+    <span>
+      <a href="#main-body">
+        <span class="arrow-down">
+        </span>
+      </a>
+    </span>
+  </div>
+{% endblock %}

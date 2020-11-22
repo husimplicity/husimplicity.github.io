@@ -10,7 +10,9 @@
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
-  <div class="container{%- if theme.motion.enable %} use-motion{%- endif %}">
+  <div class="page-head">{% block page_head %}{% endblock %}</div>
+  
+  <div id="main-body" class="container{%- if theme.motion.enable %} use-motion{%- endif %}">
     <div class="headband"></div>
 
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">

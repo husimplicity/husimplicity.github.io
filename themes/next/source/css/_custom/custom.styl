@@ -55,3 +55,57 @@ body {
   background-position: 50% 50%;
 }
 
+.page-head{
+}
+
+.index-head-image {
+  position: relative;
+  width: 100%;
+  height: 100%;  
+  // height: auto;
+  background-size: cover;
+}
+
+.index-head-image img{
+  position: relative;
+  top: 0;  
+  // width: 100%;
+  // height: 100%;  
+}
+
+.index-head-image span{
+  position: absolute;
+  top: 85%;
+  left: 50%;  
+  width: 100%;
+  transform:translate(-50%, 0%);
+}
+
+@-webkit-keyframes twinkling{	
+	0%{
+		opacity:0;			
+	}
+  30%{
+    opacity:0.7;
+  }
+  70%{
+		opacity:1;				
+	}
+	100%{
+		opacity:0;			
+	}
+}
+
+.index-head-image .arrow-down {
+  border-left: 1.5vw solid #DDBBBB;
+  border-bottom: 1.5vw solid #DDBBBB;
+  // border-right: 4px solid transparent;
+  // border-top: 4px solid transparent;
+
+  // height: 7%; // 为保证宽高一致，需要padding top
+  padding-top: 7%;
+  width: 7%;
+  display: inline-block;
+  transform: translate(-50%, -50%) rotate(-45deg);
+  -webkit-animation: twinkling 2s infinite ease-in-out;
+}
