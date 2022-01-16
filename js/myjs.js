@@ -232,4 +232,24 @@ function cat_bg(){
     $("body").css("backgroundRepeat", "repeat");
     control_new_bg("cat");
 }
-    
+
+var very_begin = document.body.scrollTop + document.documentElement.scrollTop < $(document.body.getElementsByClassName("page-head")[0]).height() * 0.5;   
+// alert("ok")
+$(window).scroll(function(){
+    let r = 0.4;
+    // let scrollTop = $(this).scrollTop();
+    let scrollTop = document.body.scrollTop + document.documentElement.scrollTop;
+    let head_height = $(document.body.getElementsByClassName("page-head")[0]).height()
+    // alert(very_begin+"1")
+    if (document.body.scrollTop + document.documentElement.scrollTop < head_height * r){
+        very_begin = true;
+    }
+    // alert(very_begin+"2")
+    if(very_begin && scrollTop > head_height * r && scrollTop < head_height){
+        // alert("More");
+        document.documentElement.scrollTop = head_height;
+        document.body.scrollTop = head_height;
+        very_begin = false;
+    }
+    // alert(very_begin+"3")
+});
